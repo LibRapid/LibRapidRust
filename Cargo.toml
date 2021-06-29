@@ -1,0 +1,15 @@
+[package]
+name = "lib_rapid"
+version = "0.0.1"
+authors = ["Windoof"]
+license = "BSL-1.0"
+description = "LibRapid - a library specifically built for mathematical calculations, scientific applications and game development, while being optimized for speed."
+homepage = "https://github.com/TheWindoof"
+readme = "readme.md"
+keywords = ["maths", "scientific", "beta"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+num-traits = "0.2"
