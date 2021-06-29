@@ -11,9 +11,8 @@ the best possible user experience and consistency over all libraries.
 How does it work?
 ----
 The Rust-port of LibRapid is a derivative from the main library made for C++ and Python. It's goal is to be optimized for speedy calculations, mathematical and
-scientific applications as well as matrice calculations (to come).
+scientific applications.
 
 Performance
 ----
-LibRapid for Rust is fully optimized - meaning your calculations for game scripts or maths will be faster. All functions that are implemented are either faster
-than the Rust functions, as fast as them or bring new features to Rust, also optimized for speed.
+LibRapid for Rust is fully optimized - meaning your calculations for game scripts and maths will be faster as a result. All functions that are implemented bring new features to Rust, while being optimized for speed.
