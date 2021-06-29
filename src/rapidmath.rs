@@ -1,35 +1,26 @@
 use num_traits::NumOps;
 
-use crate::arithmetic;
+/**
+Maps a given number of a range onto another range.
 
-pub fn pow(base: f64, exponent: i32) -> f64 {
-    let mut result: f64;
-    let is_greater_zero: bool = exponent > 0;
-    let base_is_two: bool = base == 2f64;
+# Arguments
+* `value` - The original value to be mapped.
+* `start1` - The original start value of the number range.
+* `end1` - The original end value of the number range.
+* `start2` - The new start value of the number range.
+* `end2` - The new start value of the number range.
 
-    match base_is_two {
-        true => return f64::from(arithmetic::mult_pow2(1, exponent)),
-        false => {}
-    }
+# Returns
+A number containing the new mapped value.
 
-    match is_greater_zero {
-        true => {
-            result = base.clone();
-            for _i in 1..exponent {
-                result = result*base;
-            }
-        }
-        false => {
-            let new_exponent = exponent *-1;
-            result = 1f64 / base;
-            for _i in 1..new_exponent {
-                result = result / base;
-            }
-        }
-    }
-    result
-}
+# Examples
+```
+use lib_rapid::rapidmath;
 
+let result: i32 = rapidmath::map(5, 0, 10, 0 , 1); // Original value 5 in the range from 0-10
+std::println!("{}", result.to_string()) // Prints "0.5"
+```
+*/
 pub fn map<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T) -> T {
 
     (start2 + (end2 - start2)).mul((value - start1) / end1.sub(start1))
