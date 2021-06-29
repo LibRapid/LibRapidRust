@@ -1,3 +1,5 @@
+extern crate num;
+
 use num_traits::NumOps;
 
 /**
@@ -24,4 +26,12 @@ std::println!("{}", result.to_string()) // Prints "0.5"
 pub fn map<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T) -> T {
 
     (start2 + (end2 - start2)).mul((value - start1) / end1.sub(start1))
+}
+
+pub fn approx_sqrt_t<T: NumOps + Copy + From<i32>>(a: T) -> T {
+    let mut res = (a + 1.into()) / 2.into();
+    for _ in 0..20 {
+        res = (res + a) / res;
+    }
+    res
 }
