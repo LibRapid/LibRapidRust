@@ -4,7 +4,6 @@ extern crate num_traits;
 use core::fmt;
 use std::{str, usize};
 use std::collections::HashMap;
-
 use bit_vec::BitVec;
 
 type Link = Option<Box<Node>>;
@@ -27,18 +26,18 @@ impl fmt::Display for Node {
     }
 }
 
-pub fn new_node(freq: usize, c: Option<char>) -> Node {
+fn new_node(freq: usize, c: Option<char>) -> Node {
     Node {
         frequency: freq, character: c,
         left: None, right: None,
     }
 }
 
-pub fn new_box(n: Node) -> Box<Node> {
+fn new_box(n: Node) -> Box<Node> {
     Box::new(n)
 }
 
-pub fn get_frequency(s: &str) -> HashMap<char, usize> {
+fn get_frequency(s: &str) -> HashMap<char, usize> {
     let mut hm = HashMap::new(); // Result
     for c in s.chars() {
         let counter = hm.entry(c).or_insert(0); // Inserts c if value is not present, returns mut ref
@@ -47,37 +46,36 @@ pub fn get_frequency(s: &str) -> HashMap<char, usize> {
     hm
 }
 
-
-
-// !! CRITICAL BUG !!
 pub fn assign_codes(root: &Box<Node>, 
                     hashmap: &mut HashMap<char, BitVec>, 
                     bitvec: &mut BitVec ) {
     match root.character {
         Some(character) => { hashmap.insert(character, bitvec.clone()); }
 
-        None => { 
-            if let Some(ref l) = root.left { bitvec.push(false); assign_codes(l, hashmap, bitvec); }
-            if let Some(ref r) = root.right { bitvec.push(true); assign_codes(r, hashmap, bitvec); }
+        None => {
+            if let Some(ref l) = root.left
+            { bitvec.push(false); assign_codes(l, hashmap, bitvec); }
+
+            if let Some(ref r) = root.right
+            { bitvec.push(true); assign_codes(r, hashmap, bitvec); }
         }
     }
+    bitvec.pop();
+    // Thanks to Pencilcaseman to fixing a issue
 }
-// !! END CRITICAL BUG !!
 
-
-
-pub fn encode_string(s: &str, hashmap: &mut HashMap<char, BitVec>) -> BitVec {
+pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec {
     let mut res: BitVec = BitVec::new();
     let mut t: Option<&mut BitVec>;
 
     for c in s.chars() {
-        t = hashmap.get_mut(&c);
-        res.append(t.unwrap());
+        t = char_codes.get_mut(&c);
+        res.append(&mut t.cloned().unwrap());
     }
     res
 }
 
-pub fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
+fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
     let mut res = "".to_string();
     let mut nodeptr = root;
 
@@ -118,6 +116,39 @@ pub fn get_tree(mut p: Vec<Box<Node>>) -> Vec<Box<Node>> {
     p
 }
 
-pub fn get_root(mut p: Vec<Box<Node>>) -> Box<Node> {
+pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
+    decode_string(bitvec, root)
+}
+
+fn get_p(s: &str) -> Vec<Box<Node>> {
+    let frequency = get_frequency(s);
+    let mut p: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1), Some(*(x.0))))).collect();
+
+    while p.len() > 1 {
+        p.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
+        let a = p.pop().unwrap();
+        let b = p.pop().unwrap();
+        let mut c = new_box(new_node(a.frequency + b.frequency, None));
+        c.left = Some(a);
+        c.right = Some(b);
+        p.push(c);
+    }
+
+    p
+}
+
+pub fn get_root(s: &str) -> Box<Node> {
+    let frequency = get_frequency(s);
+    let mut p: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1), Some(*(x.0))))).collect();
+
+    while p.len() > 1 {
+        p.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
+        let a = p.pop().unwrap();
+        let b = p.pop().unwrap();
+        let mut c = new_box(new_node(a.frequency + b.frequency, None));
+        c.left = Some(a);
+        c.right = Some(b);
+        p.push(c);
+    }
     p.pop().unwrap()
 }
