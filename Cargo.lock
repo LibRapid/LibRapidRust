@@ -25,12 +25,11 @@ checksum = "349f9b6a179ed607305526ca489b34ad0a41aed5f7980fa90eb03160b69598fb"
 
 [[package]]
 name = "lib_rapid"
-version = "0.0.1"
+version = "0.0.10"
 dependencies = [
  "bincode",
  "bit-vec",
  "num",
- "num-integer",
  "num-traits",
  "plain",
  "serde",

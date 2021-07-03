@@ -1,6 +1,6 @@
 [package]
 name = "lib_rapid"
-version = "0.0.1"
+version = "0.0.10"
 authors = ["Windoof"]
 license = "BSL-1.0"
 description = "LibRapid - a library specifically built for mathematical calculations, scientific applications and game development, while being optimized for speed."
@@ -13,7 +13,6 @@ edition = "2018"
 
 [dependencies]
 num-traits = "0.2"
-num-integer = "0.1"
 num = "0.2.0"
 bit-vec = "0.6.3"
 bincode = "1.0"
