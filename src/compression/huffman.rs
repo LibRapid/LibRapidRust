@@ -14,6 +14,7 @@ use std::collections::HashMap;
 use bit_vec::BitVec;
 use num::ToPrimitive;
 use serde::{Serialize, Deserialize};
+
 type Link = Option<Box<Node>>;
 
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug, Default)]
