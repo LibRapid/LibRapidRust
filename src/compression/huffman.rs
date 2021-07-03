@@ -1,19 +1,47 @@
 #![allow(dead_code)]
 extern crate bit_vec;
 extern crate num_traits;
+extern crate bincode;
+extern crate serde;
+extern crate plain;
+
+use plain::{Plain};
 use core::fmt;
+use std::fs::File;
+use std::io::{Read, Write};
 use std::{str, usize};
 use std::collections::HashMap;
 use bit_vec::BitVec;
+use num::ToPrimitive;
+use serde::{Serialize, Deserialize};
+use std::convert::TryInto;
 
 type Link = Option<Box<Node>>;
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Clone, Debug, Default)]
 pub struct Node {
     pub character: Option<char>,
     pub frequency: usize,
     pub left: Link,
     pub right: Link
+}
+
+unsafe impl Plain for Node {}
+
+impl Node {
+    fn from_bytes(buf: &[u8]) -> &Node {
+        plain::from_bytes(buf).expect("The buffer is either too short or not aligned!")
+    }
+
+    fn from_mut_bytes(buf: &mut [u8]) -> &mut Node {
+        plain::from_mut_bytes(buf).expect("The buffer is either too short or not aligned!")
+    }
+
+    fn copy_from_bytes(buf: &[u8]) -> Node {
+        let mut h = Node::default();
+        h.copy_from_bytes(buf).expect("The buffer is too short!");
+        h
+    }
 }
 
 // This makes it possible to print Nodes
@@ -151,4 +179,39 @@ pub fn get_root(s: &str) -> Box<Node> {
         p.push(c);
     }
     p.pop().unwrap()
+}
+
+pub fn write_to_file(mut path: String, bitvec: &BitVec, root: &Box<Node>) {
+    path = path + ".hlr";
+    let len: u64 = bitvec.to_bytes().len().to_u64().unwrap();
+    let mut file = File::create(path).unwrap();
+    let _wrlen = file.write(&len.to_ne_bytes());
+    println!("BitVec to bytes: {:?}", &bitvec.to_bytes());
+    println!("BitVec from bytes: {:?}", BitVec::from_bytes(&bitvec.to_bytes()));
+    let _wrbitvec = file.write(&bitvec.to_bytes());
+    let _wrroot = bincode::serialize_into(&file, root);
+    println!("root to bytes: {:?}", _wrroot.unwrap());
+}
+
+pub fn read_from_file(path: String) -> String {
+    let mut file = File::open(path).unwrap();
+    let mut buf = Vec::<u8>::new();
+    
+    let _ = file.read_to_end(&mut buf);
+    let mut _len = buf.clone();
+    let mut _bitvec = buf.clone();
+    let mut _root = buf.clone();
+    _bitvec.drain(0..7);
+    println!("Vec<u8>: {:?}", _len);
+    _len.truncate(8);
+    let len = u64::from_ne_bytes(_len.try_into().unwrap());
+    _bitvec.drain(len.to_usize().unwrap()+1.to_usize().unwrap().._bitvec.len());
+    let mut _bitvec2 = BitVec::from_bytes(&_bitvec);
+    let bitvec = _bitvec2.split_off(8);
+    println!("Decoded BitVec: {:?}", &bitvec);
+    println!("Decoded Length: {}", &len);
+    _root.drain(0..7+bitvec.len());
+    let root = bincode::deserialize(&_root).unwrap(); // called `Result::unwrap()` on an `Err` value: InvalidTagEncoding()
+    println!("{:?}", root);
+    huffman_decode(&bitvec, &root)
 }
