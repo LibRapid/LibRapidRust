@@ -14,35 +14,17 @@ use std::collections::HashMap;
 use bit_vec::BitVec;
 use num::ToPrimitive;
 use serde::{Serialize, Deserialize};
-use std::convert::TryInto;
-
 type Link = Option<Box<Node>>;
 
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug, Default)]
 pub struct Node {
     pub character: Option<char>,
-    pub frequency: usize,
+    pub frequency: u128,
     pub left: Link,
     pub right: Link
 }
 
 unsafe impl Plain for Node {}
-
-impl Node {
-    fn from_bytes(buf: &[u8]) -> &Node {
-        plain::from_bytes(buf).expect("The buffer is either too short or not aligned!")
-    }
-
-    fn from_mut_bytes(buf: &mut [u8]) -> &mut Node {
-        plain::from_mut_bytes(buf).expect("The buffer is either too short or not aligned!")
-    }
-
-    fn copy_from_bytes(buf: &[u8]) -> Node {
-        let mut h = Node::default();
-        h.copy_from_bytes(buf).expect("The buffer is too short!");
-        h
-    }
-}
 
 // This makes it possible to print Nodes
 impl fmt::Display for Node {
@@ -54,7 +36,7 @@ impl fmt::Display for Node {
     }
 }
 
-fn new_node(freq: usize, c: Option<char>) -> Node {
+fn new_node(freq: u128, c: Option<char>) -> Node {
     Node {
         frequency: freq, character: c,
         left: None, right: None,
@@ -74,6 +56,29 @@ fn get_frequency(s: &str) -> HashMap<char, usize> {
     hm
 }
 
+/**
+Assigns Huffman-codes to each character.
+
+# Arguments
+* `root` - The Huffman tree.
+* `hashmap` - The variable in which the result is stored.
+* `bitvec` - A temporary BitVec.
+
+# Returns
+Nothing.
+
+# Examples
+```
+use lib_rapid::compression::huffman::{get_root, assign_codes};
+use bit_vec::BitVec;
+use std::collections::HashMap;
+
+let s = "Lorem Ipsum";
+let root = get_root(s);
+let mut char_codes:HashMap<char, BitVec> = HashMap::new();
+assign_codes(&root, &mut char_codes, &mut BitVec::new()); // Assigns codes to characters of s and stores them in char_codes.
+```
+*/
 pub fn assign_codes(root: &Box<Node>, 
                     hashmap: &mut HashMap<char, BitVec>, 
                     bitvec: &mut BitVec ) {
@@ -92,6 +97,30 @@ pub fn assign_codes(root: &Box<Node>,
     // Thanks to Pencilcaseman to fixing a issue
 }
 
+/**
+Encodes a string.
+
+# Arguments
+* `s` - The string to be encoded.
+* `char_codes` - The assigned Huffman codes of the characters.
+
+# Returns
+A BitVec which contains the Huffman encoded string.
+
+# Examples
+```
+use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode};
+use bit_vec::BitVec;
+use std::collections::HashMap;
+
+let s = "Lorem Ipsum";
+let root = get_root(s);
+let mut char_codes:HashMap<char, BitVec> = HashMap::new();
+assign_codes(&root, &mut char_codes, &mut BitVec::new()); // Assigns codes to characters of s and stores them in char_codes.
+
+let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
+```
+*/
 pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec {
     let mut res: BitVec = BitVec::new();
     let mut t: Option<&mut BitVec>;
@@ -122,16 +151,48 @@ fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
     res
 }
 
-pub fn get_nodes(s: &str) -> Vec<Box<Node>> {
+/**
+Decodes a Huffman encoded BitVec.
+
+# Arguments
+* `bitvec` - The assigned Huffman codes of the characters.
+* `root` - The Huffman tree.
+
+# Returns
+A BitVec which contains the Huffman encoded string.
+
+# Examples
+```
+use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode};
+use bit_vec::BitVec;
+use std::collections::HashMap;
+
+let s: &str = "Lorem Ipsum";
+let root = get_root(s);
+let mut bitvec = BitVec::new();
+let mut char_codes: HashMap<char, BitVec> = HashMap::new();
+assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
+
+let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
+let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
+```
+*/
+pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
+    decode_string(bitvec, root)
+}
+
+// Currently unused function
+fn get_nodes(s: &str) -> Vec<Box<Node>> {
     let f = get_frequency(s);
     let mut res: Vec<Box<Node>> = f.iter()
-                                  .map(|x| new_box(new_node(*(x.1), Some(*(x.0)))))
+                                  .map(|x| new_box(new_node((x.1).to_u128().unwrap(), Some(*(x.0)))))
                                   .collect(); // Result
     res.sort_by_key(|n| n.frequency); // Sort ascending after count
     res // Return the Result
 }
 
-pub fn get_tree(mut p: Vec<Box<Node>>) -> Vec<Box<Node>> {
+// Currently unused function
+fn get_tree(mut p: Vec<Box<Node>>) -> Vec<Box<Node>> {
     while p.len() > 1 {
         p.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency))); // Sort
         let a = p.pop().unwrap();
@@ -144,30 +205,18 @@ pub fn get_tree(mut p: Vec<Box<Node>>) -> Vec<Box<Node>> {
     p
 }
 
-pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
-    decode_string(bitvec, root)
-}
+/**
+Gets the Huffman tree for a string.
 
-fn get_p(s: &str) -> Vec<Box<Node>> {
-    let frequency = get_frequency(s);
-    let mut p: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1), Some(*(x.0))))).collect();
+# Arguments
+* `s` - The string of which the tree should be created.
 
-    while p.len() > 1 {
-        p.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
-        let a = p.pop().unwrap();
-        let b = p.pop().unwrap();
-        let mut c = new_box(new_node(a.frequency + b.frequency, None));
-        c.left = Some(a);
-        c.right = Some(b);
-        p.push(c);
-    }
-
-    p
-}
-
+# Returns
+A Box<Node> containing the entire tree.
+*/
 pub fn get_root(s: &str) -> Box<Node> {
     let frequency = get_frequency(s);
-    let mut p: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1), Some(*(x.0))))).collect();
+    let mut p: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node((x.1).to_u128().unwrap(), Some(*(x.0))))).collect();
 
     while p.len() > 1 {
         p.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
@@ -181,37 +230,80 @@ pub fn get_root(s: &str) -> Box<Node> {
     p.pop().unwrap()
 }
 
-pub fn write_to_file(mut path: String, bitvec: &BitVec, root: &Box<Node>) {
-    path = path + ".hlr";
-    let len: u64 = bitvec.to_bytes().len().to_u64().unwrap();
-    let mut file = File::create(path).unwrap();
-    let _wrlen = file.write(&len.to_ne_bytes());
-    println!("BitVec to bytes: {:?}", &bitvec.to_bytes());
-    println!("BitVec from bytes: {:?}", BitVec::from_bytes(&bitvec.to_bytes()));
-    let _wrbitvec = file.write(&bitvec.to_bytes());
-    let _wrroot = bincode::serialize_into(&file, root);
-    println!("root to bytes: {:?}", _wrroot.unwrap());
+/**
+Writes the encoded message into 2 files.
+
+# Arguments
+* `path` - The path to be written to.
+* `bitvec` - The Huffman codes assigned to the characters.
+* `root` - The Huffman tree.
+
+# Returns
+Nothing. Writes to 2 files:
+name.hlr: The main file in which the encoded message is stored.
+name.htlr: The file in which the huffman tree is stored.
+
+# Examples
+```
+use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file};
+use bit_vec::BitVec;
+use std::collections::HashMap;
+
+let s: &str = "Lorem Ipsum";
+let root = get_root(s);
+let mut bitvec = BitVec::new();
+let mut char_codes: HashMap<char, BitVec> = HashMap::new();
+assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
+
+let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
+let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
+write_to_file("test".to_string(), &enc, &root);
+```
+*/
+pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
+    let mut file = File::create(path.clone() + ".hlr").unwrap();
+    let mut file2 = File::create(path + ".htlr").unwrap();
+    let _ = file.write(&bitvec.to_bytes());
+    let _ = file2.write(&bincode::serialize(root).unwrap());
 }
 
+/**
+Reads and decodes the message stored in the .hlr and .htlr files.
+
+# Arguments
+* `path` - The path to be read from.
+
+# Returns
+A String containing the decoded message.
+
+# Examples
+```
+use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file, read_from_file};
+use bit_vec::BitVec;
+use std::collections::HashMap;
+
+let s: &str = "Lorem Ipsum";
+let root = get_root(s);
+let mut bitvec = BitVec::new();
+let mut char_codes: HashMap<char, BitVec> = HashMap::new();
+assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
+
+let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
+let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
+write_to_file("test".to_string(), &enc, &root);
+let dec_written = read_from_file("test".to_string());
+```
+*/
 pub fn read_from_file(path: String) -> String {
-    let mut file = File::open(path).unwrap();
+    let mut encoded_file = File::open(path.clone() + ".hlr").unwrap();
+    let mut tree_file = File::open(path + ".htlr").unwrap();
     let mut buf = Vec::<u8>::new();
-    
-    let _ = file.read_to_end(&mut buf);
-    let mut _len = buf.clone();
-    let mut _bitvec = buf.clone();
-    let mut _root = buf.clone();
-    _bitvec.drain(0..7);
-    println!("Vec<u8>: {:?}", _len);
-    _len.truncate(8);
-    let len = u64::from_ne_bytes(_len.try_into().unwrap());
-    _bitvec.drain(len.to_usize().unwrap()+1.to_usize().unwrap().._bitvec.len());
-    let mut _bitvec2 = BitVec::from_bytes(&_bitvec);
-    let bitvec = _bitvec2.split_off(8);
-    println!("Decoded BitVec: {:?}", &bitvec);
-    println!("Decoded Length: {}", &len);
-    _root.drain(0..7+bitvec.len());
-    let root = bincode::deserialize(&_root).unwrap(); // called `Result::unwrap()` on an `Err` value: InvalidTagEncoding()
-    println!("{:?}", root);
+    let mut buf2 = Vec::<u8>::new();
+    let _ = encoded_file.read_to_end(&mut buf);
+    let _ = tree_file.read_to_end(&mut buf2);
+
+    let bitvec = BitVec::from_bytes(&buf); // Get final bitvec
+    let root = bincode::deserialize(&buf2).unwrap();
+
     huffman_decode(&bitvec, &root)
 }
