@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["map","Maps a given number of a range onto another range."]]});
