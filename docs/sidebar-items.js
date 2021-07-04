@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["compression",""],["constants",""],["rapidmath",""],["vectors_unripe",""]]});
