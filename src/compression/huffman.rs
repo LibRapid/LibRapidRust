@@ -138,14 +138,14 @@ fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
     let mut nodeptr = root;
 
     for b in bitvec {
-        if b == false {
-            if let Some(ref l) = nodeptr.left { nodeptr = l; }
-        } else {
-            if let Some (ref r) = nodeptr.right { nodeptr = r; }
+        match b {
+            false => {if let Some(ref l) = nodeptr.left {nodeptr = l;} }
+            true => {if let Some(ref r) = nodeptr.right {nodeptr = r;} }
         }
-        if let Some(c) = nodeptr.character {
-            res.push(c);
-            nodeptr = root;
+
+        match nodeptr.character {
+            Some(c) => { res.push(c); nodeptr = root; }
+            None => {}
         }
     }
 
@@ -298,13 +298,13 @@ let dec_written = read_from_file("test".to_string());
 pub fn read_from_file(path: String) -> String {
     let mut encoded_file = File::open(path.clone() + ".hlr").unwrap();
     let mut tree_file = File::open(path + ".htlr").unwrap();
-    let mut buf = Vec::<u8>::new();
-    let mut buf2 = Vec::<u8>::new();
-    let _ = encoded_file.read_to_end(&mut buf);
-    let _ = tree_file.read_to_end(&mut buf2);
+    let mut enc_file = Vec::<u8>::new();
+    let mut enc_tree = Vec::<u8>::new();
+    let _ = encoded_file.read_to_end(&mut enc_file);
+    let _ = tree_file.read_to_end(&mut enc_tree);
 
-    let bitvec = BitVec::from_bytes(&buf); // Get final bitvec
-    let root = bincode::deserialize(&buf2).unwrap();
+    let bitvec = BitVec::from_bytes(&enc_file); // Get final bitvec
+    let root = bincode::deserialize(&enc_tree).unwrap();
 
     huffman_decode(&bitvec, &root)
 }
