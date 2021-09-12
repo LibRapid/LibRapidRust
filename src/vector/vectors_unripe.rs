@@ -32,7 +32,7 @@ The length of the vector.
 ```
 ```
 */
-    fn get_length(&self) -> T {
+    fn get_length(&self) -> f64 {
         self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w
     }
 }
