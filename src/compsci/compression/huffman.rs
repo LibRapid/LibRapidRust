@@ -142,10 +142,7 @@ fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
             true  => { if let Some(ref r) = nodeptr.right { nodeptr = r; } }
         }
 
-        match nodeptr.character {
-            Some(c) => { res.push(c); nodeptr = root; }
-            None         => { }
-        }
+        if let Some(c) = nodeptr.character { res.push(c); nodeptr = root; }
     }
 
     res
@@ -192,19 +189,19 @@ A Box<Node> containing the entire tree.
 */
 pub fn get_root(s: &str) -> Box<Node> {
     let frequency = get_frequency(s);
-    let mut p: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node((x.1).to_u128().unwrap(), Some(*(x.0))))).collect();
+    let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node((x.1).to_u128().unwrap(), Some(*(x.0))))).collect();
 
-    while p.len() > 1 {
-        p.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
-        let a: Box<Node>     = p.pop().unwrap();
-        let b: Box<Node>     = p.pop().unwrap();
+    while vec_nodes.len() > 1 {
+        vec_nodes.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
+        let a: Box<Node>     = vec_nodes.pop().unwrap();
+        let b: Box<Node>     = vec_nodes.pop().unwrap();
         let mut c: Box<Node> = new_box(new_node(a.frequency + b.frequency, None));
 
         c.left  = Some(a);
         c.right = Some(b);
-        p.push(c);
+        vec_nodes.push(c);
     }
-    p.pop().unwrap()
+    vec_nodes.pop().unwrap()
 }
 
 /**

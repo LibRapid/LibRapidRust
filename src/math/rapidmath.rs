@@ -17,11 +17,11 @@ A number containing the new mapped value.
 
 # Examples
 ```
-use lib_rapid::rapidmath;
-
-let result: i32 = rapidmath::map(5., 0., 10., 0., 1.); // Original value 5 in the range from 0-10
-std::println!("{}", result.to_string()) // Prints "0.5"
-```
+* use lib_rapid::math;
+*
+* let result: i32 = rapidmath::map(5., 0., 10., 0., 1.); // Original value 5 in the range from 0-10
+* std::println!("{}", result.to_string()) // Prints "0.5"
+* ```
 */
 pub fn map<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T) -> T {
 
