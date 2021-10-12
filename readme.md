@@ -4,24 +4,21 @@ You can read the documentation [here](https://windoofonline.de/lib_rapid/index.h
 ----
 
 LibRapid for Rust - Fast. Reliable. Lightweight.
-
 ============
 
 Credits
-
 -----
+
 The original idea comes from Pencilcaseman, I collaborated with him to get LibRapid into Rust. We're closely working together to provide
 the best possible user experience and consistency over all libraries.
 
 How does it work?
-
 -----
 
 The Rust-port of LibRapid is a derivative from the main library made for C++ and Python. It's goal is to be optimized for speedy calculations, mathematical and
 scientific applications.
 
 Performance
-
 -----
 
 LibRapid for Rust is fully optimized - meaning your calculations for game scripts and maths will be faster as a result. All functions that are implemented bring new features to Rust, while being optimized for speed.

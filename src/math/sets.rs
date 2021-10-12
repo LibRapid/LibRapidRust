@@ -17,6 +17,21 @@ pub fn new_set<T: Copy>(values: Vec<T>) -> Set<T> {
         }
 }
 
+impl<T: PartialEq + Copy + Ord> Set<T> {
+    pub fn union(&self, other: &Set<T>) -> Set<T> {
+        let mut res = Set {values: Vec::new(),
+                       cardinality: 0,
+        };
+
+        res.values.append(&mut self.values.clone());
+        res.values.append(&mut other.values.clone());
+
+        res.values.sort(); // Sorting, because it's faster than without
+        res.values.dedup();
+        res
+    }
+}
+
 // Indexing for Sets
 impl<T> Index<usize> for Set<T> {
     type Output = T;
