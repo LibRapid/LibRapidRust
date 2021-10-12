@@ -1,10 +1,10 @@
 [package]
 name = "lib_rapid"
-version = "0.0.12"
+version = "0.0.13"
 authors = ["Windoof"]
 license = "BSL-1.0"
 description = "LibRapid - a library specifically built for mathematical calculations, scientific applications and game development, while being optimized for speed."
-homepage = "https://github.com/TheWindoof/LibRapidRust"
+homepage = "https://github.com/LibRapid/LibRapidRust"
 readme = "readme.md"
 keywords = ["maths", "scientific", "beta"]
 edition = "2018"
