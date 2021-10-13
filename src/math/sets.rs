@@ -12,16 +12,17 @@ pub struct Set<T> {
 
 // region impl for Set
 pub fn new_set<T: Copy>(values: Vec<T>) -> Set<T> {
+
     Set { values: values.clone(),
-          cardinality: values.len()
+          cardinality: values.len(),
         }
 }
 
 // Main impl
 impl<T: PartialEq + Copy + Ord> Set<T> {
     pub fn union(&self, other: &Set<T>) -> Set<T> {
-        let mut res = Set {values: Vec::new(),
-                       cardinality: 0,
+        let mut res: Set<T> = Set {values: Vec::new(),
+                                   cardinality: 0,
         };
 
         res.values.append(&mut self.values.clone());
