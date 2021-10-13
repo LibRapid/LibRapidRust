@@ -50,7 +50,8 @@ fn new_box(n: Node) -> Box<Node> {
 fn get_frequency(s: &str) -> HashMap<char, usize> {
     let mut hm: HashMap<char, usize> = HashMap::new(); // Result
     for c in s.chars() {
-        let counter: &mut usize = hm.entry(c).or_insert(0); // Inserts c if value is not present, returns mut ref
+        let counter: &mut usize = hm.entry(c)
+                                    .or_insert(0); // Inserts c if value is not present, returns mut ref
         *counter               += 1; // Increment by 1
     }
     hm
@@ -127,7 +128,8 @@ pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec
 
     for c in s.chars() {
         t = char_codes.get_mut(&c);
-        res.append(&mut t.cloned().unwrap());
+        res.append(&mut t.cloned()
+           .unwrap());
     }
     res
 }
@@ -192,16 +194,17 @@ pub fn get_root(s: &str) -> Box<Node> {
     let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node((x.1).to_u128().unwrap(), Some(*(x.0))))).collect();
 
     while vec_nodes.len() > 1 {
-        vec_nodes.sort_by(|a, b| (&(b.frequency)).cmp(&(a.frequency)));
+        vec_nodes.sort_by(|a: &Box<Node>, b: &Box<Node>| (&(b.frequency)).cmp(&(a.frequency)));
         let a: Box<Node>     = vec_nodes.pop().unwrap();
         let b: Box<Node>     = vec_nodes.pop().unwrap();
-        let mut c: Box<Node> = new_box(new_node(a.frequency + b.frequency, None));
+        let mut c: Box<Node> = new_box(new_node( a.frequency + b.frequency, None));
 
         c.left  = Some(a);
         c.right = Some(b);
         vec_nodes.push(c);
     }
-    vec_nodes.pop().unwrap()
+    vec_nodes.pop()
+             .unwrap()
 }
 
 /**
