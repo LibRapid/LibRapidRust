@@ -1,6 +1,5 @@
 ![](https://github.com/Pencilcaseman/librapid/blob/master/branding/logo_transparent_trimmed.png)
 [![Discord](https://img.shields.io/discord/848914274105557043)](https://discord.gg/cGxTFTgCAC)
-You can read the documentation [here](https://windoofonline.de/lib_rapid/index.html).
 ----
 
 LibRapid for Rust - Fast. Reliable. Lightweight.
