@@ -21,3 +21,7 @@ Performance
 -----
 
 LibRapid for Rust is fully optimized - meaning your calculations for game scripts and maths will be faster as a result. All functions that are implemented bring new features to Rust, while being optimized for speed.
+
+Maintainer
+-----
+The main maintainer of this repository is @NervousNullPtr. The secondary maintainer is @Pencilcaseman.
