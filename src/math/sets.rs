@@ -28,7 +28,7 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         res.values.append(&mut self.values.clone());
         res.values.append(&mut other.values.clone());
 
-        res.values.sort(); // Sorting, because it's faster deduping than without
+        res.values.sort(); // Temporary
         res.values.dedup();
         res
     }
