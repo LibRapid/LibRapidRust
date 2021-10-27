@@ -32,15 +32,17 @@ impl fmt::Display for Node {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.character {
             None => write!(f, "Count: {})", self.frequency),
-            _ => write!(f, "(Char: '{}', Count: {})", self.character.unwrap(), self.frequency),
+            _    => write!(f, "(Char: '{}', Count: {})", self.character.unwrap(), self.frequency),
         }
     }
 }
 
 fn new_node(freq: u128, c: Option<char>) -> Node {
     Node {
-        frequency: freq, character: c,
-        left: None, right: None,
+        frequency: freq, 
+        character: c,
+        left:      None, 
+        right:     None,
     }
 }
 
@@ -52,7 +54,7 @@ fn get_frequency(s: &str) -> HashMap<char, usize> {
     let mut hm = HashMap::new(); // Result
     for c in s.chars() {
         let counter = hm.entry(c).or_insert(0); // Inserts c if value is not present, returns mut ref
-        *counter += 1; // Increment by 1
+        *counter    += 1; // Increment by 1
     }
     hm
 }

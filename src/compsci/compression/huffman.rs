@@ -20,8 +20,8 @@ type Link = Option<Box<Node>>;
 pub struct Node {
     pub character: Option<char>,
     pub frequency: u128,
-    pub left: Link,
-    pub right: Link
+    pub left:      Link,
+    pub right:     Link
 }
 
 unsafe impl Plain for Node {}
@@ -276,8 +276,10 @@ pub fn read_from_file(path: String) -> String {
     let mut tree_file: File    = File::open(path + ".htlr").unwrap();
     let mut enc_file: Vec<u8>  = Vec::<u8>::new();
     let mut enc_tree: Vec<u8>  = Vec::<u8>::new();
+
     let _                      = encoded_file.read_to_end(&mut enc_file);
     let _                      = tree_file.read_to_end(&mut enc_tree);
+    
     let bitvec: BitVec         = BitVec::from_bytes(&enc_file); // Get final bitvec
     let root: Box<Node>        = bincode::deserialize(&enc_tree).unwrap();
 
