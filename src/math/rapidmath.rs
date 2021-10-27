@@ -23,7 +23,7 @@ A number containing the new mapped value.
 * std::println!("{}", result.to_string()) // Prints "0.5"
 * ```
 */
-pub fn map<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T) -> T {
+pub fn map_to<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T) -> T {
 
     (start2 + (end2 - start2)) * ((value - start1) / end1 - start1)
 }

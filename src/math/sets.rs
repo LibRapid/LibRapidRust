@@ -6,14 +6,13 @@ pub struct ElemPair<T>(Vec<T>);
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Set<T> {
-    values: Vec<T>,
-    cardinality: usize,
+    pub values:      Vec<T>,
+    pub cardinality: usize,
 }
 
-// region impl for Set
 pub fn new_set<T: Copy>(values: Vec<T>) -> Set<T> {
 
-    Set { values: values.clone(),
+    Set { values:      values.clone(),
           cardinality: values.len(),
         }
 }
@@ -21,7 +20,7 @@ pub fn new_set<T: Copy>(values: Vec<T>) -> Set<T> {
 // Main impl
 impl<T: PartialEq + Copy + Ord> Set<T> {
     pub fn union(&self, other: &Set<T>) -> Set<T> {
-        let mut res: Set<T> = Set {values: Vec::new(),
+        let mut res: Set<T> = Set {values:      Vec::new(),
                                    cardinality: 0,
         };
 
@@ -30,6 +29,17 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
 
         res.values.sort(); // Temporary
         res.values.dedup();
+        res.cardinality = res.values.len();
+        res
+    }
+
+    pub fn intersection(&self, other: &Set<T>) -> Set<T> {
+        let mut res: Set<T> = self.clone();
+
+        for e in &self.values {
+            res.values.retain(|_| !other.values.contains(&e));
+        }
+        res.cardinality = res.values.len();
         res
     }
 }
@@ -52,5 +62,3 @@ impl<T: ToString> std::fmt::Display for Set<T> {
         write!(f, "{}", res)
     }
 }
-
-// endregion impl for Set
