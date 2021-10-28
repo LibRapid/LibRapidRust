@@ -27,3 +27,7 @@ pub fn map_to<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T
 
     (start2 + (end2 - start2)) * ((value - start1) / end1 - start1)
 }
+
+pub fn dec_lshift<T: std::ops::Add<Output = T> + std::ops::Shl<usize, Output = T> + Copy >(n: T) -> T {
+    (n << 1) + (n << 3)
+}
