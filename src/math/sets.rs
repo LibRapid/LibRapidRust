@@ -6,8 +6,8 @@ pub struct ElemPair<T>(Vec<T>);
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Set<T> {
-    pub values:      Vec<T>,
-    pub cardinality: usize,
+    values:          Vec<T>,
+    cardinality:     usize,
 }
 
 pub fn new_set<T: Copy>(values: Vec<T>) -> Set<T> {
@@ -41,6 +41,18 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         }
         res.cardinality = res.values.len();
         res
+    }
+
+    pub fn get_cardinality(&self) -> &usize {
+        &self.cardinality
+    }
+
+    pub fn set_values(&mut self, vals: Vec<T>) {
+        self.values = vals
+    }
+
+    pub fn get_values(&self) -> &Vec<T> {
+        &self.values
     }
 }
 
