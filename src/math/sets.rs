@@ -27,7 +27,7 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         res.values.append(&mut self.values.clone());
         res.values.append(&mut other.values.clone());
 
-        res.values.sort(); // Temporary
+        res.values.sort();
         res.values.dedup();
         res.cardinality = res.values.len();
         res
@@ -43,15 +43,16 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         res
     }
 
-    pub fn get_cardinality(&self) -> &usize {
+    pub fn cardinality(&self) -> &usize {
         &self.cardinality
     }
 
     pub fn set_values(&mut self, vals: Vec<T>) {
-        self.values = vals
+        self.values = vals;
+        self.cardinality = self.values.len();
     }
 
-    pub fn get_values(&self) -> &Vec<T> {
+    pub fn values(&self) -> &Vec<T> {
         &self.values
     }
 }
