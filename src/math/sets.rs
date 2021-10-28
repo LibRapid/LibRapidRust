@@ -31,7 +31,7 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         let mut res: Set<T> = self.clone();
 
         for e in &self.values {
-            res.values.retain(|_| !other.values.contains(&e));
+            res.values.retain(|_| other.values.contains(&e));
         }
         res.cardinality = res.values.len();
         res
@@ -69,6 +69,6 @@ impl<T: ToString> std::fmt::Display for Set<T> {
         for elem in &self.values {
             res = res + " [ " + &*elem.to_string() + " ] ;";
         }
-        write!(f, "{}", res)
+        write!(f, "{}}}", res)
     }
 }
