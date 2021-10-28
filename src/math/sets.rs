@@ -1,9 +1,3 @@
-use std::ops::Index;
-use std::fmt::Formatter;
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct ElemPair<T>(Vec<T>);
-
 #[derive(Debug, Clone, PartialEq)]
 pub struct Set<T> {
     values:          Vec<T>,
@@ -43,6 +37,9 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         res
     }
 
+    // I know that getters and setters are VERY controversial.
+    // I'm not going to change it because the cardinality is only something
+    // You'll need to read, not set.
     pub fn cardinality(&self) -> &usize {
         &self.cardinality
     }
@@ -58,7 +55,7 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
 }
 
 // Indexing for Sets
-impl<T> Index<usize> for Set<T> {
+impl<T> std::ops::Index<usize> for Set<T> {
     type Output = T;
     fn index(&self, index: usize) -> &Self::Output {
         self.values.get(index).unwrap()
@@ -67,7 +64,7 @@ impl<T> Index<usize> for Set<T> {
 
 // Implement Printing
 impl<T: ToString> std::fmt::Display for Set<T> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut res: String = "{".to_owned();
         for elem in &self.values {
             res = res + " [ " + &*elem.to_string() + " ] ;";
