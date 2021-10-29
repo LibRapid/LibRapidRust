@@ -16,7 +16,7 @@ the best possible user experience and consistency over all libraries.
 Documentation
 _____
 
-Depending on how many crates are in queue on docs.rs, you may need to build the docs yourself.
+Depending on the current published LibRapid version and how many crates are in queue on docs.rs, you may need to build the docs yourself.
 To do that, simply git-clone this repository and then run `cargo doc`. After that, your documentation should be ready in src/target/doc/index.html.
 
 How does it work?
