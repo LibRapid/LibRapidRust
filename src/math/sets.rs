@@ -13,14 +13,14 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
             }
     }
 
-    pub fn new_from_parent(parent: &Set<T>, f: T) -> Set<T>
+    pub fn new_from_parent<F: Fn(T) -> bool>(parent: &Set<T>, f: F) -> Set<T>
     where
-        T: Fn(&T) -> bool {
+        F: Fn(T) -> bool {
             let mut res: Set<T> = Set {elements:    Vec::new(),
                                        cardinality: 0,
             };
             for elem in &parent.elements {
-                if f(&elem) {
+                if f(*elem) {
                     res.elements.push(elem.clone());
                 }
             }
@@ -84,9 +84,9 @@ impl<T> std::ops::Index<usize> for Set<T> {
 // Implement Printing
 impl<T: ToString> std::fmt::Display for Set<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut res: String = "{".to_owned();
+        let mut res: String = "{ ".to_owned();
         for elem in &self.elements {
-            res = res + " [ " + &*elem.to_string() + " ] ;";
+            res = res + "" + &*elem.to_string() + "; ";
         }
         write!(f, "{} }}", res)
     }
