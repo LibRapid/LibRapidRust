@@ -86,16 +86,42 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
     pub fn cardinality(&self) -> &usize {
         &self.cardinality
     }
- 
+    /**
+    Lets you set the elements of a set.
+
+    # Arguments
+    * `vals` - The Vec to change the values to.
+
+    # Returns
+    Nothing.
+    */ 
     pub fn set_elements(&mut self, vals: Vec<T>) {
         self.elements = vals;
         self.cardinality = self.elements.len();
     }
 
+    /**
+    Lets you get the elements of a set.
+
+    # Arguments
+    * none
+
+    # Returns
+    A `&Vec<T>` containing all elements.
+    */ 
     pub fn elements(&self) -> &Vec<T> {
         &self.elements
     }
 
+    /**
+    Lets you check for an element in a set.
+
+    # Arguments
+    * `elem` - The element to check for.
+
+    # Returns
+    A boolean value which determines if the element is in the set.
+    */ 
     pub fn has_element(&self, elem: &T) -> bool {
         self.elements.contains(elem)
     }
