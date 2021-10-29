@@ -4,15 +4,15 @@ pub struct Set<T> {
     cardinality:     usize,
 }
 
-pub fn new_set<T: Copy>(values: Vec<T>) -> Set<T> {
-
-    Set { elements:    values.clone(),
-          cardinality: values.len(),
-        }
-}
-
 // Main impl
 impl<T: PartialEq + Copy + Ord> Set<T> {
+
+    pub fn new(values: Vec<T>) -> Set<T> {
+
+        Set { elements:    values.clone(),
+              cardinality: values.len(),
+            }
+    }
 
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements:      Vec::new(),
