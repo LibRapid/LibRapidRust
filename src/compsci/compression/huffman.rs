@@ -38,8 +38,10 @@ impl fmt::Display for Node {
 
 fn new_node(freq: u128, c: Option<char>) -> Node {
     Node {
-        frequency: freq, character: c,
-        left: None, right: None,
+        frequency: freq,
+        character: c,
+        left:      None, 
+        right:     None,
     }
 }
 
@@ -82,7 +84,7 @@ assign_codes(&root, &mut char_codes, &mut BitVec::new()); // Assigns codes to ch
 */
 pub fn assign_codes(root: &Box<Node>, 
                     hashmap: &mut HashMap<char, BitVec>, 
-                    bitvec: &mut BitVec ) {
+                    bitvec:  &mut BitVec ) {
     match root.character {
         Some(character) => { hashmap.insert(character, bitvec.clone()); }
 
@@ -124,7 +126,7 @@ let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
 */
 pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec {
     let mut res: BitVec = BitVec::new();
-    let mut t: Option<&mut BitVec>;
+    let mut t:   Option<&mut BitVec>;
 
     for c in s.chars() {
         t = char_codes.get_mut(&c);
@@ -135,7 +137,7 @@ pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec
 }
 
 fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
-    let mut res: String         = "".to_string();
+    let mut res:     String     = "".to_string();
     let mut nodeptr: &Box<Node> = root;
 
     for b in bitvec {
@@ -195,8 +197,8 @@ pub fn get_root(s: &str) -> Box<Node> {
 
     while vec_nodes.len() > 1 {
         vec_nodes.sort_by(|a: &Box<Node>, b: &Box<Node>| (&(b.frequency)).cmp(&(a.frequency)));
-        let a: Box<Node>     = vec_nodes.pop().unwrap();
-        let b: Box<Node>     = vec_nodes.pop().unwrap();
+        let a:     Box<Node> = vec_nodes.pop().unwrap();
+        let b:     Box<Node> = vec_nodes.pop().unwrap();
         let mut c: Box<Node> = new_box(new_node( a.frequency + b.frequency, None));
 
         c.left  = Some(a);
@@ -272,16 +274,16 @@ let dec_written = read_from_file("test".to_string());
 ```
 */
 pub fn read_from_file(path: String) -> String {
-    let mut encoded_file: File = File::open(path.clone() + ".hlr").unwrap();
-    let mut tree_file: File    = File::open(path + ".htlr").unwrap();
-    let mut enc_file: Vec<u8>  = Vec::<u8>::new();
-    let mut enc_tree: Vec<u8>  = Vec::<u8>::new();
+    let mut encoded_file: File     = File::open(path.clone() + ".hlr").unwrap();
+    let mut tree_file:    File     = File::open(path + ".htlr").unwrap();
+    let mut enc_file:     Vec<u8>  = Vec::<u8>::new();
+    let mut enc_tree:     Vec<u8>  = Vec::<u8>::new();
 
-    let _                      = encoded_file.read_to_end(&mut enc_file);
-    let _                      = tree_file.read_to_end(&mut enc_tree);
+    let _                          = encoded_file.read_to_end(&mut enc_file);
+    let _                          = tree_file.read_to_end(&mut enc_tree);
     
-    let bitvec: BitVec         = BitVec::from_bytes(&enc_file); // Get final bitvec
-    let root: Box<Node>        = bincode::deserialize(&enc_tree).unwrap();
+    let bitvec: BitVec             = BitVec::from_bytes(&enc_file); // Get final bitvec
+    let root: Box<Node>            = bincode::deserialize(&enc_tree).unwrap();
 
     huffman_decode(&bitvec, &root)
 }
