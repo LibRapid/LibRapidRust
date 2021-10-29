@@ -13,9 +13,24 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
             }
     }
 
+    pub fn new_from_parent(parent: &Set<T>, f: T) -> Set<T>
+    where
+        T: Fn(&T) -> bool {
+            let mut res: Set<T> = Set {elements:    Vec::new(),
+                                       cardinality: 0,
+            };
+            for elem in &parent.elements {
+                if f(&elem) {
+                    res.elements.push(elem.clone());
+                }
+            }
+            res.cardinality = res.elements.len();
+            res
+    }
+
     pub fn union(&self, other: &Set<T>) -> Set<T> {
-        let mut res: Set<T> = Set {elements:      Vec::new(),
-                                   cardinality:   0,
+        let mut res: Set<T> = Set {elements:    Vec::new(),
+                                   cardinality: 0,
         };
 
         res.elements.append(&mut self.elements.clone());
