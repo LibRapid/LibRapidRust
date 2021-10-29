@@ -12,7 +12,16 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
               cardinality: values.len(),
             }
     }
+    /**
+    Creates a new Set using a parent-Set to which it applies a closure.
 
+    # Arguments
+    * `parent` - The Set from which the new set emerges.
+    * `f` - The closure after which the new set is created.
+
+    # Returns
+    A child Set.
+    */
     pub fn new_from_parent<F: Fn(T) -> bool>(parent: &Set<T>, f: F) -> Set<T>
     where
         F: Fn(T) -> bool {
@@ -28,6 +37,16 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
             res
     }
 
+    /**
+    Does a mathematical union on two sets.
+
+    # Arguments
+    * `self` - The first set.
+    * `other` - The second set.
+
+    # Returns
+    A new set containing the union of both sets.
+    */
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements:    Vec::new(),
                                    cardinality: 0,
@@ -41,7 +60,16 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         res.cardinality = res.elements.len();
         res
     }
+    /**
+    Does a mathematical intersection on two sets.
 
+    # Arguments
+    * `self` - The first set.
+    * `other` - The second set.
+
+    # Returns
+    A new set containing the intersection of both sets.
+    */
     pub fn intersection(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = self.clone();
 
