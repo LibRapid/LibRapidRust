@@ -1,6 +1,5 @@
 ![](https://github.com/Pencilcaseman/librapid/blob/master/branding/logo_transparent_trimmed.png)
 [![Discord](https://img.shields.io/discord/848914274105557043)](https://discord.gg/cGxTFTgCAC)
-https://img.shields.io/crates/v/lib_rapid?color=green&style=plastic
 [![Crates.io](https://img.shields.io/crates/v/lib_rapid?color=green&style=plastic)](https://crates.io/crates/lib_rapid)
 ----
 
