@@ -17,7 +17,7 @@ Documentation
 _____
 
 Depending on how many crates are in queue on docs.rs, you may need to build the docs yourself.
-To do that, simply git-clone this repository and then run `cargo doc`. After that, your documentation should be read in src/target/doc/index.html.
+To do that, simply git-clone this repository and then run `cargo doc`. After that, your documentation should be ready in src/target/doc/index.html.
 
 How does it work?
 -----
