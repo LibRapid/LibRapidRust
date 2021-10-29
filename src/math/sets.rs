@@ -8,7 +8,6 @@ pub struct Set<T> {
 impl<T: PartialEq + Copy + Ord> Set<T> {
 
     pub fn new(values: Vec<T>) -> Set<T> {
-
         Set { elements:    values.clone(),
               cardinality: values.len(),
             }
