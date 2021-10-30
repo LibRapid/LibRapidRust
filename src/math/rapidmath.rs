@@ -17,9 +17,9 @@ A number containing the new mapped value.
 
 # Examples
 ```
-use lib_rapid::math;
+use lib_rapid::math::rapidmath::map_to;
 
-let result: i32 = math::rapidmath::map(5., 0., 10., 0., 1.); // Original value 5 in the range from 0-10
+let result: f32 = map_to(5., 0., 10., 0., 1.); // Original value 5 in the range from 0-10
 std::println!("{}", result.to_string()) // Prints "0.5"
 ```
 */

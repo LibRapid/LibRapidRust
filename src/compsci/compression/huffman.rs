@@ -72,7 +72,7 @@ Nothing.
 
 # Examples
 ```
-use lib_rapid::compression::huffman::{get_root, assign_codes};
+use lib_rapid::compsci::compression::huffman::{get_root, assign_codes};
 use bit_vec::BitVec;
 use std::collections::HashMap;
 
@@ -112,7 +112,7 @@ A BitVec which contains the Huffman encoded string.
 
 # Examples
 ```
-use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode};
+use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode};
 use bit_vec::BitVec;
 use std::collections::HashMap;
 
@@ -164,7 +164,7 @@ A BitVec which contains the Huffman encoded string.
 
 # Examples
 ```
-use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode};
+use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode};
 use bit_vec::BitVec;
 use std::collections::HashMap;
 
@@ -224,7 +224,7 @@ name.htlr: The file in which the huffman tree is stored.
 
 # Examples
 ```
-use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file};
+use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file};
 use bit_vec::BitVec;
 use std::collections::HashMap;
 
@@ -257,7 +257,7 @@ A String containing the decoded message.
 
 # Examples
 ```
-use lib_rapid::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file, read_from_file};
+use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file, read_from_file};
 use bit_vec::BitVec;
 use std::collections::HashMap;
 
