@@ -55,7 +55,7 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
         res.elements.append(&mut self.elements.clone());
         res.elements.append(&mut other.elements.clone());
 
-        res.elements.sort();
+        res.elements.sort(); 
         res.elements.dedup();
         res.cardinality = res.elements.len();
         res
