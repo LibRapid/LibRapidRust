@@ -1,7 +1,3 @@
-extern crate num;
-
-use num_traits::NumOps;
-
 /**
 The conversion algorithm to be chosen. Used by `temp_conversion`.
 */
@@ -37,7 +33,11 @@ let result: f32 = map_to(5., 0., 10., 0., 1.); // Original value 5 in the range 
 std::println!("{}", result.to_string()) // Prints "0.5"
 ```
 */
-pub fn map_to<T: NumOps + Copy> (value:  T, 
+pub fn map_to<T: std::ops::Add<Output = T> + 
+                 std::ops::Sub<Output = T> + 
+                 std::ops::Mul<Output = T> + 
+                 std::ops::Div<Output = T> + 
+                 Copy> (        value:  T, 
                                 start1: T, 
                                 end1:   T, 
                                 start2: T, 
