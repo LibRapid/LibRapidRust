@@ -29,3 +29,12 @@ fn test_speed_dec_lshift() {
     println!("Multiplication time: {} ms", el_mult);
     println!("dec_lshift time:     {} ms", el_lshift);
 }
+
+#[test]
+fn test_map_to() {
+    use crate::math::rapidmath::map_to;
+
+    let result: f32 = map_to(5., 0., 10., 0., 1.); // Original value 5 in the range from 0-10
+    std::println!("{}", result.to_string());
+    println!("Should be: 0.5")
+}
