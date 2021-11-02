@@ -2,7 +2,7 @@
 name = "lib_rapid"
 version = "0.0.16"
 authors = ["Windoof"]
-license = "BSL-1.0"
+license = "MIT"
 description = "LibRapid - a library specifically built for mathematical calculations and scientific applications, while being optimized for speed."
 homepage = "https://github.com/LibRapid/LibRapidRust"
 readme = "readme.md"
