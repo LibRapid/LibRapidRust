@@ -37,7 +37,11 @@ let result: f32 = map_to(5., 0., 10., 0., 1.); // Original value 5 in the range 
 std::println!("{}", result.to_string()) // Prints "0.5"
 ```
 */
-pub fn map_to<T: NumOps + Copy>(value: T, start1: T, end1: T, start2: T, end2: T) -> T {
+pub fn map_to<T: NumOps + Copy> (value:  T, 
+                                start1: T, 
+                                end1:   T, 
+                                start2: T, 
+                                end2:   T) -> T {
 
     (start2 + (end2 - start2)) * ((value - start1) / end1 - start1)
 }
@@ -51,7 +55,9 @@ Multiplies by 10 (shifts the decimal places to the left by 1) while being more e
 # Returns
 The new shifted number.
 */
-pub fn dec_lshift<T: std::ops::Add<Output = T> + std::ops::Shl<usize, Output = T> + Copy >(n: T) -> T {
+pub fn dec_lshift<T: std::ops::Add<Output = T> + 
+                     std::ops::Shl<usize, Output = T> + 
+                     Copy> (n: T) -> T {
     (n << 1) + (n << 3)
 }
 
