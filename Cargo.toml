@@ -7,7 +7,7 @@ description = "LibRapid - a library specifically built for mathematical calculat
 homepage = "https://github.com/LibRapid/LibRapidRust"
 readme = "readme.md"
 keywords = ["maths", "scientific", "beta"]
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
