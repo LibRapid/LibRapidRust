@@ -3,6 +3,20 @@ extern crate num;
 use num_traits::NumOps;
 
 /**
+The conversion algorithm to be chosen. Used by `temp_conversion`.
+*/
+pub enum TempConversion {
+    CelsiusToFahrenheit,
+    FahrenheitToCelsius,
+
+    FahrenheitToKelvin,
+    KelvinToFahrenheit,
+
+    CelsiusToKelvin,
+    KelvinToCelsius,
+}
+
+/**
 Maps a given number of a range onto another range.
 
 # Arguments
@@ -39,4 +53,25 @@ The new shifted number.
 */
 pub fn dec_lshift<T: std::ops::Add<Output = T> + std::ops::Shl<usize, Output = T> + Copy >(n: T) -> T {
     (n << 1) + (n << 3)
+}
+
+/**
+Performs a temperature conversion.
+
+# Arguments
+* `mode` - The mode ( e.g. Celsius -> Fahrenheit ).
+* `value` - The value to be converted.
+
+# Returns
+A `f64` containing the result.
+*/
+pub fn temp_conversion(mode: TempConversion, value: &f64) -> f64 {
+    match mode {
+        TempConversion::CelsiusToFahrenheit => { return value * 1.8 + 32.0; }
+        TempConversion::CelsiusToKelvin     => { return value + 273.15; }
+        TempConversion::FahrenheitToCelsius => { return (value - 32.0) / 1.8; }
+        TempConversion::FahrenheitToKelvin  => { return (value - 32.0) / 1.8 + 273.15; }
+        TempConversion::KelvinToCelsius     => { return value - 273.15; }
+        TempConversion::KelvinToFahrenheit  => { return (value - 273.15) * 1.8 + 32.0; }
+    }
 }
