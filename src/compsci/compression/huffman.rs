@@ -1,5 +1,4 @@
 extern crate bit_vec;
-extern crate num_traits;
 extern crate bincode;
 extern crate serde;
 extern crate plain;
