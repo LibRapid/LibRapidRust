@@ -10,7 +10,6 @@ use std::io::{Read, Write};
 use std::{str, usize};
 use std::collections::HashMap;
 use bit_vec::BitVec;
-//use num::ToPrimitive;
 use serde::{Serialize, Deserialize};
 
 type Link = Option<Box<Node>>;
