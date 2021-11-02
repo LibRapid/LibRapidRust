@@ -9,7 +9,7 @@
     Nothing.
 
     ## WARNING
-    When the given `vec` has multiple identical elements (which match the `value` to be inserted), you may need to resort after insertion. This will likely be fixed in future versions.
+    When the given `vec` has multiple identical elements (which are close to the `value` to be inserted), you may need to resort after insertion. This will likely be fixed in future versions.
     
     This function ***will not*** check if the parsed `vec` is sorted. 
     */
