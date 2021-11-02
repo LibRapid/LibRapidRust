@@ -10,7 +10,7 @@ use std::io::{Read, Write};
 use std::{str, usize};
 use std::collections::HashMap;
 use bit_vec::BitVec;
-use num::ToPrimitive;
+//use num::ToPrimitive;
 use serde::{Serialize, Deserialize};
 
 type Link = Option<Box<Node>>;
@@ -192,7 +192,7 @@ A Box<Node> containing the entire tree.
 */
 pub fn get_root(s: &str) -> Box<Node> {
     let frequency = get_frequency(s);
-    let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node((x.1).to_u128().unwrap(), Some(*(x.0))))).collect();
+    let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1) as u128, Some(*(x.0))))).collect();
 
     while vec_nodes.len() > 1 {
         vec_nodes.sort_by(|a: &Box<Node>, b: &Box<Node>| (&(b.frequency)).cmp(&(a.frequency)));
