@@ -1,3 +1,6 @@
+/*
+Brings mathematical sets into Rust.
+*/
 #[derive(Debug, Clone)]
 pub struct Set<T> {
     elements:        Vec<T>,
@@ -22,11 +25,9 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
     # Returns
     A child Set.
     */
-    pub fn new_from_parent<F: Fn(T) -> bool>(parent: &Set<T>, f: F) -> Set<T>
-    where
-        F: Fn(T) -> bool {
-            let mut res: Set<T> = Set {elements:    Vec::new(),
-                                       cardinality: 0,
+    pub fn new_from_parent<F: Fn(T) -> bool>(parent: &Set<T>, f: F) -> Set<T> {
+            let mut res: Set<T> = Set { elements:    Vec::new(),
+                                        cardinality: 0,
             };
             for elem in &parent.elements {
                 if f(*elem) {
@@ -96,7 +97,7 @@ impl<T: PartialEq + Copy + Ord> Set<T> {
     Nothing.
     */ 
     pub fn set_elements(&mut self, vals: Vec<T>) {
-        self.elements = vals;
+        self.elements    = vals;
         self.cardinality = self.elements.len();
     }
 
