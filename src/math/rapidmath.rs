@@ -13,6 +13,21 @@ pub enum TempConversion {
 }
 
 /**
+Trait for `dec_lshift`.
+*/
+pub trait DecimalLeftShift<T> {
+    /**
+    Multiplies by 10 (shifts the decimal places to the left by 1) while being more efficient.
+
+    # Arguments
+    * `n` - The number to be multiplied by 10.
+
+    # Returns
+    The new shifted number.
+    */
+    fn dec_lshift(&self) -> T;
+}
+/**
 Maps a given number of a range onto another range.
 
 # Arguments
@@ -55,10 +70,12 @@ Multiplies by 10 (shifts the decimal places to the left by 1) while being more e
 # Returns
 The new shifted number.
 */
-pub fn dec_lshift<T: std::ops::Add<Output = T> + 
-                     std::ops::Shl<usize, Output = T> + 
-                     Copy> (n: T) -> T {
-    (n << 1) + (n << 3)
+impl<T: std::ops::Add<Output = T> + 
+        std::ops::Shl<usize,Output = T> + 
+        Copy> DecimalLeftShift<T> for T {
+            fn dec_lshift (&self) -> T {
+                (*self << 1) + (*self << 3)
+            }
 }
 
 /**
