@@ -139,6 +139,18 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     }
 }
 
+impl<T: std::fmt::Display> Set<'_, T> {
+    pub fn full_print(&self) {
+        print!("{} ", *self);
+        if self.parent.is_some() {
+            print!("⊆ ");
+            self.parent.unwrap().full_print();
+        } else {
+            print!("\n");
+        }
+    }
+}
+
 // Indexing for Sets
 impl<T> std::ops::Index<usize> for Set<'_, T> {
     type Output = T;
@@ -154,13 +166,7 @@ impl<T: ToString> std::fmt::Display for Set<'_, T> {
         for elem in &self.elements {
             res = res + "" + &*elem.to_string() + "; ";
         }
-        if self.parent.is_some() {
-            res = res + " } ⊆ { ";
-            for elem in &self.parent.unwrap().elements {
-                res = res + "" + &*elem.to_string() + "; ";
-            }
-        }
-        write!(f, "{} }}", res)
+        write!(f, "{}}}", res)
     }
 }
 
