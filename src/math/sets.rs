@@ -140,6 +140,12 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
 }
 
 impl<T: std::fmt::Display> Set<'_, T> {
+    /**
+    Lets you print a set with all its parents recursively.
+
+    # Returns
+    Nothing.
+    */ 
     pub fn full_print(&self) {
         print!("{} ", *self);
         if self.parent.is_some() {
