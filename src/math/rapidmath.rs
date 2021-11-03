@@ -13,7 +13,7 @@ pub enum TempConversion {
 }
 
 /**
-Trait for `dec_lshift`.
+Trait for left-shifting decimal-numbers.
 */
 pub trait DecimalLeftShift<T> {
     /**
@@ -27,49 +27,44 @@ pub trait DecimalLeftShift<T> {
     */
     fn dec_lshift(&self) -> T;
 }
+
 /**
-Maps a given number of a range onto another range.
-
-# Arguments
-* `value` - The original value to be mapped.
-* `start1` - The original start value of the number range.
-* `end1` - The original end value of the number range.
-* `start2` - The new start value of the number range.
-* `end2` - The new start value of the number range.
-
-# Returns
-A number containing the new mapped value.
-
-# Examples
-```
-use lib_rapid::math::rapidmath::map_to;
-
-let result: f32 = map_to(5., 0., 10., 0., 1.); // Original value 5 in the range from 0-10
-std::println!("{}", result.to_string()) // Prints "0.5"
-```
+Trait for mapping numbers to another number range.
 */
-pub fn map_to<T: std::ops::Add<Output = T> + 
-                 std::ops::Sub<Output = T> + 
-                 std::ops::Mul<Output = T> + 
-                 std::ops::Div<Output = T> + 
-                 Copy> (        value:  T, 
-                                start1: T, 
-                                end1:   T, 
-                                start2: T, 
-                                end2:   T) -> T {
+pub trait MapToNumRange<T> {
+    /**
+    Maps a given number of a range onto another range.
 
-    (start2 + (end2 - start2)) * ((value - start1) / end1 - start1)
+    # Arguments
+    * `start1` - The original start value of the number range.
+    * `end1` - The original end value of the number range.
+    * `start2` - The new start value of the number range.
+    * `end2` - The new start value of the number range.
+
+    # Returns
+    A number containing the new mapped value.
+
+    # Examples
+    ```
+    use lib_rapid::math::rapidmath::MapToNumRange;
+
+    let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
+    std::println!("{}", result.to_string()) // Prints "0.5"
+    ```
+    */
+    fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
 }
 
-/**
-Multiplies by 10 (shifts the decimal places to the left by 1) while being more efficient.
+impl<T: std::ops::Add<Output = T> + 
+        std::ops::Sub<Output = T> + 
+        std::ops::Mul<Output = T> + 
+        std::ops::Div<Output = T> + 
+        Copy> MapToNumRange<T> for T {
+            fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T {
+                (start2 + (end2 - start2)) * ((*self - start1) / end1 - start1)
+            }
+        }
 
-# Arguments
-* `n` - The number to be multiplied by 10.
-
-# Returns
-The new shifted number.
-*/
 impl<T: std::ops::Add<Output = T> + 
         std::ops::Shl<usize,Output = T> + 
         Copy> DecimalLeftShift<T> for T {
