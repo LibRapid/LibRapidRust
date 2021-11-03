@@ -128,6 +128,9 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     pub fn has_element(&self, elem: &T) -> bool {
         self.elements.contains(elem)
     }
+}
+
+impl<T> Set<'_, T> {
     /**
     Lets you check wether a set has a parent or not.
 
@@ -150,7 +153,7 @@ impl<T: std::fmt::Display> Set<'_, T> {
         print!("{} ", *self);
         match self.parent.is_some() {
             true  => { print!("⊆ "); 
-                      self.parent.unwrap().full_print(); }
+                       self.parent.unwrap().full_print(); }
             false => { print!("\n"); }
         }
     }
