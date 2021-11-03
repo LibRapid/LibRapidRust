@@ -148,11 +148,10 @@ impl<T: std::fmt::Display> Set<'_, T> {
     */ 
     pub fn full_print(&self) {
         print!("{} ", *self);
-        if self.parent.is_some() {
-            print!("⊆ ");
-            self.parent.unwrap().full_print();
-        } else {
-            print!("\n");
+        match self.parent.is_some() {
+            true => { print!("⊆ "); 
+                      self.parent.unwrap().full_print(); }
+            false => { print!("\n"); }
         }
     }
 }
