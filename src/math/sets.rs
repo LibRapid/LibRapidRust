@@ -157,7 +157,7 @@ impl<T: ToString> std::fmt::Display for Set<'_, T> {
             res = res + "" + &*elem.to_string() + "; ";
         }
         if self.parent.is_some() {
-            res = res + "⊆";
+            res = res + " } ⊆ { ";
             for elem in self.parent {
                 res = res + "" + &*elem.to_string() + "; ";
             }
