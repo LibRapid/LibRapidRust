@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone)]
 pub struct Set<T> {
     elements:        Vec<T>,
     cardinality:     usize,
@@ -143,5 +143,16 @@ impl<T: ToString> std::fmt::Display for Set<T> {
             res = res + "" + &*elem.to_string() + "; ";
         }
         write!(f, "{} }}", res)
+    }
+}
+
+// Implement Equality
+impl<T: PartialEq> PartialEq for Set<T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.elements == other.elements
+    }
+
+    fn ne(&self, other: &Self) -> bool {
+        self.elements != other.elements
     }
 }

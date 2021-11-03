@@ -65,7 +65,7 @@ pub fn dec_lshift<T: std::ops::Add<Output = T> +
 Performs a temperature conversion.
 
 # Arguments
-* `mode` - The mode ( e.g. Celsius -> Fahrenheit ).
+* `mode` - The mode ( e.g. CelsiusToFahrenheit ).
 * `value` - The value to be converted.
 
 # Returns
