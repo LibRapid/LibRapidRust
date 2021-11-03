@@ -84,9 +84,10 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
         res
     }
 
-    // I know that getters and setters are VERY controversial.
-    // I'm not going to change it because the cardinality is only something
-    // You'll need to read, not set.
+    /* I know that getters and setters are VERY controversial.
+       I'm not going to change it because the cardinality is only something
+      You'll need to read, not set.
+    */
     pub fn cardinality(&self) -> &usize {
         &self.cardinality
     }
@@ -134,10 +135,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     A boolean value which determines if the set has a value.
     */ 
     pub fn has_parent(&self) -> bool {
-        match self.parent {
-            Some(_) => true,
-            None    => false,
-        }
+        self.parent.is_some()
     }
 }
 
@@ -158,7 +156,7 @@ impl<T: ToString> std::fmt::Display for Set<'_, T> {
         }
         if self.parent.is_some() {
             res = res + " } ⊆ { ";
-            for elem in self.parent {
+            for elem in &self.parent.unwrap().elements {
                 res = res + "" + &*elem.to_string() + "; ";
             }
         }
