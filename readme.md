@@ -1,7 +1,7 @@
 ![](https://github.com/Pencilcaseman/librapid/blob/master/branding/logo_transparent_trimmed.png)
 [![Discord](https://img.shields.io/discord/848914274105557043)](https://discord.gg/cGxTFTgCAC)
-[![Crates.io](https://img.shields.io/crates/v/lib_rapid?color=green&style=plastic)](https://crates.io/crates/lib_rapid)
-[![Docs.rs](https://img.shields.io/docsrs/lib_rapid?style=plastic)](https://docs.rs/crate/lib_rapid/)
+[![Crates.io](https://img.shields.io/crates/v/lib_rapid?color=green)](https://crates.io/crates/lib_rapid)
+[![Docs.rs](https://img.shields.io/docsrs/lib_rapid)](https://docs.rs/crate/lib_rapid/)
 ----
 
 LibRapid for Rust - Fast. Reliable. Lightweight.
