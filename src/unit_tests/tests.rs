@@ -9,7 +9,7 @@ fn test_new_from_parent() {
 #[test]
 fn test_speed_dec_lshift() {
     use std::time::Instant;
-    use crate::math::rapidmath::dec_lshift;
+    use crate::math::rapidmath::DecimalLeftShift;
     let mut i;
     let now_mult = Instant::now();
     for _ in 0..=8_000_000 {
@@ -20,7 +20,7 @@ fn test_speed_dec_lshift() {
     let mut j: i32;
     let now_lshift = Instant::now();
     for _ in 0..=8_000_000 {
-        j = dec_lshift(123234);
+        j = 123234.dec_lshift();
         print!("{}\r", j);
     }
     let el_lshift: f64 = (*&now_lshift.elapsed().as_millis() as f64) / 10_000_000f64;
