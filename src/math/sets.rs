@@ -127,7 +127,12 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     pub fn has_element(&self, elem: &T) -> bool {
         self.elements.contains(elem)
     }
+    /**
+    Lets you check wether a set has a parent or not.
 
+    # Returns
+    A boolean value which determines if the set has a value.
+    */ 
     pub fn has_parent(&self) -> bool {
         match self.parent {
             Some(_) => true,
