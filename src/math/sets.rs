@@ -83,10 +83,33 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
         res.cardinality = res.elements.len();
         res
     }
+    /**
+    Lets you check for an element in a set.
 
+    # Arguments
+    * `elem` - The element to check for.
+
+    # Returns
+    A boolean value which determines if the element is in the set.
+    */ 
+    pub fn has_element(&self, elem: &T) -> bool {
+        self.elements.contains(elem)
+    }
+}
+
+impl<T> Set<'_, T> {
+    /**
+    Lets you check wether a set has a parent or not.
+
+    # Returns
+    A boolean value which determines if the set has a value.
+    */ 
+    pub fn has_parent(&self) -> bool {
+        self.parent.is_some()
+    }
     /* I know that getters and setters are VERY controversial.
        I'm not going to change it because the cardinality is only something
-      You'll need to read, not set.
+       You'll need to read, not set.
     */
     pub fn cardinality(&self) -> &usize {
         &self.cardinality
@@ -115,30 +138,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     */ 
     pub fn elements(&self) -> &Vec<T> {
         &self.elements
-    }
-    /**
-    Lets you check for an element in a set.
-
-    # Arguments
-    * `elem` - The element to check for.
-
-    # Returns
-    A boolean value which determines if the element is in the set.
-    */ 
-    pub fn has_element(&self, elem: &T) -> bool {
-        self.elements.contains(elem)
-    }
-}
-
-impl<T> Set<'_, T> {
-    /**
-    Lets you check wether a set has a parent or not.
-
-    # Returns
-    A boolean value which determines if the set has a value.
-    */ 
-    pub fn has_parent(&self) -> bool {
-        self.parent.is_some()
     }
 }
 
