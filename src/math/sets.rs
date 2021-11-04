@@ -141,7 +141,7 @@ impl<T> Set<'_, T> {
     }
 }
 
-impl<T: std::fmt::Display> Set<'_, T> {
+impl<T: ToString> Set<'_, T> {
     /**
     Lets you print a set with all its parents recursively.
 
@@ -149,12 +149,17 @@ impl<T: std::fmt::Display> Set<'_, T> {
     Nothing.
     */ 
     pub fn full_print(&self) {
-        print!("{} ", *self);
+        print!("{}", self.backend_full_print(&mut String::new()));
+    }
+
+    fn backend_full_print(&self, string: &mut String) -> String {
+        string.push_str(&self.to_string());
         match self.parent.is_some() {
-            true  => { print!("⊆ "); 
-                       self.parent.unwrap().full_print(); }
-            false => { print!("\n"); }
+            true  => { string.push_str(" ⊆ "); 
+                       self.parent.unwrap().backend_full_print(string); }
+            false => { string.push_str("\n"); }
         }
+        string.to_string()
     }
 }
 
