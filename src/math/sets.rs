@@ -1,4 +1,4 @@
-/*
+/**
 Brings mathematical sets into Rust.
 */
 #[derive(Debug, Clone)]
@@ -10,7 +10,15 @@ pub struct Set<'a, T> {
 
 // Main impl
 impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
+    /**
+    Creates a new Set.
 
+    # Arguments
+    * `values` - The values for the set.
+
+    # Returns
+    A new set.
+    */
     pub fn new(values: Vec<T>) -> Set<'a, T> {
         Set { elements:    values.clone(),
               cardinality: values.len(),
@@ -111,6 +119,12 @@ impl<T> Set<'_, T> {
        I'm not going to change it because the cardinality is only something
        You'll need to read, not set.
     */
+    /**
+    Gets the cardinality of a set.
+
+    # Returns
+    A `&usize`.
+    */ 
     pub fn cardinality(&self) -> &usize {
         &self.cardinality
     }
