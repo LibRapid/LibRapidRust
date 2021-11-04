@@ -13,6 +13,11 @@ Credits
 The original idea comes from Pencilcaseman, I collaborated with him to get LibRapid into Rust. We're closely working together to provide
 the best possible user experience and consistency over all libraries.
 
+Why X? Why Y?
+-----
+
+Sometimes I have to yank some versions because of critical bugs or something else happens. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
+
 Contributing
 -----
 
