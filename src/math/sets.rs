@@ -5,7 +5,7 @@ Brings mathematical sets into Rust.
 pub struct Set<'a, T> {
     elements:        Vec<T>,
     cardinality:     usize,
-    parent:          Option<&'a Set<'a, T>>,
+    superset:        Option<&'a Set<'a, T>>,
 }
 
 // Main impl
@@ -22,7 +22,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     pub fn new(values: Vec<T>) -> Set<'a, T> {
         Set { elements:    values.clone(),
               cardinality: values.len(),
-              parent:      None,
+              superset:    None,
             }
     }
     /**
@@ -35,10 +35,10 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     # Returns
     A child Set.
     */
-    pub fn new_from_parent<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
+    pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements:    Vec::new(),
                                         cardinality: 0,
-                                        parent:      Option::Some(parent),
+                                        superset:    Option::Some(parent),
             };
             for elem in &parent.elements {
                 if f(*elem) {
@@ -61,7 +61,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements:    Vec::new(),
                                    cardinality: 0,
-                                   parent:      None,
+                                   superset:    None,
         };
 
         res.elements.append(&mut self.elements.clone());
@@ -113,7 +113,7 @@ impl<T> Set<'_, T> {
     A boolean value which determines if the set has a value.
     */ 
     pub fn has_parent(&self) -> bool {
-        self.parent.is_some()
+        self.superset.is_some()
     }
     /* I know that getters and setters are VERY controversial.
        I'm not going to change it because the cardinality is only something
@@ -177,9 +177,9 @@ impl<T: ToString> Set<'_, T> {
 
     fn backend_full_print(&self, string: &mut String) -> String {
         string.push_str(&self.to_string()); // The child-set at the bottom
-        match self.parent.is_some() {
+        match self.superset.is_some() {
             true  => { string.push_str(" ⊆ "); // Add subset-character
-                       self.parent.unwrap().backend_full_print(string); } // Recursively append parent sets
+                       self.superset.unwrap().backend_full_print(string); } // Recursively append parent sets
             false => { string.push_str("\n"); }
         }
         string.to_string()
