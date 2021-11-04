@@ -162,10 +162,10 @@ impl<T: ToString> Set<'_, T> {
     }
 
     fn backend_full_print(&self, string: &mut String) -> String {
-        string.push_str(&self.to_string());
+        string.push_str(&self.to_string()); // The child-set at the bottom
         match self.parent.is_some() {
-            true  => { string.push_str(" ⊆ "); 
-                       self.parent.unwrap().backend_full_print(string); }
+            true  => { string.push_str(" ⊆ "); // Add subset-character
+                       self.parent.unwrap().backend_full_print(string); } // Recursively append parent sets
             false => { string.push_str("\n"); }
         }
         string.to_string()
