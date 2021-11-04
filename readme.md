@@ -13,6 +13,15 @@ Credits
 The original idea comes from Pencilcaseman, I collaborated with him to get LibRapid into Rust. We're closely working together to provide
 the best possible user experience and consistency over all libraries.
 
+Contributing
+-----
+
+You want to contribute? Sure! You can contribute with:
+
+- 🚩 Issues
+- 🙇 Pull Requests
+- 💡 Feature Suggestions (With Issues)
+
 Documentation
 -----
 
