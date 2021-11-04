@@ -1,3 +1,5 @@
+use std::vec;
+
 #[test]
 fn test_new_from_parent() {
     use crate::math::sets::Set;
@@ -47,4 +49,27 @@ fn test_rec_printing() {
     let s2 = sets::Set::new_subset(&s1, |x| x == 4);
 
     s2.full_print();
+}
+
+#[test]
+fn test_union() {
+    use crate::math::sets;
+
+    let s = sets::Set::new(vec![0,1,2,3,4,5,6,7,8,9,10]);
+    let s1 = sets::Set::new(vec![11,12,13]);
+
+    let c = s.union(&s1);
+    println!("{}", c)
+}
+
+#[test]
+fn test_intersection() {
+    use crate::math::sets;
+
+    let s = sets::Set::new(vec![0,1,2,3,4,5,6,7,8,9,10]);
+    let s1 = sets::Set::new_subset(&s, |x| x % 2 == 0);
+    let s2 = sets::Set::new(vec![0,1,2,3,11,0,0,0]);
+
+    let c = s.intersection(&s2);
+    println!("{}", c)
 }

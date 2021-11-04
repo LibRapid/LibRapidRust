@@ -85,8 +85,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     pub fn intersection(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = self.clone();
 
-        for e in &self.elements {
-            res.elements.retain(|_| other.elements.contains(&e));
+        for _ in &self.elements {
+            res.elements.retain(|x| other.elements.contains(x));
         }
         res.cardinality = res.elements.len();
         res
@@ -112,7 +112,7 @@ impl<T> Set<'_, T> {
     # Returns
     A boolean value which determines if the set has a value.
     */ 
-    pub fn has_parent(&self) -> bool {
+    pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
     /* I know that getters and setters are VERY controversial.
