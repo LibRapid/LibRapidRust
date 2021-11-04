@@ -1,6 +1,6 @@
 [package]
 name = "lib_rapid"
-version = "0.0.17"
+version = "0.0.18"
 authors = ["Windoof"]
 license = "MIT"
 description = "LibRapid - a library specifically built for mathematical calculations and scientific applications, while being optimized for speed."
