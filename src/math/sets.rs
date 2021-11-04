@@ -151,6 +151,15 @@ impl<T: ToString> Set<'_, T> {
     pub fn full_print(&self) {
         print!("{}", self.backend_full_print(&mut String::new()));
     }
+    /**
+    Converts a set with all subsets to a string.
+
+    # Returns
+    A String containing the result.
+    */ 
+    pub fn to_full_string(&self) -> String {
+        self.backend_full_print(&mut String::new())
+    }
 
     fn backend_full_print(&self, string: &mut String) -> String {
         string.push_str(&self.to_string());
