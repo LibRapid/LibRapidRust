@@ -54,7 +54,7 @@ fn test_union() {
     use crate::math::sets;
 
     let s = sets::Set::new(vec![0,1,2,3,4,5,6,7,8,9,10]);
-    let s1 = sets::Set::new(vec![11,12,13]);
+    let s1 = sets::Set::new(vec![11,12,13,13,11,0,0,0]);
 
     let c = s.union(&s1);
     println!("{}", c)
