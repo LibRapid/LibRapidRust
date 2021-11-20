@@ -16,14 +16,14 @@ fn test_speed_dec_lshift() {
         i = 123234 * 10;
         print!("{}\r", i);
     }
-    let el_mult: f64 = (*&now_mult.elapsed().as_millis() as f64) / 10_000_000f64;
+    let el_mult: f64 = (*&now_mult.elapsed().as_millis() as f64) / 8_000_000f64;
     let mut j: i32;
     let now_lshift = Instant::now();
     for _ in 0..=8_000_000 {
         j = 123234.dec_lshift();
         print!("{}\r", j);
     }
-    let el_lshift: f64 = (*&now_lshift.elapsed().as_millis() as f64) / 10_000_000f64;
+    let el_lshift: f64 = (*&now_lshift.elapsed().as_millis() as f64) / 8_000_000f64;
     println!("Average over 8 Million iterations (With Print).");
     println!("Multiplication time: {} ms", el_mult);
     println!("dec_lshift time:     {} ms", el_lshift);
