@@ -3,9 +3,9 @@ Brings mathematical sets into Rust.
 */
 #[derive(Debug, Clone)]
 pub struct Set<'a, T> {
-    elements:        Vec<T>,
-    cardinality:     usize,
-    superset:        Option<&'a Set<'a, T>>,
+    elements:    Vec<T>,
+    cardinality: usize,
+    superset:    Option<&'a Set<'a, T>>,
 }
 
 // Main impl

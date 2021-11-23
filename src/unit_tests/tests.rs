@@ -34,7 +34,7 @@ fn test_map_to() {
     use crate::math::rapidmath::MapToNumRange;
 
     let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
-    std::println!("{}", result.to_string());
+    println!("           {}", result.to_string());
     println!("Should be: 0.5")
 }
 
