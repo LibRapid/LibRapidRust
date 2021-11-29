@@ -75,12 +75,12 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
 
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut finstring: String = "{".to_owned();
+        let mut finstring: String = "(".to_owned();
         for i in 0..self.dimension {
             finstring =  " ".to_owned() + &finstring + &self.values[i].to_string() + ";";
         }
         finstring.pop();
-        finstring = finstring + " }";
-        write!(f, "({})", finstring)
+        finstring = finstring + " )";
+        write!(f, "{}", finstring)
     }
 }
