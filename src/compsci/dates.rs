@@ -1,4 +1,4 @@
-struct Date {
+pub struct Date {
     year:   i32,
     month:  u8,
     day:    u8,
@@ -8,15 +8,11 @@ struct Date {
 }
 
 impl Date {
-    fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
+    pub fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
         if is_valid_day(year, month, day) {
             
         }
         return None;
-    }
-
-    fn new() {
-        
     }
 }
 
