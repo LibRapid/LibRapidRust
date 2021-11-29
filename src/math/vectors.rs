@@ -7,7 +7,7 @@ pub struct MathVector {
 
 impl MathVector {
     pub fn new(values: &Vec<f64>) -> MathVector{
-        MathVector { values: values.clone(),
+        MathVector { values:    values.clone(),
                      dimension: values.len() }
     }
 
