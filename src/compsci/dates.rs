@@ -47,11 +47,7 @@ impl Date {
 
     pub fn set_year(&mut self, year: i32) {
         match is_valid_day(year, self.month, self.day) {
-            true  => { if is_leap_year(year)
-                       { self.leap_year = true; }
-                       else
-                       { self.leap_year = false; }
-                }
+            true  => { self.leap_year = is_leap_year(year); }
             false => { panic!("Error: Invalid year.") }
         }
         self.year = year;
