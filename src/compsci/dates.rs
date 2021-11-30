@@ -48,10 +48,10 @@ impl Date {
     pub fn set_year(&mut self, year: i32) {
         match is_valid_day(year, self.month, self.day) {
             true  => { if is_leap_year(year)
-                { self.leap_year = true; }
-                else
-                { self.leap_year = false; }
-            }
+                       { self.leap_year = true; }
+                       else
+                       { self.leap_year = false; }
+                }
             false => { panic!("Error: Invalid year.") }
         }
         self.year = year;
@@ -118,7 +118,11 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
     let day_in_month: u8;
 
     match month {
-        1  => { if is_leap_year(year) { day_in_month = 29; } else { day_in_month = 28; } }
+        1  => { if is_leap_year(year)
+                { day_in_month = 29; }
+                else
+                { day_in_month = 28; }
+            }
         3  => day_in_month = 30,
         5  => day_in_month = 30,
         8  => day_in_month = 30,
@@ -140,5 +144,5 @@ pub fn is_leap_year(year: i32) -> bool {
 }
 
 fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
-    hour <= 24 || minute <= 60 || second <= 60
+    hour <= 24 && minute <= 60 && second <= 60
 }
