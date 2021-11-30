@@ -19,11 +19,10 @@ impl MathVector {
         &self.values
     }
 
-    pub fn set_values(self: &mut Self, vals: &Vec<f64>) -> bool {
+    pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
         match vals.len() == self.dimension() {
-            true  => { self.values = vals.clone(); 
-                       return true; }
-            false => { return false; } 
+            true  => { self.values = vals.clone(); }
+            false => { panic!("Error: Dimensions did not match."); } 
         }
     }
 }
