@@ -115,10 +115,6 @@ impl<T> Set<'_, T> {
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
-    /* I know that getters and setters are VERY controversial.
-       I'm not going to change it because the cardinality is only something
-       You'll need to read, not set.
-    */
     /**
     Gets the cardinality of a set.
 
