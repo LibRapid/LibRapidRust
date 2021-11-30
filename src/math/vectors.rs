@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+const INV_DIM: &str = "Error: Dimensions did not match.";
+
 pub struct MathVector {
     values: Vec<f64>,
     dimension: usize
@@ -22,7 +24,7 @@ impl MathVector {
     pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
         match vals.len() == self.dimension() {
             true  => { self.values = vals.clone(); }
-            false => { panic!("Error: Dimensions did not match."); } 
+            false => { panic!("{}", INV_DIM); } 
         }
     }
 }
@@ -39,7 +41,7 @@ impl std::ops::Add for MathVector {
                 MathVector { values:    vals,
                              dimension: self.dimension }
             }
-            false => { panic!("Error: Expected same dimensions.") }
+            false => { panic!("{}", INV_DIM) }
         }
     }
 }
@@ -56,7 +58,7 @@ impl std::ops::Sub for MathVector {
                 MathVector { values:    vals,
                              dimension: self.dimension }
             }
-            false => { panic!("Error: Expected same dimensions.") }
+            false => { panic!("{}", INV_DIM) }
         }
     }
 }
