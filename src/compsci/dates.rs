@@ -30,9 +30,9 @@ impl Date {
     pub fn with_hms(&mut self, hour: u8, minute: u8, second: u8) {
         match is_valid_hms(hour, minute, second) {
             true  => { 
-                      self.hour   = hour;
-                      self.minute = minute;
-                      self.second = second; }
+                       self.hour   = hour;
+                       self.minute = minute;
+                       self.second = second; }
             false => { panic!("Error: Expected valid hour, minute or second.") }
         }
     }
