@@ -22,7 +22,7 @@ impl MathVector {
     }
 
     pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
-        match vals.len() == self.dimension() {
+        match vals.len() == self.dimension {
             true  => { self.values = vals.clone(); }
             false => { core::panic!("{}", INV_DIM); } 
         }
@@ -32,10 +32,10 @@ impl MathVector {
 impl std::ops::Add for MathVector {
     type Output = Self;
     fn add(self, other: Self) -> MathVector {
-        match self.dimension() == other.dimension() {
+        match self.dimension() == other.dimension {
             true  =>  { 
                 let mut vals: Vec<f64> = Vec::with_capacity(self.dimension);
-                for i in 0..self.dimension() {
+                for i in 0..self.dimension {
                     vals.push(self.values[i] + other.values[i]);
                 }
                 MathVector { values:    vals,
