@@ -134,13 +134,7 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
 }
 
 pub fn is_leap_year(year: i32) -> bool {
-    if year % 4   != 0 { return false; }
-    if year % 100 == 0 {
-
-        if year % 400 == 0 { return true; }
-        else { return false; }
-    }
-    return true;
+    (year & 3) == 0 && ((year % 25) != 0 || (year & 15) == 0)
 }
 
 fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
