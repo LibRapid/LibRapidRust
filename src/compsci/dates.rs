@@ -1,7 +1,5 @@
 #![allow(dead_code)]
 
-use core::panic;
-
 pub struct Date {
     year:      i32,
     month:     u8,
@@ -33,7 +31,7 @@ impl Date {
                        self.hour   = hour;
                        self.minute = minute;
                        self.second = second; }
-            false => { panic!("Error: Expected valid hour, minute and second.") }
+            false => { core::panic!("Error: Expected valid hour, minute and second.") }
         }
     }
     
@@ -48,7 +46,7 @@ impl Date {
     pub fn set_year(&mut self, year: i32) {
         match is_valid_day(year, self.month, self.day) {
             true  => { self.leap_year = is_leap_year(year); }
-            false => { panic!("Error: Invalid year.") }
+            false => { core::panic!("Error: Invalid year.") }
         }
         self.year = year;
     }
@@ -60,7 +58,7 @@ impl Date {
     pub fn set_month(&mut self, month: u8) {
         match is_valid_day(self.year, month, self.day) {
             true  => { self.month = month; }
-            false => { panic!("Error: Invalid month.") }
+            false => { core::panic!("Error: Invalid month.") }
         }
     }
 
@@ -72,7 +70,7 @@ impl Date {
     pub fn set_day(&mut self, day: u8) {
         match is_valid_day(self.year, self.month, day) {
             true  => { self.day = day; }
-            false => { panic!("Error: Invalid day.") }
+            false => { core::panic!("Error: Invalid day.") }
         }
     }
 
@@ -83,7 +81,7 @@ impl Date {
     pub fn set_hour(&mut self, hour: u8) {
         match is_valid_hms(hour, self.minute, self.second) {
             true  => { self.hour = hour; }
-            false => { panic!("Error: Invalid hour.") }
+            false => { core::panic!("Error: Invalid hour.") }
         }
     }
 
@@ -94,7 +92,7 @@ impl Date {
     pub fn set_minute(&mut self, minute: u8) {
         match is_valid_hms(self.hour, minute, self.second) {
             true  => { self.minute = minute; }
-            false => { panic!("Error: Invalid minute.") }
+            false => { core::panic!("Error: Invalid minute.") }
         }
     }
 
@@ -105,7 +103,7 @@ impl Date {
     pub fn set_second(&mut self, second: u8) {
         match is_valid_hms(self.hour, self.minute, second) {
             true  => { self.second = second; }
-            false => { panic!("Error: Invalid second.") }
+            false => { core::panic!("Error: Invalid second.") }
         }
     }
 }
