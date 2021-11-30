@@ -8,7 +8,7 @@ pub struct MathVector {
 }
 
 impl MathVector {
-    pub fn new(values: &Vec<f64>) -> MathVector{
+    pub fn new(values: &Vec<f64>) -> MathVector {
         MathVector { values:    values.clone(),
                      dimension: values.len() }
     }
@@ -24,7 +24,7 @@ impl MathVector {
     pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
         match vals.len() == self.dimension() {
             true  => { self.values = vals.clone(); }
-            false => { panic!("{}", INV_DIM); } 
+            false => { core::panic!("{}", INV_DIM); } 
         }
     }
 }
@@ -41,7 +41,7 @@ impl std::ops::Add for MathVector {
                 MathVector { values:    vals,
                              dimension: self.dimension }
             }
-            false => { panic!("{}", INV_DIM) }
+            false => { core::panic!("{}", INV_DIM) }
         }
     }
 }
@@ -58,7 +58,7 @@ impl std::ops::Sub for MathVector {
                 MathVector { values:    vals,
                              dimension: self.dimension }
             }
-            false => { panic!("{}", INV_DIM) }
+            false => { core::panic!("{}", INV_DIM) }
         }
     }
 }
