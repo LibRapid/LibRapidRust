@@ -129,7 +129,7 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
         10 => day_in_month = 30,
         _  => day_in_month = 31,
     }
-    if day_in_month <= day { return true; }
+    if day <= day_in_month { return true; }
     return false;
 }
 
