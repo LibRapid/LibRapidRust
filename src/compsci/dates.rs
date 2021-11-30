@@ -118,7 +118,7 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
     let day_in_month: u8;
 
     match month {
-        1  => { if is_leap_year(year)
+        2  => { if is_leap_year(year)
                 { day_in_month = 29; }
                 else
                 { day_in_month = 28; }
