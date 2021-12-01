@@ -134,3 +134,15 @@ pub fn is_leap_year(year: i32) -> bool {
 fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
     hour <= 24 && minute <= 60 && second <= 60
 }
+
+impl std::fmt::Display for Date {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let finstring: String =  self.year.to_string()   + "-" +
+                                &self.month.to_string()  + "-" +
+                                &self.day.to_string()    + " " +
+                                &self.hour.to_string()   + ":" +
+                                &self.minute.to_string() + ":" +
+                                &self.second.to_string() + ":" ;
+        write!(f, "{}", finstring)
+    }
+}
