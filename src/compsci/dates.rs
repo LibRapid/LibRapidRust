@@ -137,12 +137,12 @@ fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
 
 impl std::fmt::Display for Date {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let finstring: String =  self.year.to_string()   + "-" +
-                                &self.month.to_string()  + "-" +
-                                &self.day.to_string()    + " " +
-                                &self.hour.to_string()   + ":" +
-                                &self.minute.to_string() + ":" +
-                                &self.second.to_string() + ":" ;
+        let finstring: String =  self.year.to_string()    + "-" +
+             &format!("{:0>2}", &self.month.to_string())  + "-" +
+             &format!("{:0>2}", &self.day.to_string())    + " " +
+             &format!("{:0>2}", &self.hour.to_string())   + ":" +
+             &format!("{:0>2}", &self.minute.to_string()) + ":" +
+             &format!("{:0>2}", &self.second.to_string()) + ":" ;
         write!(f, "{}", finstring)
     }
 }
