@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+#![allow(unused_macros)]
 
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
@@ -74,9 +75,28 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
                  dimension: other.dimension }
 }
 
+#[macro_export]
+macro_rules! new_mathvec {
+    ( $( $a:expr ),* ) => {
+        {
+        let mut temp = Vec::new();
+        $(
+            temp.push($a as f64);
+        )*
+        MathVector::new(&temp)
+        }
+    };
+}
+
+
+#[test]
+fn test_macro() {
+    println!("{}", new_mathvec!(2,2,2));
+}
+
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut finstring: String = "(".to_owned();
+        let mut finstring: String = "( ".to_owned();
         for i in 0..self.dimension {
             finstring =  " ".to_owned() + &finstring + &self.values[i].to_string() + ";";
         }
