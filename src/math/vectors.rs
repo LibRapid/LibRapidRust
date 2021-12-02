@@ -88,7 +88,6 @@ macro_rules! new_mathvec {
     };
 }
 
-
 #[test]
 fn test_macro() {
     println!("{}", new_mathvec!(2,2,2));
