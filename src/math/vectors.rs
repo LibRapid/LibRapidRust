@@ -80,7 +80,7 @@ impl MathVector {
                        for i in &self.values {
                            len += i * i;
                        }
-                       self.length = len; }
+                       self.length = len.sqrt(); }
             false => { core::panic!("{}", INV_DIM); } 
         }
     }
