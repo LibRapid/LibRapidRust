@@ -75,7 +75,12 @@ impl MathVector {
     */
     pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
         match vals.len() == self.dimension {
-            true  => { self.values = vals.clone(); }
+            true  => { self.values = vals.clone();
+                       let mut len: f64 = 0f64; 
+                       for i in &self.values {
+                           len += i * i;
+                       }
+                       self.length = len; }
             false => { core::panic!("{}", INV_DIM); } 
         }
     }
