@@ -27,6 +27,7 @@ fn test_speed_dec_lshift() {
     println!("Average over 8 Million iterations (With Print).");
     println!("Multiplication time: {} ms", el_mult);
     println!("dec_lshift time:     {} ms", el_lshift);
+    assert_eq!(el_lshift <= el_mult, true);
 }
 
 #[test]
@@ -34,8 +35,7 @@ fn test_map_to() {
     use crate::math::rapidmath::MapToNumRange;
 
     let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
-    println!("           {}", result.to_string());
-    println!("Should be: 0.5")
+    assert_eq!(result, 0.5);
 }
 
 #[test]
@@ -57,7 +57,7 @@ fn test_union() {
     let s1 = sets::Set::new(vec![11,12,13,13,11,0,0,0]);
 
     let c = s.union(&s1);
-    println!("{}", c)
+    assert_eq!(c, sets::Set::new(vec![0,1,2,3,4,5,6,7,8,9,10,11,12,13]));
 }
 
 #[test]
@@ -69,5 +69,5 @@ fn test_intersection() {
     let s2 = sets::Set::new(vec![0,1,2,3,11,0,0,0]);
 
     let c = s.intersection(&s2);
-    println!("{}", c)
+    assert_eq!(c, sets::Set::new(vec![0,1,2,3]));
 }
