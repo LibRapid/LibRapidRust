@@ -251,7 +251,7 @@ impl std::fmt::Display for Date {
              &format!("{:0>2}", &self.day.to_string())    + " " +
              &format!("{:0>2}", &self.hour.to_string())   + ":" +
              &format!("{:0>2}", &self.minute.to_string()) + ":" +
-             &format!("{:0>2}", &self.second.to_string()) + ":" ;
+             &format!("{:0>2}", &self.second.to_string());
         write!(f, "{}", finstring)
     }
 }
