@@ -260,6 +260,10 @@ impl PartialEq for Date {
     fn eq(&self, other: &Self) -> bool {
         self.year == other.year && self.month == other.month && self.day == other.day && self.hour == other.hour && self.minute == other.minute && self.second == other.second
     }
+
+    fn ne(&self, other: &Self) -> bool {
+        !(self == other)
+    }
 }
 
 impl core::cmp::PartialOrd for Date {
