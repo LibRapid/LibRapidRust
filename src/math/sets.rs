@@ -159,7 +159,7 @@ impl<T: ToString> Set<'_, T> {
     Nothing.
     */ 
     pub fn full_print(&self) {
-        print!("{}", self.backend_full_print(&mut String::new()));
+        print!("{}\n", self.rec_to_string(&mut String::new()));
     }
     /**
     Converts a set with all subsets to a string.
@@ -168,15 +168,15 @@ impl<T: ToString> Set<'_, T> {
     A String containing the result.
     */ 
     pub fn to_full_string(&self) -> String {
-        self.backend_full_print(&mut String::new())
+        self.rec_to_string(&mut String::new())
     }
 
-    fn backend_full_print(&self, string: &mut String) -> String {
+    fn rec_to_string(&self, string: &mut String) -> String {
         string.push_str(&self.to_string()); // The child-set at the bottom
         match self.superset.is_some() {
             true  => { string.push_str(" ⊆ "); // Add subset-character
-                       self.superset.unwrap().backend_full_print(string); } // Recursively append parent sets
-            false => { string.push_str("\n"); }
+                       self.superset.unwrap().rec_to_string(string); } // Recursively append parent sets
+            false => { }
         }
         string.to_string()
     }
