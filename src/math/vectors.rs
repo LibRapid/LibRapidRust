@@ -55,15 +55,16 @@ impl MathVector {
     A `f64`.
     */
     pub fn length(self: &mut Self) -> f64 {
-        match self.length.is_some() {
-            true  => { let mut len: f64 = 0f64; 
-                       for i in &self.values {
-                           len += i * i;
-                       }
-                       self.length = Some(len.sqrt());
-                       return self.length.unwrap();
-                     }
-            false => { return self.length.unwrap(); }
+        match self.length {
+            None        => { let mut len: f64 = 0f64; 
+                             for i in &self.values {
+                                 len += i * i;
+                             }
+                             len = len.sqrt();
+                             self.length = Some(len);
+                             return len;
+                           }
+            Some(len) => { return len; }
 
         }
     }
@@ -88,11 +89,7 @@ impl MathVector {
     pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
         match vals.len() == self.dimension {
             true  => { self.values = vals.clone();
-                       let mut len: f64 = 0f64; 
-                       for i in &self.values {
-                           len += i * i;
-                       }
-                       self.length = Some(len.sqrt()); }
+                       self.length = None; }
             false => { core::panic!("{}", INV_DIM); } 
         }
     }
