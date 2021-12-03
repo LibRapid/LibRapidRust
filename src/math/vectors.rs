@@ -28,6 +28,23 @@ impl MathVector {
                      length:    -1f64 }
     }
     /**
+    Creates a new `MathVector` with the specified capacity.
+
+    # Arguments
+    * `dim` - The dimension for the new MathVector.
+
+    # Returns
+    A new MathVector with length 0.
+    */
+    pub fn new_with_dimension(dim: usize) -> MathVector {        
+        let mut vals: Vec<f64> = Vec::with_capacity(dim);
+        (0..=dim).for_each(|_| { vals.push(0f64) });
+
+        MathVector { values:    vals,
+                     dimension: dim,
+                     length:    -1f64 }
+    }
+    /**
     Gets the dimension in which a `MathVector` lives.
 
     # Returns
@@ -48,7 +65,7 @@ impl MathVector {
                        for i in &self.values {
                            len += i * i;
                        }
-                       self.length = len;
+                       self.length = len.sqrt();
                        return self.length;
                      }
             false => { return self.length; }
@@ -176,5 +193,11 @@ impl std::fmt::Display for MathVector {
         finstring.pop();
         finstring = finstring + " )";
         write!(f, "{}", finstring)
+    }
+}
+
+impl PartialEq for MathVector {
+    fn eq(&self, other: &Self) -> bool {
+        self.values == other.values
     }
 }
