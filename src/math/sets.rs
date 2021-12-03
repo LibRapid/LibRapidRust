@@ -193,10 +193,12 @@ impl<T> std::ops::Index<usize> for Set<'_, T> {
 // Implement Printing
 impl<T: ToString> std::fmt::Display for Set<'_, T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut res: String = "{ ".to_owned();
+        let mut res: String = "{".to_owned();
         for elem in &self.elements {
-            res = res + &*elem.to_string() + "; ";
+            res += &(" ".to_owned() + &elem.to_string() + ";");
         }
+        res.pop();
+        res += " ";
         write!(f, "{}}}", res)
     }
 }
