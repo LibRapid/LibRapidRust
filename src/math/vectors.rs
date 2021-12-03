@@ -200,4 +200,8 @@ impl PartialEq for MathVector {
     fn eq(&self, other: &Self) -> bool {
         self.values == other.values
     }
+
+    fn ne(&self, other: &Self) -> bool {
+        !(self == other)
+    }
 }
