@@ -255,3 +255,9 @@ impl std::fmt::Display for Date {
         write!(f, "{}", finstring)
     }
 }
+
+impl PartialEq for Date {
+    fn eq(&self, other: &Self) -> bool {
+        self.year == other.year && self.month == other.month && self.day == other.day && self.hour == other.hour && self.minute == other.minute && self.second == other.second && self.leap_year == other.leap_year
+    }
+}
