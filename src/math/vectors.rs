@@ -43,7 +43,7 @@ impl MathVector {
     Gets the dimension in which a `MathVector` lives.
 
     # Returns
-    A `usize`.
+    A `&usize`.
     */
     pub fn dimension(self: &Self) -> &usize {
         &self.dimension
@@ -72,7 +72,7 @@ impl MathVector {
     Gets the values of a `MathVector`.
 
     # Returns
-    A `Vec<f64>`.
+    A `&Vec<f64>`.
     */
     pub fn get_values(self: &Self) -> &'_ Vec<f64> {
         &self.values
