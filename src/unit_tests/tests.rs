@@ -47,7 +47,7 @@ fn test_rec_printing() {
     let s2: Set<i32> = Set::new_subset(&s1, |x| x == 4);
 
     s2.full_print();
-    assert_eq!(s2.to_full_string(), "{ 4; } ⊆ { 0; 2; 4; 6; 8; 10; } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; }\n".to_string());
+    assert_eq!(s2.to_full_string(), "{ 4; } ⊆ { 0; 2; 4; 6; 8; 10; } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; }".to_string());
 }
 
 #[test]
