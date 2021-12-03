@@ -261,3 +261,33 @@ impl PartialEq for Date {
         self.year == other.year && self.month == other.month && self.day == other.day && self.hour == other.hour && self.minute == other.minute && self.second == other.second && self.leap_year == other.leap_year
     }
 }
+
+impl core::cmp::PartialOrd for Date {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        match self.year.partial_cmp(&other.year) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        match self.month.partial_cmp(&other.month) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        match self.day.partial_cmp(&other.day) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        match self.hour.partial_cmp(&other.hour) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        match self.minute.partial_cmp(&other.minute) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        match self.second.partial_cmp(&other.second) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        None
+    }
+}
