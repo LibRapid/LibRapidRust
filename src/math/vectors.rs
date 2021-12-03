@@ -6,7 +6,7 @@ Mathematical Vectors in Rust.
 pub struct MathVector {
     values:    Vec<f64>,
     dimension: usize,
-    length:    f64,
+    length:    Option<f64>,
 }
 
 impl MathVector {
@@ -22,7 +22,7 @@ impl MathVector {
     pub fn new(values: &Vec<f64>) -> MathVector {        
         MathVector { values:    values.clone(),
                      dimension: values.len(),
-                     length:    -1f64 }
+                     length:    None }
     }
     /**
     Creates a new `MathVector` with the specified capacity.
@@ -37,7 +37,7 @@ impl MathVector {
 
         MathVector { values:    vec![0f64; dim],
                      dimension: dim,
-                     length:    -1f64 }
+                     length:    None }
     }
     /**
     Gets the dimension in which a `MathVector` lives.
@@ -55,15 +55,15 @@ impl MathVector {
     A `f64`.
     */
     pub fn length(self: &mut Self) -> f64 {
-        match self.length < 0f64 {
+        match self.length.is_some() {
             true  => { let mut len: f64 = 0f64; 
                        for i in &self.values {
                            len += i * i;
                        }
-                       self.length = len.sqrt();
-                       return self.length;
+                       self.length = Some(len.sqrt());
+                       return self.length.unwrap();
                      }
-            false => { return self.length; }
+            false => { return self.length.unwrap(); }
 
         }
     }
@@ -92,7 +92,7 @@ impl MathVector {
                        for i in &self.values {
                            len += i * i;
                        }
-                       self.length = len.sqrt(); }
+                       self.length = Some(len.sqrt()); }
             false => { core::panic!("{}", INV_DIM); } 
         }
     }
@@ -109,7 +109,7 @@ impl std::ops::Add for MathVector {
                 }
                 MathVector { values:    vals,
                              dimension: self.dimension,
-                             length:    -1f64 }
+                             length:    None }
             }
             false => { core::panic!("{}", INV_DIM) }
         }
@@ -127,7 +127,7 @@ impl std::ops::Sub for MathVector {
                 }
                 MathVector { values:    vals,
                              dimension: self.dimension,
-                             length:    -1f64 }
+                             length:    None }
             }
             false => { core::panic!("{}", INV_DIM) }
         }
@@ -152,7 +152,7 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
     }
     MathVector { values:    vals,
                  dimension: other.dimension,
-                 length:    -1f64 }
+                 length:    None }
 }
 
     /**
