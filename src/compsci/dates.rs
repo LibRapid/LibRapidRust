@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 /**
 Simple Dates. Do not expect anything fancy from this part of the library, as the focus does not lie on date-functions.
 */

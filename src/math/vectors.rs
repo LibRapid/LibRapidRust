@@ -1,6 +1,3 @@
-#![allow(dead_code)]
-#![allow(unused_macros)]
-
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /**
