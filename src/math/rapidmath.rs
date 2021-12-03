@@ -29,6 +29,24 @@ pub trait DecimalLeftShift<T> {
 }
 
 /**
+ Trait for different mathematical means.
+ */ 
+pub trait Means<T> {
+    /**
+     The arithmetic mean of a given set of values.
+    */ 
+    fn arithmetic_mean(&self) -> T;
+    /**
+     The mode of a given set of values.
+    */ 
+    fn mode(&self) -> T;
+    /**
+     The median of a given set of values.
+    */ 
+    fn median(&self) -> f64;
+}
+
+/**
 Trait for mapping numbers to another number range.
 */
 pub trait MapToNumRange<T> {
@@ -71,6 +89,43 @@ impl<T: std::ops::Add<Output = T> +
             fn dec_lshift (&self) -> T {
                 (*self << 1) + (*self << 3)
             }
+}
+
+impl<T: std::ops::AddAssign +
+        std::ops::Add<Output = T> +
+        std::ops::Sub<Output = T> +
+        std::ops::DivAssign +
+        std::ops::Div<Output = f64> +
+        Copy + 
+        From<usize> +
+        Into<f64> +
+        std::cmp::Ord>
+        Means<T> for Vec<T> {
+    fn arithmetic_mean(&self) -> T {
+        let mut res: T = self[0] - self[0];
+        for i in self {
+            res += *i;
+        }
+
+        res /= self.len().into();
+        res
+    }
+
+    fn mode(&self) -> T {
+        let mut temp: Vec<T> = self.clone();
+        temp.sort_by(|a, b| b.cmp(a));
+        temp[0]
+    }
+
+    fn median(&self) -> f64 {
+        let mut temp: Vec<T> = self.clone();
+        temp.sort();
+        if temp.len() & 1 == 0 {
+            return (temp[temp.len() / 2] + temp[temp.len() / 2 - 1]).into() / 2f64;
+        } else {
+            return temp[temp.len() / 2].into();
+        }
+    }
 }
 
 /**
