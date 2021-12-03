@@ -191,6 +191,7 @@ impl std::fmt::Display for MathVector {
             finstring =  " ".to_owned() + &finstring + &self.values[i].to_string() + "; ";
         }
         finstring.pop();
+        finstring.pop();
         finstring = finstring + " )";
         write!(f, "{}", finstring)
     }
