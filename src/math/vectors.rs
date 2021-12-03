@@ -179,11 +179,6 @@ macro_rules! new_mathvec {
     };
 }
 
-#[test]
-fn test_macro() {
-    println!("{}", new_mathvec!(2,2,2));
-}
-
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut finstring: String = "( ".to_owned();
