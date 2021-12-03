@@ -62,18 +62,18 @@ impl Date {
     # Returns
     A boolean value.
     */
-    pub fn leap_year(&self) -> bool {
-        self.leap_year
+    pub fn leap_year(&self) -> &bool {
+        &self.leap_year
     }
 
     /**
     Gets the year.
 
     # Returns
-    A `i32`.
+    A `&i32`.
     */
-    pub fn year(&self) -> i32 {
-        self.year
+    pub fn year(&self) -> &i32 {
+        &self.year
     }
 
     /**
@@ -94,10 +94,10 @@ impl Date {
     Gets the month.
 
     # Returns
-    A `u8`.
+    A `&u8`.
     */
-    pub fn month(&self) -> u8 {
-        self.month
+    pub fn month(&self) -> &u8 {
+        &self.month
     }
 
     /**
@@ -118,10 +118,10 @@ impl Date {
     Gets the day.
 
     # Returns
-    A `u8`.
+    A `&u8`.
     */
-    pub fn day(&self) -> u8 {
-        self.day
+    pub fn day(&self) -> &u8 {
+        &self.day
     }
 
     /**
@@ -141,10 +141,10 @@ impl Date {
     Gets the hour.
 
     # Returns
-    A `u8`.
+    A `&u8`.
     */
-    pub fn hour(&self) -> u8 {
-        self.hour
+    pub fn hour(&self) -> &u8 {
+        &self.hour
     }
 
     /**
@@ -164,10 +164,10 @@ impl Date {
     Gets the minute.
 
     # Returns
-    A `u8`.
+    A `&u8`.
     */
-    pub fn minute(&self) -> u8 {
-        self.minute
+    pub fn minute(&self) -> &u8 {
+        &self.minute
     }
 
     /**
@@ -187,10 +187,10 @@ impl Date {
     Gets the second.
 
     # Returns
-    A `u8`.
+    A `&u8`.
     */
-    pub fn second(&self) -> u8 {
-        self.second
+    pub fn second(&self) -> &u8 {
+        &self.second
     }
 
     /**
