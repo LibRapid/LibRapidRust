@@ -45,8 +45,8 @@ impl MathVector {
     # Returns
     A `usize`.
     */
-    pub fn dimension(self: &Self) -> usize {
-        self.dimension
+    pub fn dimension(self: &Self) -> &usize {
+        &self.dimension
     }
     /**
     Gets the length of a `MathVector`.
@@ -98,7 +98,7 @@ impl MathVector {
 impl std::ops::Add for MathVector {
     type Output = Self;
     fn add(self, other: Self) -> MathVector {
-        match self.dimension() == other.dimension {
+        match self.dimension() == &other.dimension {
             true  =>  { 
                 let mut vals: Vec<f64> = Vec::with_capacity(self.dimension);
                 for i in 0..self.dimension {
@@ -119,7 +119,7 @@ impl std::ops::Sub for MathVector {
         match self.dimension() == other.dimension() {
             true  =>  { 
                 let mut vals: Vec<f64> = Vec::with_capacity(self.dimension);
-                for i in 0..self.dimension() {
+                for i in 0..self.dimension {
                     vals.push(self.values[i] - other.values[i]);
                 }
                 MathVector { values:    vals,
@@ -178,8 +178,7 @@ impl std::fmt::Display for MathVector {
             finstring =  " ".to_owned() + &finstring + &self.values[i].to_string() + "; ";
         }
         finstring.drain(finstring.len()-2..finstring.len());
-        finstring = finstring + " )";
-        write!(f, "{}", finstring)
+        write!(f, "{} )", finstring)
     }
 }
 
