@@ -152,12 +152,12 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
                  length:    None }
 }
 
-    /**
-    Creates a new `MathVector` more elegantly from values..
+/**
+Creates a new `MathVector` more elegantly from values.
 
-    # Returns
-    A new `MathVector`.
-    */
+# Returns
+A new `MathVector`.
+*/
 #[macro_export]
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
