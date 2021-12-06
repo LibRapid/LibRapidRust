@@ -32,9 +32,6 @@ pub trait DecimalLeftShift<T> {
     /**
     Multiplies by 10 (shifts the decimal places to the left by 1) while being more efficient.
 
-    # Arguments
-    * `n` - The number to be multiplied by 10.
-
     # Returns
     The new shifted number.
     */
