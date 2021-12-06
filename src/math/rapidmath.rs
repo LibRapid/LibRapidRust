@@ -11,6 +11,18 @@ pub enum TempConversion {
     CelsiusToKelvin,
     KelvinToCelsius,
 }
+/**
+ Trait for the cross sum of a given number.
+ */
+pub trait CrossSum<T> {
+    /**
+    Calculates the cross sum of a number.
+
+    # Returns
+    A `usize` containing the result.
+    */
+    fn cross_sum(&self) -> usize;
+}
 
 /**
 Trait for left-shifting decimal-numbers.
@@ -29,10 +41,6 @@ pub trait DecimalLeftShift<T> {
     #[deprecated(note = "This feature is deprecated, as it has not been proven to be faster than multiplying by 10. Use at your own risk.")]
     fn dec_lshift(&self) -> T;
 }
-
-/**
- Trait for different mathematical means.
- */ 
 
 /**
 Trait for mapping numbers to another number range.
@@ -59,6 +67,18 @@ pub trait MapToNumRange<T> {
     ```
     */
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
+}
+
+impl<T: std::fmt::Display> CrossSum<T> for T {
+    fn cross_sum(&self) -> usize {
+        let self_str: String = self.to_string();
+        let mut res_str: String = "".to_string();
+        
+        for c in self_str.chars() {
+            res_str += &c.to_string();
+        }
+        self_str.parse::<usize>().unwrap()
+    }
 }
 
 impl<T: std::ops::Add<Output = T> + 
