@@ -72,3 +72,22 @@ fn test_intersection() {
     let c:  Set<i32> = s.intersection(&s2);
     assert_eq!(c, Set::new(vec![0,1,2,3]));
 }
+
+#[test]
+fn test_vec_len_speed() {
+    use crate::math::vectors::MathVector;
+    use std::time::Instant;
+
+    let mut v1: MathVector = MathVector::new(&vec![0.,2.5,4.]);
+    let now:    Instant    = Instant::now();
+    for _ in 0..=10 {
+        for _ in 0..=1_000_000 {
+            v1.set_values(&vec![0.,2.5,4.]);
+            v1.length();
+            v1.set_values(&vec![0.,0.,0.]);
+        }
+    }
+    let elapsed: u128 = now.elapsed().as_nanos();
+    println!("{} ns Total", elapsed);
+    println!("{} ns Avg / iteration", elapsed as f64 / 1_000_000. / 10.);
+}
