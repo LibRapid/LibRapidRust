@@ -19,7 +19,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     # Returns
     A new set.
     */
-    pub fn new(values: Vec<T>) -> Set<'a, T> {
+    pub fn new(values: &Vec<T>) -> Set<'a, T> {
         Set { elements:    values.clone(),
               cardinality: values.len(),
               superset:    None,
@@ -103,6 +103,25 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     pub fn has_element(&self, elem: &T) -> bool {
         self.elements.contains(elem)
     }
+}
+
+/**
+Creates a new `Set` more elegantly from values.
+
+# Returns
+A new `Set`.
+*/
+#[macro_export]
+macro_rules! new_set {
+    ( $( $a:expr ),* ) => {
+        {
+        let mut temp = Vec::new();
+        $(
+            temp.push($a);
+        )*
+        Set::new(&temp)
+        }
+    };
 }
 
 impl<T> Set<'_, T> {
