@@ -1,9 +1,11 @@
+use crate::math::sets::Set;
+
 #[test]
 fn test_new_from_parent() {
     use crate::math::sets::Set;
-    let test1:       Set<u8> = Set::new(vec![0,1,2,3,4]);
+    let test1:       Set<u8> = Set::new(&vec![0,1,2,3,4]);
     let from_parent: Set<u8> = Set::<u8>::new_subset(&test1, |x| x % 2 == 0);
-    assert_eq!(from_parent, Set::new(vec![0,2,4]))
+    assert_eq!(from_parent, Set::new(&vec![0,2,4]))
 }
 
 #[test]
@@ -42,7 +44,7 @@ fn test_map_to() {
 fn test_rec_printing() {
     use crate::math::sets::Set;
 
-    let s:  Set<i32> = Set::new(vec![0,1,2,3,4,5,6,7,8,9,10]);
+    let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     let s1: Set<i32> = Set::new_subset(&s, |x| x % 2 == 0);
     let s2: Set<i32> = Set::new_subset(&s1, |x| x == 4);
 
@@ -55,22 +57,22 @@ fn test_rec_printing() {
 fn test_union() {
     use crate::math::sets::Set;
 
-    let s:  Set<i32> = Set::new(vec![0,1,2,3,4,5,6,7,8,9,10]);
-    let s1: Set<i32> = Set::new(vec![11,12,13,13,11,0,0,0]);
+    let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    let s1: Set<i32> = Set::new(&vec![11,12,13,13,11,0,0,0]);
 
     let c:  Set<i32> = s.union(&s1);
-    assert_eq!(c, Set::new(vec![0,1,2,3,4,5,6,7,8,9,10,11,12,13]));
+    assert_eq!(c, Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10,11,12,13]));
 }
 
 #[test]
 fn test_intersection() {
     use crate::math::sets::Set;
 
-    let s:  Set<i32> = Set::new(vec![0,1,2,3,4,5,6,7,8,9,10]);
-    let s2: Set<i32> = Set::new(vec![0,1,2,3,11,0,0,0]);
+    let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    let s2: Set<i32> = Set::new(&vec![0,1,2,3,11,0,0,0]);
 
     let c:  Set<i32> = s.intersection(&s2);
-    assert_eq!(c, Set::new(vec![0,1,2,3]));
+    assert_eq!(c, Set::new(&vec![0,1,2,3]));
 }
 
 #[test]
@@ -91,4 +93,11 @@ fn test_vec_len_speed() {
     let elapsed: u128 = now.elapsed().as_nanos();
     println!("{} ns Total", elapsed);
     println!("{} ns Avg / iteration", elapsed as f64 / 1_000_000. / 10.);
+}
+
+#[test]
+fn test_set_macro() {
+    use crate::new_set;
+    let set: Set<i32> = new_set!(0,1,2,3,4,5,6,-1);
+    println!("{}", set);
 }
