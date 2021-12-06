@@ -88,10 +88,12 @@ pub fn assign_codes(root: &Box<Node>,
 
         None => {
             if let Some(ref l) = root.left
-            { bitvec.push(false); assign_codes(l, hashmap, bitvec); }
+            { bitvec.push(false);
+              assign_codes(l, hashmap, bitvec); }
 
             if let Some(ref r) = root.right
-            { bitvec.push(true); assign_codes(r, hashmap, bitvec); }
+            { bitvec.push(true);
+              assign_codes(r, hashmap, bitvec); }
         }
     }
     bitvec.pop();
