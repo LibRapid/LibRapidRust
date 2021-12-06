@@ -14,7 +14,10 @@ pub enum TempConversion {
 
 /**
 Trait for left-shifting decimal-numbers.
+# WARNING
+*** This feature is deprecated, as it has not been proven to be faster than multiplying by 10.***
 */
+#[deprecated(note = "This feature is deprecated, as it has not been proven to be faster than multiplying by 10.")]
 pub trait DecimalLeftShift<T> {
     /**
     Multiplies by 10 (shifts the decimal places to the left by 1) while being more efficient.
@@ -24,7 +27,11 @@ pub trait DecimalLeftShift<T> {
 
     # Returns
     The new shifted number.
+
+    # WARNING
+*** This feature is deprecated, as it has not been proven to be faster than multiplying by 10.***
     */
+    #[deprecated(note = "This feature is deprecated, as it has not been proven to be faster than multiplying by 10.")]
     fn dec_lshift(&self) -> T;
 }
 
@@ -73,6 +80,7 @@ impl<T: std::ops::Add<Output = T> +
         std::ops::Shl<usize,Output = T> + 
         Copy> DecimalLeftShift<T> for T {
             fn dec_lshift (&self) -> T {
+
                 (*self << 1) + (*self << 3)
             }
 }
