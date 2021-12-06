@@ -76,9 +76,10 @@ fn test_intersection() {
 #[test]
 fn test_vec_len_speed() {
     use crate::math::vectors::MathVector;
+    use crate::new_mathvec;
     use std::time::Instant;
 
-    let mut v1: MathVector = MathVector::new(&vec![0.,2.5,4.]);
+    let mut v1: MathVector = new_mathvec!(0.,2.5,4.);
     let now:    Instant    = Instant::now();
     for _ in 0..=10 {
         for _ in 0..=1_000_000 {
