@@ -1,5 +1,3 @@
-use crate::math::sets::Set;
-
 #[test]
 fn test_new_from_parent() {
     use crate::math::sets::Set;
@@ -98,6 +96,8 @@ fn test_vec_len_speed() {
 #[test]
 fn test_set_macro() {
     use crate::new_set;
+    use crate::math::sets::Set;
     let set: Set<i32> = new_set!(0,1,2,3,4,5,6,-1);
-    println!("{}", set);
+    assert_eq!(set.to_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
+    assert_eq!(set.to_full_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
 }
