@@ -137,7 +137,7 @@ pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec
 }
 
 fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
-    let mut res:     String     = "".to_string();
+    let mut res:     String     = String::new();
     let mut nodeptr: &Box<Node> = root;
 
     for b in bitvec {
