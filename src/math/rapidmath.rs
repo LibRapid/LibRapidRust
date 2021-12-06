@@ -71,15 +71,6 @@ impl<T: std::ops::Add<Output = T> +
             }
         }
 
-impl<T: std::ops::Add<Output = T> + 
-        std::ops::Shl<usize,Output = T> + 
-        Copy> DecimalLeftShift<T> for T {
-            fn dec_lshift (&self) -> T {
-
-                (*self << 1) + (*self << 3)
-            }
-}
-
 /**
 Performs a temperature conversion.
 
