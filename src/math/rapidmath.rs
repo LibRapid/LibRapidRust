@@ -69,7 +69,7 @@ pub trait MapToNumRange<T> {
 impl<T: std::fmt::Display> CrossSum<T> for T {
     fn cross_sum(&self) -> usize {
         let self_str: String = self.to_string();
-        let mut res_str: String = "".to_string();
+        let mut res_str: String = String::new();
         
         for c in self_str.chars() {
             res_str += &c.to_string();
