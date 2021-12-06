@@ -6,7 +6,7 @@ license = "MIT"
 description = "LibRapid - a library specifically built for mathematical calculations and scientific applications."
 homepage = "http://librapid.org"
 readme = "readme.md"
-keywords = ["maths", "scientific", "beta", "computerscience", "compsci", "mathematics"]
+keywords = ["maths", "scientific", "beta", "computerscience", "compsci"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
