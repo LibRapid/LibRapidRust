@@ -56,14 +56,14 @@ impl MathVector {
     */
     pub fn length(self: &mut Self) -> f64 {
         match self.length {
-            None        => { let mut len: f64 = 0f64; 
-                             for i in &self.values {
-                                 len += i * i;
+            None          => { let mut len: f64 = 0f64; 
+                               for i in &self.values {
+                                   len += i * i;
+                               }
+                               len = len.sqrt();
+                               self.length = Some(len);
+                               return len;
                              }
-                             len = len.sqrt();
-                             self.length = Some(len);
-                             return len;
-                           }
             Some(len) => { return len; }
 
         }
