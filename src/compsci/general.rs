@@ -10,10 +10,8 @@ pub trait BinayInsert<T> {
 
     # Returns
     Nothing.
-
-    ## WARNING
-    When the given `vec` has multiple identical elements (which are close to the `value` to be inserted), you may need to resort after insertion. This will likely be fixed in future versions.
     
+    # Warning
     This function ***will not*** check if the parsed `vec` is sorted. 
     */
     fn binary_insert(&mut self, value: &T);
