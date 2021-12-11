@@ -23,7 +23,22 @@ pub trait CrossSum<T> {
     */
     fn cross_sum(&self) -> usize;
 }
+/**
+ Trait for temperature conversion.
+ */
+pub trait TempConversionTrait {
+    /**
+    Performs a temperature conversion.
 
+    # Arguments
+    * `&self` - The value to be converted.
+    * `mode` - The mode ( e.g. CelsiusToFahrenheit ).
+
+    # Returns
+    A `Self` containing the result.
+    */
+    fn temp_conversion(&self, mode: TempConversion) -> Self;
+}
 /**
 Trait for left-shifting decimal-numbers.
 */
@@ -88,23 +103,28 @@ impl<T: std::ops::Add<Output = T> +
             }
         }
 
-/**
-Performs a temperature conversion.
+impl TempConversionTrait for f64 {
+    fn temp_conversion(&self, mode: TempConversion) -> f64 {
+        match mode {
+            TempConversion::CelsiusToFahrenheit => { return self * 1.8 + 32.0; }
+            TempConversion::CelsiusToKelvin     => { return self + 273.15; }
+            TempConversion::FahrenheitToCelsius => { return (self - 32.0) / 1.8; }
+            TempConversion::FahrenheitToKelvin  => { return (self - 32.0) / 1.8 + 273.15; }
+            TempConversion::KelvinToCelsius     => { return self - 273.15; }
+            TempConversion::KelvinToFahrenheit  => { return (self - 273.15) * 1.8 + 32.0; }
+        }
+    }
+}
 
-# Arguments
-* `mode` - The mode ( e.g. CelsiusToFahrenheit ).
-* `value` - The value to be converted.
-
-# Returns
-A `f64` containing the result.
-*/
-pub fn temp_conversion(mode: TempConversion, value: &f64) -> f64 {
-    match mode {
-        TempConversion::CelsiusToFahrenheit => { return value * 1.8 + 32.0; }
-        TempConversion::CelsiusToKelvin     => { return value + 273.15; }
-        TempConversion::FahrenheitToCelsius => { return (value - 32.0) / 1.8; }
-        TempConversion::FahrenheitToKelvin  => { return (value - 32.0) / 1.8 + 273.15; }
-        TempConversion::KelvinToCelsius     => { return value - 273.15; }
-        TempConversion::KelvinToFahrenheit  => { return (value - 273.15) * 1.8 + 32.0; }
+impl TempConversionTrait for f32 {
+    fn temp_conversion(&self, mode: TempConversion) -> f32 {
+        match mode {
+            TempConversion::CelsiusToFahrenheit => { return self * 1.8 + 32.0; }
+            TempConversion::CelsiusToKelvin     => { return self + 273.15; }
+            TempConversion::FahrenheitToCelsius => { return (self - 32.0) / 1.8; }
+            TempConversion::FahrenheitToKelvin  => { return (self - 32.0) / 1.8 + 273.15; }
+            TempConversion::KelvinToCelsius     => { return self - 273.15; }
+            TempConversion::KelvinToFahrenheit  => { return (self - 273.15) * 1.8 + 32.0; }
+        }
     }
 }
