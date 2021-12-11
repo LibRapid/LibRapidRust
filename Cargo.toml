@@ -1,18 +1,18 @@
 [package]
-name = "lib_rapid"
-version = "0.0.52"
-authors = ["Maximilian 'NervousNullPtr' Schleicher <NervousNullPtr@librapid.org>"]
-license = "MIT"
+name        = "lib_rapid"
+version     = "0.0.52"
+authors     = ["Maximilian 'NervousNullPtr' Schleicher <NervousNullPtr@librapid.org>"]
+license     = "MIT"
 description = "LibRapid - a library specifically built for mathematical calculations and scientific applications."
-homepage = "http://librapid.org"
-readme = "readme.md"
-keywords = ["maths", "scientific", "beta", "computerscience", "compsci"]
-edition = "2021"
+homepage    = "http://librapid.org"
+readme      = "readme.md"
+keywords    = ["maths", "scientific", "beta", "computerscience", "compsci"]
+edition     = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 bit-vec = "0.6.3"
 bincode = "1.3.3"
-plain = " 0.2.3"
-serde = { version = "1.0.130", features = ["derive"] }
+plain   = "0.2.3"
+serde   = { version = "1.0.130", features = ["derive"] }
