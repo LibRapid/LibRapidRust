@@ -62,6 +62,7 @@ pub trait MapToNumRange<T> {
     Maps a given number of a range onto another range.
 
     # Arguments
+    * `self` - The value which is to be mapped.
     * `start1` - The original start value of the number range.
     * `end1` - The original end value of the number range.
     * `start2` - The new start value of the number range.
