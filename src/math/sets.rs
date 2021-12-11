@@ -217,7 +217,7 @@ impl<T: ToString> std::fmt::Display for Set<'_, T> {
             res += &(" ".to_owned() + &elem.to_string() + ";");
         }
         res.pop();
-        res += " ";
+        res.push(' ');
         write!(f, "{}}}", res)
     }
 }
