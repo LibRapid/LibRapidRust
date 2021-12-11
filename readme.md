@@ -16,7 +16,7 @@ the best possible user experience and consistency over all libraries.
 Why X? Why Y?
 -----
 
-Sometimes I have to yank some versions because of critical bugs or something else happens. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
+Sometimes I have to yank some versions because of critical bugs or something else. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
 
 Contributing
 -----
@@ -25,13 +25,13 @@ You want to contribute? Sure! You can contribute with:
 
 - 🚩 Issues
 - 🙇 Pull Requests
-- 💡 Feature Suggestions (With Issues)
+- 💡 Feature Suggestions (Via Issues)
 
 Documentation
 -----
 
 Depending on the current published LibRapid version and how many crates are in queue on docs.rs, you may need to build the docs yourself.
-To do that, simply git-clone this repository and then run `cargo doc`. After that, your documentation should be ready in src/target/doc/index.html.
+To do that, simply git-clone this repository and then run `cargo doc`. After that, your documentation should be ready in `src/target/doc/index.html`.
 
 How does it work?
 -----
@@ -43,7 +43,3 @@ Performance
 -----
 
 LibRapid for Rust is fully optimized - meaning your calculations for game scripts and maths will be faster as a result. All functions that are implemented bring new features to Rust, while being optimized for speed.
-
-Maintainer
------
-The main maintainer of this repository is @NervousNullPtr. The secondary maintainer is @Pencilcaseman.
