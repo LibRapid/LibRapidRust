@@ -4,21 +4,21 @@ The mathematical constant Pi squared over 6.
 # Returns
 a f64 containing the first 16+1 decimal places of Pi squared over 6. Rounded.
 */
-pub const PISQRDIV6:    f64 = 1.644934066848226;
+pub const PISQRDIV6:   f64 = 1.644934066848226;
 /**
 The mathematical constant 180 / Pi.
 
 # Returns
 a f64 containing the first 16+2 decimal places of 180 / Pi. Rounded.
 */
-pub const RADDEGRATE:   f64 = 57.295779513082321;
+pub const RADDEGRATE:  f64 = 57.295779513082321;
 /**
 The mathematical constant Pi / 180.
 
 # Returns
 a f64 containing the first 16+1 decimal places of Pi / 180. Rounded.
 */
-pub const DEGRADRATE:   f64 = 0.017453292519943;
+pub const DEGRADRATE:  f64 = 0.017453292519943;
 /**
 The mathematical constant Pi.
 
