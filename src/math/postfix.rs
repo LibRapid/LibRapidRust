@@ -1,5 +1,5 @@
 /**
-Evaluate a mathematical expression in postfix notation ("Reverse Polish Notation") at compile time.
+Evaluate a mathematical expression in postfix notation ("Reverse Polish Notation") at compile time. greater than, less than etc. are also possible.
 
 # Returns
 The result of the calculation.
@@ -49,6 +49,31 @@ macro_rules! eval_postfix {
     // Modulo
     ($call_stack:tt % $($leftover:tt)*) => {
         eval_postfix!(@operator $call_stack % $($leftover)*)
+    };
+
+    // Greater than
+    ($call_stack:tt > $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack > $($leftover)*)
+    };
+
+    // Greater than or equal to
+    ($call_stack:tt >= $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack >= $($leftover)*)
+    };
+
+    // Less than
+    ($call_stack:tt < $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack < $($leftover)*)
+    };
+
+    // Less than or equal to
+    ($call_stack:tt <= $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack <= $($leftover)*)
+    };
+
+    // Equals
+    ($call_stack:tt == $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack == $($leftover)*)
     };
 
     // Recursively call macro with the rest of the expression
