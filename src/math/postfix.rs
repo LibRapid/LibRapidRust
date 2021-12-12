@@ -4,6 +4,19 @@ Evaluate a mathematical expression in postfix notation ("Reverse Polish Notation
 # Returns
 The result of the calculation.
 
+# Supported Operators
+* `+`
+* `-`
+* `*`
+* `/`
+* `%`
+* `>`
+* `>=`
+* `<`
+* `<=`
+* `==`
+* `!=`
+
 # Examples
 ```
 use crate::eval_postfix;
