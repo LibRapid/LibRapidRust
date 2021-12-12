@@ -18,9 +18,9 @@ macro_rules! eval_postfix {
     
     // Could not apply operator
     (@operator $call_stack:tt $operator:tt $($leftover:tt)*) => {
-        compile_error!(concat!("Could not apply operator \"",
+        compile_error!(concat!("Could not apply operator `",
                                 stringify!($operator),
-                                "\" to the current call stack: ",
+                                "` to the current call stack: ",
                                 stringify!($call_stack)
                             )
                     )
