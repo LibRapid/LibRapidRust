@@ -77,3 +77,9 @@ fn test_set_macro() {
     assert_eq!(set.to_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
     assert_eq!(set.to_full_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
 }
+
+#[test]
+fn test_postfix() {
+    use crate::eval_postfix;
+    assert_eq!(0f32, eval_postfix!(1f32 1f32 + 2f32 %));
+}
