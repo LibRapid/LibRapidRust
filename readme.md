@@ -25,7 +25,7 @@ You want to contribute? Sure! You can contribute with:
 
 - 🚩 Issues
 - 🙇 Pull Requests
-- 💡 Feature Suggestions (Via Issues)
+- 💡 Feature Suggestions (Via Discussions)
 
 Documentation
 -----
