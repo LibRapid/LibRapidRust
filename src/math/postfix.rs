@@ -76,6 +76,11 @@ macro_rules! eval_postfix {
         eval_postfix!(@operator $call_stack == $($leftover)*)
     };
 
+    // Not equals
+    ($call_stack:tt != $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack != $($leftover)*)
+    };
+
     // Recursively call macro with the rest of the expression
     ([$($call_stack:expr),*] $num:tt $($leftover:tt)*) => {
         eval_postfix!([$num $(,$call_stack)*] $($leftover)*)
