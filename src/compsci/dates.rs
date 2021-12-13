@@ -1,6 +1,5 @@
-/**
-Simple Dates. Do not expect anything fancy from this part of the library, as the focus does not lie on date-functions.
-*/
+//! Simple Dates. Do not expect anything fancy from this part of the library, as the focus does not lie on date-functions.
+/// The structure for dates in LibRapid.
 pub struct Date {
     year:      i32,
     month:     u8,
@@ -12,17 +11,15 @@ pub struct Date {
 }
 
 impl Date {
-    /**
-    Initializes a new date with the given parameters.
-
-    # Arguments
-    * `year` - The Year.
-    * `month` - The month.
-    * `day` - The day.
-
-    # Returns
-    `none` if the date is invalid, otherwise a new date.
-    */
+    /// Initializes a new date with the given parameters.
+    ///
+    /// # Arguments
+    /// * `year` - The Year.
+    /// * `month` - The month.
+    /// * `day` - The day.
+    ///
+    /// # Returns
+    /// `none` if the date is invalid, otherwise a new date.
     pub fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
         if is_valid_day(year, month, day) {
             return Option::Some(Date { year,
@@ -36,17 +33,15 @@ impl Date {
         }
         return None;
     }
-    /**
-    Adds a given amount of hours to the initialised date.
-
-    #Arguments
-    * `hour` - The hour.
-    * `minute` - The minute.
-    * `second` - The second.
-
-    # Returns
-    Nothing.
-    */
+    /// Adds a given amount of hours to the initialised date.
+    ///
+    /// #Arguments
+    /// * `hour` - The hour.
+    /// * `minute` - The minute.
+    /// * `second` - The second.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn with_hms(&mut self, hour: u8, minute: u8, second: u8) {
         match is_valid_hms(hour, minute, second) {
             true  => { 
@@ -56,32 +51,26 @@ impl Date {
             false => { core::panic!("Error: Expected valid hour, minute and second.") }
         }
     }
-    /**
-    Checks if a year is a leap year.
-
-    # Returns
-    A boolean value.
-    */
+    /// Checks if a year is a leap year.
+    ///
+    /// # Returns
+    /// A boolean value.
     pub fn leap_year(&self) -> &bool {
         &self.leap_year
     }
 
-    /**
-    Gets the year.
-
-    # Returns
-    A `&i32`.
-    */
+    /// Gets the year.
+    ///
+    /// # Returns
+    /// A `&i32`.
     pub fn year(&self) -> &i32 {
         &self.year
     }
 
-    /**
-    Sets the year.
-
-    # Returns
-    Nothing.
-    */
+    /// Sets the year.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn set_year(&mut self, year: i32) {
         match is_valid_day(year, self.month, self.day) {
             true  => { self.leap_year = is_leap_year(year); }
@@ -90,22 +79,18 @@ impl Date {
         self.year = year;
     }
 
-    /**
-    Gets the month.
-
-    # Returns
-    A `&u8`.
-    */
+    /// Gets the month.
+    ///
+    /// # Returns
+    /// A `&u8`.
     pub fn month(&self) -> &u8 {
         &self.month
     }
 
-    /**
-    Sets the month.
-
-    # Returns
-    Nothing.
-    */
+    /// Sets the month.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn set_month(&mut self, month: u8) {
         match is_valid_day(self.year, month, self.day) {
             true  => { self.month = month; }
@@ -114,22 +99,18 @@ impl Date {
     }
 
 
-    /**
-    Gets the day.
-
-    # Returns
-    A `&u8`.
-    */
+    /// Gets the day.
+    ///
+    /// # Returns
+    /// A `&u8`.
     pub fn day(&self) -> &u8 {
         &self.day
     }
 
-    /**
-    Sets the day.
-
-    # Returns
-    Nothing.
-    */
+    /// Sets the day.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn set_day(&mut self, day: u8) {
         match is_valid_day(self.year, self.month, day) {
             true  => { self.day = day; }
@@ -137,22 +118,18 @@ impl Date {
         }
     }
 
-    /**
-    Gets the hour.
-
-    # Returns
-    A `&u8`.
-    */
+    /// Gets the hour.
+    ///
+    /// # Returns
+    /// A `&u8`.
     pub fn hour(&self) -> &u8 {
         &self.hour
     }
 
-    /**
-    Sets the hour.
-
-    # Returns
-    Nothing.
-    */
+    /// Sets the hour.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn set_hour(&mut self, hour: u8) {
         match is_valid_hms(hour, self.minute, self.second) {
             true  => { self.hour = hour; }
@@ -160,22 +137,18 @@ impl Date {
         }
     }
 
-    /**
-    Gets the minute.
-
-    # Returns
-    A `&u8`.
-    */
+    /// Gets the minute.
+    ///
+    /// # Returns
+    /// A `&u8`.
     pub fn minute(&self) -> &u8 {
         &self.minute
     }
 
-    /**
-    Sets the minute.
-
-    # Returns
-    Nothing.
-    */
+    /// Sets the minute.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn set_minute(&mut self, minute: u8) {
         match is_valid_hms(self.hour, minute, self.second) {
             true  => { self.minute = minute; }
@@ -183,22 +156,18 @@ impl Date {
         }
     }
 
-    /**
-    Gets the second.
-
-    # Returns
-    A `&u8`.
-    */
+    /// Gets the second.
+    ///
+    /// # Returns
+    /// A `&u8`.
     pub fn second(&self) -> &u8 {
         &self.second
     }
 
-    /**
-    Sets the second.
-
-    # Returns
-    Nothing.
-    */
+    /// Sets the second.
+    ///
+    /// # Returns
+    /// Nothing.
     pub fn set_second(&mut self, second: u8) {
         match is_valid_hms(self.hour, self.minute, second) {
             true  => { self.second = second; }
@@ -226,14 +195,12 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
     return false;
 }
 
-/**
-Checks if a year is a leap year.
-
-# Arguments
-* `year` - The year to be checked.
-# Returns
-A boolean value.
-*/
+/// Checks if a year is a leap year.
+///
+/// # Arguments
+/// * `year` - The year to be checked.
+/// # Returns
+/// A boolean value.
 pub fn is_leap_year(year: i32) -> bool {
     year & 3 == 0 && (year & 24 == 0 || year & 15 == 0)
 }

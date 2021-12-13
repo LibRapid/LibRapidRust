@@ -1,28 +1,27 @@
-/**
-Evaluate a mathematical expression in postfix notation ("Reverse Polish Notation") at compile time. greater than, less than etc. are also possible.
-
-# Returns
-The result of the calculation.
-
-# Supported Operators
-* `+`
-* `-`
-* `*`
-* `/`
-* `%`
-* `>`
-* `>=`
-* `<`
-* `<=`
-* `==`
-* `!=`
-
-# Examples
-```
-use crate::eval_postfix;
-println!("{}", eval_postfix!(1f32 1f32 + 2f32 %)); // Prints "0", because (1 + 1) % 2 = 0.
-```
-*/
+//! In here is the macro `eval_postfix!` defined. With that, you can evaluate expressions in reverse polish notation at compile time. Handy, isn't it?
+/// Evaluate a mathematical expression in postfix notation ("Reverse Polish Notation") at compile time. greater than, less than etc. are also possible.
+///
+/// # Returns
+/// The result of the calculation.
+///
+/// # Supported Operators
+/// * `+`
+/// * `-`
+/// * `*`
+/// * `/`
+/// * `%`
+/// * `>`
+/// * `>=`
+/// * `<`
+/// * `<=`
+/// * `==`
+/// * `!=`
+///
+/// # Examples
+/// ```
+/// use crate::eval_postfix;
+/// println!("{}", eval_postfix!(1f32 1f32 + 2f32 %)); // Prints "0", because (1 + 1) % 2 = 0.
+/// ```
 #[macro_export]
 macro_rules! eval_postfix {
     (@operator [$b:expr, $a:expr $(,$call_stack:expr)*] $operator:tt $($leftover:tt)*) => {
@@ -120,3 +119,5 @@ macro_rules! eval_postfix {
         eval_postfix!([] $($tokens)*)
     };
 }
+
+pub use eval_postfix;

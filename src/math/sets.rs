@@ -1,6 +1,5 @@
-/**
-Brings mathematical sets into Rust.
-*/
+//! Diving deeper into mathematics, huh? In here you'll find mathematical sets - Sometimes pretty handy!
+/// Brings mathematical sets into Rust.
 #[derive(Debug, Clone)]
 pub struct Set<'a, T> {
     elements:    Vec<T>,
@@ -10,31 +9,27 @@ pub struct Set<'a, T> {
 
 // Main impl
 impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
-    /**
-    Creates a new Set.
-
-    # Arguments
-    * `values` - The values for the set.
-
-    # Returns
-    A new set.
-    */
+    /// Creates a new Set.
+    ///
+    /// # Arguments
+    /// * `values` - The values for the set.
+    ///
+    /// # Returns
+    /// A new set.
     pub fn new(values: &Vec<T>) -> Set<'a, T> {
         Set { elements:    values.clone(),
               cardinality: values.len(),
               superset:    None,
             }
     }
-    /**
-    Creates a new Set using a parent-Set to which it applies a closure.
-
-    # Arguments
-    * `parent` - The Set from which the new set emerges.
-    * `f` - The closure after which the new set is created.
-
-    # Returns
-    A child Set.
-    */
+    /// Creates a new Set using a parent-Set to which it applies a closure.
+    ///
+    /// # Arguments
+    /// * `parent` - The Set from which the new set emerges.
+    /// * `f` - The closure after which the new set is created.
+    ///
+    /// # Returns
+    /// A child Set.
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements:    Vec::new(),
                                         cardinality: 0,
@@ -48,16 +43,14 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
             res.cardinality = res.elements.len();
             res
     }
-    /**
-    Does a mathematical union on two sets.
-
-    # Arguments
-    * `self` - The first set.
-    * `other` - The second set.
-
-    # Returns
-    A new set containing the union of both sets.
-    */
+    /// Does a mathematical union on two sets.
+    ///
+    /// # Arguments
+    /// * `self` - The first set.
+    /// * `other` - The second set.
+    ///
+    /// # Returns
+    /// A new set containing the union of both sets.
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements:    Vec::new(),
                                    cardinality: 0,
@@ -72,16 +65,14 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
         res.cardinality = res.elements.len();
         res
     }
-    /**
-    Does a mathematical intersection on two sets.
-
-    # Arguments
-    * `self` - The first set.
-    * `other` - The second set.
-
-    # Returns
-    A new set containing the intersection of both sets.
-    */
+    /// Does a mathematical intersection on two sets.
+    ///
+    /// # Arguments
+    /// * `self` - The first set.
+    /// * `other` - The second set.
+    ///
+    /// # Returns
+    /// A new set containing the intersection of both sets.
     pub fn intersection(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = self.clone();
 
@@ -91,26 +82,22 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
         res.cardinality = res.elements.len();
         res
     }
-    /**
-    Lets you check for an element in a set.
-
-    # Arguments
-    * `elem` - The element to check for.
-
-    # Returns
-    A boolean value which determines if the element is in the set.
-    */ 
+    /// Lets you check for an element in a set.
+    ///
+    /// # Arguments
+    /// * `elem` - The element to check for.
+    ///
+    /// # Returns
+    /// A boolean value which determines if the element is in the set. 
     pub fn has_element(&self, elem: &T) -> bool {
         self.elements.contains(elem)
     }
 }
 
-/**
-Creates a new `Set` more elegantly from values.
-
-# Returns
-A new `Set`.
-*/
+/// Creates a new `Set` more elegantly from values.
+///
+/// # Returns
+/// A new `Set`.
 #[macro_export]
 macro_rules! new_set {
     ( $( $a:expr ),* ) => {
@@ -125,67 +112,55 @@ macro_rules! new_set {
 }
 
 impl<T> Set<'_, T> {
-    /**
-    Lets you check wether a set has a parent or not.
-
-    # Returns
-    A boolean value which determines if the set has a value.
-    */ 
+    /// Lets you check wether a set has a parent or not.
+    ///
+    /// # Returns
+    /// A boolean value which determines if the set has a value. 
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
-    /**
-    Gets the cardinality of a set.
-
-    # Returns
-    A `&usize`.
-    */ 
+    /// Gets the cardinality of a set.
+    ///
+    /// # Returns
+    /// A `&usize`. 
     pub fn cardinality(&self) -> &usize {
         &self.cardinality
     }
-    /**
-    Lets you set the elements of a set.
-
-    # Arguments
-    * `vals` - The Vec to change the values to.
-
-    # Returns
-    Nothing.
-    */ 
+    /// Lets you set the elements of a set.
+    ///
+    /// # Arguments
+    /// * `vals` - The Vec to change the values to.
+    ///
+    /// # Returns
+    /// Nothing. 
     pub fn set_elements(&mut self, vals: Vec<T>) {
         self.elements    = vals;
         self.cardinality = self.elements.len();
     }
-    /**
-    Lets you get the elements of a set.
-
-    # Arguments
-    * none
-
-    # Returns
-    A `&Vec<T>` containing all elements.
-    */ 
+    /// Lets you get the elements of a set.
+    ///
+    /// # Arguments
+    /// * none
+    ///
+    /// # Returns
+    /// A `&Vec<T>` containing all elements. 
     pub fn elements(&self) -> &Vec<T> {
         &self.elements
     }
 }
 
 impl<T: ToString> Set<'_, T> {
-    /**
-    Lets you print a set with all its parents recursively.
-
-    # Returns
-    Nothing.
-    */ 
+    /// Lets you print a set with all its parents recursively.
+    ///
+    /// # Returns
+    /// Nothing. 
     pub fn full_print(&self) {
         print!("{}\n", self.rec_to_string(&mut String::new()));
     }
-    /**
-    Converts a set with all subsets to a string.
-
-    # Returns
-    A String containing the result.
-    */ 
+    /// Converts a set with all subsets to a string.
+    ///
+    /// # Returns
+    /// A String containing the result. 
     pub fn to_full_string(&self) -> String {
         self.rec_to_string(&mut String::new())
     }

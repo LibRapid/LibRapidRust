@@ -1,8 +1,9 @@
+//! Traits and functions for general purpose, everyday mathematics.
+//! Temperature conversion, angle conversion etc. Everything you need.
+
 use super::constants;
 
-/**
-The conversion algorithm to be chosen. Used by `temp_conversion`.
-*/
+/// The conversion algorithm to be chosen. Used by `temp_conversion`.
 pub enum TempConversion {
     CelsiusToFahrenheit,
     FahrenheitToCelsius,
@@ -13,60 +14,44 @@ pub enum TempConversion {
     CelsiusToKelvin,
     KelvinToCelsius,
 }
-/**
-The conversion algorithm to be chosen. Used by `angle_conversion`.
-*/
+/// The conversion algorithm to be chosen. Used by `angle_conversion`.
 pub enum AngleConversion {
     DegreesToRadians,
     RadiansToDegrees,
 }
-/**
- Trait for angle conversion.
- */
+/// Trait for angle conversion.
 pub trait AngleConversionTrait {
-    /**
-    Performs a angle conversion.
-
-    # Arguments
-    * `&self` - The value to be converted.
-    * `mode` - The mode ( e.g. RadiansToDegrees ).
-
-    # Returns
-    A `Self` containing the result.
-    */
+    /// Performs a angle conversion.
+    ///
+    /// # Arguments
+    /// * `&self` - The value to be converted.
+    /// * `mode` - The mode ( e.g. RadiansToDegrees ).
+    ///
+    /// # Returns
+    /// A `Self` containing the result.
     fn angle_conversion(&self, mode: AngleConversion) -> Self;
 }
-/**
- Trait for the cross sum of a given number.
- */
+/// Trait for the cross sum of a given number.
 pub trait CrossSum<T> {
-    /**
-    Calculates the cross sum of a number.
-
-    # Returns
-    A `usize` containing the result.
-    */
+    /// Calculates the cross sum of a number.
+    ///
+    /// # Returns
+    /// A `usize` containing the result.
     fn cross_sum(&self) -> usize;
 }
-/**
- Trait for temperature conversion.
- */
+/// Trait for temperature conversion.
 pub trait TempConversionTrait {
-    /**
-    Performs a temperature conversion.
-
-    # Arguments
-    * `&self` - The value to be converted.
-    * `mode` - The mode ( e.g. CelsiusToFahrenheit ).
-
-    # Returns
-    A `Self` containing the result.
-    */
+    /// Performs a temperature conversion.
+    ///
+    /// # Arguments
+    /// * `&self` - The value to be converted.
+    /// * `mode` - The mode ( e.g. CelsiusToFahrenheit ).
+    ///
+    /// # Returns
+    /// A `Self` containing the result.
     fn temp_conversion(&self, mode: TempConversion) -> Self;
 }
-/**
-Trait for left-shifting decimal-numbers.
-*/
+/// Trait for left-shifting decimal-numbers.
 #[deprecated(note = "This feature is deprecated, as it has not been proven to be faster than multiplying by 10. Use at your own risk.")]
 pub trait DecimalLeftShift<T> {
     /**
@@ -79,31 +64,27 @@ pub trait DecimalLeftShift<T> {
     fn dec_lshift(&self) -> T;
 }
 
-/**
-Trait for mapping numbers to another number range.
-*/
+/// Trait for mapping numbers to another number range.
 pub trait MapToNumRange<T> {
-    /**
-    Maps a given number of a range onto another range.
-
-    # Arguments
-    * `self` - The value which is to be mapped.
-    * `start1` - The original start value of the number range.
-    * `end1` - The original end value of the number range.
-    * `start2` - The new start value of the number range.
-    * `end2` - The new start value of the number range.
-
-    # Returns
-    A number containing the new mapped value.
-
-    # Examples
-    ```
-    use lib_rapid::math::rapidmath::MapToNumRange;
-
-    let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
-    std::println!("{}", result.to_string()) // Prints "0.5"
-    ```
-    */
+    /// Maps a given number of a range onto another range.
+    ///
+    /// # Arguments
+    /// * `self` - The value which is to be mapped.
+    /// * `start1` - The original start value of the number range.
+    /// * `end1` - The original end value of the number range.
+    /// * `start2` - The new start value of the number range.
+    /// * `end2` - The new start value of the number range.
+    ///
+    /// # Returns
+    /// A number containing the new mapped value.
+    ///
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::rapidmath::MapToNumRange;
+    ///
+    /// let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
+    /// std::println!("{}", result.to_string()) // Prints "0.5"
+    /// ```
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
 }
 
