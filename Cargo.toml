@@ -15,5 +15,5 @@ edition     = "2021"
 [dependencies]
 bit-vec = "0.6.3"
 bincode = "1.3.3"
-plain   = "0.2.3"
 serde   = { version = "1.0.130", features = ["derive"] }
+chrono  = "0.4"
