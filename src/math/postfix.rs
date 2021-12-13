@@ -19,7 +19,8 @@
 ///
 /// # Examples
 /// ```
-/// use crate::eval_postfix;
+/// extern crate lib_rapid;
+/// use lib_rapid::math::postfix::eval_postfix;
 /// println!("{}", eval_postfix!(1f32 1f32 + 2f32 %)); // Prints "0", because (1 + 1) % 2 = 0.
 /// ```
 #[macro_export]

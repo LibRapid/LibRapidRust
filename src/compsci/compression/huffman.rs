@@ -1,9 +1,7 @@
 extern crate bit_vec;
 extern crate bincode;
 extern crate serde;
-extern crate plain;
 
-use plain::Plain;
 use core::fmt;
 use std::fs::File;
 use std::io::{Read, Write};
@@ -21,8 +19,6 @@ pub struct Node {
     pub left:      Link,
     pub right:     Link
 }
-
-unsafe impl Plain for Node {}
 
 // This makes it possible to print Nodes
 impl fmt::Display for Node {
@@ -250,7 +246,7 @@ pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
 /// use bit_vec::BitVec;
 /// use std::collections::HashMap;
 ///
-/// let s: &str = "Lorem Ipsum";
+/// let s: &str = "Lorem Ipsum123123123";
 /// let root = get_root(s);
 /// let mut bitvec = BitVec::new();
 /// let mut char_codes: HashMap<char, BitVec> = HashMap::new();
@@ -260,6 +256,7 @@ pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
 /// let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
 /// write_to_file("test".to_string(), &enc, &root);
 /// let dec_written = read_from_file("test".to_string());
+/// assert_eq!(dec_written, "Lorem Ipsum123123123");
 /// ```
 pub fn read_from_file(path: String) -> String {
     let mut encoded_file: File     = File::open(path.clone() + ".hlr").unwrap();
@@ -270,8 +267,9 @@ pub fn read_from_file(path: String) -> String {
     let _                          = encoded_file.read_to_end(&mut enc_file);
     let _                          = tree_file.read_to_end(&mut enc_tree);
     
-    let bitvec: BitVec             = BitVec::from_bytes(&enc_file); // Get final bitvec
-    let root: Box<Node>            = bincode::deserialize(&enc_tree).unwrap();
+    let mut bitvec: BitVec             = BitVec::from_bytes(&enc_file); // Get final bitvec
+    bitvec.pop();
+    let root:   Box<Node>          = bincode::deserialize(&enc_tree).unwrap();
 
     huffman_decode(&bitvec, &root)
 }

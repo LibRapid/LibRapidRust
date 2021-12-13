@@ -1,6 +1,7 @@
 /target/
 *.hlr
 *.htlr
+*.txt
 /.idea/
 /.vscode/
 Cargo.lock

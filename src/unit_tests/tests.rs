@@ -84,3 +84,12 @@ fn test_postfix() {
     assert_eq!(0f32, eval_postfix!(1f32 1f32 + 2f32 %));
     assert_eq!(true, eval_postfix!(1f32 1f32 + 2f32 % 0f32 ==));
 }
+
+#[test]
+fn test_logger() {
+    use crate::compsci::rapidlogging::Logger;
+    let mut l: Logger = Logger::new(3, true, true, "log.txt".to_string());
+    let _ = l.log(Some(vec!["warning", "low urgency"]), "Test-Log.");
+    let _ = l.log(None, "Test-Log.");
+    let _ = l.log(None, "Test-Log.");
+}
