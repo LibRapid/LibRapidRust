@@ -83,7 +83,7 @@ impl Logger {
                         Err(e) => { return Err(format!("Problem opening or creating file: {:?}", e)); },
                     };
                     self.buffer += &out_cns;
-                    match write!(file, "{}", self.buffer) {
+                    match write!(file, "{}\n", self.buffer) {
                         Ok(_) => { },
                         Err(e) => { return Err(format!("Problem writing to file: {:?}", e)); },
                     }
