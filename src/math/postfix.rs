@@ -21,7 +21,7 @@
 /// ```
 /// extern crate lib_rapid;
 /// use lib_rapid::math::postfix::eval_postfix;
-/// println!("{}", eval_postfix!(1f32 1f32 + 2f32 %)); // Prints "0", because (1 + 1) % 2 = 0.
+/// println!("{}", eval_postfix!(1.0 1.0 + 2.0 %)); // Prints "0", because (1 + 1) % 2 = 0.
 /// ```
 #[macro_export]
 macro_rules! eval_postfix {
