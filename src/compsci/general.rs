@@ -1,19 +1,16 @@
-/**
-Trait for `binary_insert`. 
-*/
+//! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
+/// Trait for `binary_insert`.
 pub trait BinayInsert<T> {
-    /**
-    Insert an element into a ***sorted*** `vec` whilst maintaining the order.
-
-    # Arguments
-    * `value` - The value which needs to be inserted.
-
-    # Returns
-    Nothing.
-    
-    # Warning
-    This function ***will not*** check if the parsed `vec` is sorted. 
-    */
+    /// Insert an element into a ***sorted*** `vec` whilst maintaining the order.
+    ///
+    /// # Arguments
+    /// * `value` - The value which needs to be inserted.
+    ///
+    /// # Returns
+    /// Nothing.
+    ///
+    /// # Warning
+    /// This function ***will not*** check if the parsed `vec` is sorted.
     fn binary_insert(&mut self, value: &T);
 }
 

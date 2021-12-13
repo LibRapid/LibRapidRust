@@ -80,7 +80,7 @@ fn test_set_macro() {
 
 #[test]
 fn test_postfix() {
-    use crate::eval_postfix;
+    use crate::math::postfix::eval_postfix;
     assert_eq!(0f32, eval_postfix!(1f32 1f32 + 2f32 %));
     assert_eq!(true, eval_postfix!(1f32 1f32 + 2f32 % 0f32 ==));
 }

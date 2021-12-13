@@ -1,8 +1,7 @@
+//! Vectors can be really handy, sometimes. Do everything you want with your favorite direction pointing data type from mathematics.
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
-/**
-Mathematical Vectors in Rust.
-*/
+/// Mathematical Vectors in Rust.
 pub struct MathVector {
     values:    Vec<f64>,
     dimension: usize,
@@ -10,50 +9,42 @@ pub struct MathVector {
 }
 
 impl MathVector {
-    /**
-    Creates a new `MathVector`.
-
-    # Arguments
-    * `values` - The values for the new MathVector.
-
-    # Returns
-    A new MathVector.
-    */
+    /// Creates a new `MathVector`.
+    ///
+    /// # Arguments
+    /// * `values` - The values for the new MathVector.
+    ///
+    /// # Returns
+    /// A new MathVector.
     pub fn new(values: &Vec<f64>) -> MathVector {        
         MathVector { values:    values.clone(),
                      dimension: values.len(),
                      length:    None }
     }
-    /**
-    Creates a new `MathVector` with the specified capacity.
-
-    # Arguments
-    * `dim` - The dimension for the new MathVector.
-
-    # Returns
-    A new MathVector with length 0.
-    */
+    /// Creates a new `MathVector` with the specified capacity.
+    ///
+    /// # Arguments
+    /// * `dim` - The dimension for the new MathVector.
+    ///
+    /// # Returns
+    /// A new MathVector with length 0.
     pub fn new_with_dimension(dim: usize) -> MathVector {
 
         MathVector { values:    vec![0f64; dim],
                      dimension: dim,
                      length:    None }
     }
-    /**
-    Gets the dimension in which a `MathVector` lives.
-
-    # Returns
-    A `&usize`.
-    */
+    /// Gets the dimension in which a `MathVector` lives.
+    ///
+    /// # Returns
+    /// A `&usize`.
     pub fn dimension(self: &Self) -> &usize {
         &self.dimension
     }
-    /**
-    Gets the length of a `MathVector`.
-
-    # Returns
-    A `f64`.
-    */
+    /// Gets the length of a `MathVector`.
+    ///
+    /// # Returns
+    /// A `f64`.
     pub fn length(self: &mut Self) -> f64 {
         match self.length {
             None          => { let mut len: f64 = 0f64; 
@@ -68,24 +59,20 @@ impl MathVector {
 
         }
     }
-    /**
-    Gets the values of a `MathVector`.
-
-    # Returns
-    A `&Vec<f64>`.
-    */
+    /// Gets the values of a `MathVector`.
+    ///
+    /// # Returns
+    /// A `&Vec<f64>`.
     pub fn get_values(self: &Self) -> &'_ Vec<f64> {
         &self.values
     }
-    /**
-    Sets the values of a `MathVector`.
-
-    # Arguments
-    * `vals` - The Vector of the new values.
-
-    # Panic
-    Panics if the values don't have the same dimension as before.
-    */
+    /// Sets the values of a `MathVector`.
+    ///
+    /// # Arguments
+    /// * `vals` - The Vector of the new values.
+    ///
+    /// # Panic
+    /// Panics if the values don't have the same dimension as before.
     pub fn set_values(self: &mut Self, vals: &Vec<f64>) {
         match vals.len() == self.dimension {
             true  => { self.values = vals.clone();
@@ -130,16 +117,14 @@ impl std::ops::Sub for MathVector {
         }
     }
 }
-    /**
-    Multiplies a `MathVector` with a scalar product.
-
-    # Arguments
-    * `scalar` - The scalar product.
-    * `other` - The `MathVector` for the calculation.
-
-    # Returns
-    A new `MathVector`.
-    */
+    /// Multiplies a `MathVector` with a scalar product.
+    ///
+    /// # Arguments
+    /// * `scalar` - The scalar product.
+    /// * `other` - The `MathVector` for the calculation.
+    ///
+    /// # Returns
+    /// A new `MathVector`.
 pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
 
     let mut vals: Vec<f64> = Vec::with_capacity(other.dimension);
@@ -152,12 +137,10 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
                  length:    None }
 }
 
-/**
-Creates a new `MathVector` more elegantly from values.
-
-# Returns
-A new `MathVector`.
-*/
+/// Creates a new `MathVector` more elegantly from values.
+///
+/// # Returns
+/// A new `MathVector`.
 #[macro_export]
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
