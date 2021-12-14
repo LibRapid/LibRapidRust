@@ -170,7 +170,7 @@ impl Primality for u8 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i <= *self {
+        while i*i < *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
