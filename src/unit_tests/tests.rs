@@ -93,3 +93,24 @@ fn test_logger() {
     let _ = l.log(None, "Test-Log.");
     let _ = l.log(None, "Test-Log.");
 }
+
+#[test]
+fn test_prime() {
+    use crate::math::rapidmath::Primality;
+    let p:     Vec<u64> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    let mut f: Vec<u64> = Vec::new();
+    for i in 0..100 {
+        if (i as u64).is_prime() { f.push(i as u64); }
+    }
+
+    assert_eq!(p, f);
+}
+
+#[test]
+fn test_prime_sieve() {
+    use crate::math::rapidmath::generate_primes;
+    let p: Vec<usize> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    let f: Vec<usize> = generate_primes(100);
+
+    assert_eq!(p, f);
+}
