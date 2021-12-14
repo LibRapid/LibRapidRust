@@ -269,28 +269,32 @@ impl<T: std::ops::Mul<Output = T> + Copy> Square for T {
 pub fn generate_primes(limit: usize) -> Vec<usize> {
     let mut sieve: Vec<bool> = vec![false; limit];
     for x in (1..).take_while(|n| n * n < limit) {
+        let mut n: usize;
         for y in (1..).take_while(|n| n * n < limit) {
-            let n = 4 * x.square() + y.square();
-            if n <= limit && (n % 12 == 1 || n % 12 == 5) { sieve[n] ^= true; }
 
-            let n = 3 * x.square() + y.square();
-            if n <= limit && n % 12 == 7 { sieve[n] ^= true; }
+            n = 4 * x.square() + y.square();
+            if n <= limit && (n % 12 == 1 || n % 12 == 5)
+            { sieve[n] ^= true; }
+
+            n = 3 * x.square() + y.square();
+            if n <= limit && n % 12 == 7
+            { sieve[n] ^= true; }
 
             if x > y {
-                let n = 3 * x.square() - y.square();
-                if x > y && n <= limit && n % 12 == 11 { sieve[n] ^= true; }
+                n = 3 * x.square() - y.square();
+                if x > y && n <= limit && n % 12 == 11
+                { sieve[n] ^= true; }
             }
         }
     }
     
-    (5..).take_while(|n| n.square() < limit).for_each(|r| {
+    for r in (5..).take_while(|n| n.square() < limit) {
         if sieve[r] {
-            (r.square() .. limit).step_by(r.square())
-            .for_each(|i| sieve.get_mut(i)
-                                 .map(|b| *b = false)
-            .unwrap());
+            for i in (r.square()..limit).step_by(r.square()) {
+                sieve[i] = false;
+            }
         }
-    });
+    }
 
     let mut res: Vec<usize> = Vec::with_capacity(sieve.len());
     res.push(2);
