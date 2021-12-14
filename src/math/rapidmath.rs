@@ -261,6 +261,11 @@ impl<T: std::ops::Mul<Output = T> + Copy> Square for T {
     }
 }
 
+/// Generate a list of prime numbers in the interval `[2;limit[`.
+/// # Arguments
+/// * `limit: usize` The limit up to which the function should search for primes.
+/// # Returns
+/// A `Vec<usize>` containing a list of primes.
 pub fn generate_primes(limit: usize) -> Vec<usize> {
     let mut sieve: Vec<bool> = vec![false; limit];
     for x in (1..).take_while(|n| n * n < limit) {
