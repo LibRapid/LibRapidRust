@@ -267,7 +267,18 @@ impl<T: std::ops::Mul<Output = T> + Copy> Square for T {
 /// # Returns
 /// A `Vec<usize>` containing a list of primes.
 pub fn generate_primes(limit: usize) -> Vec<usize> {
+    match limit {
+        0 | 1 => { return Vec::new(); }
+        2     => { return vec![2]; }
+        3     => { return vec![2, 3]; }
+        _     => { }
+    }
+
+    let mut res: Vec<usize> = Vec::with_capacity(limit);
+    res.push(2);
+    res.push(3);
     let mut sieve: Vec<bool> = vec![false; limit];
+    
     for x in (1..).take_while(|n| n * n < limit) {
         let mut n: usize;
         for y in (1..).take_while(|n| n * n < limit) {
@@ -296,9 +307,6 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
         }
     }
 
-    let mut res: Vec<usize> = Vec::with_capacity(sieve.len());
-    res.push(2);
-    res.push(3);
     for i in 0..sieve.len() {
         if sieve[i] { res.push(i); }
     }
