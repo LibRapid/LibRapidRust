@@ -89,7 +89,7 @@ pub trait MapToNumRange<T> {
 
 /// Square a number. Pretty edgy, isn't it?
 pub trait Square {
-    /// Square a number. Pretty edgy, isn't it?
+    /// Square a number.
     /// # Returns
     /// The square of the number.
     /// # Caution
