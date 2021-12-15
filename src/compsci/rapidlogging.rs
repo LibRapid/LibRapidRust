@@ -38,9 +38,8 @@ impl Logger {
     /// Logs to a `Logger`.
     /// # Returns
     /// A `Result<bool, String>`. `true` if it was successful, otherwise the error message as a `String`.
-    /// # Example
+    /// # Examples
     /// ```
-    /// extern crate lib_rapid;
     /// use lib_rapid::compsci::rapidlogging::Logger;
     /// let mut l: Logger = Logger::new(3, true, true, "log.txt".to_string());
     /// let _ = l.log(None, "Test-Log.");
