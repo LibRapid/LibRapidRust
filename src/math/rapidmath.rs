@@ -87,14 +87,21 @@ pub trait MapToNumRange<T> {
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
 }
 
-/// Square a number. Pretty edgy, isn't it?
-pub trait Square {
+/// Common powers.
+pub trait CommonPowers {
     /// Square a number.
     /// # Returns
     /// The square of the number.
     /// # Caution
     /// This function does not check if overflow occurs.
     fn square(&self) -> Self;
+
+    /// Cube a number.
+    /// # Returns
+    /// The cube of the number.
+    /// # Caution
+    /// This function does not check if overflow occurs.
+    fn cube(&self) -> Self;
 }
 /// Trait for prime functions.
 pub trait Primality {
@@ -255,9 +262,13 @@ impl Primality for u128 {
     }
 }
 
-impl<T: std::ops::Mul<Output = T> + Copy> Square for T {
+impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
     fn square(&self) -> Self {
         *self * *self
+    }
+
+    fn cube(&self) -> Self {
+        *self * *self * *self
     }
 }
 
