@@ -114,3 +114,13 @@ fn test_prime_sieve() {
 
     assert_eq!(p, f);
 }
+
+#[test]
+fn test_square() {
+    use crate::math::rapidmath::CommonPowers;
+    let i = 12;
+    let res = i.square();
+
+    assert_eq!(i, 12);
+    assert_eq!(144, res);
+}

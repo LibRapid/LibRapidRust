@@ -177,7 +177,7 @@ impl Primality for u8 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i < *self {
+        while i.square() < *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
@@ -192,7 +192,7 @@ impl Primality for u16 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i <= *self {
+        while i.square() <= *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
@@ -207,7 +207,7 @@ impl Primality for u32 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i <= *self {
+        while i.square() <= *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
@@ -222,7 +222,7 @@ impl Primality for i32 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i <= *self {
+        while i.square() <= *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
@@ -237,7 +237,7 @@ impl Primality for u64 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i <= *self {
+        while i.square() <= *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
@@ -252,7 +252,7 @@ impl Primality for u128 {
         if self < &2 { return false; }
         let mut i = 2;
 
-        while i*i <= *self {
+        while i.square() <= *self {
             match self % i {
                 0 => { return false; }
                 _ => { i += 1; }
