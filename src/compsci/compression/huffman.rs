@@ -267,7 +267,7 @@ pub fn read_from_file(path: String) -> String {
     let _                          = encoded_file.read_to_end(&mut enc_file);
     let _                          = tree_file.read_to_end(&mut enc_tree);
     
-    let mut bitvec: BitVec             = BitVec::from_bytes(&enc_file); // Get final bitvec
+    let mut bitvec: BitVec         = BitVec::from_bytes(&enc_file); // Get final bitvec
     bitvec.pop();
     let root:   Box<Node>          = bincode::deserialize(&enc_tree).unwrap();
 
