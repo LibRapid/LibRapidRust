@@ -30,6 +30,13 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A child Set.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// let test1:       Set<u8> = Set::new(&vec![0,1,2,3,4]);
+    /// let from_parent: Set<u8> = Set::<u8>::new_subset(&test1, |x| x % 2 == 0);
+    /// assert_eq!(from_parent, Set::new(&vec![0,2,4]))
+    /// ```
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements:    Vec::new(),
                                         cardinality: 0,
@@ -51,6 +58,16 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A new set containing the union of both sets.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// let s1: Set<i32> = Set::new(&vec![11,12,13,13,11,0,0,0]);
+    /// 
+    /// let c:  Set<i32> = s.union(&s1);
+    /// assert_eq!(c, new_set!(0,1,2,3,4,5,6,7,8,9,10,11,12,13));
+    /// ```
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements:    Vec::new(),
                                    cardinality: 0,
@@ -73,6 +90,16 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A new set containing the intersection of both sets.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// let s2: Set<i32> = Set::new(&vec![0,1,2,3,11,0,0,0]);
+    /// 
+    /// let c:  Set<i32> = s.intersection(&s2);
+    /// assert_eq!(c, new_set!(0, 1, 2, 3));
+    /// ```
     pub fn intersection(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = self.clone();
 
@@ -98,6 +125,13 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
 ///
 /// # Returns
 /// A new `Set`.
+/// # Examples
+/// ```
+/// use lib_rapid::new_set;
+/// use lib_rapid::math::sets::Set;
+/// let set: Set<i32> = new_set!(0,1,2,3,4,5,6,-1);
+/// assert_eq!(set.to_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
+/// assert_eq!(set.to_full_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
 #[macro_export]
 macro_rules! new_set {
     ( $( $a:expr ),* ) => {
@@ -110,6 +144,7 @@ macro_rules! new_set {
         }
     };
 }
+pub use new_set;
 
 impl<T> Set<'_, T> {
     /// Lets you check wether a set has a parent or not.
@@ -154,6 +189,17 @@ impl<T: ToString> Set<'_, T> {
     ///
     /// # Returns
     /// Nothing. 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// let s1: Set<i32> = Set::new_subset(&s, |x| x % 2 == 0);
+    /// let s2: Set<i32> = Set::new_subset(&s1, |x| x == 4);
+    /// 
+    /// s2.full_print();
+    /// println!("{}", s2);
+    /// assert_eq!(s2.to_full_string(), "{ 4 } ⊆ { 0; 2; 4; 6; 8; 10 } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 }".to_string());
+    /// ```
     pub fn full_print(&self) {
         print!("{}\n", self.rec_to_string(&mut String::new()));
     }
@@ -161,6 +207,8 @@ impl<T: ToString> Set<'_, T> {
     ///
     /// # Returns
     /// A String containing the result. 
+    /// # Examples
+    /// See `full_print()`.
     pub fn to_full_string(&self) -> String {
         self.rec_to_string(&mut String::new())
     }

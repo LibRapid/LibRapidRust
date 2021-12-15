@@ -23,6 +23,11 @@
 /// use lib_rapid::math::postfix::eval_postfix;
 /// println!("{}", eval_postfix!(1.0 1.0 + 2.0 %)); // Prints "0", because (1 + 1) % 2 = 0.
 /// ```
+/// ```
+/// use lib_rapid::math::postfix::eval_postfix;
+/// assert_eq!(0f32, eval_postfix!(1f32 1f32 + 2f32 %));
+/// assert_eq!(true, eval_postfix!(1f32 1f32 + 2f32 % 0f32 ==));
+/// ```
 #[macro_export]
 macro_rules! eval_postfix {
     (@operator [$b:expr, $a:expr $(,$call_stack:expr)*] $operator:tt $($leftover:tt)*) => {
