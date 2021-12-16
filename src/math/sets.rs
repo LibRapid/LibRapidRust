@@ -16,9 +16,9 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// # Returns
     /// A new set.
     pub fn new(values: &Vec<T>) -> Set<'a, T> {        
-        let mut res = Set { elements:    values.clone(),
-              superset:    None,
-            };
+        let mut res: Set<T> = Set { elements:    values.clone(),
+                                    superset:    None,
+                                };
         res.elements.sort_unstable();
         res.elements.dedup();
         res
