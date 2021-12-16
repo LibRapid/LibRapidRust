@@ -35,8 +35,8 @@ pub trait CrossSum<T> {
     /// Calculates the cross sum of a number.
     ///
     /// # Returns
-    /// A `usize` containing the result.
-    fn cross_sum(&self) -> usize;
+    /// A `Self` containing the result.
+    fn cross_sum(&self) -> Self;
 }
 /// Trait for temperature conversion.
 pub trait TempConversionTrait {
@@ -130,10 +130,73 @@ pub trait Primality {
     fn is_prime(&self) -> bool;
 }
 
-impl<T: std::fmt::Display> CrossSum<T> for T {
-    fn cross_sum(&self) -> usize {
-        let self_str: String = self.to_string();
-        self_str.chars().map(|c| c.to_digit(10).unwrap()).sum::<u32>() as usize
+impl<T> CrossSum<T> for u8 {
+    fn cross_sum(&self) -> Self {
+        let mut v: Self = *self;
+        let mut digits: Vec<Self> = Vec::with_capacity(3);
+    
+        while v > 0 {
+            let n = (self % 10) as u8;
+            v /= 10;
+            digits.push(n);
+        }
+        digits.iter().sum()
+    }
+}
+
+impl<T> CrossSum<T> for u16 {
+    fn cross_sum(&self) -> Self {
+        let mut v: Self = *self;
+        let mut digits: Vec<Self> = Vec::with_capacity(5);
+    
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n);
+        }
+        digits.iter().sum()
+    }
+}
+
+impl<T> CrossSum<T> for u32 {
+    fn cross_sum(&self) -> Self {
+        let mut v: Self = *self;
+        let mut digits: Vec<Self> = Vec::with_capacity(10);
+    
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n);
+        }
+        digits.iter().sum()
+    }
+}
+
+impl<T> CrossSum<T> for u64 {
+    fn cross_sum(&self) -> Self {
+        let mut v: Self = *self;
+        let mut digits: Vec<Self> = Vec::with_capacity(20);
+    
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n);
+        }
+        digits.iter().sum()
+    }
+}
+
+impl<T> CrossSum<T> for u128 {
+    fn cross_sum(&self) -> Self {
+        let mut v: Self = *self;
+        let mut digits: Vec<Self> = Vec::with_capacity(39);
+    
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n);
+        }
+        digits.iter().sum()
     }
 }
 
