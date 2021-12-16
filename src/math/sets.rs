@@ -258,9 +258,11 @@ impl<T> std::ops::Index<usize> for Set<'_, T> {
 // Implement Printing
 impl<T: ToString> std::fmt::Display for Set<'_, T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut res: String = "{".to_owned();
+        let mut res: String = String::from('{');
         for elem in &self.elements {
-            res += &(" ".to_owned() + &elem.to_string() + ";");
+            res.push(' ');
+            res += &elem.to_string();
+            res.push(';');
         }
         res.pop();
         res.push(' ');
