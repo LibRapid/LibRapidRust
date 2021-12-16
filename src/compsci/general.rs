@@ -19,8 +19,8 @@ pub trait BinayInsert<T> {
 impl<T: Ord + Copy> BinayInsert<T> for Vec<T> {
     fn binary_insert(&mut self, value: &T) {
         match self.binary_search(value) {
-            Ok(pos)  => self.insert(pos + 1, value.clone()),
-            Err(pos) => self.insert(pos, value.clone()),
+            Ok(pos)  => self.insert(pos + 1, *value),
+            Err(pos) => self.insert(pos, *value),
         }
     }
 

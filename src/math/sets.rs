@@ -15,8 +15,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A new set.
-    pub fn new(values: &Vec<T>) -> Set<'a, T> {        
-        let mut res: Set<T> = Set { elements:    values.clone(),
+    pub fn new(values: &[T]) -> Set<'a, T> {        
+        let mut res: Set<T> = Set { elements:    values.to_vec(),
                                     superset:    None,
                                 };
         res.elements.sort_unstable();
@@ -36,7 +36,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// use lib_rapid::math::sets::Set;
     /// let test1:       Set<u8> = Set::new(&vec![0,1,2,3,4]);
     /// let from_parent: Set<u8> = Set::<u8>::new_subset(&test1, |x| x % 2 == 0);
-    /// assert_eq!(from_parent, Set::new(&vec![0,2,4]))
+    /// assert_eq!(from_parent, Set::new(&vec![0,2,4]));
+    /// assert_eq!(test1.elements(), &vec![0,1,2,3,4])
     /// ```
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements:    Vec::new(),
@@ -44,7 +45,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
             };
             for elem in &parent.elements {
                 if f(*elem) {
-                    res.elements.push(elem.clone());
+                    res.elements.push(*elem);
                 }
             }
             res
@@ -203,8 +204,8 @@ impl<T> Set<'_, T> {
     /// * none
     ///
     /// # Returns
-    /// A `&Vec<T>` containing all elements. 
-    pub fn elements(&self) -> &Vec<T> {
+    /// A `&[T]` containing all elements. 
+    pub fn elements(&self) -> &[T] {
         &self.elements
     }
 }
