@@ -7,7 +7,7 @@ pub struct Set<'a, T> {
 }
 
 // Main impl
-impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
+impl<'a, T: Copy + Ord> Set<'a, T> {
     /// Creates a new Set.
     ///
     /// # Arguments
@@ -16,8 +16,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// # Returns
     /// A new set.
     pub fn new(values: &[T]) -> Set<'a, T> {        
-        let mut res: Set<T> = Set { elements:    values.to_vec(),
-                                    superset:    None,
+        let mut res: Set<T> = Set { elements: values.to_vec(),
+                                    superset: None,
                                 };
         res.elements.sort_unstable();
         res.elements.dedup();
@@ -40,8 +40,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// assert_eq!(test1.elements(), &vec![0,1,2,3,4])
     /// ```
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
-            let mut res: Set<T> = Set { elements:    Vec::new(),
-                                        superset:    Option::Some(parent),
+            let mut res: Set<T> = Set { elements: Vec::new(),
+                                        superset: Option::Some(parent),
             };
             for elem in &parent.elements {
                 if f(*elem) {
@@ -70,8 +70,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// assert_eq!(c, new_set!(0,1,2,3,4,5,6,7,8,9,10,11,12,13));
     /// ```
     pub fn union(&self, other: &Set<T>) -> Set<T> {
-        let mut res: Set<T> = Set {elements:    Vec::new(),
-                                   superset:    None,
+        let mut res: Set<T> = Set {elements: Vec::new(),
+                                   superset: None,
         };
 
         res.elements.append(&mut self.elements.clone());
@@ -122,8 +122,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
             Err(_) => { return false; },
         }
     }
-
-    /// Lets you insert an element into a set.
+    /// Lets you insert an element into a set. Does not insert already present values.
     ///
     /// # Arguments
     /// * `elem` - The element to insert.
@@ -141,6 +140,41 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// ```
     pub fn insert(&mut self, elem: T) {
         self.elements.binary_insert_no_dup(elem)
+    }
+        /// Lets you check wether a set has a parent or not.
+    ///
+    /// # Returns
+    /// A boolean value which determines if the set has a value. 
+    pub fn has_superset(&self) -> bool {
+        self.superset.is_some()
+    }
+    /// Gets the cardinality of a set.
+    ///
+    /// # Returns
+    /// A `usize`. 
+    pub fn cardinality(&self) -> usize {
+        self.elements.len()
+    }
+    /// Lets you set the elements of a set.
+    ///
+    /// # Arguments
+    /// * `vals` - The Vec to change the values to.
+    ///
+    /// # Returns
+    /// Nothing. 
+    pub fn set_elements(&mut self, vals: &[T]) {
+        self.elements = vals.to_vec();
+        self.elements.sort_unstable();
+    }
+    /// Lets you get the elements of a set.
+    ///
+    /// # Arguments
+    /// * none
+    ///
+    /// # Returns
+    /// A `&[T]` containing all elements. 
+    pub fn elements(&self) -> &[T] {
+        &self.elements
     }
 }
 
@@ -172,43 +206,6 @@ macro_rules! new_set {
 pub use new_set;
 
 use crate::compsci::general::BinayInsert;
-
-impl<T> Set<'_, T> {
-    /// Lets you check wether a set has a parent or not.
-    ///
-    /// # Returns
-    /// A boolean value which determines if the set has a value. 
-    pub fn has_superset(&self) -> bool {
-        self.superset.is_some()
-    }
-    /// Gets the cardinality of a set.
-    ///
-    /// # Returns
-    /// A `usize`. 
-    pub fn cardinality(&self) -> usize {
-        self.elements.len()
-    }
-    /// Lets you set the elements of a set.
-    ///
-    /// # Arguments
-    /// * `vals` - The Vec to change the values to.
-    ///
-    /// # Returns
-    /// Nothing. 
-    pub fn set_elements(&mut self, vals: Vec<T>) {
-        self.elements    = vals;
-    }
-    /// Lets you get the elements of a set.
-    ///
-    /// # Arguments
-    /// * none
-    ///
-    /// # Returns
-    /// A `&[T]` containing all elements. 
-    pub fn elements(&self) -> &[T] {
-        &self.elements
-    }
-}
 
 impl<T: ToString> Set<'_, T> {
     /// Lets you print a set with all its parents recursively.
