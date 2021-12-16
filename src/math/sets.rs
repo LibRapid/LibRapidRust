@@ -2,8 +2,8 @@
 /// Brings mathematical sets into Rust.
 #[derive(Debug, Clone)]
 pub struct Set<'a, T> {
-    elements:    Vec<T>,
-    superset:    Option<&'a Set<'a, T>>,
+    elements: Vec<T>,
+    superset: Option<&'a Set<'a, T>>,
 }
 
 // Main impl

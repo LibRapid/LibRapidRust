@@ -74,16 +74,16 @@ impl Logger {
             true  => { 
                 if self.buff_count == self.buff_size {
                     let file = OpenOptions::new()
-                                                            .create(true)
-                                                            .append(true)
-                                                            .open(&self.file_path);
+                                            .create(true)
+                                            .append(true)
+                                            .open(&self.file_path);
                     let mut file = match file {
-                        Ok(f) => f,
+                        Ok(f)  => f,
                         Err(e) => { return Err(format!("Problem opening or creating file: {:?}", e)); },
                     };
                     self.buffer += &out_cns;
                     match writeln!(file, "{}", self.buffer) {
-                        Ok(_) => { },
+                        Ok(_)  => { },
                         Err(e) => { return Err(format!("Problem writing to file: {:?}", e)); },
                     }
                 } else { self.buffer = out; }

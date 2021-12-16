@@ -26,7 +26,7 @@ impl<T: Ord + Copy> BinayInsert<T> for Vec<T> {
 
     fn binary_insert_no_dup(&mut self, value: T) {
         match self.binary_search(&value) {
-            Ok(_)          => { },
+            Ok(_)    => { },
             Err(pos) => self.insert(pos, value),
         }
     }
