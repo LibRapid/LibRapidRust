@@ -219,6 +219,15 @@ impl Primality for u16 {
         }
     
         let witnesses = [2, 3];
+
+        for p in witnesses.iter() {
+            if *self == *p {
+                return true;
+            }
+            if *self % *p == 0 {
+                return false;
+            }
+        }
         
         'outer: for w in witnesses.iter() {
             let mut x = mod_exp(*w as u32,d as u32,*self as u32) as u16;
@@ -255,6 +264,15 @@ impl Primality for u32 {
     
         // Witnesses found by Jim Sinclair to cover all 32 bit integers
         let witnesses = [2, 7, 61];
+
+        for p in witnesses.iter() {
+            if *self == *p {
+                return true;
+            }
+            if *self % *p == 0 {
+                return false;
+            }
+        }
         
         'outer: for w in witnesses.iter() {
             let mut x = mod_exp(*w as u64,d as u64,*self as u64) as u32;
@@ -292,6 +310,15 @@ impl Primality for i32 {
     
         // Witnesses found by Jim Sinclair to cover all 32 bit integers
         let witnesses = [2, 7, 61];
+
+        for p in witnesses.iter() {
+            if *self == *p {
+                return true;
+            }
+            if *self % *p == 0 {
+                return false;
+            }
+        }
         
         'outer: for w in witnesses.iter() {
             let mut x = mod_exp(*w as i64,d as i64,*self as i64) as i32;
