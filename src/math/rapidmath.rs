@@ -1,7 +1,6 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Temperature conversion, angle conversion etc. Everything you need.
 use super::constants;
-use mod_exp::mod_exp;
 
 /// The conversion algorithm to be chosen. Used by `temp_conversion`.
 pub enum TempConversion {
@@ -192,57 +191,31 @@ impl AngleConversionTrait for f32 {
     }
 }
 
-
-
 impl Primality for u8 {
     fn is_prime(&self) -> bool {
-        [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 
-        53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 
-        109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 
-        173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 
-        233, 239, 241, 251].contains(self)
+        if self < &2 { return false; }
+        let mut i = 2;
+
+        while i.square() < *self {
+            match self % i {
+                0 => { return false; }
+                _ => { i += 1; }
+            }
+        }
+        true
     }
 }
 
 impl Primality for u16 {
     fn is_prime(&self) -> bool {
+        if self < &2 { return false; }
+        let mut i = 2;
 
-        if *self <= 1 {
-            return false;
-        }
-    
-        let mut d = (*self-1)/2;
-        let mut r = 1;
-        while d % 2 == 0 {
-            d /= 2;
-            r += 1;
-        }
-    
-        let witnesses = [2, 3];
-
-        for p in witnesses.iter() {
-            if *self == *p {
-                return true;
+        while i.square() <= *self {
+            match self % i {
+                0 => { return false; }
+                _ => { i += 1; }
             }
-            if *self % *p == 0 {
-                return false;
-            }
-        }
-        
-        'outer: for w in witnesses.iter() {
-            let mut x = mod_exp(*w as u32,d as u32,*self as u32) as u16;
-            
-            if x == 1 || x == *self-1 {
-                continue 'outer;
-            }
-            for _ in 0..r-1 {
-                x = mod_exp(x as u32, 2u32, *self as u32) as u16;
-                
-                if x == *self-1 {
-                     continue 'outer;
-                }
-            }
-            return false;
         }
         true
     }
@@ -250,44 +223,14 @@ impl Primality for u16 {
 
 impl Primality for u32 {
     fn is_prime(&self) -> bool {
+        if self < &2 { return false; }
+        let mut i = 2;
 
-        if *self <= 1 {
-            return false;
-        }
-    
-        let mut d = (*self-1)/2;
-        let mut r = 1;
-        while d % 2 == 0 {
-            d /= 2;
-            r += 1;
-        }
-    
-        // Witnesses found by Jim Sinclair to cover all 32 bit integers
-        let witnesses = [2, 7, 61];
-
-        for p in witnesses.iter() {
-            if *self == *p {
-                return true;
+        while i.square() <= *self {
+            match self % i {
+                0 => { return false; }
+                _ => { i += 1; }
             }
-            if *self % *p == 0 {
-                return false;
-            }
-        }
-        
-        'outer: for w in witnesses.iter() {
-            let mut x = mod_exp(*w as u64,d as u64,*self as u64) as u32;
-            
-            if x == 1 || x == *self-1 {
-                continue 'outer;
-            }
-            for _ in 0..r-1 {
-                x = mod_exp(x as u64, 2u64, *self as u64) as u32;
-                
-                if x == *self-1 {
-                     continue 'outer;
-                }
-            }
-            return false;
         }
         true
     }
@@ -295,45 +238,14 @@ impl Primality for u32 {
 
 impl Primality for i32 {
     fn is_prime(&self) -> bool {
+        if self < &2 { return false; }
+        let mut i = 2;
 
-        // This also ensures that negative numbers are excluded as primes which is usually the case
-        if *self <= 1 {
-            return false;
-        }
-    
-        let mut d = (*self-1)/2;
-        let mut r = 1;
-        while d % 2 == 0 {
-            d /= 2;
-            r += 1;
-        }
-    
-        // Witnesses found by Jim Sinclair to cover all 32 bit integers
-        let witnesses = [2, 7, 61];
-
-        for p in witnesses.iter() {
-            if *self == *p {
-                return true;
+        while i.square() <= *self {
+            match self % i {
+                0 => { return false; }
+                _ => { i += 1; }
             }
-            if *self % *p == 0 {
-                return false;
-            }
-        }
-        
-        'outer: for w in witnesses.iter() {
-            let mut x = mod_exp(*w as i64,d as i64,*self as i64) as i32;
-            
-            if x == 1 || x == *self-1 {
-                continue 'outer;
-            }
-            for _ in 0..r-1 {
-                x = mod_exp(x as i64, 2i64, *self as i64) as i32;
-                
-                if x == *self-1 {
-                     continue 'outer;
-                }
-            }
-            return false;
         }
         true
     }
@@ -341,56 +253,20 @@ impl Primality for i32 {
 
 impl Primality for u64 {
     fn is_prime(&self) -> bool {
+        if self < &2 { return false; }
+        let mut i = 2;
 
-        if *self <= 1 {
-            return false;
-        }
-    
-        // Witnesses found by Jim Sinclair to cover all 64 bit integers
-        let witnesses = [2, 325, 9375, 28178, 450775, 9780504, 1795265022];
-
-        // Instantly eliminate most compositive numbers by testing divisibility by primes less than 50
-        // Also test divisibility by each of the witnesses
-        let small_factors = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 325, 9375, 28178, 450775, 9780504, 1795265022];
-    
-        for p in small_factors.iter() {
-            if *self == *p {
-                return true;
+        while i.square() <= *self {
+            match self % i {
+                0 => { return false; }
+                _ => { i += 1; }
             }
-            if *self % *p == 0 {
-                return false;
-            }
-        }
-        
-        let mut d = (*self-1)/2;
-        let mut r = 1;
-        while d % 2 == 0 {
-            d /= 2;
-            r += 1;
-        }
-    
-        'outer: for w in witnesses.iter() {
-            let mut x = mod_exp(*w as u128,d as u128,*self as u128) as u64;
-            
-            if x == 1 || x == *self-1 {
-                continue 'outer;
-            }
-            for _ in 0..r-1 {
-                x = mod_exp(x as u128, 2u128, *self as u128) as u64;
-                
-                if x == *self-1 {
-                     continue 'outer;
-                }
-            }
-            return false;
         }
         true
     }
 }
 
 impl Primality for u128 {
-    // Miller-Rabin could be used here as well but I don't know of deterministic witnesses for 128 bits.
-    // Perhaps a different trait could be given with the option for "probably prime"
     fn is_prime(&self) -> bool {
         if self < &2 { return false; }
         let mut i = 2;
