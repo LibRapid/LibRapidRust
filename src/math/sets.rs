@@ -3,7 +3,6 @@
 #[derive(Debug, Clone)]
 pub struct Set<'a, T> {
     elements:    Vec<T>,
-    cardinality: usize,
     superset:    Option<&'a Set<'a, T>>,
 }
 
@@ -18,7 +17,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// A new set.
     pub fn new(values: &Vec<T>) -> Set<'a, T> {
         Set { elements:    values.clone(),
-              cardinality: values.len(),
               superset:    None,
             }
     }
@@ -39,7 +37,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// ```
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements:    Vec::new(),
-                                        cardinality: 0,
                                         superset:    Option::Some(parent),
             };
             for elem in &parent.elements {
@@ -47,7 +44,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
                     res.elements.push(elem.clone());
                 }
             }
-            res.cardinality = res.elements.len();
             res
     }
     /// Does a mathematical union on two sets.
@@ -70,7 +66,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// ```
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements:    Vec::new(),
-                                   cardinality: 0,
                                    superset:    None,
         };
 
@@ -79,7 +74,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
 
         res.elements.sort(); 
         res.elements.dedup();
-        res.cardinality = res.elements.len();
         res
     }
     /// Does a mathematical intersection on two sets.
@@ -106,7 +100,6 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
         for _ in &self.elements {
             res.elements.retain(|x| other.elements.contains(x));
         }
-        res.cardinality = res.elements.len();
         res
     }
     /// Lets you check for an element in a set.
@@ -157,9 +150,9 @@ impl<T> Set<'_, T> {
     /// Gets the cardinality of a set.
     ///
     /// # Returns
-    /// A `&usize`. 
-    pub fn cardinality(&self) -> &usize {
-        &self.cardinality
+    /// A `usize`. 
+    pub fn cardinality(&self) -> usize {
+        self.elements.len()
     }
     /// Lets you set the elements of a set.
     ///
@@ -170,7 +163,6 @@ impl<T> Set<'_, T> {
     /// Nothing. 
     pub fn set_elements(&mut self, vals: Vec<T>) {
         self.elements    = vals;
-        self.cardinality = self.elements.len();
     }
     /// Lets you get the elements of a set.
     ///
