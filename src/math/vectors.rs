@@ -158,9 +158,11 @@ macro_rules! new_mathvec {
 
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut finstring: String = "( ".to_owned();
+        let mut finstring: String = String::from("( ");
         for i in 0..self.dimension {
-            finstring =  " ".to_owned() + &finstring + &self.values[i].to_string() + "; ";
+            finstring.push(' ');
+            finstring += &self.values[i].to_string();
+            finstring.push_str("; ");
         }
         finstring.drain(finstring.len()-2..finstring.len());
         write!(f, "{} )", finstring)

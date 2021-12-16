@@ -16,8 +16,8 @@ pub struct Logger {
 impl Logger {
     /// Creates a new `Logger` object.
     pub fn new(buff_size: usize,
-               console: bool,
-               file: bool,
+               console:   bool,
+               file:      bool,
                file_path: String) -> Logger {
                 Logger { buff_size,
                          buffer:     String::new(),
