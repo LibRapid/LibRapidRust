@@ -15,10 +15,13 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A new set.
-    pub fn new(values: &Vec<T>) -> Set<'a, T> {
-        Set { elements:    values.clone(),
+    pub fn new(values: &Vec<T>) -> Set<'a, T> {        
+        let mut res = Set { elements:    values.clone(),
               superset:    None,
-            }
+            };
+        res.elements.sort_unstable();
+        res.elements.dedup();
+        res
     }
     /// Creates a new Set using a parent-Set to which it applies a closure.
     ///
@@ -72,7 +75,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
         res.elements.append(&mut self.elements.clone());
         res.elements.append(&mut other.elements.clone());
 
-        res.elements.sort(); 
+        res.elements.sort_unstable(); 
         res.elements.dedup();
         res
     }
@@ -110,7 +113,33 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// # Returns
     /// A boolean value which determines if the element is in the set. 
     pub fn has_element(&self, elem: &T) -> bool {
-        self.elements.contains(elem)
+        match self.elements.binary_search(elem) {
+            Ok(_)  => { return true; }
+            Err(_) => { return false; },
+        }
+    }
+
+    /// Lets you insert an element into a set.
+    ///
+    /// # Arguments
+    /// * `elem` - The element to insert.
+    ///
+    /// # Returns
+    /// Nothing.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// let mut s: Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// 
+    /// s.insert(&5);
+    /// assert_eq!(s.elements(), &vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// ```
+    pub fn insert(&mut self, elem: &T) {
+        match self.elements.binary_search(elem) {
+            Ok(_)  => {},
+            Err(pos) => self.elements.insert(pos, elem.clone()),
+        }
     }
 }
 
@@ -123,8 +152,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
 /// use lib_rapid::new_set;
 /// use lib_rapid::math::sets::Set;
 /// let set: Set<i32> = new_set!(0,1,2,3,4,5,6,-1);
-/// assert_eq!(set.to_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
-/// assert_eq!(set.to_full_string(), "{ 0; 1; 2; 3; 4; 5; 6; -1 }");
+/// assert_eq!(set.to_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
+/// assert_eq!(set.to_full_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 #[macro_export]
 macro_rules! new_set {
     ( $( $a:expr ),* ) => {
@@ -133,6 +162,8 @@ macro_rules! new_set {
         $(
             temp.push($a);
         )*
+        temp.sort_unstable();
+        temp.dedup();
         Set::new(&temp)
         }
     };
