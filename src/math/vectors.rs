@@ -65,7 +65,7 @@ impl MathVector {
     ///
     /// # Returns
     /// A `&Vec<f64>`.
-    pub fn get_values(&self) -> &'_ Vec<f64> {
+    pub fn get_values(&self) -> &Vec<f64> {
         &self.values
     }
     /// Sets the values of a `MathVector`.
