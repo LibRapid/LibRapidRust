@@ -61,6 +61,7 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// ```
     /// use lib_rapid::math::sets::Set;
     /// use lib_rapid::math::sets::new_set;
+    /// use lib_rapid::compsci::general::BinayInsert;
     /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// let s1: Set<i32> = Set::new(&vec![11,12,13,13,11,0,0,0]);
     /// 
@@ -91,6 +92,8 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// ```
     /// use lib_rapid::math::sets::Set;
     /// use lib_rapid::math::sets::new_set;
+    /// use lib_rapid::compsci::general::BinayInsert; // Used for "new_set!"
+    /// 
     /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// let s2: Set<i32> = Set::new(&vec![0,1,2,3,11,0,0,0]);
     /// 
@@ -132,14 +135,11 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
     /// use lib_rapid::math::sets::new_set;
     /// let mut s: Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// 
-    /// s.insert(&5);
+    /// s.insert(5);
     /// assert_eq!(s.elements(), &vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// ```
-    pub fn insert(&mut self, elem: &T) {
-        match self.elements.binary_search(elem) {
-            Ok(_)  => {},
-            Err(pos) => self.elements.insert(pos, elem.clone()),
-        }
+    pub fn insert(&mut self, elem: T) {
+        self.elements.binary_insert_no_dup(elem)
     }
 }
 
@@ -150,7 +150,9 @@ impl<'a, T: PartialEq + Copy + Ord> Set<'a, T> {
 /// # Examples
 /// ```
 /// use lib_rapid::new_set;
-/// use lib_rapid::math::sets::Set;
+/// use lib_rapid::math::sets::Set; 
+/// use lib_rapid::compsci::general::BinayInsert; // Used for "new_set!"
+/// 
 /// let set: Set<i32> = new_set!(0,1,2,3,4,5,6,-1);
 /// assert_eq!(set.to_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 /// assert_eq!(set.to_full_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
@@ -160,15 +162,15 @@ macro_rules! new_set {
         {
         let mut temp = Vec::new();
         $(
-            temp.push($a);
+            temp.binary_insert_no_dup($a);
         )*
-        temp.sort_unstable();
-        temp.dedup();
         Set::new(&temp)
         }
     };
 }
 pub use new_set;
+
+use crate::compsci::general::BinayInsert;
 
 impl<T> Set<'_, T> {
     /// Lets you check wether a set has a parent or not.
