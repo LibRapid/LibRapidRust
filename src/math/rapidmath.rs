@@ -120,10 +120,58 @@ pub trait Primality {
     /// # Examples
     /// ```
     /// use lib_rapid::math::rapidmath::Primality;
+    /// 
+    /// assert_eq!(false, (-2).is_prime());
+    /// assert_eq!(true, 2.is_prime());
+    /// assert_eq!(false, 1.is_prime());
+    /// assert_eq!(false, 0.is_prime());
+    /// ```
+    /// ```
+    /// use lib_rapid::math::rapidmath::Primality;
     /// let p:     Vec<u64> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
     /// let mut f: Vec<u64> = Vec::new();
     /// for i in 0..100 {
     ///     if (i as u64).is_prime() { f.push(i as u64); }
+    /// }
+    /// 
+    /// assert_eq!(p, f);
+    /// ```
+    /// ```
+    /// use lib_rapid::math::rapidmath::Primality;
+    /// let p:     Vec<u8> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// let mut f: Vec<u8> = Vec::new();
+    /// for i in 0..100 {
+    ///     if (i as u8).is_prime() { f.push(i as u8); }
+    /// }
+    /// 
+    /// assert_eq!(p, f);
+    /// ```
+    /// ```
+    /// use lib_rapid::math::rapidmath::Primality;
+    /// let p:     Vec<u16> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// let mut f: Vec<u16> = Vec::new();
+    /// for i in 0..100 {
+    ///     if (i as u16).is_prime() { f.push(i as u16); }
+    /// }
+    /// 
+    /// assert_eq!(p, f);
+    /// ```
+    /// ```
+    /// use lib_rapid::math::rapidmath::Primality;
+    /// let p:     Vec<u32> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// let mut f: Vec<u32> = Vec::new();
+    /// for i in 0..100 {
+    ///     if (i as u32).is_prime() { f.push(i as u32); }
+    /// }
+    /// 
+    /// assert_eq!(p, f);
+    /// ```
+    /// ```
+    /// use lib_rapid::math::rapidmath::Primality;
+    /// let p:     Vec<u128> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// let mut f: Vec<u128> = Vec::new();
+    /// for i in 0..100 {
+    ///     if (i as u128).is_prime() { f.push(i as u128); }
     /// }
     /// 
     /// assert_eq!(p, f);
@@ -255,44 +303,43 @@ impl AngleConversionTrait for f32 {
     }
 }
 
-
 impl Primality for u8 { // promoted to u16 for a more optimized check
     fn is_prime(&self) -> bool {
-         (*self as u16).is_prime()
-      }
+        (*self as u16).is_prime()
+    }
         
 }
 
-
 impl Primality for u16 {// Splits 
     fn is_prime(&self) -> bool {
-      const PRIMELIST : [u8;54] = [// list of all primes less than 2^8
-         2,  3,  5,   7,  11,  13,  17,  19,  23,  29,  31,
-        37, 41, 43,  47,  53,  59,  61,  67,  71,  73,  79, 
-        83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 
-       139,149,151, 157, 163, 167, 173, 179, 181, 191, 193,
-       197,199,211, 223, 227, 229, 233, 239, 241, 251
-       ];
+        const PRIMELIST: [u16; 54] = [// list of all primes less than 2^8
+           2,  3,  5,   7,  11,  13,  17,  19,  23,  29,  31,
+          37, 41, 43,  47,  53,  59,  61,  67,  71,  73,  79, 
+          83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 
+         139,149,151, 157, 163, 167, 173, 179, 181, 191, 193,
+         197,199,211, 223, 227, 229, 233, 239, 241, 251
+        ];
        
-       if self == &1{return false}
+        if self == &1 ||
+           self == &0
+        { return false; }
        
-       for i in PRIMELIST{ // all values are checked to match PRIMELIST
-         if *self == i as u16{
-           return true
-         }
-       }
+        for i in PRIMELIST { // all values are checked to match PRIMELIST
+            if *self == i {
+            return true;
+            }
+        }
        
-       if self.leading_zeros() > 7{// if greater than 2^8 then check divisibilty by PRIMELIST, which works up to 2^16
+        if self.leading_zeros() > 7 {// if greater than 2^8 then check divisibilty by PRIMELIST, which works up to 2^16
        
-         for i in PRIMELIST{
-          if *self%i as u16 == 0{
-            return false
-          }
-         }
-       
-       }
+            for i in PRIMELIST {
+                if *self % i as u16 == 0 {
+                    return false;
+                }
+            }
+        }
     
-      return true
+        return true;
     }
 }
 
@@ -304,6 +351,7 @@ impl Primality for u32 { // too large to check primality by trial division so pr
 
 impl Primality for i32 {
     fn is_prime(&self) -> bool {
+        if self <= &0 { return false; }
         (self.abs() as u64).is_prime()
     }    
 }
@@ -311,82 +359,76 @@ impl Primality for i32 {
 impl Primality for u64 {
     fn is_prime(&self) -> bool {
      
-      const PRIME_BASES : [u64;12] = [2,3,5,7,11, 13, 17, 19, 23, 29, 31, 37];
-        if self == &1u64{
-           return false
+        const PRIME_BASES: [u64;12] = [2,3,5,7,11, 13, 17, 19, 23, 29, 31, 37];
+            if self == &1 ||
+               self == &0
+            { return false; }
+        
+        for i in PRIME_BASES {  // Checks if self is a member of PRIME_BASES or divisible by a member
+            if *self == i { return true; }
+            if *self % i == 0 { return false; }
         }
         
-        for i in PRIME_BASES{  // Checks if self is a member of PRIME_BASES or divisible by a member
-           if *self == i {
-             return true
-           }
-           if *self%i == 0{
-             return false
-           }
+        for i in PRIME_BASES {        // performs Strong Fermat test using each base. Equivalent to Deterministic Miller Rabin
+            if sprp(*self,i) == false {
+                return false;
+            }
         }
-        
-        for i in PRIME_BASES{        // performs Strong Fermat test using each base. Equivalent to Deterministic Miller Rabin
-           if sprp(*self,i) == false{
-              return false
-           }
-        }
-        return true
-        }
+        return true;
+    }
 }
 
-impl Primality for i64{
+impl Primality for i64 {
    fn is_prime(&self) -> bool {
-       (self.abs() as u64).is_prime()
+        if self <= &0 { return false; }
+        (self.abs() as u64).is_prime()
    }
 }
 // Very slow primality check, I'll work out how to do BPSW for 128-bit
 impl Primality for u128 {
     fn is_prime(&self) -> bool {
-         
-     const PRIMES : [u64;27] = [2,3,5,7,11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103];
-     const PRIMORIAL : u128 = 210;
-     let x = self.clone();  // too lazy to dereference at every point
+        if *self == 1 { return false; }
+        const PRIMES:    [u64;27] = [2,3,5,7,11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103];
+        const PRIMORIAL: u128     = 210;
+        let x = *self;  // too lazy to dereference at every point
      
-     if x == 1{return false}
+        for i in PRIMES {
+            if x == i as u128 { return true; }
+            if x % i as u128 == 0 { return false; }
+        } 
      
-     for i in PRIMES{
-       if x == i as u128 {
-         return true 
-       }
-       if x % i as u128 == 0 {
-         return false
-       }
-     } 
-     
-     if x.leading_zeros() > 63 {  // if x is smaller than 2^64 call deterministic miller rabin
-      for i in PRIMES[..12].iter(){
-        if sprp(x as u64,*i)==false{
-          return false
-         }
+        if x.leading_zeros() > 63 {  // if x is smaller than 2^64 call deterministic miller rabin
+            for i in PRIMES[..12].iter(){
+                if sprp(x as u64,*i) == false {
+                return false;
+                }
+            }
+            return true;
         }
-        return true
-     }
      
-     let supremum = ( ( (x as f64).sqrt() as u128 + 103u128) /PRIMORIAL) + 1u128; // Else perform trial division using the 11-rough numbers (higher-density of primes)
-     for i in 1..supremum{
+        let supremum = ( ( (x as f64).sqrt() as u128 + 103u128) / PRIMORIAL) + 1u128; // Else perform trial division using the 11-rough numbers (higher-density of primes)
+        for i in 1..supremum {
+      
+            if x % (PRIMORIAL * i - 1) == 0 ||
+               x % (PRIMORIAL * i + 1) == 0 {
+                return false;
+            } 
      
-     if x%(PRIMORIAL*i -1) == 0 || x%(PRIMORIAL*i + 1) == 0u128{
-         return false
-     } 
-     
-       for j in PRIMES[4..].iter(){
-          if x%(PRIMORIAL*i - *j as u128) == 0 || x%(PRIMORIAL*i+ *j as u128)==0{
-            return false
-          }
-       }
-     }
-     return true
-     }
+            for j in PRIMES[4..].iter(){
+                if x % (PRIMORIAL * i - *j as u128) == 0 ||
+                   x % (PRIMORIAL * i + *j as u128) == 0 {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
 
 impl Primality for i128{
-    fn is_prime(&self)->bool{
-      (self.abs() as u128).is_prime()
+    fn is_prime(&self)-> bool {
+        if self <= &0 { return false; }
+        (self.abs() as u128).is_prime()
     }
 }
 
