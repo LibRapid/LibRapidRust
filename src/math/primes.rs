@@ -4,12 +4,12 @@ use super::rapidmath::*;
 
 /// Trait for prime functions.
 pub trait Primality {
-    /// Determines whether a number is prime in `O(sqrt n)`.
+    /// Determines whether a number is prime.
     /// # Returns
     /// `true` if the number is prime, otherwise `false`.
     /// # Examples
     /// ```
-    /// use lib_rapid::math::rapidmath::Primality;
+    /// use lib_rapid::math::primes::Primality;
     /// 
     /// assert_eq!(false, (-2).is_prime());
     /// assert_eq!(true, 2.is_prime());
@@ -17,8 +17,7 @@ pub trait Primality {
     /// assert_eq!(false, 0.is_prime());
     /// ```
     /// ```
-    /// use lib_rapid::math::rapidmath::Primality;
-    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// use lib_rapid::math::primes::{Primality, generate_primes};
     /// 
     /// let _p: Vec<usize>  = generate_primes(1000);
     /// let p:  Vec<u64>    = _p.into_iter().map(|x: usize| x as u64).collect::<Vec<u64>>();
@@ -30,8 +29,7 @@ pub trait Primality {
     /// assert_eq!(p, f);
     /// ```
     /// ```
-    /// use lib_rapid::math::rapidmath::Primality;
-    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// use lib_rapid::math::primes::{Primality, generate_primes};
     /// 
     /// let _p: Vec<usize> = generate_primes(100);
     /// let p:  Vec<u8>    = _p.into_iter().map(|x: usize| x as u8).collect::<Vec<u8>>();
@@ -43,8 +41,7 @@ pub trait Primality {
     /// assert_eq!(p, f);
     /// ```
     /// ```
-    /// use lib_rapid::math::rapidmath::Primality;
-    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// use lib_rapid::math::primes::{Primality, generate_primes};
     /// 
     /// let _p: Vec<usize>  = generate_primes(1000);
     /// let p:  Vec<u16>    = _p.into_iter().map(|x: usize| x as u16).collect::<Vec<u16>>();
@@ -57,8 +54,7 @@ pub trait Primality {
     /// assert_eq!(p, f);
     /// ```
     /// ```
-    /// use lib_rapid::math::rapidmath::Primality;
-    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// use lib_rapid::math::primes::{Primality, generate_primes};
     /// 
     /// let _p: Vec<usize>  = generate_primes(1000);
     /// let p:  Vec<u32>    = _p.into_iter().map(|x: usize| x as u32).collect::<Vec<u32>>();
@@ -70,8 +66,7 @@ pub trait Primality {
     /// assert_eq!(p, f);
     /// ```
     /// ```
-    /// use lib_rapid::math::rapidmath::Primality;
-    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// use lib_rapid::math::primes::{Primality, generate_primes};
     /// 
     /// let _p: Vec<usize>  = generate_primes(1000);
     /// let p:  Vec<u128>    = _p.into_iter().map(|x: usize| x as u128).collect::<Vec<u128>>();
@@ -209,7 +204,7 @@ impl Primality for i128{
 /// A `Vec<usize>` containing a list of primes.
 /// # Examples
 /// ```
-/// use lib_rapid::math::rapidmath::generate_primes;
+/// use lib_rapid::math::primes::generate_primes;
 /// let p: Vec<usize> = vec![2, 3, 5, 7, 11, 13];
 /// let f: Vec<usize> = generate_primes(15);
 /// assert_eq!(p, f);
