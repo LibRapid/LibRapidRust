@@ -11,12 +11,12 @@ pub fn modpow(x : u64,mut  pow: u64, modulus: u64)-> u64 {  //upgrades to u128 t
 
   		if pow % 2 == 0 {
       		base = base*base % n ;
-      		pow >>= 1;
+      		pow  >>= 1;
   		}
 		else {
-			z = base * z % n;
+			z    = base * z % n;
   			base = base * base % n;
-  			pow = (pow - 1) >> 1;
+  			pow  = (pow - 1) >> 1;
   		}
   	}
 
@@ -32,7 +32,7 @@ pub fn sprp(p: u64, base: u64)->bool{// checks if base^p = 1 mod p  or base^(d*2
 	if x == 1 || x == p - 1 {   // checks if base^p = 1 mod p  or base^(d*2^n)= -1
 		return true;
 	}
-	for _ in 0..zeroes-1{// checks for all d*2^zeroes. One is subtracted since d*2^n was already checked above
+	for _ in 0..zeroes-1 {// checks for all d*2^zeroes. One is subtracted since d*2^n was already checked above
 		x = modpow(x, 2, p);
 		if x == p - 1 {       // if any d*2^zeroes = p-1  then it passes
 			return true;
