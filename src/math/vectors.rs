@@ -5,8 +5,8 @@ const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /// Mathematical Vectors in Rust.
 pub struct MathVector {
-    values:    Vec<f64>,
-    length:    Option<f64>,
+    values: Vec<f64>,
+    length: Option<f64>,
 }
 
 impl MathVector {
@@ -18,8 +18,8 @@ impl MathVector {
     /// # Returns
     /// A new MathVector.
     pub fn new(values: &[f64]) -> MathVector {        
-        MathVector { values:    values.to_owned(),
-                     length:    None }
+        MathVector { values: values.to_owned(),
+                     length: None }
     }
     /// Creates a new `MathVector` with the specified capacity.
     ///
@@ -30,8 +30,8 @@ impl MathVector {
     /// A new MathVector with length 0.
     pub fn new_with_dimension(dim: usize) -> MathVector {
 
-        MathVector { values:    vec![0f64; dim],
-                     length:    None }
+        MathVector { values: vec![0f64; dim],
+                     length: None }
     }
     /// Gets the dimension in which a `MathVector` lives.
     ///
@@ -90,8 +90,8 @@ impl std::ops::Add for MathVector {
                 for i in 0..self.dimension() {
                     vals.push(self.values[i] + other.values[i]);
                 }
-                MathVector { values:    vals,
-                             length:    None }
+                MathVector { values: vals,
+                             length: None }
             }
             false => { core::panic!("{}", INV_DIM) }
         }
@@ -107,8 +107,8 @@ impl std::ops::Sub for MathVector {
                 for i in 0..self.dimension() {
                     vals.push(self.values[i] - other.values[i]);
                 }
-                MathVector { values:    vals,
-                             length:    None }
+                MathVector { values: vals,
+                             length: None }
             }
             false => { core::panic!("{}", INV_DIM) }
         }
@@ -129,8 +129,8 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
     for i in 0..other.dimension() {
         vals.push(scalar * other.values[i]);
     }
-    MathVector { values:    vals,
-                 length:    None }
+    MathVector { values: vals,
+                 length: None }
 }
 
 /// Creates a new `MathVector` more elegantly from values.
@@ -141,11 +141,11 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
         {
-        let mut temp = Vec::new();
-        $(
-            temp.push($a as f64);
-        )*
-        MathVector::new(&temp)
+            let mut temp = Vec::new();
+            $(
+                temp.push($a as f64);
+            )*
+            MathVector::new(&temp)
         }
     };
 }

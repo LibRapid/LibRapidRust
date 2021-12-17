@@ -129,15 +129,14 @@ impl Primality for u64 {
                self == &0
             { return false; }
         
-        for i in PRIME_BASES {  // Checks if self is a member of PRIME_BASES or divisible by a member
+        for i in PRIME_BASES { // Checks if self is a member of PRIME_BASES or divisible by a member
             if *self == i { return true; }
             if *self % i == 0 { return false; }
         }
         
-        for i in PRIME_BASES {        // performs Strong Fermat test using each base. Equivalent to Deterministic Miller Rabin
-            if sprp(*self,i) == false {
-                return false;
-            }
+        for i in PRIME_BASES { // performs Strong Fermat test using each base. Equivalent to Deterministic Miller Rabin
+            if sprp(*self,i) == false
+            { return false; }
         }
         return true;
     }
@@ -155,18 +154,17 @@ impl Primality for u128 {
         if *self == 1 { return false; }
         const PRIMES:    [u64;27] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103];
         const PRIMORIAL: u128     = 210;
-        let x = *self;  // too lazy to dereference at every point
+        let x = *self; // too lazy to dereference at every point
      
         for i in PRIMES {
             if x == i as u128 { return true; }
             if x % i as u128 == 0 { return false; }
         } 
      
-        if x.leading_zeros() > 63 {  // if x is smaller than 2^64 call deterministic miller rabin
+        if x.leading_zeros() > 63 { // if x is smaller than 2^64 call deterministic miller rabin
             for i in PRIMES[..12].iter(){
-                if sprp(x as u64,*i) == false {
-                return false;
-                }
+                if sprp(x as u64,*i) == false
+                { return false; }
             }
             return true;
         }
@@ -175,15 +173,13 @@ impl Primality for u128 {
         for i in 1..supremum {
       
             if x % (PRIMORIAL * i - 1) == 0 ||
-               x % (PRIMORIAL * i + 1) == 0 {
-                return false;
-            } 
+               x % (PRIMORIAL * i + 1) == 0
+            { return false; } 
      
             for j in PRIMES[4..].iter(){
                 if x % (PRIMORIAL * i - *j as u128) == 0 ||
-                   x % (PRIMORIAL * i + *j as u128) == 0 {
-                    return false;
-                }
+                   x % (PRIMORIAL * i + *j as u128) == 0
+                { return false; }
             }
         }
         return true;

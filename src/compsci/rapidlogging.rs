@@ -54,7 +54,7 @@ impl Logger {
         let mut out:     String = String::new();
         let mut out_cns: String = format!("[{}]", Utc::now().to_rfc3339_opts(SecondsFormat::Secs, true));
         match prefixes {
-            Some(v) => { 
+            Some(v) => {
                 for s in v {
                     out_cns += &format!("[{}]", s);
                 }
