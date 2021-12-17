@@ -115,7 +115,7 @@ impl<T> CrossSum<T> for u32 {
 
 impl<T> CrossSum<T> for u64 {
     fn cross_sum(&self) -> Self {
-        let mut v: Self = *self;
+        let mut v:      Self      = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(20);
     
         while v > 0 {
@@ -129,7 +129,7 @@ impl<T> CrossSum<T> for u64 {
 
 impl<T> CrossSum<T> for u128 {
     fn cross_sum(&self) -> Self {
-        let mut v: Self = *self;
+        let mut v:      Self      = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(39);
     
         while v > 0 {

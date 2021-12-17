@@ -17,8 +17,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// A new set.
     pub fn new(values: &[T]) -> Set<'a, T> {        
         let mut res: Set<T> = Set { elements: values.to_vec(),
-                                    superset: None,
-                                };
+                                    superset: None };
         res.elements.sort_unstable();
         res.elements.dedup();
         res
@@ -41,8 +40,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// ```
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements: Vec::new(),
-                                        superset: Option::Some(parent),
-            };
+                                        superset: Option::Some(parent) };
             for elem in &parent.elements {
                 if f(*elem) {
                     res.elements.push(*elem);
@@ -71,8 +69,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// ```
     pub fn union(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = Set {elements: Vec::new(),
-                                   superset: None,
-        };
+                                   superset: None };
 
         res.elements.append(&mut self.elements.clone());
         res.elements.append(&mut other.elements.clone());
@@ -119,7 +116,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     pub fn has_element(&self, elem: &T) -> bool {
         match self.elements.binary_search(elem) {
             Ok(_)  => { return true; }
-            Err(_) => { return false; },
+            Err(_) => { return false; }
         }
     }
     /// Lets you insert an element into a set. Does not insert already present values.
@@ -195,11 +192,11 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
 macro_rules! new_set {
     ( $( $a:expr ),* ) => {
         {
-        let mut temp = Vec::new();
-        $(
-            temp.binary_insert_no_dup($a);
-        )*
-        Set::new(&temp)
+            let mut temp = Vec::new();
+            $(
+                temp.binary_insert_no_dup($a);
+            )*
+            Set::new(&temp)
         }
     };
 }

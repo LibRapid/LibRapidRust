@@ -22,14 +22,14 @@ impl Date {
     /// `none` if the date is invalid, otherwise a new date.
     pub fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
         if is_valid_day(year, month, day) {
-            return Option::Some(Date { year,
-                                       month,
-                                       day,
-                                       hour:   0,
-                                       minute: 0,
-                                       second: 0,
-                                       leap_year:
-                                       is_leap_year(year) });
+            return Some(Date { year,
+                               month,
+                               day,
+                               hour:   0,
+                               minute: 0,
+                               second: 0,
+                               leap_year:
+                               is_leap_year(year) });
         }
         return None;
     }
@@ -223,7 +223,12 @@ impl std::fmt::Display for Date {
 
 impl PartialEq for Date {
     fn eq(&self, other: &Self) -> bool {
-        self.year == other.year && self.month == other.month && self.day == other.day && self.hour == other.hour && self.minute == other.minute && self.second == other.second
+        self.year   == other.year   &&
+        self.month  == other.month  &&
+        self.day    == other.day    &&
+        self.hour   == other.hour   &&
+        self.minute == other.minute &&
+        self.second == other.second
     }
 
     fn ne(&self, other: &Self) -> bool {
