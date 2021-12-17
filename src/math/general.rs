@@ -99,6 +99,37 @@ pub trait Increment {
     fn inc_by(&mut self, n: Self);
 }
 
+pub trait Decrement {
+    /// Decrement a number by one.
+    /// # Returns
+    /// Nothing.
+    /// # Warning
+    /// Does not check for underflow.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Decrement;
+    /// let mut five: i32 = 5;
+    /// five.dec();
+    /// assert_eq!(five, 4);
+    /// ```
+    fn dec(&mut self);
+    /// Decrement a number by a specified value.
+    /// # Arguments
+    /// * `n` - The value to be decremented by.
+    /// # Returns
+    /// Nothing.
+    /// # Warning
+    /// Does not check for underflow.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Increment;
+    /// let mut five: i32 = 5;
+    /// five.dec_by(2);
+    /// assert_eq!(five, 3);
+    /// ```
+    fn dec_by(&mut self, n: Self);
+}
+
 impl<T: std::ops::AddAssign + From<u8>> Increment for T {
     fn inc(&mut self) {
         *self += 1u8.into();
@@ -106,6 +137,16 @@ impl<T: std::ops::AddAssign + From<u8>> Increment for T {
 
     fn inc_by(&mut self, n: Self) {
         *self += n;
+    }
+}
+
+impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
+    fn dec(&mut self) {
+        *self -= 1u8.into();
+    }
+
+    fn dec_by(&mut self, n: Self) {
+        *self -= n;
     }
 }
 
