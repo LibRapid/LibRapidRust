@@ -1,7 +1,9 @@
 Formatting rules for contributing
 ========
 If you want to contribute to LibRapid, be sure to follow these rules to have consistency in the code.
-
+_____
+The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL” in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).
+_____
 §1 Curly braces
 ------
 A opening curly brace `{` MUST be placed on the same line as its statement with a leading space, except
@@ -22,3 +24,12 @@ Spaces SHOULD be applied where:
 §3 Types
 -----
 Types MAY be inferred, even though a explicit type declaration is preffered.
+When explicitly delcaring a type, the colon `:` is places right after the name of the constant or variable.
+
+§4 Operators
+----
+Arithmetic and bitwise operators `+`,`-`,`*`,`/`,`%`,`&`,`^`,`|`,`<<`,`>>` MUST have one trailing and following space.
+
+Logic operators `>`,`>=`,`<`,`<=`,`==`,`!=`,`&&`,`||` MUST have one trailing and following space.
+
+One SHOULD split up statements using `&&`,`||`, when one line is becoming too long (subjective to the editor). This MUST be done having a line break instead of a trailing space, while the right hand side MUST begin on the same column as the left hand side.
