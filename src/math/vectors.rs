@@ -1,6 +1,6 @@
 //! Vectors can be really handy, sometimes. Do everything you want with your favorite direction pointing data type from mathematics.
 
-use super::rapidmath::CommonPowers;
+use super::general::CommonPowers;
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /// Mathematical Vectors in Rust.

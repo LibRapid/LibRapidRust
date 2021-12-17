@@ -39,7 +39,7 @@ pub trait MapToNumRange<T> {
     ///
     /// # Examples
     /// ```
-    /// use lib_rapid::math::rapidmath::MapToNumRange;
+    /// use lib_rapid::math::general::MapToNumRange;
     ///
     /// let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
@@ -56,7 +56,7 @@ pub trait CommonPowers {
     /// This function does not check if overflow occurs.
     /// # Examples
     /// ```
-    ///use lib_rapid::math::rapidmath::CommonPowers;
+    ///use lib_rapid::math::general::CommonPowers;
     ///let i = 12;
     ///let res = i.square();
     ///

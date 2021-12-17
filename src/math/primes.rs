@@ -1,6 +1,6 @@
 //! Traits and functions for handling primes and primality.
 use super::ztheory::*;
-use super::rapidmath::*;
+use super::general::*;
 
 /// Trait for prime functions.
 pub trait Primality {
