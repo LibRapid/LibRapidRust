@@ -24,7 +24,7 @@ Contributing
 You want to contribute? Sure! You can contribute with:
 
 - 🚩 Issues
-- 🙇 Pull Requests
+- 🙇 Pull Requests (See `FORMATRULES.md` for more information)
 - 💡 Feature Suggestions (Via Discussions)
 
 Documentation
