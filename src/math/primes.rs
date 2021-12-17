@@ -12,7 +12,7 @@ pub trait Primality {
     /// use lib_rapid::math::primes::Primality;
     /// 
     /// assert_eq!(false, (-2).is_prime());
-    /// assert_eq!(true, 2.is_prime());
+    /// assert_eq!(true, 8191.is_prime());
     /// assert_eq!(false, 1.is_prime());
     /// assert_eq!(false, 0.is_prime());
     /// ```
