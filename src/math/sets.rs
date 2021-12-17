@@ -280,3 +280,14 @@ impl<T: PartialEq> PartialEq for Set<'_, T> {
         self.elements != other.elements
     }
 }
+
+impl<T: Copy> Iterator for Set<'_, T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.elements.iter().next() {
+            Some(x) => { return Some(*x); }
+            None    => { return None; }
+        }
+    }
+}
