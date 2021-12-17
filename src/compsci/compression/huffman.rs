@@ -10,6 +10,8 @@ use std::collections::HashMap;
 use bit_vec::BitVec;
 use serde::{Serialize, Deserialize};
 
+use crate::math::general::Increment;
+
 type Link = Option<Box<Node>>;
 
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug, Default)]
@@ -48,7 +50,7 @@ fn get_frequency(s: &str) -> HashMap<char, usize> {
     for c in s.chars() {
         let counter: &mut usize = hm.entry(c)
                                     .or_insert(0); // Inserts c if value is not present, returns mut ref
-        *counter               += 1; // Increment by 1
+        counter.inc(); // Increment by 1
     }
     hm
 }
