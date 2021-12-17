@@ -27,6 +27,7 @@ You want to contribute? Sure! You can contribute with:
 - 🙇 Pull Requests (See `FORMATRULES.md` for more information)
 - 💡 Feature Suggestions (Via Discussions)
 
+Be sure to add documentation to any new public API with examples, and running `cargo test` to ensure that your changes are valid.
 Documentation
 -----
 
