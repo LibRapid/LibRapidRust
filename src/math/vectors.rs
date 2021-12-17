@@ -6,7 +6,6 @@ const INV_DIM: &str = "Error: Dimensions did not match.";
 /// Mathematical Vectors in Rust.
 pub struct MathVector {
     values:    Vec<f64>,
-    dimension: usize,
     length:    Option<f64>,
 }
 
@@ -20,7 +19,6 @@ impl MathVector {
     /// A new MathVector.
     pub fn new(values: &[f64]) -> MathVector {        
         MathVector { values:    values.to_owned(),
-                     dimension: values.len(),
                      length:    None }
     }
     /// Creates a new `MathVector` with the specified capacity.
@@ -33,15 +31,14 @@ impl MathVector {
     pub fn new_with_dimension(dim: usize) -> MathVector {
 
         MathVector { values:    vec![0f64; dim],
-                     dimension: dim,
                      length:    None }
     }
     /// Gets the dimension in which a `MathVector` lives.
     ///
     /// # Returns
-    /// A `&usize`.
-    pub fn dimension(&self) -> &usize {
-        &self.dimension
+    /// A `usize`.
+    pub fn dimension(&self) -> usize {
+        self.values.len()
     }
     /// Gets the length of a `MathVector`.
     ///
@@ -76,7 +73,7 @@ impl MathVector {
     /// # Panic
     /// Panics if the values don't have the same dimension as before.
     pub fn set_values(&mut self, vals: &[f64]) {
-        match vals.len() == self.dimension {
+        match vals.len() == self.dimension() {
             true  => { self.values = vals.to_owned();
                        self.length = None; }
             false => { core::panic!("{}", INV_DIM); } 
@@ -87,14 +84,13 @@ impl MathVector {
 impl std::ops::Add for MathVector {
     type Output = Self;
     fn add(self, other: Self) -> MathVector {
-        match self.dimension() == &other.dimension {
+        match self.dimension() == other.dimension() {
             true  =>  { 
-                let mut vals: Vec<f64> = Vec::with_capacity(self.dimension);
-                for i in 0..self.dimension {
+                let mut vals: Vec<f64> = Vec::with_capacity(self.dimension());
+                for i in 0..self.dimension() {
                     vals.push(self.values[i] + other.values[i]);
                 }
                 MathVector { values:    vals,
-                             dimension: self.dimension,
                              length:    None }
             }
             false => { core::panic!("{}", INV_DIM) }
@@ -107,12 +103,11 @@ impl std::ops::Sub for MathVector {
     fn sub(self, other: Self) -> MathVector {
         match self.dimension() == other.dimension() {
             true  =>  { 
-                let mut vals: Vec<f64> = Vec::with_capacity(self.dimension);
-                for i in 0..self.dimension {
+                let mut vals: Vec<f64> = Vec::with_capacity(self.dimension());
+                for i in 0..self.dimension() {
                     vals.push(self.values[i] - other.values[i]);
                 }
                 MathVector { values:    vals,
-                             dimension: self.dimension,
                              length:    None }
             }
             false => { core::panic!("{}", INV_DIM) }
@@ -129,13 +124,12 @@ impl std::ops::Sub for MathVector {
     /// A new `MathVector`.
 pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
 
-    let mut vals: Vec<f64> = Vec::with_capacity(other.dimension);
+    let mut vals: Vec<f64> = Vec::with_capacity(other.dimension());
 
-    for i in 0..other.dimension {
+    for i in 0..other.dimension() {
         vals.push(scalar * other.values[i]);
     }
     MathVector { values:    vals,
-                 dimension: other.dimension,
                  length:    None }
 }
 
@@ -159,7 +153,7 @@ macro_rules! new_mathvec {
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut finstring: String = String::from("( ");
-        for i in 0..self.dimension {
+        for i in 0..self.dimension() {
             finstring.push(' ');
             finstring += &self.values[i].to_string();
             finstring.push_str("; ");
