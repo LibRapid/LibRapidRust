@@ -117,7 +117,7 @@ impl Primality for u32 { // too large to check primality by trial division so pr
 impl Primality for i32 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (self.abs() as u64).is_prime()
+        (*self as u64).is_prime()
     }    
 }
 
@@ -146,7 +146,7 @@ impl Primality for u64 {
 impl Primality for i64 {
    fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (self.abs() as u64).is_prime()
+        (*self as u64).is_prime()
    }
 }
 // Very slow primality check, I'll work out how to do BPSW for 128-bit
@@ -193,7 +193,7 @@ impl Primality for u128 {
 impl Primality for i128{
     fn is_prime(&self)-> bool {
         if self <= &0 { return false; }
-        (self.abs() as u128).is_prime()
+        (*self as u128).is_prime()
     }
 }
 
