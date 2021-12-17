@@ -6,3 +6,4 @@ pub mod sets;
 pub mod vectors;
 pub mod postfix;
 pub mod unit_conversion;
+pub mod primes;
