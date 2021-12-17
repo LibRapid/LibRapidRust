@@ -36,4 +36,5 @@ One SHOULD split up statements using `&&`,`||`, when one line is becoming too lo
 
 §5 Others
 ----
-Other characters and substrings, such as `->` MUST have one trailing and one leading space.
+The substring `->` MUST have one trailing and leading space.
+The characters `,`,`:` MUST have one trailing space.

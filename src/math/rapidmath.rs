@@ -362,7 +362,7 @@ impl Primality for i32 {
 impl Primality for u64 {
     fn is_prime(&self) -> bool {
      
-        const PRIME_BASES: [u64;12] = [2,3,5,7,11, 13, 17, 19, 23, 29, 31, 37];
+        const PRIME_BASES: [u64;12] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
             if self == &1 ||
                self == &0
             { return false; }
@@ -391,7 +391,7 @@ impl Primality for i64 {
 impl Primality for u128 {
     fn is_prime(&self) -> bool {
         if *self == 1 { return false; }
-        const PRIMES:    [u64;27] = [2,3,5,7,11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103];
+        const PRIMES:    [u64;27] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103];
         const PRIMORIAL: u128     = 210;
         let x = *self;  // too lazy to dereference at every point
      
