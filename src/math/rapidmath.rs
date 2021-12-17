@@ -128,9 +128,12 @@ pub trait Primality {
     /// ```
     /// ```
     /// use lib_rapid::math::rapidmath::Primality;
-    /// let p:     Vec<u64> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// 
+    /// let _p: Vec<usize>  = generate_primes(1000);
+    /// let p:  Vec<u64>    = _p.into_iter().map(|x: usize| x as u64).collect::<Vec<u64>>();
     /// let mut f: Vec<u64> = Vec::new();
-    /// for i in 0..100 {
+    /// for i in 0..1000 {
     ///     if (i as u64).is_prime() { f.push(i as u64); }
     /// }
     /// 
@@ -138,7 +141,10 @@ pub trait Primality {
     /// ```
     /// ```
     /// use lib_rapid::math::rapidmath::Primality;
-    /// let p:     Vec<u8> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// 
+    /// let _p: Vec<usize> = generate_primes(100);
+    /// let p:  Vec<u8>    = _p.into_iter().map(|x: usize| x as u8).collect::<Vec<u8>>();
     /// let mut f: Vec<u8> = Vec::new();
     /// for i in 0..100 {
     ///     if (i as u8).is_prime() { f.push(i as u8); }
@@ -148,8 +154,12 @@ pub trait Primality {
     /// ```
     /// ```
     /// use lib_rapid::math::rapidmath::Primality;
-    /// let p:     Vec<u16> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997];
+    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// 
+    /// let _p: Vec<usize>  = generate_primes(1000);
+    /// let p:  Vec<u16>    = _p.into_iter().map(|x: usize| x as u16).collect::<Vec<u16>>();
     /// let mut f: Vec<u16> = Vec::new();
+    /// 
     /// for i in 0..1000 {
     ///     if (i as u16).is_prime() { f.push(i as u16); }
     /// }
@@ -158,9 +168,12 @@ pub trait Primality {
     /// ```
     /// ```
     /// use lib_rapid::math::rapidmath::Primality;
-    /// let p:     Vec<u32> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// 
+    /// let _p: Vec<usize>  = generate_primes(1000);
+    /// let p:  Vec<u32>    = _p.into_iter().map(|x: usize| x as u32).collect::<Vec<u32>>();
     /// let mut f: Vec<u32> = Vec::new();
-    /// for i in 0..100 {
+    /// for i in 0..1000 {
     ///     if (i as u32).is_prime() { f.push(i as u32); }
     /// }
     /// 
@@ -168,9 +181,12 @@ pub trait Primality {
     /// ```
     /// ```
     /// use lib_rapid::math::rapidmath::Primality;
-    /// let p:     Vec<u128> = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    /// use lib_rapid::math::rapidmath::generate_primes;
+    /// 
+    /// let _p: Vec<usize>  = generate_primes(1000);
+    /// let p:  Vec<u128>    = _p.into_iter().map(|x: usize| x as u128).collect::<Vec<u128>>();
     /// let mut f: Vec<u128> = Vec::new();
-    /// for i in 0..100 {
+    /// for i in 0..1000 {
     ///     if (i as u128).is_prime() { f.push(i as u128); }
     /// }
     /// 
@@ -183,7 +199,6 @@ impl<T> CrossSum<T> for u8 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(3);
-    
         while v > 0 {
             let n = (self % 10) as u8;
             v /= 10;
