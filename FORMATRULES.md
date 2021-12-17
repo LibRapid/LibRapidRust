@@ -28,8 +28,12 @@ When explicitly delcaring a type, the colon `:` is places right after the name o
 
 §4 Operators
 ----
-Arithmetic and bitwise operators `+`,`-`,`*`,`/`,`%`,`&`,`^`,`|`,`<<`,`>>` MUST have one trailing and following space.
+Arithmetic and bitwise operators `+`,`-`,`*`,`/`,`%`,`&`,`^`,`|`,`<<`,`>>` MUST have one trailing and leading space.
 
-Logic operators `>`,`>=`,`<`,`<=`,`==`,`!=`,`&&`,`||` MUST have one trailing and following space.
+Logic operators `>`,`>=`,`<`,`<=`,`==`,`!=`,`&&`,`||` MUST have one trailing and leading space.
 
 One SHOULD split up statements using `&&`,`||`, when one line is becoming too long (subjective to the editor). This MUST be done having a line break instead of a trailing space, while the right hand side MUST begin on the same column as the left hand side.
+
+§5 Others
+----
+Other characters and substrings, such as `->` MUST have one trailing and one leading space.
