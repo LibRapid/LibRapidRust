@@ -72,6 +72,43 @@ pub trait CommonPowers {
     fn cube(&self) -> Self;
 }
 
+pub trait Increment {
+    /// Increment a number by one.
+    /// # Returns
+    /// Nothing.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Increment;
+    /// let mut five: i32 = 5;
+    /// five.inc();
+    /// assert_eq!(five, 6);
+    /// ```
+    fn inc(&mut self);
+    /// Increment a number by a specified value.
+    /// # Arguments
+    /// * `n` - The value to be incremented by.
+    /// # Returns
+    /// Nothing.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Increment;
+    /// let mut five: i32 = 5;
+    /// five.inc_by(2);
+    /// assert_eq!(five, 7);
+    /// ```
+    fn inc_by(&mut self, n: Self);
+}
+
+impl<T: std::ops::AddAssign + From<u8>> Increment for T {
+    fn inc(&mut self) {
+        *self += 1u8.into();
+    }
+
+    fn inc_by(&mut self, n: Self) {
+        *self += n;
+    }
+}
+
 impl<T> CrossSum<T> for u8 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
