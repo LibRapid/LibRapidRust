@@ -191,7 +191,7 @@ impl Primality for u128 {
 }
 
 impl Primality for i128 {
-    fn is_prime(&self)-> bool {
+    fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
         (self.abs() as u128).is_prime()
     }
