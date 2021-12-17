@@ -21,7 +21,7 @@
 /// [^1] Note that this also includes reading and writing from/to files which is performance-wise expensive.
 ///
 /// # Attention
-/// This alogrithm roughly gets more efficient the bigger texts it has to store.
+/// This algorithm roughly gets more efficient the bigger texts it has to store.
 ///
 /// # Trivia
 /// Huffman invented this algorithm for text compression, but this is now the base of many more compression methods.
