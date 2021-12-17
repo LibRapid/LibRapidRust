@@ -122,7 +122,7 @@ pub trait Decrement {
     /// Does not check for underflow.
     /// # Examples
     /// ```
-    /// use lib_rapid::math::general::Increment;
+    /// use lib_rapid::math::general::Decrement;
     /// let mut five: i32 = 5;
     /// five.dec_by(2);
     /// assert_eq!(five, 3);
