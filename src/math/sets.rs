@@ -40,7 +40,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// ```
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a Set<T>, f: F) -> Set<'a, T> {
             let mut res: Set<T> = Set { elements: Vec::new(),
-                                        superset: Option::Some(parent) };
+                                        superset: Some(parent) };
             for elem in &parent.elements {
                 if f(*elem) {
                     res.elements.push(*elem);

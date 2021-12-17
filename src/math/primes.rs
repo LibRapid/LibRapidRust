@@ -218,9 +218,9 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
     res.push(3);
     let mut sieve: Vec<bool> = vec![false; limit];
     
-    for x in (1..).take_while(|n| n * n < limit) {
+    for x in (1..).take_while(|n| n.square() < limit) {
         let mut n: usize;
-        for y in (1..).take_while(|n| n * n < limit) {
+        for y in (1..).take_while(|n| n.square() < limit) {
 
             n = 4 * x.square() + y.square();
             if n <= limit && (n % 12 == 1 || n % 12 == 5)

@@ -3,6 +3,8 @@ use chrono::{Utc, SecondsFormat};
 use std::io::prelude::*;
 use std::fs::OpenOptions;
 
+use crate::math::general::Increment;
+
 /// The structure for the RapidLogger.
 pub struct Logger {
     pub buff_size:  usize,
@@ -50,7 +52,7 @@ impl Logger {
     /// Instead of `None`, you can also add things like `some(vec!["warning", "low urgency"])`. Then, one line of the output will look like this:
     /// `[2021-12-13T18:08:06Z][warning][low urgency] Test-Log.`
     pub fn log(&mut self, prefixes: Option<Vec<&str>>, msg: &str) -> Result<bool, String> {
-        self.buff_count += 1;
+        self.buff_count.inc();
         let mut out:     String = String::new();
         let mut out_cns: String = format!("[{}]", Utc::now().to_rfc3339_opts(SecondsFormat::Secs, true));
         match prefixes {
