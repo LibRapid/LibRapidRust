@@ -71,7 +71,7 @@ pub trait CommonPowers {
     /// This function does not check if overflow occurs.
     fn cube(&self) -> Self;
 }
-
+/// Trait for incrementing by value. Shorthand syntax for `x += y;`.
 pub trait Increment {
     /// Increment a number by one.
     /// # Returns
@@ -98,7 +98,7 @@ pub trait Increment {
     /// ```
     fn inc_by(&mut self, n: Self);
 }
-
+/// Trait for incrementing by value. Shorthand syntax for `x -= y;`.
 pub trait Decrement {
     /// Decrement a number by one.
     /// # Returns
