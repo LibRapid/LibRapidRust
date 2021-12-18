@@ -49,13 +49,13 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
             res
     }
     /// Does a mathematical union on two sets.
-    ///
+    /// `self ∪ other`.
     /// # Arguments
     /// * `self` - The first set.
     /// * `other` - The second set.
     ///
     /// # Returns
-    /// A new set containing the union of both sets.
+    /// A new `Set<T>`: `self ∪ other`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::Set;
@@ -85,7 +85,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// * `other` - The second set.
     ///
     /// # Returns
-    /// A new set containing the intersection of both sets.
+    /// A new `Set<T>`: `self ∩ other`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::Set;
@@ -112,7 +112,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// * `elem` - The element to check for.
     ///
     /// # Returns
-    /// A boolean value which determines if the element is in the set. 
+    /// A boolean value which determines if `elem ∈ self`. 
     pub fn has_element(&self, elem: &T) -> bool {
         match self.elements.binary_search(elem) {
             Ok(_)  => { return true; }
@@ -141,14 +141,14 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
         /// Lets you check wether a set has a parent or not.
     ///
     /// # Returns
-    /// A boolean value which determines if the set has a value. 
+    /// A boolean value which determines if the set is a subset of any other set. 
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
     /// Gets the cardinality of a set.
     ///
     /// # Returns
-    /// A `usize`. 
+    /// A `usize`: `|self|`.
     pub fn cardinality(&self) -> usize {
         self.elements.len()
     }
