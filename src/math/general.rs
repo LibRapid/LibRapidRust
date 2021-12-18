@@ -1,6 +1,8 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
 
+use crate::eval_postfix;
+
 /// Trait for the cross sum of a given number.
 pub trait CrossSum<T> {
     /// Calculates the cross sum of a number.
@@ -225,7 +227,7 @@ impl<T: std::ops::Add<Output = T> +
         std::ops::Div<Output = T> + 
         Copy> MapToNumRange<T> for T {
             fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T {
-                (start2 + (end2 - start2)) * ((*self - start1) / end1 - start1)
+                eval_postfix!(start2 end2 start2 - + (*self) start1 - end1 / start1 - *)
             }
         }
 
