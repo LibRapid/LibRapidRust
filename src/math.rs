@@ -1,5 +1,6 @@
 //! This part of the library is designed for mathematics and physics - evaluating postfix-notation expressions, unions on customised sets or temperature conversion;Those features are among those implemented for LibRapid.
-mod ztheory; 
+mod ztheory;
+mod matrices;
 pub mod general;
 pub mod constants;
 pub mod sets;
