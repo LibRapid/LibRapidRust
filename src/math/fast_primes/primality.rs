@@ -10,10 +10,9 @@ use crate::math::fast_primes::fjprime32::fjprime32;
   This currently utilizes a compiler optimization trick, so trying to execute on unoptimized executable will result in overflow error. 
 
 */
-
-
-
+#[allow(non_upper_case_globals)]
 pub fn primality_128(x: u128) -> bool {
+
         const PRIMELIST: [u8; 54] = [// list of all primes less than 2^8
            2,  3,  5,   7,  11,  13,  17,  19,  23,  29,  31,
           37, 41, 43,  47,  53,  59,  61,  67,  71,  73,  79, 

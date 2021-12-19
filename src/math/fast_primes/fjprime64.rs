@@ -1375,14 +1375,21 @@ static  BASES_64 : [u32;16384] = [
 
 
 pub fn fjprime64(x: u64)->bool {
-    if (x==2 || x==3 || x==5 || x==7 || x == 677) {return true};
-    if (x%2==0 || x%3==0 || x%5==0 || x%7==0) {return false};
-    if (x<121) {return (x>1)};
-    if (!sprp(x,2)) {return false};
+    if x==2 || x==3 || x==5 || x==7 || x == 677
+    { return true; }
+
+    if x % 2 == 0 || x % 3 == 0 || x % 5 == 0 || x % 7 == 0
+    { return false; }
+
+    if x < 121
+    {return x > 1; }
+
+    if !sprp(x,2)
+    { return false; }
     let mut  h = x;
     h = ((h >> 32) ^ h) * 0x45d9f3b3335b369;
     h = ((h >> 32) ^ h) * 0x3335b36945d9f3b;
-    h = ((h >> 32) ^ h);
+    h = (h >> 32) ^ h;
     let b = BASES_64[(h & 16383) as usize];
     return sprp(x,(b&4095) as u64) && sprp(x,(b>>12) as u64);
 }
