@@ -89,6 +89,10 @@ impl Primality for u8 { // promoted to u16 for a more optimized check
 
 impl Primality for u16 {// Splits 
     fn is_prime(&self) -> bool {
+        if self == &1 ||
+           self == &0
+        { return false; }
+
         const PRIMELIST: [u16; 54] = [// list of all primes less than 2^8
            2,  3,  5,   7,  11,  13,  17,  19,  23,  29,  31,
           37, 41, 43,  47,  53,  59,  61,  67,  71,  73,  79, 
@@ -96,10 +100,6 @@ impl Primality for u16 {// Splits
          139,149,151, 157, 163, 167, 173, 179, 181, 191, 193,
          197,199,211, 223, 227, 229, 233, 239, 241, 251
         ];
-       
-        if self == &1 ||
-           self == &0
-        { return false; }
        
         if PRIMELIST.contains(self)
         { return true; }
@@ -117,17 +117,16 @@ impl Primality for u32 { // too large to check primality by trial division so pr
 impl Primality for i32 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (self.abs() as u64).is_prime()
-    }    
+        (*self as u64).is_prime()
+    }
 }
 
 impl Primality for u64 {
     fn is_prime(&self) -> bool {
+        if self == &1
+        { return false; }
      
         const PRIME_BASES: [u64;12] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
-            if self == &1 ||
-               self == &0
-            { return false; }
         
         for i in PRIME_BASES { // Checks if self is a member of PRIME_BASES or divisible by a member
             if *self == i { return true; }
@@ -145,7 +144,7 @@ impl Primality for u64 {
 impl Primality for i64 {
    fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (self.abs() as u64).is_prime()
+        (*self as u64).is_prime()
    }
 }
 // Very slow primality check, I'll work out how to do BPSW for 128-bit
@@ -189,7 +188,7 @@ impl Primality for u128 {
 impl Primality for i128 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (self.abs() as u128).is_prime()
+        (*self as u128).is_prime()
     }
 }
 
