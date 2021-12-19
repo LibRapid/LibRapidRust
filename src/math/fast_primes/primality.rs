@@ -1,6 +1,3 @@
-//use super::fjprime32;
-//use super::fjprime64;
-
 use crate::math::fast_primes::fjprime64::fjprime64;
 use crate::math::fast_primes::fjprime32::fjprime32;
 
