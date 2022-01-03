@@ -1,6 +1,11 @@
 //! In here is the macro `eval_postfix!` defined. With that, you can evaluate expressions in reverse polish notation at compile time. Handy, isn't it?
 /// Evaluate a mathematical expression in postfix notation ("Reverse Polish Notation") at compile time. greater than, less than etc. are also possible.
 ///
+/// # What is the advantage?
+/// The postfix notation does not need parentheses, which means less typing - especially for long, complicated formulas.
+/// Implementations of the postfix notation only need a stack - which is commonly associated with faster evaluations.
+/// It does need however a bit time to get used to it.
+/// 
 /// # Returns
 /// The result of the calculation.
 ///
