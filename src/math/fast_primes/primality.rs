@@ -26,31 +26,26 @@ pub fn primality_128(x: u128) -> bool {
         const u32bound : u128 = 0x100000000;
         const u64bound : u128 = 0x10000000000000000;
         
-        if x == 1 || x == 0 {
-           return false
-        }
+        if x == 1 || x == 0
+        { return false; }
          
         if x < u16bound || x >= u64bound {
 
        		for i in PRIMELIST { // you can't truncate x as multiple elements in 0;2^128  mod 2^8 are congruent to any element in 0;2^8 
-    		    if x == i as u128 {
-        	    	return true;
-    			}
+    		    if x == i as u128 
+                { return true; }
        		}
 		   
-        	if x < u8bound {  // If x < 2^8 end checks
-        		return false;
+        	if x < u8bound // If x < 2^8 end checks
+            { return false; }
+
+        	for i in PRIMELIST { // All x are checked for divisibility, majority of composites will fail 
+        	  	if x % i as u128 == 0
+                { return false; }
         	}
 
-        	for i in PRIMELIST {    // All x are checked for divisibility, majority of composites will fail 
-        	  	if x % i as u128 == 0 {
-        	  		return false;
-        		}
-        	}
-
-        	if x < u16bound { // if  less than 2^16 then checks stop here
-        		return true;
-        	}
+        	if x < u16bound // if less than 2^16 then checks stop here
+            { return true; }
 		
         } // ends the initial check for 0;2^16 and 2^64;2^128-1
         // checks are split there for the interval of 0;2^32 and 0;2^64 and then resumed for 0;2^128, so numbers greater than 2^64 never receive these checks
