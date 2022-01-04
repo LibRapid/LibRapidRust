@@ -21,10 +21,10 @@ pub fn primality_128(x: u128) -> bool {
          197,199,211, 223, 227, 229, 233, 239, 241, 251
         ];
         
-        const u8bound  : u128 = 0x100;
-        const u16bound : u128 = 0x10000;
-        const u32bound : u128 = 0x100000000;
-        const u64bound : u128 = 0x10000000000000000;
+        const u8bound:  u128 = 0x100;
+        const u16bound: u128 = 0x10000;
+        const u32bound: u128 = 0x100000000;
+        const u64bound: u128 = 0x10000000000000000;
         
         if x == 1 || x == 0
         { return false; }
@@ -58,14 +58,14 @@ pub fn primality_128(x: u128) -> bool {
         // numbers greater than 2^64 are checked here in addition to the previous trial division, but not the SPRP tests.
         else {
             const PRIMORIAL: u128 = 210;
-            let supremum = ( ( (x as f64).sqrt() as u128 + 103u128) / PRIMORIAL) + 1u128; // Else perform trial division using the 11-rough numbers (higher-density of primes)
+            let supremum: u128 = ( ( (x as f64).sqrt() as u128 + 103u128) / PRIMORIAL) + 1u128; // Else perform trial division using the 11-rough numbers (higher-density of primes)
             for i in 1..supremum { // starts at 
             
                 if x % (PRIMORIAL * i - 1) == 0 ||
                    x % (PRIMORIAL * i + 1) == 0
                 { return false; } 
             
-                for j in PRIMELIST[4..27].iter(){
+                for j in PRIMELIST[4..27].iter() {
                     if x % (PRIMORIAL * i - *j as u128) == 0 ||
                        x % (PRIMORIAL * i + *j as u128) == 0
                     { return false; }
