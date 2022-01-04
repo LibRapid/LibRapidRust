@@ -58,7 +58,9 @@ impl Logger {
     /// `[2021-12-13T18:08:06Z][warning][low urgency] Test-Log.`
     pub fn log(&mut self, prefixes: Option<Vec<&str>>, msg: &str) -> Result<bool, String> {
         self.buff_count.inc();
-        let mut out: String = format!("[{}]", Utc::now().to_rfc3339_opts(SecondsFormat::Secs, true));
+        let mut out: String = format!("[{}]", Utc::now()
+                                                   .to_rfc3339_opts(SecondsFormat::Secs,
+                                                                    true));
         match prefixes {
             Some(v) => {
                 for s in v {
@@ -91,11 +93,11 @@ impl Logger {
                                     .open(&self.file_path.as_ref().unwrap());
             let mut file = match file {
                 Ok(f)  => f,
-                Err(e) => { return Err(format!("Problem opening or creating file: {:?}", e)); },
+                Err(e) => { return Err(format!("Problem opening or creating file: {:?}", e)); }
             };
             match write!(file, "{}", self.buffer) {
-                Ok(_)  => { },
-                Err(e) => { return Err(format!("Problem writing to file: {:?}", e)); },
+                Ok(_)  => { }
+                Err(e) => { return Err(format!("Problem writing to file: {:?}", e)); }
             }
         }
 
