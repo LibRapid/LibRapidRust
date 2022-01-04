@@ -231,7 +231,7 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
 
             if x > y {
                 n = 3 * x.square() - y.square();
-                if x > y && n <= limit && n % 12 == 11
+                if n <= limit && n % 12 == 11
                 { sieve[n] ^= true; }
             }
         }
