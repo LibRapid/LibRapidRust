@@ -37,7 +37,7 @@ pub(crate) fn fjprime32(x: u32) -> bool {
     h = ((h >> 16) ^ h) * 0x45d9f3b;
     h = ((h >> 16) ^ h) & 255;
 
-    return sprp(x as u64,BASES[h as usize] as u64);
+    return sprp(x as u64, BASES[h as usize] as u64);
 }
 
 
