@@ -102,9 +102,8 @@ impl Logger {
         }
 
         if self.log_to_console {
-            { print!("{}", self.buffer);
-                     std::io::stdout().flush().unwrap();
-            }
+            print!("{}", self.buffer);
+            std::io::stdout().flush().unwrap();
         }
         self.reset_buffs();
         Ok(true)
