@@ -19,6 +19,11 @@ pub const DEGRADRATE: f64 = 0.017453292519943;
 /// # Returns
 /// a f64 containing the first 15+1 decimal places of π. Rounded.
 pub const PI: f64 = 3.141592653589793;
+/// The mathematical constant √π.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of √π. Rounded.
+pub const SQRTPI: f64 = 1.772453850905516;
 /// The mathematical constant τ.
 ///
 /// # Returns
@@ -34,6 +39,11 @@ pub const HALFPI: f64 = 1.570796326794897;
 /// # Returns
 /// a f64 containing the first 15+1 decimal places of Eulers number. Rounded.
 pub const E: f64 = 2.718281828459045;
+/// The square root of Eulers number.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of √e. Rounded.
+pub const SQRTE: f64 = 1.648721270700128;
 /// √2.
 ///
 /// # Returns
