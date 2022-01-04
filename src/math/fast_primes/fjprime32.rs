@@ -24,10 +24,13 @@ pub(crate) fn fjprime32(x: u32) -> bool {
 
     if x == 2 || x == 3 || x == 5 || x == 7
     { return true; }
+    
     if x % 2 == 0 || x % 3== 0 || x % 5 == 0 || x % 7 ==0
     { return false; }
+
     if x < 121
     { return x > 1; }
+
     let mut h : u64 = x as u64;
 
     h = ((h >> 16) ^ h) * 0x45d9f3b;  
