@@ -93,7 +93,7 @@ impl Primality for u16 {// Splits
            self == &0
         { return false; }
 
-        const PRIMELIST: [u16; 54] = [// list of all primes less than 2^8
+        const PRIMELIST: [u16; 54] = [// list of all primes less than 2⁸
            2,  3,  5,   7,  11,  13,  17,  19,  23,  29,  31,
           37, 41, 43,  47,  53,  59,  61,  67,  71,  73,  79, 
           83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 
@@ -101,7 +101,7 @@ impl Primality for u16 {// Splits
          197,199,211, 223, 227, 229, 233, 239, 241, 251
         ];
        
-        if PRIMELIST.contains(self)
+        if PRIMELIST.binary_search(self).is_ok()
         { return true; }
         
         return (*self as u64).is_prime();
@@ -212,7 +212,7 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
         _     => { }
     }
 
-    let mut res: Vec<usize> = Vec::with_capacity(limit);
+    let mut res: Vec<usize> = Vec::with_capacity(limit >> 2 + 2);
     res.push(2);
     res.push(3);
     let mut sieve: Vec<bool> = vec![false; limit];
