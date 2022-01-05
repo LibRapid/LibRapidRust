@@ -152,7 +152,7 @@ macro_rules! new_mathvec {
 
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut finstring: String = String::from("( ");
+        let mut finstring: String = String::from('(');
         for i in 0..self.dimension() {
             finstring.push(' ');
             finstring += &self.values[i].to_string();

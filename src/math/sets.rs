@@ -248,7 +248,7 @@ impl<T: ToString> Set<'_, T> {
 impl<T> std::ops::Index<usize> for Set<'_, T> {
     type Output = T;
     fn index(&self, index: usize) -> &Self::Output {
-        self.elements.get(index).unwrap()
+        &self.elements[index]
     }
 }
 
@@ -262,8 +262,7 @@ impl<T: ToString> std::fmt::Display for Set<'_, T> {
             res.push(';');
         }
         res.pop();
-        res.push(' ');
-        write!(f, "{}}}", res)
+        write!(f, "{} }}", res)
     }
 }
 

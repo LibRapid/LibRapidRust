@@ -261,17 +261,17 @@ pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
 /// assert_eq!(dec_written, "Lorem Ipsum123123123");
 /// ```
 pub fn read_from_file(path: String) -> String {
-    let mut encoded_file: File     = File::open(path.clone() + ".hlr").unwrap();
-    let mut tree_file:    File     = File::open(path + ".htlr").unwrap();
-    let mut enc_file:     Vec<u8>  = Vec::<u8>::new();
-    let mut enc_tree:     Vec<u8>  = Vec::<u8>::new();
+    let mut encoded_file: File    = File::open(path.clone() + ".hlr").unwrap();
+    let mut tree_file:    File    = File::open(path + ".htlr").unwrap();
+    let mut enc_file:     Vec<u8> = Vec::<u8>::new();
+    let mut enc_tree:     Vec<u8> = Vec::<u8>::new();
 
-    let _                          = encoded_file.read_to_end(&mut enc_file);
-    let _                          = tree_file.read_to_end(&mut enc_tree);
-    
-    let mut bitvec: BitVec         = BitVec::from_bytes(&enc_file); // Get final bitvec
+    let _ = encoded_file.read_to_end(&mut enc_file);
+    let _ = tree_file.read_to_end(&mut enc_tree);
+
+    let mut bitvec: BitVec = BitVec::from_bytes(&enc_file); // Get final bitvec
     bitvec.pop();
-    let root:   Box<Node>          = bincode::deserialize(&enc_tree).unwrap();
+    let root:Box<Node> = bincode::deserialize(&enc_tree).unwrap();
 
     huffman_decode(&bitvec, &root)
 }
