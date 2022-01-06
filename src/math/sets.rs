@@ -138,7 +138,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     pub fn insert(&mut self, elem: T) {
         self.elements.binary_insert_no_dup(elem)
     }
-        /// Lets you check wether a set has a parent or not.
+    /// Lets you check wether a set has a parent (emerged from another set) or not.
     ///
     /// # Returns
     /// A boolean value which determines if the set is a subset of any other set. 
