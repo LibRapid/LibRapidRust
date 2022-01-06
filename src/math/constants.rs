@@ -23,7 +23,7 @@ pub const PI: f64 = 3.141592653589793;
 ///
 /// # Returns
 /// a f64 containing the first 15+1 decimal places of √π. Rounded.
-pub const SQRTPI: f64 = 1.772453850905516;
+pub const SQRTPI: f64 = 1.77245385090552;
 /// The mathematical constant τ.
 ///
 /// # Returns
@@ -89,3 +89,8 @@ pub const LN3: f64 = 1.098612288668109;
 /// # Returns
 /// a f64 containing the first 15+1 decimal places of ln(5). Rounded.
 pub const LN5: f64 = 1.609437912434100;
+/// ζ(3).
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of ζ(3). Rounded.
+pub const ZETA3: f64 = 1.202056903159594;
