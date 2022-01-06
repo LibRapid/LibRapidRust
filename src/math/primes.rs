@@ -123,7 +123,8 @@ impl Primality for i32 {
 
 impl Primality for u64 {
     fn is_prime(&self) -> bool {
-        if self == &1
+        if self == &1 ||
+           self == &0
         { return false; }
      
         const PRIME_BASES: [u64;12] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
