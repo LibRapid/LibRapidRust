@@ -145,6 +145,13 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
+    /// Gets you the optional superset.
+    ///
+    /// # Returns
+    /// A `Option<&Set<T>>`.
+    pub fn get_superset(&self) -> Option<&Set<T>> {
+        self.superset
+    }
     /// Gets the cardinality of a set.
     ///
     /// # Returns
