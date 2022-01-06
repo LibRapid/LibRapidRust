@@ -235,10 +235,10 @@ impl<T: ToString> Set<'_, T> {
 
     fn rec_to_string(&self, string: &mut String) -> String {
         string.push_str(&self.to_string()); // The child-set at the bottom
-        match self.superset.is_some() {
-            true  => { string.push_str(" ⊆ "); // Add subset-character
-                       self.superset.unwrap().rec_to_string(string); } // Recursively append parent sets
-            false => { }
+        match self.superset {
+            Some(x)  => { string.push_str(" ⊆ "); // Add subset-character
+                          x.rec_to_string(string); } // Recursively append parent sets
+            None     => { }
         }
         string.to_string()
     }
