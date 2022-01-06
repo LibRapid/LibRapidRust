@@ -79,6 +79,22 @@ impl MathVector {
             false => { core::panic!("{}", INV_DIM); } 
         }
     }
+
+    /// Normalises a `MathVector`.
+    ///
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// use lib_rapid::math::vectors::new_mathvec;
+    /// let mut v = new_mathvec!(2,2,2);
+    /// v.normalise(); // Also sets the Length to 1.0.
+    /// assert_eq!(v.length(), 1.0);
+    /// assert_eq!(v.get_values(), &vec!(0.5773502691896258; 3));
+    /// ```
+    pub fn normalise(&mut self) {
+        *self = scalar_mul(1.0 / self.length(), self);
+        self.length = Some(1.0);
+    }
 }
 
 impl std::ops::Add for MathVector {
@@ -149,6 +165,8 @@ macro_rules! new_mathvec {
         }
     };
 }
+
+pub use new_mathvec;
 
 impl std::fmt::Display for MathVector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
