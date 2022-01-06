@@ -21,6 +21,13 @@
 /// * `<=`
 /// * `==`
 /// * `!=`
+/// * `&&`
+/// * `||`
+/// * `&`
+/// * `|`
+/// * `^`
+/// * `>>`
+/// * `<<`
 ///
 /// # Examples
 /// ```
@@ -31,6 +38,8 @@
 /// ```
 /// use lib_rapid::math::postfix::eval_postfix;
 /// assert_eq!(0f32, eval_postfix!(1f32 1f32 + 2f32 %));
+/// assert_eq!(16, eval_postfix!(1 1 + 2 / 4 <<));
+/// assert_eq!(1, eval_postfix!(16 2 * 5 >>));
 /// assert_eq!(true, eval_postfix!(1f32 1f32 + 2f32 % 0f32 ==));
 /// ```
 #[macro_export]
@@ -102,6 +111,41 @@ macro_rules! eval_postfix {
     // Not equals
     ($call_stack:tt != $($leftover:tt)*) => {
         eval_postfix!(@operator $call_stack != $($leftover)*)
+    };
+
+    // Logical AND
+    ($call_stack:tt && $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack && $($leftover)*)
+    };
+
+    // Logical OR
+    ($call_stack:tt || $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack || $($leftover)*)
+    };
+
+    // XOR
+    ($call_stack:tt ^ $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack ^ $($leftover)*)
+    };
+
+    // Bitwise AND
+    ($call_stack:tt & $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack & $($leftover)*)
+    };
+
+    // Bitwise OR
+    ($call_stack:tt | $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack | $($leftover)*)
+    };
+
+    // BSL
+    ($call_stack:tt << $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack << $($leftover)*)
+    };
+
+    // BSR
+    ($call_stack:tt >> $($leftover:tt)*) => {
+        eval_postfix!(@operator $call_stack >> $($leftover)*)
     };
 
     // Recursively call macro with the rest of the expression
