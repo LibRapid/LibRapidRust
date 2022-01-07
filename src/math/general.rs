@@ -43,7 +43,7 @@ pub trait MapToNumRange<T> {
     /// ```
     /// use lib_rapid::math::general::MapToNumRange;
     ///
-    /// let result: f32 = 5f32.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
+    /// let result: f32 = 5.0.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
     /// ```
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;

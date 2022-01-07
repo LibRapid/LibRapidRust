@@ -30,7 +30,7 @@ impl MathVector {
     /// A new MathVector with length 0.
     pub fn new_with_dimension(dim: usize) -> MathVector {
 
-        MathVector { values: vec![0f64; dim],
+        MathVector { values: vec![0.0; dim],
                      length: None }
     }
     /// Gets the dimension in which a `MathVector` lives.
@@ -46,7 +46,7 @@ impl MathVector {
     /// A `f64`.
     pub fn length(&mut self) -> f64 {
         match self.length {
-            None      => { let mut len: f64 = 0f64; 
+            None      => { let mut len: f64 = 0.0; 
                            for i in &self.values {
                                len.inc_by(i.square());
                            }
