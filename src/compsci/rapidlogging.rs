@@ -25,7 +25,7 @@ impl Logger {
                log_to_console: bool,
                log_to_file:    bool,
                file_path:      Option<String>)
-    -> Logger {
+               -> Logger {
                 Logger { buff_size,
                          buffer:     String::new(),
                          buff_count: 0,
@@ -52,10 +52,9 @@ impl Logger {
     /// let _ = l.log(None, "Test-Log.");
     /// let _ = l.log(None, "Test-Log.");
     /// let _ = l.log(None, "Test-Log.");
+    /// let _ = l.log(Some(vec!["Warning"]), "This is a warning.");
     /// ```
-    /// As you can see, we initialise a new Logger `l` with the buffer size 3. This means that only after 3x logging, the logger writes to the file.
-    /// Instead of `None`, you can also add things like `some(vec!["warning", "low urgency"])`. Then, one line of the output will look like this:
-    /// `[2021-12-13T18:08:06Z][warning][low urgency] Test-Log.`
+    /// As you can see, we initialise a new Logger `l` with the buffer size 3. This means that only after 3x logging, the logger writes to the file and to the console.
     pub fn log(&mut self, prefixes: Option<Vec<&str>>, msg: &str) -> Result<bool, String> {
         self.buff_count.inc();
         let mut out: String = format!("[{}]", Utc::now()
@@ -63,9 +62,8 @@ impl Logger {
                                                                     true));
         match prefixes {
             Some(v) => {
-                for s in v {
-                    out.push_str(&format!("[{}]", s));
-                }
+                for s in v
+                { out.push_str(&format!("[{}]", s)); }
             }
             None => { }
         }
@@ -74,9 +72,9 @@ impl Logger {
         out.push('\n');
         self.buffer += &out;
 
-        if self.buff_count == self.buff_size {
-            return self.backend_log();
-        }
+        if self.buff_count == self.buff_size
+        { return self.backend_log(); }
+
         Ok(true)
     }
     /// Resets `buffer` and `buff_counter`.

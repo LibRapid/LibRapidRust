@@ -1,5 +1,49 @@
 //! Traits and functions for converting between units.
 use super::constants;
+/// SI-Prefixes.
+pub enum SIPrefix<T> {
+    /// 10⁻²⁴.
+    Yocto(T),
+    /// 10⁻²¹.
+    Zepto(T),
+    /// 10⁻¹⁸.
+    Atto(T),
+    /// 10⁻¹⁵.
+    Femto(T),
+    /// 10⁻¹².
+    Pico(T),
+    /// 10⁻⁹.
+    Nano(T),
+    /// 10⁻⁶.
+    Micro(T),
+    /// 10⁻³.
+    Milli(T),
+    /// 10⁻².
+    Centi(T),
+    /// 10⁻¹.
+    Deci(T),
+    /// 10¹.
+    Deca(T),
+    /// 10².
+    Hecto(T),
+    /// 10³.
+    Kilo(T),
+    /// 10⁶.
+    Mega(T),
+    /// 10⁹.
+    Giga(T),
+    /// 10¹².
+    Tera(T),
+    /// 10¹⁵.
+    Peta(T),
+    /// 10¹⁸.
+    Exa(T),
+    /// 10²¹.
+    Zetta(T),
+    /// 10²⁴.
+    Yotta(T)
+}
+
 /// The conversion algorithm to be chosen. Used by `temp_conversion`.
 pub enum TempConversion {
     CelsiusToFahrenheit,
@@ -82,6 +126,80 @@ impl AngleConversionTrait for f32 {
         match mode {
             AngleConversion::RadiansToDegrees => { self * constants::RADDEGRATE as f32 }
             AngleConversion::DegreesToRadians => { self * constants::DEGRADRATE as f32 }
+        }
+    }
+}
+
+impl<T: Into<f32> + Copy> SIPrefix<T> {
+    /// Converts a SI-Prefix value into a regular `f32`.
+    /// # Returns
+    /// A `f32`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::unit_conversion::SIPrefix;
+    /// assert_eq!(0.000_000_000_000_000_000_000_005, SIPrefix::Yocto(5.0).to_decimal_f32());
+    /// assert_eq!(0.5, SIPrefix::Deci(5.0).to_decimal_f32());
+    /// assert_eq!(5000.0, SIPrefix::Kilo(5.0).to_decimal_f32());
+    /// ```
+    pub fn to_decimal_f32(&self) -> f32 {
+        match self {
+            SIPrefix::Yocto(x) => { return (*x).into() * 0.000_000_000_000_000_000_000_001; },
+            SIPrefix::Zepto(x) => { return (*x).into() * 0.000_000_000_000_000_000_001; },
+            SIPrefix::Atto(x)  => { return (*x).into() * 0.000_000_000_000_000_001; },
+            SIPrefix::Femto(x) => { return (*x).into() * 0.000_000_000_000_001; },
+            SIPrefix::Pico(x)  => { return (*x).into() * 0.000_000_000_001; },
+            SIPrefix::Nano(x)  => { return (*x).into() * 0.000_000_001; },
+            SIPrefix::Micro(x) => { return (*x).into() * 0.000_001; },
+            SIPrefix::Milli(x) => { return (*x).into() * 0.001; },
+            SIPrefix::Centi(x) => { return (*x).into() * 0.01; },
+            SIPrefix::Deci(x)  => { return (*x).into() * 0.1; },
+            SIPrefix::Deca(x)  => { return (*x).into() * 10.0; },
+            SIPrefix::Hecto(x) => { return (*x).into() * 100.0; },
+            SIPrefix::Kilo(x)  => { return (*x).into() * 1_000.0; },
+            SIPrefix::Mega(x)  => { return (*x).into() * 1_000_000.0; },
+            SIPrefix::Giga(x)  => { return (*x).into() * 1_000_000_000.0; },
+            SIPrefix::Tera(x)  => { return (*x).into() * 1_000_000_000_000.0; },
+            SIPrefix::Peta(x)  => { return (*x).into() * 1_000_000_000_000_000.0; },
+            SIPrefix::Exa(x)   => { return (*x).into() * 1_000_000_000_000_000_000.0; },
+            SIPrefix::Zetta(x) => { return (*x).into() * 1_000_000_000_000_000_000_000.0; },
+            SIPrefix::Yotta(x) => { return (*x).into() * 1_000_000_000_000_000_000_000_000.0; },
+        }
+    }
+}
+
+impl<T: Into<f64> + Copy> SIPrefix<T> {
+    /// Converts a SI-Prefix value into a regular `f64`.
+    /// # Returns
+    /// A `f64`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::unit_conversion::SIPrefix;
+    /// assert_eq!(0.000_000_000_000_000_000_000_005, SIPrefix::Yocto(5.0).to_decimal_f32());
+    /// assert_eq!(0.5, SIPrefix::Deci(5.0).to_decimal_f32());
+    /// assert_eq!(5000.0, SIPrefix::Kilo(5.0).to_decimal_f32());
+    /// ```
+    pub fn to_decimal_f64(&self) -> f64 {
+        match self {
+            SIPrefix::Yocto(x) => { return (*x).into() * 0.000_000_000_000_000_000_000_001; },
+            SIPrefix::Zepto(x) => { return (*x).into() * 0.000_000_000_000_000_000_001; },
+            SIPrefix::Atto(x)  => { return (*x).into() * 0.000_000_000_000_000_001; },
+            SIPrefix::Femto(x) => { return (*x).into() * 0.000_000_000_000_001; },
+            SIPrefix::Pico(x)  => { return (*x).into() * 0.000_000_000_001; },
+            SIPrefix::Nano(x)  => { return (*x).into() * 0.000_000_001; },
+            SIPrefix::Micro(x) => { return (*x).into() * 0.000_001; },
+            SIPrefix::Milli(x) => { return (*x).into() * 0.001; },
+            SIPrefix::Centi(x) => { return (*x).into() * 0.01; },
+            SIPrefix::Deci(x)  => { return (*x).into() * 0.1; },
+            SIPrefix::Deca(x)  => { return (*x).into() * 10.0; },
+            SIPrefix::Hecto(x) => { return (*x).into() * 100.0; },
+            SIPrefix::Kilo(x)  => { return (*x).into() * 1_000.0; },
+            SIPrefix::Mega(x)  => { return (*x).into() * 1_000_000.0; },
+            SIPrefix::Giga(x)  => { return (*x).into() * 1_000_000_000.0; },
+            SIPrefix::Tera(x)  => { return (*x).into() * 1_000_000_000_000.0; },
+            SIPrefix::Peta(x)  => { return (*x).into() * 1_000_000_000_000_000.0; },
+            SIPrefix::Exa(x)   => { return (*x).into() * 1_000_000_000_000_000_000.0; },
+            SIPrefix::Zetta(x) => { return (*x).into() * 1_000_000_000_000_000_000_000.0; },
+            SIPrefix::Yotta(x) => { return (*x).into() * 1_000_000_000_000_000_000_000_000.0; },
         }
     }
 }

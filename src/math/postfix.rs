@@ -10,24 +10,24 @@
 /// The result of the calculation.
 ///
 /// # Supported Operators
-/// * `+`
-/// * `-`
-/// * `*`
-/// * `/`
-/// * `%`
-/// * `>`
-/// * `>=`
-/// * `<`
-/// * `<=`
-/// * `==`
-/// * `!=`
-/// * `&&`
-/// * `||`
-/// * `&`
-/// * `|`
-/// * `^`
-/// * `>>`
-/// * `<<`
+/// * `+` - Plus
+/// * `-` - Minus
+/// * `*` - Multiplication
+/// * `/` - Division
+/// * `%` - Modulo
+/// * `>` - Greater than
+/// * `>=` - Greater than or equal to
+/// * `<` - Less than
+/// * `<=` - Less than or equal to
+/// * `==` - Equals
+/// * `!=` - Does not equal
+/// * `&&` - Logical AND
+/// * `||` - Logical OR
+/// * `&` - Bitwise AND
+/// * `|` - Bitwise OR
+/// * `^` - Bitwise XOR
+/// * `>>` - Bitshift Right
+/// * `<<` - Bitshift Left
 ///
 /// # Examples
 /// ```
