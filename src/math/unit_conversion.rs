@@ -174,9 +174,9 @@ impl<T: Into<f64> + Copy> SIPrefix<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::unit_conversion::SIPrefix;
-    /// assert_eq!(0.000_000_000_000_000_000_000_005, SIPrefix::Yocto(5.0).to_decimal_f32());
-    /// assert_eq!(0.5, SIPrefix::Deci(5.0).to_decimal_f32());
-    /// assert_eq!(5000.0, SIPrefix::Kilo(5.0).to_decimal_f32());
+    /// assert_eq!(0.000_000_000_000_000_000_000_005, SIPrefix::Yocto(5.0).to_decimal_f64());
+    /// assert_eq!(0.5, SIPrefix::Deci(5.0).to_decimal_f64());
+    /// assert_eq!(5000.0, SIPrefix::Kilo(5.0).to_decimal_f64());
     /// ```
     pub fn to_decimal_f64(&self) -> f64 {
         match self {
