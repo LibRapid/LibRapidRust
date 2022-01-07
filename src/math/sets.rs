@@ -223,12 +223,12 @@ impl<T: ToString> Set<'_, T> {
     /// let s1: Set<i32> = Set::new_subset(&s, |x| x % 2 == 0);
     /// let s2: Set<i32> = Set::new_subset(&s1, |x| x == 4);
     /// 
-    /// s2.full_print();
+    /// s2.full_println();
     /// println!("{}", s2);
     /// assert_eq!(s2.to_full_string(), "{ 4 } ⊆ { 0; 2; 4; 6; 8; 10 } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 }".to_string());
     /// ```
-    pub fn full_print(&self) {
-        print!("{}\n", self.rec_to_string(&mut String::new()));
+    pub fn full_println(&self) {
+        println!("{}", self.rec_to_string(&mut String::new()));
     }
     /// Converts a set with all subsets to a string.
     ///
