@@ -250,3 +250,33 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
     }
     res
 }
+
+#[test]
+fn testing() {
+    use std::time::Instant;
+
+    let mut now = Instant::now();
+    for _ in 0..=1_000_000
+    { 9223372036854775783u128.is_prime(); }
+    let mut el = now.elapsed().as_nanos() / 1_000_000;
+    println!("{} nanoseconds: 9223372036854775783u128.is_prime();", el);
+
+    let mut _p: Vec<usize>;
+    now = Instant::now();
+    
+    for _ in 0..=100 {
+        _p = generate_primes(1_000_000);
+    }
+    el = now.elapsed().as_millis() / 100;
+    println!("{} milliseconds: generate_primes(1_000_000)", el);
+    let mut p: Vec<usize> = Vec::with_capacity(1_000_000);
+
+    now = Instant::now();
+    for _ in 0..=100 {
+        for i in 0..1_000_000 {
+            if (i as u128).is_prime() {p.push(i); }
+        }
+    }
+    el = now.elapsed().as_millis() as u128 / 100;
+    println!("{} milliseconds: is_prime() up to 1_000_000", el);
+}
