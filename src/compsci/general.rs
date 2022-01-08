@@ -23,19 +23,19 @@ pub trait StringIndex {
     /// * `index` - The index of the character
     ///
     /// # Returns
-    /// A `char`.
-    fn char_at(&self, index: usize) -> char;
+    /// A `Option<char>`.
+    fn char_at(&self, index: usize) -> Option<char>;
 }
 
 impl StringIndex for String {
-    fn char_at(&self, index: usize) -> char {
-        return self.chars().collect::<Vec<char>>()[index];
+    fn char_at(&self, index: usize) -> Option<char> {
+        return self.chars().nth(index);
     }
 }
 
 impl StringIndex for &str {
-    fn char_at(&self, index: usize) -> char {
-        return self.chars().collect::<Vec<char>>()[index];
+    fn char_at(&self, index: usize) -> Option<char> {
+        return self.chars().nth(index);
     }
 }
 
