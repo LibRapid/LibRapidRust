@@ -4,11 +4,20 @@
 use crate::eval_postfix;
 
 /// Trait for the cross sum of a given number.
-pub trait CrossSum<T> {
+pub trait CrossSum {
     /// Calculates the cross sum of a number.
     ///
     /// # Returns
     /// A `Self` containing the result.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::CrossSum;
+    /// 
+    /// assert_eq!(3u8, 12.cross_sum());
+    /// assert_eq!(9u16, 342.cross_sum());
+    /// assert_eq!(52u64, 4928947234.cross_sum());
+    /// ```
     fn cross_sum(&self) -> Self;
 }
 
@@ -152,12 +161,12 @@ impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
     }
 }
 
-impl<T> CrossSum<T> for u8 {
+impl CrossSum for u8 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(3);
         while v > 0 {
-            let n = (self % 10) as u8;
+            let n: Self = v % 10;
             v /= 10;
             digits.push(n);
         }
@@ -165,7 +174,7 @@ impl<T> CrossSum<T> for u8 {
     }
 }
 
-impl<T> CrossSum<T> for u16 {
+impl CrossSum for u16 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(5);
@@ -179,7 +188,7 @@ impl<T> CrossSum<T> for u16 {
     }
 }
 
-impl<T> CrossSum<T> for u32 {
+impl CrossSum for u32 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(10);
@@ -193,7 +202,7 @@ impl<T> CrossSum<T> for u32 {
     }
 }
 
-impl<T> CrossSum<T> for u64 {
+impl CrossSum for u64 {
     fn cross_sum(&self) -> Self {
         let mut v:      Self      = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(20);
@@ -207,7 +216,7 @@ impl<T> CrossSum<T> for u64 {
     }
 }
 
-impl<T> CrossSum<T> for u128 {
+impl CrossSum for u128 {
     fn cross_sum(&self) -> Self {
         let mut v:      Self      = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(39);
