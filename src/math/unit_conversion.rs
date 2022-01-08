@@ -22,6 +22,8 @@ pub enum SIPrefix<T> {
     Centi(T),
     /// 10⁻¹.
     Deci(T),
+    /// 10⁰.
+    Unity(T),
     /// 10¹.
     Deca(T),
     /// 10².
@@ -153,6 +155,7 @@ impl<T: Into<f32> + Copy> SIPrefix<T> {
             SIPrefix::Milli(x) => { return (*x).into() * SIRATES[7]  as f32; },
             SIPrefix::Centi(x) => { return (*x).into() * SIRATES[8]  as f32; },
             SIPrefix::Deci(x)  => { return (*x).into() * SIRATES[9]  as f32; },
+            SIPrefix::Unity(x) => { return (*x).into();                      },
             SIPrefix::Deca(x)  => { return (*x).into() * SIRATES[10] as f32; },
             SIPrefix::Hecto(x) => { return (*x).into() * SIRATES[11] as f32; },
             SIPrefix::Kilo(x)  => { return (*x).into() * SIRATES[12] as f32; },
@@ -180,16 +183,17 @@ impl<T: Into<f64> + Copy> SIPrefix<T> {
     /// ```
     pub fn to_decimal_f64(&self) -> f64 {
         match self {
-            SIPrefix::Yocto(x) => { return (*x).into() * SIRATES[0]; },
-            SIPrefix::Zepto(x) => { return (*x).into() * SIRATES[1]; },
-            SIPrefix::Atto(x)  => { return (*x).into() * SIRATES[2]; },
-            SIPrefix::Femto(x) => { return (*x).into() * SIRATES[3]; },
-            SIPrefix::Pico(x)  => { return (*x).into() * SIRATES[4]; },
-            SIPrefix::Nano(x)  => { return (*x).into() * SIRATES[5]; },
-            SIPrefix::Micro(x) => { return (*x).into() * SIRATES[6]; },
-            SIPrefix::Milli(x) => { return (*x).into() * SIRATES[7]; },
-            SIPrefix::Centi(x) => { return (*x).into() * SIRATES[8]; },
-            SIPrefix::Deci(x)  => { return (*x).into() * SIRATES[9]; },
+            SIPrefix::Yocto(x) => { return (*x).into() * SIRATES[0];  },
+            SIPrefix::Zepto(x) => { return (*x).into() * SIRATES[1];  },
+            SIPrefix::Atto(x)  => { return (*x).into() * SIRATES[2];  },
+            SIPrefix::Femto(x) => { return (*x).into() * SIRATES[3];  },
+            SIPrefix::Pico(x)  => { return (*x).into() * SIRATES[4];  },
+            SIPrefix::Nano(x)  => { return (*x).into() * SIRATES[5];  },
+            SIPrefix::Micro(x) => { return (*x).into() * SIRATES[6];  },
+            SIPrefix::Milli(x) => { return (*x).into() * SIRATES[7];  },
+            SIPrefix::Centi(x) => { return (*x).into() * SIRATES[8];  },
+            SIPrefix::Deci(x)  => { return (*x).into() * SIRATES[9];  },
+            SIPrefix::Unity(x) => { return (*x).into();               },
             SIPrefix::Deca(x)  => { return (*x).into() * SIRATES[10]; },
             SIPrefix::Hecto(x) => { return (*x).into() * SIRATES[11]; },
             SIPrefix::Kilo(x)  => { return (*x).into() * SIRATES[12]; },
