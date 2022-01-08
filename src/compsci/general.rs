@@ -15,6 +15,29 @@ pub trait BinayInsert<T> {
     /// The same as `binary_insert`, but doesn't insert a value that is already present.
     fn binary_insert_no_dup(&mut self, value: T);
 }
+/// Trait for a kind of indexing Strings in Rust.w
+pub trait StringIndex {
+    /// Get the `char` at a given index from a `String` or `&str`.
+    ///
+    /// # Arguments
+    /// * `index` - The index of the character
+    ///
+    /// # Returns
+    /// A `char`.
+    fn char_at(&self, index: usize) -> char;
+}
+
+impl StringIndex for String {
+    fn char_at(&self, index: usize) -> char {
+        return self.chars().collect::<Vec<char>>()[index];
+    }
+}
+
+impl StringIndex for &str {
+    fn char_at(&self, index: usize) -> char {
+        return self.chars().collect::<Vec<char>>()[index];
+    }
+}
 
 impl<T: Ord + Copy> BinayInsert<T> for Vec<T> {
     fn binary_insert(&mut self, value: &T) {
