@@ -27,7 +27,7 @@ impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> BinaryPrefix<T> {
     /// A `u128`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::BinaryPrefix;
+    /// use lib_rapid::compsci::unit_conversion::BinaryPrefix;
     /// assert_eq!(5120u128, BinaryPrefix::Kibi(5u8).to_decimal_u128());
     /// assert_eq!(5u128, BinaryPrefix::Unity(5u8).to_decimal_u128());
     /// assert_eq!(1073741824u128, BinaryPrefix::Gibi(1u8).to_decimal_u128());
@@ -48,7 +48,7 @@ impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> BinaryPrefix<T> {
 }
 /// # Tests
 /// ```
-/// use lib_rapid::compsci::general::BinaryPrefix;
+/// use lib_rapid::compsci::unit_conversion::BinaryPrefix;
 /// assert_eq!(3355443.2f64, BinaryPrefix::Mebi(3.2).into());
 /// assert_eq!(4198.4f64, BinaryPrefix::Kibi(4.1).into());
 /// ```
@@ -69,7 +69,7 @@ impl<T: Copy + Into<f64>> Into<f64> for BinaryPrefix<T> {
 }
 /// # Tests
 /// ```
-/// use lib_rapid::compsci::general::BinaryPrefix;
+/// use lib_rapid::compsci::unit_conversion::BinaryPrefix;
 /// assert_eq!(3355443.2f32, BinaryPrefix::Mebi(3.2).into());
 /// assert_eq!(4198.4f32, BinaryPrefix::Kibi(4.1).into());
 /// ```
@@ -90,7 +90,7 @@ impl<T: Copy + Into<f32>> Into<f32> for BinaryPrefix<T> {
 }
 /// # Tests
 /// ```
-/// use lib_rapid::compsci::general::BinaryPrefix;
+/// use lib_rapid::compsci::unit_conversion::BinaryPrefix;
 /// assert_eq!(3145728u128, BinaryPrefix::Mebi(3 as u128).into());
 /// assert_eq!(4096u128, BinaryPrefix::Kibi(4 as u128).into());
 /// ```

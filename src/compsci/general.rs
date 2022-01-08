@@ -24,6 +24,16 @@ pub trait StringIndex {
     ///
     /// # Returns
     /// A `Option<char>`.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::StringIndex;
+    /// 
+    /// let s = String::from("Hello");
+    /// assert_eq!('H', s.char_at(0).unwrap());
+    /// assert_eq!('e', s.char_at(1).unwrap());
+    /// assert_eq!('l', s.char_at(2).unwrap());
+    /// ```
     fn char_at(&self, index: usize) -> Option<char>;
 }
 
