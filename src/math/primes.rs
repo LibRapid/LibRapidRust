@@ -251,6 +251,7 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
     res
 }
 
+#[ignore]
 #[test]
 fn testing() {
     use std::time::Instant;
