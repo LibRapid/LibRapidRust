@@ -208,6 +208,18 @@ impl<T: Into<f64> + Copy> SIPrefix<T> {
     }
 }
 
+impl<T: Into<f64> + Copy> Into<f64> for SIPrefix<T> {
+    fn into(self) -> f64 {
+        self.to_decimal_f64()
+    }
+}
+
+impl<T: Into<f32> + Copy> Into<f32> for SIPrefix<T> {
+    fn into(self) -> f32 {
+        self.to_decimal_f32()
+    }
+}
+
 pub(crate) const SIRATES: [f64; 20] = [0.000_000_000_000_000_000_000_001,
                                        0.000_000_000_000_000_000_001,
                                        0.000_000_000_000_000_001,
