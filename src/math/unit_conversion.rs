@@ -45,7 +45,6 @@ pub enum SIPrefix<T> {
     /// x · 10²⁴.
     Yotta(T)
 }
-
 /// The conversion algorithm to be chosen. Used by `temp_conversion`.
 pub enum TempConversion {
     CelsiusToFahrenheit,
