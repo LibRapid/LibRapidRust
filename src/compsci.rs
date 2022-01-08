@@ -3,3 +3,4 @@ pub mod compression;
 pub mod general;
 pub mod dates;
 pub mod rapidlogging;
+pub mod unit_conversion;
