@@ -15,7 +15,7 @@ pub trait BinayInsert<T> {
     /// The same as `binary_insert`, but doesn't insert a value that is already present.
     fn binary_insert_no_dup(&mut self, value: T);
 }
-/// Trait for a kind of indexing Strings in Rust.w
+/// Trait for a kind of indexing Strings in Rust.
 pub trait StringIndex {
     /// Get the `char` at a given index from a `String` or `&str`.
     ///
