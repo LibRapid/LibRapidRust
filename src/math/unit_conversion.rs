@@ -1,48 +1,48 @@
 //! Traits and functions for converting between units.
 use super::constants;
-/// SI-Prefixes.
+/// SI-Prefixes as used in several fields.
 pub enum SIPrefix<T> {
-    /// 10⁻²⁴.
+    /// x · 10⁻²⁴.
     Yocto(T),
-    /// 10⁻²¹.
+    /// x · 10⁻²¹.
     Zepto(T),
-    /// 10⁻¹⁸.
+    /// x · 10⁻¹⁸.
     Atto(T),
-    /// 10⁻¹⁵.
+    /// x · 10⁻¹⁵.
     Femto(T),
-    /// 10⁻¹².
+    /// x · 10⁻¹².
     Pico(T),
-    /// 10⁻⁹.
+    /// x · 10⁻⁹.
     Nano(T),
-    /// 10⁻⁶.
+    /// x · 10⁻⁶.
     Micro(T),
-    /// 10⁻³.
+    /// x · 10⁻³.
     Milli(T),
-    /// 10⁻².
+    /// x · 10⁻².
     Centi(T),
-    /// 10⁻¹.
+    /// x · 10⁻¹.
     Deci(T),
-    /// 10⁰.
+    /// x · 10⁰.
     Unity(T),
-    /// 10¹.
+    /// x · 10¹.
     Deca(T),
-    /// 10².
+    /// x · 10².
     Hecto(T),
-    /// 10³.
+    /// x · 10³.
     Kilo(T),
-    /// 10⁶.
+    /// x · 10⁶.
     Mega(T),
-    /// 10⁹.
+    /// x · 10⁹.
     Giga(T),
-    /// 10¹².
+    /// x · 10¹².
     Tera(T),
-    /// 10¹⁵.
+    /// x · 10¹⁵.
     Peta(T),
-    /// 10¹⁸.
+    /// x · 10¹⁸.
     Exa(T),
-    /// 10²¹.
+    /// x · 10²¹.
     Zetta(T),
-    /// 10²⁴.
+    /// x · 10²⁴.
     Yotta(T)
 }
 
