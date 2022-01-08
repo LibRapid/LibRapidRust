@@ -120,6 +120,12 @@ impl<T: Copy + Into<f32>> Into<f32> for BinaryPrefix<T> {
         }
     }
 }
+/// # Tests
+/// ```
+/// use lib_rapid::compsci::general::BinaryPrefix;
+/// assert_eq!(3145728u128, BinaryPrefix::Mebi(3 as u128).into());
+/// assert_eq!(4096u128, BinaryPrefix::Kibi(4 as u128).into());
+/// ```
 impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> Into<u128> for BinaryPrefix<T> {
     fn into(self) -> u128 {
         match self {
