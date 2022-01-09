@@ -370,6 +370,7 @@ impl<T: Copy> Iterator for Set<'_, T> {
 }
 
 #[ignore]
+#[allow(unused)]
 #[test]
 fn performance() {
     use std::time::Instant;
