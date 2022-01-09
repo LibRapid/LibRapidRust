@@ -18,7 +18,8 @@ pub trait BinayInsert<T> {
 /// Trait for a kind of indexing Strings in Rust.
 pub trait StringIndex {
     /// Get the `char` at a given index from a `String` or `&str`.
-    ///
+    /// If only dealing with ASCII-characters, `byte_at` is recommended.
+    /// 
     /// # Arguments
     /// * `index` - The index of the character
     ///
@@ -35,17 +36,45 @@ pub trait StringIndex {
     /// assert_eq!('l', s.char_at(2).unwrap());
     /// ```
     fn char_at(&self, index: usize) -> Option<char>;
+
+    /// Get the byte at a given index from a `String` or `&str`.
+    /// If dealing with Unicode characters, this function is *not* recommended, as it only returns one byte even though Unicode can be a multi byte encoding.
+    /// 
+    /// # Arguments
+    /// * `index` - The index of the byte
+    ///
+    /// # Returns
+    /// A `u8`.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::StringIndex;
+    /// 
+    /// let s = String::from("Hello");
+    /// assert_eq!('H', s.byte_at(0) as char);
+    /// assert_eq!('e', s.byte_at(1) as char);
+    /// assert_eq!('l', s.byte_at(2) as char);
+    /// ```
+    fn byte_at(&self, index: usize) -> u8;
 }
 
 impl StringIndex for String {
     fn char_at(&self, index: usize) -> Option<char> {
         return self.chars().nth(index);
     }
+
+    fn byte_at(&self, index: usize) -> u8 {
+        self.as_bytes()[index]
+    }
 }
 
 impl StringIndex for &str {
     fn char_at(&self, index: usize) -> Option<char> {
         return self.chars().nth(index);
+    }
+
+    fn byte_at(&self, index: usize) -> u8 {
+        self.as_bytes()[index]
     }
 }
 
