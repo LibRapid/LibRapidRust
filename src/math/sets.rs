@@ -101,18 +101,16 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// use lib_rapid::math::sets::new_set;
     /// use lib_rapid::compsci::general::BinaryInsert; // Used for "new_set!"
     /// 
-    /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10,11]);
     /// let s2: Set<i32> = Set::new(&vec![0,1,2,3,11,0,0,0]);
     /// 
     /// let c:  Set<i32> = s.intersection(&s2);
-    /// assert_eq!(c, new_set!(0, 1, 2, 3));
+    /// assert_eq!(c, new_set!(0, 1, 2, 3, 11));
     /// ```
     pub fn intersection(&self, other: &Set<T>) -> Set<T> {
         let mut res: Set<T> = self.clone();
+        res.elements.retain(|x| other.elements.binary_search(x).is_ok());
 
-        for _ in &self.elements {
-            res.elements.retain(|x| other.elements.binary_search(x).is_ok());
-        }
         res
     }
     /// Lets you check for an element in a set.
@@ -369,4 +367,23 @@ impl<T: Copy> Iterator for Set<'_, T> {
             None    => { return None; }
         }
     }
+}
+
+#[ignore]
+#[test]
+fn performance() {
+    use std::time::Instant;
+    let i: i32 = 5;
+    let _v: Vec<i32> = (0..=1_000_000).collect();
+    let _v2: Vec<i32> = (500_000..=2_000_000).collect();
+    let s1 = Set::new(&_v);
+    let s2: Set<i32> = Set::new(&_v2);
+    let mut s3: Set<i32>;
+    println!("Setup done!");
+    let now = Instant::now();
+    for _ in 0..i {
+        s3 = s1.intersection(&s2);
+    }
+    let el = now.elapsed().as_millis() / i as u128;
+    println!("{} milliseconds per iteration", el);
 }
