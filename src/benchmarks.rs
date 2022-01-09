@@ -1,7 +1,5 @@
 #![allow(unused)]
 
-pub(crate) const BENCHMARK: bool = true;
-
 #[ignore]
 #[test]
 fn benchmark() {
