@@ -368,23 +368,3 @@ impl<T: Copy> Iterator for Set<'_, T> {
         }
     }
 }
-
-#[ignore]
-#[allow(unused)]
-#[test]
-fn performance() {
-    use std::time::Instant;
-    let i: i32 = 5;
-    let _v: Vec<i32> = (0..=1_000_000).collect();
-    let _v2: Vec<i32> = (500_000..=2_000_000).collect();
-    let s1 = Set::new(&_v);
-    let s2: Set<i32> = Set::new(&_v2);
-    let mut s3: Set<i32>;
-    println!("Setup done!");
-    let now = Instant::now();
-    for _ in 0..i {
-        s3 = s1.intersection(&s2);
-    }
-    let el = now.elapsed().as_millis() / i as u128;
-    println!("{} milliseconds per iteration", el);
-}
