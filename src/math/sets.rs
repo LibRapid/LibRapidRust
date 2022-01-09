@@ -15,6 +15,15 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A new set.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// 
+    /// let set = Set::new(&vec![0, 1, 1, 2, 3, 4, 5]);
+    /// 
+    /// assert_eq!(set.elements(), &vec![0, 1, 2, 3, 4, 5]);
+    /// ```
     pub fn new(values: &[T]) -> Set<'a, T> {        
         let mut res: Set<T> = Set { elements: values.to_vec(),
                                     superset: None };
@@ -113,8 +122,20 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A boolean value which determines if `elem ∈ self`. 
-    pub fn has_element(&self, elem: &T) -> bool {
-        match self.elements.binary_search(elem) {
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// 
+    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// 
+    /// assert_eq!(false, set.has_element(7));
+    /// assert_eq!(false, set.has_element(-1));
+    /// assert_eq!(true, set.has_element(1));
+    /// ```
+    pub fn has_element(&self, elem: T) -> bool {
+        match self.elements.binary_search(&elem) {
             Ok(_)  => { return true; }
             Err(_) => { return false; }
         }
@@ -141,7 +162,18 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     /// Lets you check wether a set has a parent (emerged from another set) or not.
     ///
     /// # Returns
-    /// A boolean value which determines if the set is a subset of any other set. 
+    /// A boolean value which determines if the set is a subset of any other set.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// 
+    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let subset = Set::new_subset(&set, |x| x % 2 == 0);
+    /// 
+    /// assert_eq!(true, subset.has_superset());
+    /// assert_eq!(false, set.has_superset());
+    /// ```
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
@@ -149,6 +181,16 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A `Option<&Set<T>>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// 
+    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let subset = Set::new_subset(&set, |x| x % 2 == 0);
+    /// 
+    /// assert_eq!(&set, subset.get_superset().unwrap());
+    /// ```
     pub fn get_superset(&self) -> Option<&Set<T>> {
         self.superset
     }
@@ -156,6 +198,15 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A `usize`: `|self|`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// 
+    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// 
+    /// assert_eq!(7, set.cardinality());
+    /// ```
     pub fn cardinality(&self) -> usize {
         self.elements.len()
     }
@@ -166,6 +217,16 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// Nothing. 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// 
+    /// let mut set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// set.set_elements(&vec![0, 2, 4, 6]);
+    /// 
+    /// assert_eq!(&vec![0, 2, 4, 6], set.elements());
+    /// ```
     pub fn set_elements(&mut self, vals: &[T]) {
         self.elements = vals.to_vec();
         self.elements.sort_unstable();
@@ -177,6 +238,15 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
     ///
     /// # Returns
     /// A `&[T]` containing all elements. 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// use lib_rapid::math::sets::new_set;
+    /// 
+    /// let mut set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// 
+    /// assert_eq!(&vec![0, 1, 2, 3, 4, 5, 6], set.elements());
+    /// ```
     pub fn elements(&self) -> &[T] {
         &self.elements
     }
@@ -190,7 +260,6 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
 /// ```
 /// use lib_rapid::new_set;
 /// use lib_rapid::math::sets::Set; 
-/// use lib_rapid::compsci::general::BinaryInsert; // Used for "new_set!"
 /// 
 /// let set: Set<i32> = new_set!(0,1,2,3,4,5,6,-1);
 /// assert_eq!(set.to_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
@@ -199,6 +268,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
 macro_rules! new_set {
     ( $( $a:expr ),* ) => {
         {
+            use lib_rapid::compsci::general::BinaryInsert;
             let mut temp = Vec::new();
             $(
                 temp.binary_insert_no_dup($a);
@@ -223,9 +293,8 @@ impl<T: ToString> Set<'_, T> {
     /// let s1: Set<i32> = Set::new_subset(&s, |x| x % 2 == 0);
     /// let s2: Set<i32> = Set::new_subset(&s1, |x| x == 4);
     /// 
-    /// s2.full_println();
-    /// println!("{}", s2);
-    /// assert_eq!(s2.to_full_string(), "{ 4 } ⊆ { 0; 2; 4; 6; 8; 10 } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 }".to_string());
+    /// s2.full_println(); // Prints this set and the superset, see to_full_string.
+    /// println!("{}", s2); // Only prints this set
     /// ```
     pub fn full_println(&self) {
         println!("{}", self.rec_to_string(&mut String::new()));
@@ -235,7 +304,14 @@ impl<T: ToString> Set<'_, T> {
     /// # Returns
     /// A String containing the result. 
     /// # Examples
-    /// See `full_print()`.
+    /// ```
+    /// use lib_rapid::math::sets::Set;
+    /// let s:  Set<i32> = Set::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
+    /// let s1: Set<i32> = Set::new_subset(&s, |x| x % 2 == 0);
+    /// let s2: Set<i32> = Set::new_subset(&s1, |x| x == 4);
+    ///
+    /// assert_eq!(s2.to_full_string(), "{ 4 } ⊆ { 0; 2; 4; 6; 8; 10 } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 }".to_string());
+    /// ```
     pub fn to_full_string(&self) -> String {
         self.rec_to_string(&mut String::new())
     }
