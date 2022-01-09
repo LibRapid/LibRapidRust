@@ -20,6 +20,20 @@ pub trait CrossSum {
     /// ```
     fn cross_sum(&self) -> Self;
 }
+
+/// Trait for left-shifting decimal-numbers.
+#[deprecated(note = "This feature is deprecated, as it has not been proven to be faster than multiplying by 10. Use at your own risk.")]
+pub trait DecimalLeftShift<T> {
+    /**
+    Multiplies by 10 (shifts the decimal places to the left by 1) while being more efficient.
+
+    # Returns
+    The new shifted number.
+    */
+    #[deprecated(note = "This feature is deprecated, as it has not been proven to be faster than multiplying by 10. Use at your own risk.")]
+    fn dec_lshift(&self) -> T;
+}
+
 /// Trait for mapping numbers to another number range.
 pub trait MapToNumRange<T> {
     /// Maps a given number of a range onto another range.
@@ -66,14 +80,6 @@ pub trait CommonPowers {
     /// The cube of the number.
     /// # Caution
     /// This function does not check if overflow occurs.
-    /// # Examples
-    /// ```
-    ///use lib_rapid::math::general::CommonPowers;
-    ///let i = 12;
-    ///let res = i.cube();
-    ///
-    ///assert_eq!(1728, res);
-    /// ```
     fn cube(&self) -> Self;
 }
 /// Trait for incrementing by value. Shorthand syntax for `x += y;`.
