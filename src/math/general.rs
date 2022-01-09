@@ -66,6 +66,14 @@ pub trait CommonPowers {
     /// The cube of the number.
     /// # Caution
     /// This function does not check if overflow occurs.
+    /// # Examples
+    /// ```
+    ///use lib_rapid::math::general::CommonPowers;
+    ///let i = 12;
+    ///let res = i.cube();
+    ///
+    ///assert_eq!(1728, res);
+    /// ```
     fn cube(&self) -> Self;
 }
 /// Trait for incrementing by value. Shorthand syntax for `x += y;`.
