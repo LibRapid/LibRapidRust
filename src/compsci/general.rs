@@ -35,6 +35,14 @@ pub trait StringIndex {
     /// assert_eq!('e', s.char_at(1).unwrap());
     /// assert_eq!('l', s.char_at(2).unwrap());
     /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::StringIndex;
+    /// 
+    /// let s = "Hello";
+    /// assert_eq!('H', s.char_at(0).unwrap());
+    /// assert_eq!('e', s.char_at(1).unwrap());
+    /// assert_eq!('l', s.char_at(2).unwrap());
+    /// ```
     fn char_at(&self, index: usize) -> Option<char>;
 
     /// Get the byte at a given index from a `String` or `&str`.
@@ -54,6 +62,14 @@ pub trait StringIndex {
     /// assert_eq!('H', s.byte_at(0) as char);
     /// assert_eq!('e', s.byte_at(1) as char);
     /// assert_eq!('l', s.byte_at(2) as char);
+    /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::StringIndex;
+    /// 
+    /// let s = "Hello";
+    /// assert_eq!('H', s.char_at(0).unwrap());
+    /// assert_eq!('e', s.char_at(1).unwrap());
+    /// assert_eq!('l', s.char_at(2).unwrap());
     /// ```
     fn byte_at(&self, index: usize) -> u8;
 }
