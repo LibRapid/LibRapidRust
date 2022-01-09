@@ -76,7 +76,7 @@ pub trait StringIndex {
 
 impl StringIndex for String {
     fn char_at(&self, index: usize) -> Option<char> {
-        return self.chars().nth(index);
+        self.chars().nth(index)
     }
 
     fn byte_at(&self, index: usize) -> u8 {
@@ -86,7 +86,7 @@ impl StringIndex for String {
 
 impl StringIndex for &str {
     fn char_at(&self, index: usize) -> Option<char> {
-        return self.chars().nth(index);
+        self.chars().nth(index)
     }
 
     fn byte_at(&self, index: usize) -> u8 {
