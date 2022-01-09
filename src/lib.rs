@@ -6,3 +6,4 @@
 //! 
 pub mod math;
 pub mod compsci;
+mod benchmarks;
