@@ -1,7 +1,7 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
 /// Trait for `binary_insert`.
-pub trait BinayInsert<T> {
-    /// Insert an element into a ***sorted*** `vec` whilst maintaining the order.
+pub trait BinaryInsert<T> {
+    /// Insert an element into a ***sorted*** `vec` whilst maintaining the order, consuming `other`.
     ///
     /// # Arguments
     /// * `value` - The value which needs to be inserted.
@@ -11,8 +11,42 @@ pub trait BinayInsert<T> {
     ///
     /// # Warning
     /// This function ***will not*** check if the parsed `vec` is sorted.
-    fn binary_insert(&mut self, value: &T);
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::BinaryInsert;
+    /// 
+    /// let mut v = vec![0, 1, 2, 3, 4, 5];
+    /// v.binary_insert(3);
+    /// 
+    /// assert_eq!(vec![0, 1, 2, 3, 3, 4, 5], v);
+    /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::BinaryInsert;
+    /// 
+    /// let mut v = vec![0, 2, 3, 4, 5];
+    /// v.binary_insert(1);
+    /// 
+    /// assert_eq!(vec![0, 1, 2, 3, 4, 5], v);
+    /// ```
+    fn binary_insert(&mut self, value: T);
     /// The same as `binary_insert`, but doesn't insert a value that is already present.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::BinaryInsert;
+    /// 
+    /// let mut v = vec![0, 1, 2, 3, 4, 5];
+    /// v.binary_insert_no_dup(3);
+    /// 
+    /// assert_eq!(vec![0, 1, 2, 3, 4, 5], v);
+    /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::BinaryInsert;
+    /// 
+    /// let mut v = vec![0, 1, 2, 3, 4, 5];
+    /// v.binary_insert(6);
+    /// 
+    /// assert_eq!(vec![0, 1, 2, 3, 4, 5, 6], v);
+    /// ```
     fn binary_insert_no_dup(&mut self, value: T);
 }
 /// Trait for a kind of indexing Strings in Rust.
@@ -94,11 +128,11 @@ impl StringIndex for &str {
     }
 }
 
-impl<T: Ord + Copy> BinayInsert<T> for Vec<T> {
-    fn binary_insert(&mut self, value: &T) {
-        match self.binary_search(value) {
-            Ok(pos)  => self.insert(pos + 1, *value),
-            Err(pos) => self.insert(pos, *value),
+impl<T: Ord + Copy> BinaryInsert<T> for Vec<T> {
+    fn binary_insert(&mut self, value: T) {
+        match self.binary_search(&value) {
+            Ok(pos)  => self.insert(pos + 1, value),
+            Err(pos) => self.insert(pos, value),
         }
     }
 
