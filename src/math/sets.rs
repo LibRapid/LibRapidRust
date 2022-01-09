@@ -111,7 +111,7 @@ impl<'a, T: Copy + Ord> Set<'a, T> {
         let mut res: Set<T> = self.clone();
 
         for _ in &self.elements {
-            res.elements.retain(|x| other.elements.contains(x));
+            res.elements.retain(|x| other.elements.binary_search(x).is_ok());
         }
         res
     }
