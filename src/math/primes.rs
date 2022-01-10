@@ -1,5 +1,4 @@
 //! Traits and functions for handling primes and primality.
-use super::ztheory::*;
 use super::general::*;
 // These import number-theory's primality, but wrap it due to number-theory using the algebraic definition of "primality", vs the elementary definition used in LibRapid
 use number_theory::traits::NumberTheory;
@@ -202,7 +201,7 @@ fn testing() {
 
     let mut now = Instant::now();
     for _ in 0..=1_000_000
-    { 9223372036854775783u128.is_prime(); }
+    { Primality::is_prime(&9223372036854775783u128); }
     let mut el = now.elapsed().as_nanos() / 1_000_000;
     println!("{} nanoseconds: 9223372036854775783u128.is_prime();", el);
 
@@ -219,7 +218,7 @@ fn testing() {
     now = Instant::now();
     for _ in 0..=100 {
         for i in 0..1_000_000 {
-            if (i as u128).is_prime() {p.push(i); }
+            if Primality::is_prime(&(i as u128)) {p.push(i); }
         }
     }
     el = now.elapsed().as_millis() as u128 / 100;
