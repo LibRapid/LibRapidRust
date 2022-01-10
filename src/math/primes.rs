@@ -1,6 +1,10 @@
 //! Traits and functions for handling primes and primality.
 use super::ztheory::*;
 use super::general::*;
+// These import number-theory's primality, but wrap it due to number-theory using the algebraic definition of "primality", vs the elementary definition used in LibRapid
+use number_theory::traits::NumberTheory;
+
+
 
 /// Trait for prime functions.
 pub trait Primality {
@@ -82,113 +86,53 @@ pub trait Primality {
 
 impl Primality for u8 { // promoted to u16 for a more optimized check
     fn is_prime(&self) -> bool {
-        (*self as u16).is_prime()
+        NumberTheory::is_prime(self)
     }
         
 }
 
 impl Primality for u16 {// Splits 
-    fn is_prime(&self) -> bool {
-        if self == &1 ||
-           self == &0
-        { return false; }
-
-        const PRIMELIST: [u16; 54] = [// list of all primes less than 2⁸
-           2,  3,  5,   7,  11,  13,  17,  19,  23,  29,  31,
-          37, 41, 43,  47,  53,  59,  61,  67,  71,  73,  79, 
-          83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 
-         139,149,151, 157, 163, 167, 173, 179, 181, 191, 193,
-         197,199,211, 223, 227, 229, 233, 239, 241, 251
-        ];
-       
-        if PRIMELIST.binary_search(self).is_ok()
-        { return true; }
-        
-        return (*self as u64).is_prime();
+   fn is_prime(&self) -> bool {
+       NumberTheory::is_prime(self)
     }
 }
 
-impl Primality for u32 { // too large to check primality by trial division so promoted to u64 where SPRP is performed
+impl Primality for u32 { 
     fn is_prime(&self) -> bool {
-        (*self as u64).is_prime()
+         NumberTheory::is_prime(self)
     }
 }
 
 impl Primality for i32 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (*self as u64).is_prime()
+         NumberTheory::is_prime(self)
     }
 }
 
 impl Primality for u64 {
-    fn is_prime(&self) -> bool {
-        if self == &1 ||
-           self == &0
-        { return false; }
-     
-        const PRIME_BASES: [u64;12] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
-        
-        for i in PRIME_BASES { // Checks if self is a member of PRIME_BASES or divisible by a member
-            if *self == i { return true; }
-            if *self % i == 0 { return false; }
-        }
-        
-        for i in PRIME_BASES { // performs Strong Fermat test using each base. Equivalent to Deterministic Miller Rabin
-            if sprp(*self,i) == false
-            { return false; }
-        }
-        return true;
-    }
+   fn is_prime(&self) -> bool {
+     NumberTheory::is_prime(self) 
+   }  
 }
 
 impl Primality for i64 {
    fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (*self as u64).is_prime()
+         NumberTheory::is_prime(self)
    }
 }
 // Very slow primality check, I'll work out how to do BPSW for 128-bit
 impl Primality for u128 {
-    fn is_prime(&self) -> bool {
-        if *self == 1 { return false; }
-        const PRIMES:    [u64;27] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103];
-        const PRIMORIAL: u128     = 210;
-     
-        for i in PRIMES {
-            if self == &(i as u128) { return true; }
-            if self % i as u128 == 0 { return false; }
-        } 
-     
-        if self.leading_zeros() > 63 { // if x is smaller than 2^64 call deterministic miller rabin
-            for i in PRIMES[..12].iter(){
-                if sprp(*self as u64,*i) == false
-                { return false; }
-            }
-            return true;
-        }
-     
-        let supremum = ( ( (*self as f64).sqrt() as u128 + 103u128) / PRIMORIAL) + 1u128; // Else perform trial division using the 11-rough numbers (higher-density of primes)
-        for i in 1..supremum {
-      
-            if self % (PRIMORIAL * i - 1) == 0 ||
-               self % (PRIMORIAL * i + 1) == 0
-            { return false; } 
-     
-            for j in PRIMES[4..].iter(){
-                if self % (PRIMORIAL * i - *j as u128) == 0 ||
-                   self % (PRIMORIAL * i + *j as u128) == 0
-                { return false; }
-            }
-        }
-        return true;
-    }
+  fn is_prime(&self) -> bool{
+     NumberTheory::is_prime(self)
+     }
 }
 
 impl Primality for i128 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-        (*self as u128).is_prime()
+         NumberTheory::is_prime(self)
     }
 }
 
@@ -249,4 +193,35 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
         if sieve[i] { res.push(i); }
     }
     res
+}
+
+//#[ignore]
+#[test]
+fn testing() {
+    use std::time::Instant;
+
+    let mut now = Instant::now();
+    for _ in 0..=1_000_000
+    { 9223372036854775783u128.is_prime(); }
+    let mut el = now.elapsed().as_nanos() / 1_000_000;
+    println!("{} nanoseconds: 9223372036854775783u128.is_prime();", el);
+
+    let mut _p: Vec<usize>;
+    now = Instant::now();
+    
+    for _ in 0..=100 {
+        _p = generate_primes(1_000_000);
+    }
+    el = now.elapsed().as_millis() / 100;
+    println!("{} milliseconds: generate_primes(1_000_000)", el);
+    let mut p: Vec<usize> = Vec::with_capacity(1_000_000);
+
+    now = Instant::now();
+    for _ in 0..=100 {
+        for i in 0..1_000_000 {
+            if (i as u128).is_prime() {p.push(i); }
+        }
+    }
+    el = now.elapsed().as_millis() as u128 / 100;
+    println!("{} milliseconds: is_prime() up to 1_000_000", el);
 }
