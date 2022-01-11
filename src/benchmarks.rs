@@ -2,7 +2,7 @@
 use std::time::Instant;
 use crate::math::primes::Primality;
 use crate::math::primes::generate_primes;
-use crate::math::sets::Set;
+use crate::math::sets::vec_sets::VecSet;
 
 #[ignore]
 #[test]
@@ -26,9 +26,9 @@ fn benchmark() {
 fn intersection_bench(iterations: u128, set_size: i32) {
     let _v: Vec<i32> = (0..set_size).collect();
     let _v2: Vec<i32> = (set_size / 2..=set_size * 2).collect();
-    let s1 = Set::new(&_v);
-    let s2: Set<i32> = Set::new(&_v2);
-    let mut s3: Set<i32>;
+    let s1 = VecSet::new(&_v);
+    let s2: VecSet<i32> = VecSet::new(&_v2);
+    let mut s3: VecSet<i32>;
 
     println!("[0; {}] ∩ [{}; {}]:", &set_size, &set_size / 2, &set_size * 2);
     let now = Instant::now();
