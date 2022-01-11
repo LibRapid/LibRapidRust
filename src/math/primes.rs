@@ -1,5 +1,4 @@
 //! Traits and functions for handling primes and primality.
-use super::ztheory::*;
 use super::general::*;
 
 use number_theory::traits::NumberTheory;
