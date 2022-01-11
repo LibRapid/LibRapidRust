@@ -121,7 +121,7 @@ impl Primality for i64 {
          NumberTheory::is_prime(self)
    }
 }
-// Very slow primality check, I'll work out how to do BPSW for 128-bit
+
 impl Primality for u128 {
   fn is_prime(&self) -> bool{
      NumberTheory::is_prime(self)
