@@ -30,7 +30,7 @@ fn intersection_bench(iterations: u128, set_size: i32) {
     let s2: Set<i32> = Set::new(&_v2);
     let mut s3: Set<i32>;
 
-    println!("[0; 1_000_000] ∩ [500_000; 2_000_000]:");
+    println!("[0; {}] ∩ [{}; {}]:", &set_size, &set_size / 2, &set_size * 2);
     let now = Instant::now();
     for _ in 0..iterations {
         s3 = s1.intersection(&s2);
