@@ -1,20 +1,22 @@
 #![allow(unused)]
+use std::time::Instant;
+use crate::math::primes::Primality;
+use crate::math::primes::generate_primes;
+use crate::math::sets::Set;
 
 #[ignore]
 #[test]
 fn benchmark() {
     println!("Benchmarks in non-optimised mode.");
     println!("\nIntersection Benchmark.");
-    intersection_benchmark();
+    intersection_bench(10);
     println!("\nPrimes Benchmark.");
-    primes_benchmark();
+    generate_primes_bench(100);
+    big_is_prime_bench(1_000_000);
+    sieve_is_prime_bench(25);
 }
 
-fn intersection_benchmark() {
-    use std::time::Instant;
-    use crate::math::sets::Set;
-
-    let iterations: i32 = 10;
+fn intersection_bench(iterations: u128) {
     let _v: Vec<i32> = (0..=1_000_000).collect();
     let _v2: Vec<i32> = (500_000..=2_000_000).collect();
     let s1 = Set::new(&_v);
@@ -26,45 +28,44 @@ fn intersection_benchmark() {
     for _ in 0..iterations {
         s3 = s1.intersection(&s2);
     }
-    let el = now.elapsed().as_millis() / iterations as u128;
+    let el = now.elapsed().as_millis() / iterations;
     println!("{} milliseconds / iteration.", el);
 }
 
-#[ignore]
-#[test]
-fn primes_benchmark() {
-    use std::time::Instant;
-    use crate::math::primes::Primality;
-    use crate::math::primes::generate_primes;
+fn generate_primes_bench(iters: u128) {
+    let mut _p: Vec<usize>;
+    println!("generate_primes(1_000_000):");
+    let now = Instant::now();
+    
+    for _ in 0..iters {
+        _p = generate_primes(1_000_000);
+    }
+    let el = now.elapsed().as_millis() / iters;
+    println!("{} milliseconds / iteration.\n", el);
+}
 
+fn big_is_prime_bench(iters: u128) {
     println!("9223372036854775783u128.is_prime():");
     let mut now = Instant::now();
 
-    for _ in 0..=1_000_000
+    for _ in 0..iters
     { 9223372036854775783u128.is_prime(); }
 
-    let mut el = now.elapsed().as_nanos() / 1_000_000;
+    let mut el = now.elapsed().as_nanos() / iters;
 
     println!("{} nanoseconds / iteration.\n", el);
+}
 
-    let mut _p: Vec<usize>;
-    println!("generate_primes(1_000_000):");
-    now = Instant::now();
-    
-    for _ in 0..=100 {
-        _p = generate_primes(1_000_000);
-    }
-    el = now.elapsed().as_millis() / 100;
-    println!("{} milliseconds / iteration.\n", el);
+fn sieve_is_prime_bench(iters: u128) {
     let mut p: Vec<usize> = Vec::with_capacity(1_000_000);
 
     println!("is_prime() up to 1_000_000:");
-    now = Instant::now();
-    for _ in 0..=25 {
+    let now = Instant::now();
+    for _ in 0..iters {
         for i in 0..1_000_000 {
             if (i as u128).is_prime() {p.push(i); }
         }
     }
-    el = now.elapsed().as_millis() as u128 / 25;
+    let el = now.elapsed().as_millis() as u128 / iters;
     println!("{} milliseconds / iteration.\n", el);
 }
