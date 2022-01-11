@@ -7,18 +7,25 @@ use crate::math::sets::Set;
 #[ignore]
 #[test]
 fn benchmark() {
+    let intersection_run = true;
+    let primes_run = true;
     println!("Benchmarks in non-optimised mode.");
-    println!("\nIntersection Benchmark.");
-    intersection_bench(10);
-    println!("\nPrimes Benchmark.");
-    generate_primes_bench(100);
-    big_is_prime_bench(1_000_000);
-    sieve_is_prime_bench(25);
+
+    if intersection_run {
+        println!("\nIntersection Benchmark.");
+        intersection_bench(10, 1_000_000);
+    }
+    if primes_run {
+        println!("\nPrimes Benchmark.");
+        generate_primes_bench(100);
+        big_is_prime_bench(1_000_000);
+        sieve_is_prime_bench(25);
+    }
 }
 
-fn intersection_bench(iterations: u128) {
-    let _v: Vec<i32> = (0..=1_000_000).collect();
-    let _v2: Vec<i32> = (500_000..=2_000_000).collect();
+fn intersection_bench(iterations: u128, set_size: i32) {
+    let _v: Vec<i32> = (0..set_size).collect();
+    let _v2: Vec<i32> = (set_size / 2..=set_size * 2).collect();
     let s1 = Set::new(&_v);
     let s2: Set<i32> = Set::new(&_v2);
     let mut s3: Set<i32>;
