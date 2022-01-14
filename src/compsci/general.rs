@@ -77,6 +77,7 @@ pub trait StringIndex {
     /// assert_eq!('e', s.char_at(1).unwrap());
     /// assert_eq!('l', s.char_at(2).unwrap());
     /// ```
+    #[must_use]
     fn char_at(&self, index: usize) -> Option<char>;
 
     /// Get the byte at a given index from a `String` or `&str`.
@@ -105,6 +106,7 @@ pub trait StringIndex {
     /// assert_eq!('e', s.byte_at(1) as char);
     /// assert_eq!('l', s.byte_at(2) as char);
     /// ```
+    #[must_use]
     fn byte_at(&self, index: usize) -> u8;
 }
 

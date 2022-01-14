@@ -18,6 +18,7 @@ pub trait CrossSum {
     /// assert_eq!(9u16, 342.cross_sum());
     /// assert_eq!(52u64, 4928947234.cross_sum());
     /// ```
+    #[must_use]
     fn cross_sum(&self) -> Self;
 }
 /// Trait for mapping numbers to another number range.
@@ -40,7 +41,8 @@ pub trait MapToNumRange<T> {
     ///
     /// let result: f32 = 5.0.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
-    /// ```
+    /// ``
+    #[must_use]
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
 }
 
@@ -59,6 +61,7 @@ pub trait CommonPowers {
     ///
     ///assert_eq!(144, res);
     /// ```
+    #[must_use]
     fn square(&self) -> Self;
 
     /// Cube a number.
@@ -74,6 +77,7 @@ pub trait CommonPowers {
     ///
     ///assert_eq!(1728, res);
     /// ```
+    #[must_use]
     fn cube(&self) -> Self;
 }
 /// Trait for incrementing by value. Shorthand syntax for `x += y;`.

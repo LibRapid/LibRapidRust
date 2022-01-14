@@ -80,6 +80,7 @@ pub trait Primality {
     /// 
     /// assert_eq!(p, f);
     /// ```
+    #[must_use]
     fn is_prime(&self) -> bool;
 }
 
@@ -147,6 +148,7 @@ impl Primality for i128 {
 /// let f: Vec<usize> = generate_primes(15);
 /// assert_eq!(p, f);
 /// ```
+#[must_use]
 pub fn generate_primes(limit: usize) -> Vec<usize> {
     match limit {
         0 | 1 => { return Vec::new(); }

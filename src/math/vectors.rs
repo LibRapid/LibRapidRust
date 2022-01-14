@@ -17,6 +17,7 @@ impl MathVector {
     ///
     /// # Returns
     /// A new MathVector.
+    #[must_use]
     pub fn new(values: &[f64]) -> MathVector {        
         MathVector { values: values.to_owned(),
                      length: None }
@@ -28,6 +29,7 @@ impl MathVector {
     ///
     /// # Returns
     /// A new MathVector with length 0.
+    #[must_use]
     pub fn new_with_dimension(dim: usize) -> MathVector {
 
         MathVector { values: vec![0.0; dim],
@@ -37,6 +39,7 @@ impl MathVector {
     ///
     /// # Returns
     /// A `usize`.
+    #[must_use]
     pub fn dimension(&self) -> usize {
         self.values.len()
     }
@@ -44,6 +47,7 @@ impl MathVector {
     ///
     /// # Returns
     /// A `f64`.
+    #[must_use]
     pub fn length(&mut self) -> f64 {
         match self.length {
             None      => { let mut len: f64 = 0.0; 
@@ -62,6 +66,7 @@ impl MathVector {
     ///
     /// # Returns
     /// A `&Vec<f64>`.
+    #[must_use]
     pub fn get_values(&self) -> &Vec<f64> {
         &self.values
     }
@@ -138,6 +143,7 @@ impl std::ops::Sub for MathVector {
     ///
     /// # Returns
     /// A new `MathVector`.
+    #[must_use]
 pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
 
     let mut vals: Vec<f64> = Vec::with_capacity(other.dimension());
@@ -154,6 +160,7 @@ pub fn scalar_mul(scalar: f64, other: &MathVector) -> MathVector {
 /// # Returns
 /// A new `MathVector`.
 #[macro_export]
+#[must_use]
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
         {

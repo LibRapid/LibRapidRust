@@ -118,6 +118,7 @@ pub fn assign_codes(root: &Box<Node>,
 ///
 /// let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
 /// ```
+#[must_use]
 pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec {
     let mut res: BitVec = BitVec::new();
     let mut t:   Option<&mut BitVec>;
@@ -170,6 +171,7 @@ fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
 /// let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
 /// let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
 /// ```
+#[must_use]
 pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
     decode_string(bitvec, root)
 }
@@ -181,6 +183,7 @@ pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
 ///
 /// # Returns
 /// A Box<Node> containing the entire tree.
+#[must_use]
 pub fn get_root(s: &str) -> Box<Node> {
     let frequency = get_frequency(s);
     let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1) as u128, Some(*(x.0))))).collect();
@@ -260,6 +263,7 @@ pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
 /// let dec_written = read_from_file("test".to_string());
 /// assert_eq!(dec_written, "Lorem Ipsum123123123");
 /// ```
+#[must_use]
 pub fn read_from_file(path: String) -> String {
     let mut encoded_file: File    = File::open(path.clone() + ".hlr").unwrap();
     let mut tree_file:    File    = File::open(path + ".htlr").unwrap();

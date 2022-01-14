@@ -32,6 +32,7 @@ impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> BinaryPrefix<T> {
     /// assert_eq!(5u128, BinaryPrefix::Unity(5u8).to_decimal_u128());
     /// assert_eq!(1073741824u128, BinaryPrefix::Gibi(1u8).to_decimal_u128());
     /// ```
+    #[must_use]
     pub fn to_decimal_u128(&self) -> u128 {
         match self {
             BinaryPrefix::Unity(x) => { return (*x).into();       },
@@ -74,6 +75,7 @@ impl<T: Copy + Into<f64>> Into<f64> for BinaryPrefix<T> {
 /// assert_eq!(4198.4f32, BinaryPrefix::Kibi(4.1).into());
 /// ```
 impl<T: Copy + Into<f32>> Into<f32> for BinaryPrefix<T> {
+    #[must_use]
     fn into(self) -> f32 {
         match self {
             BinaryPrefix::Unity(x) => { return (x).into();                            },
