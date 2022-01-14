@@ -3,8 +3,8 @@
 
 use crate::eval_postfix;
 
-/// Trait for the cross sum of a given number.
-pub trait CrossSum {
+/// Trait for the Digits of a given number.
+pub trait NumDigits {
     /// Calculates the cross sum of a number.
     ///
     /// # Returns
@@ -12,7 +12,7 @@ pub trait CrossSum {
     /// 
     /// # Examples
     /// ```
-    /// use lib_rapid::math::general::CrossSum;
+    /// use lib_rapid::math::general::NumDigits;
     /// 
     /// assert_eq!(3u8, 12.cross_sum());
     /// assert_eq!(9u16, 342.cross_sum());
@@ -20,6 +20,20 @@ pub trait CrossSum {
     /// ```
     #[must_use]
     fn cross_sum(&self) -> Self;
+    /// Gets the digits as a number with the 1s place at index 0.
+    ///
+    /// # Returns
+    /// A `Vec<u8>`.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumDigits;
+    /// 
+    /// assert_eq!(vec![4,3,2,1], 1234u16.digits());
+    /// assert_eq!(vec![0], 0u8.digits());
+    /// ```
+    #[must_use]
+    fn digits(&self) -> Vec<u8>;
 }
 /// Trait for mapping numbers to another number range.
 pub trait MapToNumRange<T> {
@@ -159,7 +173,7 @@ impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
     }
 }
 
-impl CrossSum for u8 {
+impl NumDigits for u8 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(3);
@@ -170,9 +184,21 @@ impl CrossSum for u8 {
         }
         digits.iter().sum()
     }
+
+    fn digits(&self) -> Vec<u8> {
+        if self == &0u8{ return vec![0]; }
+        let mut v: Self = *self;
+        let mut digits: Vec<u8> = Vec::with_capacity(3);
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n);
+        }
+        digits
+    }
 }
 
-impl CrossSum for u16 {
+impl NumDigits for u16 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(5);
@@ -184,9 +210,21 @@ impl CrossSum for u16 {
         }
         digits.iter().sum()
     }
+
+    fn digits(&self) -> Vec<u8> {
+        if self == &0u16 { return vec![0]; }
+        let mut v: Self = *self;
+        let mut digits: Vec<u8> = Vec::with_capacity(5);
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n as u8);
+        }
+        digits
+    }
 }
 
-impl CrossSum for u32 {
+impl NumDigits for u32 {
     fn cross_sum(&self) -> Self {
         let mut v: Self = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(10);
@@ -198,9 +236,21 @@ impl CrossSum for u32 {
         }
         digits.iter().sum()
     }
+
+    fn digits(&self) -> Vec<u8> {
+        if self == &0u32 { return vec![0]; }
+        let mut v: Self = *self;
+        let mut digits: Vec<u8> = Vec::with_capacity(10);
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n as u8);
+        }
+        digits
+    }
 }
 
-impl CrossSum for u64 {
+impl NumDigits for u64 {
     fn cross_sum(&self) -> Self {
         let mut v:      Self      = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(20);
@@ -212,9 +262,21 @@ impl CrossSum for u64 {
         }
         digits.iter().sum()
     }
+
+    fn digits(&self) -> Vec<u8> {
+        if self == &0u64 { return vec![0]; }
+        let mut v: Self = *self;
+        let mut digits: Vec<u8> = Vec::with_capacity(20);
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n as u8);
+        }
+        digits
+    }
 }
 
-impl CrossSum for u128 {
+impl NumDigits for u128 {
     fn cross_sum(&self) -> Self {
         let mut v:      Self      = *self;
         let mut digits: Vec<Self> = Vec::with_capacity(39);
@@ -225,6 +287,18 @@ impl CrossSum for u128 {
             digits.push(n);
         }
         digits.iter().sum()
+    }
+
+    fn digits(&self) -> Vec<u8> {
+        if self == &0u128 { return vec![0]; }
+        let mut v: Self = *self;
+        let mut digits: Vec<u8> = Vec::with_capacity(39);
+        while v > 0 {
+            let n: Self = v % 10;
+            v /= 10;
+            digits.push(n as u8);
+        }
+        digits
     }
 }
 
