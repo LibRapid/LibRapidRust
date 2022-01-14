@@ -24,6 +24,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(set.elements(), &vec![0, 1, 2, 3, 4, 5]);
     /// ```
+    #[must_use]
     pub fn new(values: &[T]) -> VecSet<'a, T> {        
         let mut res: VecSet<T> = VecSet { elements: values.to_vec(),
                                     superset: None };
@@ -47,6 +48,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// assert_eq!(from_parent, VecSet::new(&vec![0,2,4]));
     /// assert_eq!(test1.elements(), &vec![0,1,2,3,4])
     /// ```
+    #[must_use]
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a VecSet<T>, f: F) -> VecSet<'a, T> {
             let mut res: VecSet<T> = VecSet { elements: Vec::with_capacity(parent.cardinality()),
                                         superset: Some(parent) };
@@ -76,6 +78,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let c:  VecSet<i32> = s.union(&s1);
     /// assert_eq!(c, new_set!(0,1,2,3,4,5,6,7,8,9,10,11,12,13));
     /// ```
+    #[must_use]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res: VecSet<T> = VecSet {elements: Vec::new(),
                                    superset: None };
@@ -107,6 +110,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let c:  VecSet<i32> = s.intersection(&s2);
     /// assert_eq!(c, new_set!(0, 1, 2, 3, 11));
     /// ```
+    #[must_use]
     pub fn intersection(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res: VecSet<T> = self.clone();
         res.elements.retain(|x| other.elements.binary_search(x).is_ok());
@@ -132,6 +136,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// assert_eq!(false, set.has_element(-1));
     /// assert_eq!(true, set.has_element(1));
     /// ```
+    #[must_use]
     pub fn has_element(&self, elem: T) -> bool {
         match self.elements.binary_search(&elem) {
             Ok(_)  => { return true; }
@@ -154,6 +159,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// s.insert(5);
     /// assert_eq!(s.elements(), &vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// ```
+    #[must_use]
     pub fn insert(&mut self, elem: T) {
         self.elements.binary_insert_no_dup(elem)
     }
@@ -172,6 +178,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// assert_eq!(true, subset.has_superset());
     /// assert_eq!(false, set.has_superset());
     /// ```
+    #[must_use]
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
     }
@@ -189,6 +196,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(&set, subset.get_superset().unwrap());
     /// ```
+    #[must_use]
     pub fn get_superset(&self) -> Option<&VecSet<T>> {
         self.superset
     }
@@ -205,6 +213,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(7, set.cardinality());
     /// ```
+    #[must_use]
     pub fn cardinality(&self) -> usize {
         self.elements.len()
     }
@@ -245,6 +254,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(&vec![0, 1, 2, 3, 4, 5, 6], set.elements());
     /// ```
+    #[must_use]
     pub fn elements(&self) -> &[T] {
         &self.elements
     }
@@ -263,6 +273,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
 /// assert_eq!(set.to_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 /// assert_eq!(set.to_full_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 #[macro_export]
+#[must_use]
 macro_rules! new_set {
     ( $( $a:expr ),* ) => {
         {
@@ -310,6 +321,7 @@ impl<T: ToString> VecSet<'_, T> {
     ///
     /// assert_eq!(s2.to_full_string(), "{ 4 } ⊆ { 0; 2; 4; 6; 8; 10 } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 }".to_string());
     /// ```
+    #[must_use]
     pub fn to_full_string(&self) -> String {
         self.rec_to_string(&mut String::new())
     }

@@ -20,6 +20,7 @@ impl Date {
     ///
     /// # Returns
     /// `none` if the date is invalid, otherwise a new date.
+    #[must_use]
     pub fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
         if is_valid_day(year, month, day) {
             return Some(Date { year,
@@ -55,6 +56,7 @@ impl Date {
     ///
     /// # Returns
     /// A boolean value.
+    #[must_use]
     pub fn leap_year(&self) -> &bool {
         &self.leap_year
     }
@@ -63,6 +65,7 @@ impl Date {
     ///
     /// # Returns
     /// A `&i32`.
+    #[must_use]
     pub fn year(&self) -> &i32 {
         &self.year
     }
@@ -83,6 +86,7 @@ impl Date {
     ///
     /// # Returns
     /// A `&u8`.
+    #[must_use]
     pub fn month(&self) -> &u8 {
         &self.month
     }
@@ -122,6 +126,7 @@ impl Date {
     ///
     /// # Returns
     /// A `&u8`.
+    #[must_use]
     pub fn hour(&self) -> &u8 {
         &self.hour
     }
@@ -141,6 +146,7 @@ impl Date {
     ///
     /// # Returns
     /// A `&u8`.
+    #[must_use]
     pub fn minute(&self) -> &u8 {
         &self.minute
     }
@@ -160,6 +166,7 @@ impl Date {
     ///
     /// # Returns
     /// A `&u8`.
+    #[must_use]
     pub fn second(&self) -> &u8 {
         &self.second
     }
@@ -201,6 +208,7 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
 /// * `year` - The year to be checked.
 /// # Returns
 /// A boolean value.
+#[must_use]
 pub fn is_leap_year(year: i32) -> bool {
     year & 3 == 0 && (year & 24 == 0 || year & 15 == 0)
 }

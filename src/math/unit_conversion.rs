@@ -71,6 +71,7 @@ pub trait AngleConversionTrait {
     ///
     /// # Returns
     /// A `Self` containing the result.
+    #[must_use]
     fn angle_conversion(&self, mode: AngleConversion) -> Self;
 }
 
@@ -84,6 +85,7 @@ pub trait TempConversionTrait {
     ///
     /// # Returns
     /// A `Self` containing the result.
+    #[must_use]
     fn temp_conversion(&self, mode: TempConversion) -> Self;
 }
 

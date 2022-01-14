@@ -21,6 +21,7 @@ pub struct Logger {
 
 impl Logger {
     /// Creates a new `Logger` object.
+    #[must_use]
     pub fn new(buff_size:      usize,
                log_to_console: bool,
                log_to_file:    bool,
@@ -34,6 +35,7 @@ impl Logger {
                          file_path }
     }
     /// Creates a new `Logger` object with default values.
+    #[must_use]
     pub fn new_default() -> Logger {
         Logger { buff_size:      10,
                  buff_count:     0,
@@ -55,6 +57,7 @@ impl Logger {
     /// let _ = l.log(Some(vec!["Warning"]), "This is a warning.");
     /// ```
     /// As you can see, we initialise a new Logger `l` with the buffer size 3. This means that only after 3x logging, the logger writes to the file and to the console.
+    #[must_use]
     pub fn log(&mut self, prefixes: Option<Vec<&str>>, msg: &str) -> Result<bool, String> {
         self.buff_count.inc();
         let mut out: String = format!("[{}]", Utc::now()

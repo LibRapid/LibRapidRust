@@ -27,6 +27,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// let mut wrapped = WrapperHashSet::wrap(books);
     /// ```
+    #[must_use]
     pub fn wrap(existing: HashSet<T>) -> WrapperHashSet<'a, T> {
         WrapperHashSet { hs: existing, parent: None }
     }
@@ -52,6 +53,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// assert_eq!(HashSet::from([0, 2, 4, 6]), subset.hs);
     /// ```
+    #[must_use]
     pub fn new_subset<F: Fn(&T) -> bool>(&'a self, f: F) -> Self {
         let mut res: HashSet<T> = HashSet::with_capacity(self.hs.capacity());
         for elem in &self.hs {
@@ -80,6 +82,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// assert_eq!(true, subset.has_emerged());
     /// ```
+    #[must_use]
     pub fn has_emerged(&self) -> bool {
         self.parent.is_some()
     }
@@ -103,6 +106,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// assert_eq!(&wrapped, subset.get_superset().unwrap());
     /// ```
+    #[must_use]
     pub fn get_superset(&self) -> Option<&Self> {
         self.parent
     }
