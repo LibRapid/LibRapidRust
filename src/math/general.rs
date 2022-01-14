@@ -41,7 +41,7 @@ pub trait MapToNumRange<T> {
     ///
     /// let result: f32 = 5.0.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
-    /// ``
+    /// ```
     #[must_use]
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
 }
