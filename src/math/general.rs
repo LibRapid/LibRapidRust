@@ -175,14 +175,7 @@ impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
 
 impl NumDigits for u8 {
     fn cross_sum(&self) -> Self {
-        let mut v: Self = *self;
-        let mut digits: Vec<Self> = Vec::with_capacity(3);
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n);
-        }
-        digits.iter().sum()
+        self.digits().iter().sum()
     }
 
     fn digits(&self) -> Vec<u8> {
@@ -200,15 +193,11 @@ impl NumDigits for u8 {
 
 impl NumDigits for u16 {
     fn cross_sum(&self) -> Self {
-        let mut v: Self = *self;
-        let mut digits: Vec<Self> = Vec::with_capacity(5);
-    
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n);
+        let mut res = 0;
+        for i in self.digits() {
+            res.inc_by(i as Self);
         }
-        digits.iter().sum()
+        res
     }
 
     fn digits(&self) -> Vec<u8> {
@@ -226,15 +215,11 @@ impl NumDigits for u16 {
 
 impl NumDigits for u32 {
     fn cross_sum(&self) -> Self {
-        let mut v: Self = *self;
-        let mut digits: Vec<Self> = Vec::with_capacity(10);
-    
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n);
+        let mut res = 0;
+        for i in self.digits() {
+            res.inc_by(i as Self);
         }
-        digits.iter().sum()
+        res
     }
 
     fn digits(&self) -> Vec<u8> {
@@ -252,15 +237,11 @@ impl NumDigits for u32 {
 
 impl NumDigits for u64 {
     fn cross_sum(&self) -> Self {
-        let mut v:      Self      = *self;
-        let mut digits: Vec<Self> = Vec::with_capacity(20);
-    
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n);
+        let mut res = 0;
+        for i in self.digits() {
+            res.inc_by(i as Self);
         }
-        digits.iter().sum()
+        res
     }
 
     fn digits(&self) -> Vec<u8> {
@@ -278,15 +259,11 @@ impl NumDigits for u64 {
 
 impl NumDigits for u128 {
     fn cross_sum(&self) -> Self {
-        let mut v:      Self      = *self;
-        let mut digits: Vec<Self> = Vec::with_capacity(39);
-    
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n);
+        let mut res = 0;
+        for i in self.digits() {
+            res.inc_by(i as Self);
         }
-        digits.iter().sum()
+        res
     }
 
     fn digits(&self) -> Vec<u8> {
