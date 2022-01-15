@@ -81,7 +81,6 @@ pub trait StringIndex {
     /// ```
     #[must_use]
     fn char_at(&self, index: usize) -> Option<char>;
-
     /// Get the byte at a given index from a `String` or `&str`.
     /// If dealing with Unicode characters, this function is *not* recommended, as it only returns one byte even though Unicode can be a multi byte encoding.
     /// 

@@ -50,14 +50,14 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// ```
     #[must_use]
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a VecSet<T>, f: F) -> VecSet<'a, T> {
-            let mut res: VecSet<T> = VecSet { elements: Vec::with_capacity(parent.cardinality()),
-                                        superset: Some(parent) };
-            for elem in &parent.elements {
-                if f(*elem) {
-                    res.elements.push(*elem);
-                }
+        let mut res: VecSet<T> = VecSet { elements: Vec::with_capacity(parent.cardinality()),
+                                    superset: Some(parent) };
+        for elem in &parent.elements {
+            if f(*elem) {
+                res.elements.push(*elem);
             }
-            res
+        }
+        res
     }
     /// Does a mathematical union on two VecSets.
     /// `self ∪ other`.
@@ -138,10 +138,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// ```
     #[must_use]
     pub fn has_element(&self, elem: T) -> bool {
-        match self.elements.binary_search(&elem) {
-            Ok(_)  => { return true; }
-            Err(_) => { return false; }
-        }
+        self.elements.binary_search(&elem).is_ok()
     }
     /// Lets you insert an element into a set. Does not insert already present values.
     ///

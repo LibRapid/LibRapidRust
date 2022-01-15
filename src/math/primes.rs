@@ -1,9 +1,6 @@
 //! Traits and functions for handling primes and primality.
 use super::general::*;
-
 use number_theory::traits::NumberTheory;
-
-
 
 /// Trait for prime functions.
 pub trait Primality {
