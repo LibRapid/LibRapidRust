@@ -121,7 +121,7 @@ pub trait Brackets {
     /// ```
     /// use lib_rapid::compsci::general::Brackets;
     /// 
-    /// let s = "([{}])";
+    /// let s = "([{Some text won't throw it off}])";
     /// 
     /// assert_eq!(Ok(true), s.validate_brackets());
     /// ```
@@ -142,9 +142,9 @@ pub trait Brackets {
     /// ```
     /// use lib_rapid::compsci::general::Brackets;
     /// 
-    /// let s = "([{}]))";
+    /// let s = "([{Some text won't throw it off}]))";
     /// 
-    /// assert_eq!(Err(6), s.validate_brackets());
+    /// assert_eq!(Err(34), s.validate_brackets());
     /// ```
     #[must_use]
     fn validate_brackets(&self) -> Result<bool, isize>;
