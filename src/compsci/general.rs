@@ -116,7 +116,6 @@ pub trait Brackets {
     /// Determines whether the given `&str` or `String` has valid brackets.
     /// # Returns
     /// `Ok(true)` if all brackets were closed, otherwise `Err(isize)`, where `isize` is the index of the String at which the error occured.
-    /// `-1` if the brackets were not balanced.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::Brackets;
@@ -137,7 +136,7 @@ pub trait Brackets {
     /// 
     /// let s = "([{}]";
     /// 
-    /// assert_eq!(Err(-1), s.validate_brackets());
+    /// assert_eq!(Err(5), s.validate_brackets());
     /// ```
     /// ```
     /// use lib_rapid::compsci::general::Brackets;
@@ -147,13 +146,13 @@ pub trait Brackets {
     /// assert_eq!(Err(34), s.validate_brackets());
     /// ```
     #[must_use]
-    fn validate_brackets(&self) -> Result<bool, isize>;
+    fn validate_brackets(&self) -> Result<bool, usize>;
 }
 
 impl Brackets for &str {
-    fn validate_brackets(&self) -> Result<bool, isize> {
+    fn validate_brackets(&self) -> Result<bool, usize> {
         let mut s: Vec<char> = Vec::with_capacity(self.len());
-        let mut i: isize = 0;
+        let mut i: usize = 0;
         for c in self.chars() {
             match c {
                 '[' => { s.push(c); },
@@ -175,15 +174,15 @@ impl Brackets for &str {
         }
 
         if s.len() != 0
-        { return Err(-1); }
+        { return Err(i); }
         return Ok(true);
     }
 }
 
 impl Brackets for String {
-    fn validate_brackets(&self) -> Result<bool, isize> {
+    fn validate_brackets(&self) -> Result<bool, usize> {
         let mut s: Vec<char> = Vec::with_capacity(self.len());
-        let mut i: isize = 0;
+        let mut i: usize = 0;
         for c in self.chars() {
             match c {
                 '[' => { s.push(c); },
@@ -205,7 +204,7 @@ impl Brackets for String {
         }
 
         if s.len() != 0
-        { return Err(-1); }
+        { return Err(i); }
         return Ok(true);
     }
 }
