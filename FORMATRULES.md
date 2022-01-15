@@ -7,7 +7,7 @@ _____
 §1 Curly braces
 ------
 A opening curly brace `{` MUST be placed on the same line as its statement with a leading space, except
-* the statement inside the curly braces is only one line, in which case the statement and the curly braces `{` and `}` MAY all be placed on the same line with one space before and after the statement.
+* the statement inside the curly braces is only one line, in which case the statement in the curly braces and the curly braces `{` and `}` MAY all be placed on the next line after the clause  with one space before and after the statement.
 
 A closing curly brace `}` MUST be placed on a following line on the same column as the beginning of the beforegoing statement, except the rule for `{` is applied.
 
@@ -24,7 +24,7 @@ Spaces SHOULD be applied where:
 §3 Types
 -----
 Types MAY be inferred, even though a explicit type declaration is preffered.
-When explicitly delcaring a type, the colon `:` is places right after the name of the constant or variable.
+When explicitly delcaring a type, the colon `:` is placed right after the name of the constant or variable.
 
 §4 Operators
 ----
