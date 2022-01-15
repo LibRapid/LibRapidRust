@@ -115,7 +115,7 @@ pub trait StringIndex {
 pub trait Brackets {
     /// Determines whether the given `&str` or `String` has valid brackets.
     /// # Returns
-    /// `Ok(true)` if all brackets were closed, otherwise `Err(isize)`, where `isize` is the index of the String at which the error occured.
+    /// `Ok(true)` if all brackets were closed, otherwise `Err(usize)`, where `usize` is the index of the String at which the error occured.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::Brackets;
