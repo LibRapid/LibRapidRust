@@ -145,6 +145,13 @@ pub trait Brackets {
     /// 
     /// assert_eq!(Err(34), s.validate_brackets());
     /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::Brackets;
+    /// 
+    /// let s = "([{]}))";
+    /// 
+    /// assert_eq!(Err(3), s.validate_brackets());
+    /// ```
     #[must_use]
     fn validate_brackets(&self) -> Result<bool, usize>;
 }
