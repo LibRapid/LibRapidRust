@@ -94,3 +94,48 @@ pub const LN5: f64 = 1.609437912434100;
 /// # Returns
 /// a f64 containing the first 15+1 decimal places of ζ(3). Rounded.
 pub const ZETA3: f64 = 1.202056903159594;
+/// ∛2.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of ∛2. Rounded.
+pub const CUBEROOT2: f64 = 1.259921049894873;
+/// ∛3.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of ∛3. Rounded.
+pub const CUBEROOT3: f64 = 1.442249570307408;
+/// the speed of light, c.
+///
+/// # Returns
+/// a f64 containing the decimal places of c. Rounded.
+pub const LIGHTSPEED: f64 = 299_792_458.0;
+/// Gravity of Earth, denoted as g
+///
+/// # Returns
+/// a f64 containing the decimal places of the total average of g. Rounded.
+pub const EARTHGRAVITY: f64 = 9.80665;
+/// Wallis Constant.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of the Wallis Constant. Rounded.
+pub const WALLISCONSTANT: f64 = 2.094551481542327;
+/// The Laplace limit, λ.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of λ. Rounded.
+pub const LAPLACELIMIT: f64 = 0.662743419349182;
+/// Gauss's constant.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of Gauss's constant. Rounded.
+pub const GAUSSCONSTANT: f64 = 0.834626841674073;
+/// Cahen's constant, C.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of C. Rounded.
+pub const CAHENSCONSTANT: f64 = 0.643410546288338;
+/// The parabolic constant.
+///
+/// # Returns
+/// a f64 containing the first 15+1 decimal places of the parabolic constant. Rounded.
+pub const P2: f64 = 2.295587149392638;
