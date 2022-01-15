@@ -1,8 +1,75 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
-
 use crate::eval_postfix;
-
+pub mod avg_impl;
+/// Trait for several kinds of averages.
+pub trait Averages<T> {
+    /// Calculate the arithmetic mean.
+    /// # Returns
+    /// A `f64`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Averages;
+    /// 
+    /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+    /// 
+    /// assert_eq!(3.125, v.arithmetic_mean());
+    /// ```
+    #[must_use]
+    fn arithmetic_mean(&self) -> f64;
+    /// Calculate the harmonic mean.
+    /// # Returns
+    /// A `f64`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Averages;
+    /// 
+    /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+    /// 
+    /// assert_eq!(2.318840579710145, v.harmonic_mean());
+    /// ```
+    #[must_use]
+    fn harmonic_mean(&self) -> f64;
+    /// Calculate the median.
+    /// # Returns
+    /// A `f64`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Averages;
+    /// 
+    /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+    /// 
+    /// assert_eq!(2.5, v.median());
+    /// ```
+    #[must_use]
+    fn median(&self) -> f64;
+    /// Calculate the mode.
+    /// # Returns
+    /// A `T`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Averages;
+    /// 
+    /// let v = vec![1, 2, 2, 2, 3, 4, 5, 6];
+    /// 
+    /// assert_eq!(2, v.mode());
+    /// ```
+    #[must_use]
+    fn mode(&self) -> T;
+    /// Calculate the mode.
+    /// # Returns
+    /// A `T`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::Averages;
+    /// 
+    /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+    /// 
+    /// assert_eq!(3.5, v.mid_range());
+    /// ```
+    #[must_use]
+    fn mid_range(&self) -> f64;
+}
 /// Trait for the Digits of a given number.
 pub trait NumDigits {
     /// Calculates the cross sum of a number.
