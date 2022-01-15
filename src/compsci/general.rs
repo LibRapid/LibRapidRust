@@ -1,4 +1,6 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
+
+use crate::math::general::Increment;
 /// Trait for `binary_insert`.
 pub trait BinaryInsert<T> {
     /// Insert an element into a ***sorted*** `vec` whilst maintaining the order, consuming `other`.
@@ -108,6 +110,104 @@ pub trait StringIndex {
     /// ```
     #[must_use]
     fn byte_at(&self, index: usize) -> u8;
+}
+/// Trait for functions related to brackets.
+pub trait Brackets {
+    /// Determines whether the given `&str` or `String` has valid brackets.
+    /// # Returns
+    /// `Ok(true)` if all brackets were closed, otherwise `Err(isize)`, where `isize` is the index of the String at which the error occured.
+    /// `-1` if the brackets were not balanced.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::Brackets;
+    /// 
+    /// let s = "([{}])";
+    /// 
+    /// assert_eq!(Ok(true), s.validate_brackets());
+    /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::Brackets;
+    /// 
+    /// let s = String::from("([{}])");
+    /// 
+    /// assert_eq!(Ok(true), s.validate_brackets());
+    /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::Brackets;
+    /// 
+    /// let s = "([{}]";
+    /// 
+    /// assert_eq!(Err(-1), s.validate_brackets());
+    /// ```
+    /// ```
+    /// use lib_rapid::compsci::general::Brackets;
+    /// 
+    /// let s = "([{}]))";
+    /// 
+    /// assert_eq!(Err(6), s.validate_brackets());
+    /// ```
+    #[must_use]
+    fn validate_brackets(&self) -> Result<bool, isize>;
+}
+
+impl Brackets for &str {
+    fn validate_brackets(&self) -> Result<bool, isize> {
+        let mut s: Vec<char> = Vec::with_capacity(self.len());
+        let mut i: isize = 0;
+        for c in self.chars() {
+            match c {
+                '[' => { s.push(c); },
+                '{' => { s.push(c); },
+                '(' => { s.push(c); },
+                ']' => { 
+                         if s.pop() != Some('[')
+                         { return Err(i); }
+                        },
+                '}' => { if s.pop() != Some('{')
+                         { return Err(i); }
+                        },
+                ')' => { if s.pop() != Some('(')
+                         { return Err(i); }
+                        },
+                _   => { }
+            }
+            i.inc();
+        }
+
+        if s.len() != 0
+        { return Err(-1); }
+        return Ok(true);
+    }
+}
+
+impl Brackets for String {
+    fn validate_brackets(&self) -> Result<bool, isize> {
+        let mut s: Vec<char> = Vec::with_capacity(self.len());
+        let mut i: isize = 0;
+        for c in self.chars() {
+            match c {
+                '[' => { s.push(c); },
+                '{' => { s.push(c); },
+                '(' => { s.push(c); },
+                ']' => { 
+                         if s.pop() != Some('[')
+                         { return Err(i); }
+                        },
+                '}' => { if s.pop() != Some('{')
+                         { return Err(i); }
+                        },
+                ')' => { if s.pop() != Some('(')
+                         { return Err(i); }
+                        },
+                _   => { }
+            }
+            i.inc();
+        }
+
+        if s.len() != 0
+        { return Err(-1); }
+        return Ok(true);
+    }
 }
 
 impl StringIndex for String {
