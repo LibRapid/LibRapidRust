@@ -1,141 +1,81 @@
 //! Here you'll find common used constants from several mathematical fields.
-/// The mathematical constant π² / 6.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of π² / 6. Rounded.
-pub const PISQRDIV6: f64 = 1.644934066848226;
-/// The mathematical constant 180 / π.
-///
-/// # Returns
-/// a f64 containing the first 15+2 decimal places of 180 / π. Rounded.
-pub const RADDEGRATE: f64 = 57.295779513082321;
-/// The mathematical constant π / 180.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of π / 180. Rounded.
-pub const DEGRADRATE: f64 = 0.017453292519943;
-/// The mathematical constant π.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of π. Rounded.
-pub const PI: f64 = 3.141592653589793;
-/// The mathematical constant √π.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of √π. Rounded.
-pub const SQRTPI: f64 = 1.77245385090552;
-/// The mathematical constant τ.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of τ. Rounded.
-pub const TAU: f64 = 6.283185307179586;
+/// π² / 6.
+pub const PISQRDIV6: f64 = 1.6449340668482264364724151666460251892189499012067984377355582293;
+/// 180 / π.
+pub const RADDEGRATE: f64 = 57.295779513082320876798154814105170332405472466564321549160243861;
+/// π / 180.
+pub const DEGRADRATE: f64 = 0.0174532925199432957692369076848861271344287188854172545609719144;
+/// π.
+pub const PI: f64 = 3.1415926535897932384626433832795028841971693993751058209749445923;
+/// √π.
+pub const SQRTPI: f64 = 1.7724538509055160272981674833411451827975494561223871282138077898;
+/// τ.
+pub const TAU: f64 = 6.2831853071795864769252867665590057683943387987502116419498891846;
 /// π / 2.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of π / 2. Rounded.
-pub const HALFPI: f64 = 1.570796326794897;
+pub const HALFPI: f64 = 1.5707963267948966192313216916397514420985846996875529104874722961;
 /// Eulers number.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of Eulers number. Rounded.
-pub const E: f64 = 2.718281828459045;
+pub const E: f64 = 2.7182818284590452353602874713526624977572470936999595749669676277;
 /// The square root of Eulers number.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of √e. Rounded.
-pub const SQRTE: f64 = 1.648721270700128;
+pub const SQRTE: f64 = 1.6487212707001281468486507878141635716537761007101480115750793116;
 /// √2.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of √2. Rounded.
-pub const SQRT2: f64 = 1.414213562373095;
+pub const SQRT2: f64 = 1.4142135623730950488016887242096980785696718753769480731766797379;
 /// √3.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of √3. Rounded.
-pub const SQRT3: f64 = 1.732050807568877;
+pub const SQRT3: f64 = 1.7320508075688772935274463415058723669428052538103806280558069794;
 /// √5.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of √5. Rounded.
-pub const SQRT5: f64 = 2.236067977499790;
+pub const SQRT5: f64 = 2.2360679774997896964091736687312762354406183596115257242708972454;
 /// The golden ratio φ.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of the golden ratio. Rounded.
-pub const GOLDENRATIO: f64 = 1.618033988749895;
+pub const GOLDENRATIO: f64 = 1.6180339887498948482045868343656381177203091798057628621354486227;
 /// The Euler-Mascheroni constant, γ.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of γ. Rounded.
-pub const EULERMASCHERONI: f64 = 0.577215664901532;
+pub const EULERMASCHERONI: f64 = 0.5772156649015328606065120900824024310421593359399235988057672348;
 /// The Twin Primes Constant.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of the Twin Primes Constant. Rounded.
-pub const TWINPRIMES: f64 = 0.660161815846869;
+pub const TWINPRIMES: f64 = 0.6601618158468695739278121100145557784326233602847334133194484233;
 /// ln(2).
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of ln(2). Rounded.
-pub const LN2: f64 = 0.693147180559945;
+pub const LN2: f64 = 0.6931471805599453094172321214581765680755001343602552541206800094;
 /// ln(3).
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of ln(3). Rounded.
-pub const LN3: f64 = 1.098612288668109;
+pub const LN3: f64 = 1.0986122886681096913952452369225257046474905578227494517346943336;
 /// ln(5).
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of ln(5). Rounded.
-pub const LN5: f64 = 1.609437912434100;
+pub const LN5: f64 = 1.6094379124341003746007593332261876395256013542685177219126478914;
 /// ζ(3).
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of ζ(3). Rounded.
-pub const ZETA3: f64 = 1.202056903159594;
+pub const ZETA3: f64 = 1.2020569031595942853997381615114499907649862923404988817922715553;
 /// ∛2.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of ∛2. Rounded.
-pub const CUBEROOT2: f64 = 1.259921049894873;
+pub const CUBEROOT2: f64 = 1.2599210498948731647672106072782283505702514647015079800819751121;
 /// ∛3.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of ∛3. Rounded.
-pub const CUBEROOT3: f64 = 1.442249570307408;
+pub const CUBEROOT3: f64 = 1.4422495703074083823216383107801095883918692534993505775464161945;
 /// the speed of light, c.
-///
-/// # Returns
-/// a f64 containing the decimal places of c. Rounded.
 pub const LIGHTSPEED: f64 = 299_792_458.0;
 /// Gravity of Earth, denoted as g
-///
-/// # Returns
-/// a f64 containing the decimal places of the total average of g. Rounded.
 pub const EARTHGRAVITY: f64 = 9.80665;
 /// Wallis Constant.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of the Wallis Constant. Rounded.
-pub const WALLISCONSTANT: f64 = 2.094551481542327;
+pub const WALLISCONSTANT: f64 = 2.0945514815423265914823865405793029638573061056282391803041285290;
 /// The Laplace limit, λ.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of λ. Rounded.
-pub const LAPLACELIMIT: f64 = 0.662743419349182;
+pub const LAPLACELIMIT: f64 = 0.6627434193491815809747420971092529070562335491150224175203925349;
 /// Gauss's constant.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of Gauss's constant. Rounded.
-pub const GAUSSCONSTANT: f64 = 0.834626841674073;
+pub const GAUSSCONSTANT: f64 = 0.8346268416740731862814297327990468089939930134903470024498273701;
 /// Cahen's constant, C.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of C. Rounded.
-pub const CAHENSCONSTANT: f64 = 0.643410546288338;
-/// The parabolic constant.
-///
-/// # Returns
-/// a f64 containing the first 15+1 decimal places of the parabolic constant. Rounded.
-pub const P2: f64 = 2.295587149392638;
+pub const CAHENSCONSTANT: f64 = 0.6434105462883380261822543077575647632865878602682395059870309203;
+/// The parabolic constant, P₂.
+pub const P2: f64 = 2.2955871493926380740342980491894903875978322036385834839299753466;
+/// The Dottie number.
+pub const DOTTIENUMBER: f64 = 0.7390851332151606416553120876738734040134117589007574649656806357;
+/// The Meissel-Mertens constant.
+pub const MEISSELMERTENS: f64 = 0.2614972128476427837554268386086958590515666482611992061920642139;
+/// Gelfond's constant e^π.
+pub const ETOPI: f64 = 23.140692632779269005729086367948547380266106242600211993445046409;
+/// The golden angle.
+pub const GOLDENANGLE: f64 = 2.3999632297286533222315555066336138531249990110581150429351127507;
+/// The area of the Mandelbrot fractal.
+pub const MANDELBROTAREA: f64 = 1.5065918849;
+/// The Gieseking constant.
+pub const GIESEKINGCONSTANT: f64 = 1.0149416064096536250212025542745202859416893075302997920174891067;
+/// The Bloch-Landau constant.
+pub const BLOCHLANDAU: f64 = 0.5432589653429767069527282953006132311388632937583569889557325691;
+/// The Golomb-Dickman constant.
+pub const GOLOMBDICKMAN: f64 = 0.6243299885435508709929363831008372441796426201805292869735519024;
+/// The Feller-Tornier constant.
+pub const FELLERTORNIER: f64 = 0.6613170494696223352897658462741185332854752898329;
+/// The 2^(√2).
+pub const TWOTOSQRT2: f64 = 2.6651441426902251886502972498731398482742113137146594928359795933;
+/// The Khinchin's constant.
+pub const KHINCHINSCONSTANT: f64 = 2.6854520010653064453097148354817956938203822939944629530511523455;
+/// Mill's constant.
+pub const MILLSCONSTANT: f64 = 1.3063778838630806904686144926026057129167845851567136443680537599;
