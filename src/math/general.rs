@@ -384,9 +384,9 @@ impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
 /// ```
 pub fn nth_root(degree: f64, radicand: f64) -> f64 {
     // Using Newtons method
-    let     p = 1e-15_f64;
-    let mut initial_guess = radicand / degree;
-    let mut next_guess;
+    let     p:             f64 = 1e-15_f64;
+    let mut initial_guess: f64 = radicand / degree;
+    let mut next_guess:    f64;
   
     loop {
        next_guess = ((degree - 1.0) * initial_guess 
