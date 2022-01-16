@@ -365,3 +365,38 @@ impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
         *self * *self * *self
     }
 }
+/// Compute the nth-root of a number.
+/// # Arguments
+/// * `degree` - the `f64` specifying the `n`.
+/// * `radicand` - the `f64` of which the root should be computed.
+/// # Returns
+/// A `f64`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::nth_root;
+/// use lib_rapid::math::constants;
+/// assert_eq!(1.4422495703074085, nth_root(3.0, 3.0));
+/// ```
+/// ```
+/// use lib_rapid::math::general::nth_root;
+/// use lib_rapid::math::constants;
+/// assert_eq!(1.414213562373095, nth_root(2.0, 2.0));
+/// ```
+pub fn nth_root(degree: f64, radicand: f64) -> f64 {
+    // Using Newtons method
+    let     p = 1e-15_f64;
+    let mut initial_guess = radicand / degree;
+    let mut next_guess;
+  
+    loop {
+       next_guess = ((degree - 1.0) * initial_guess 
+                    + radicand / 
+                    f64::powf(initial_guess, degree - 1.0))
+                    / degree; // Guess the next guess
+
+       if (next_guess - initial_guess).abs() <= (initial_guess * p).abs()
+       { return next_guess; }
+
+       initial_guess = next_guess;
+    }
+ }
