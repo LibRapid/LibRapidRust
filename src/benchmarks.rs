@@ -1,5 +1,7 @@
 #![allow(unused)]
 use std::time::Instant;
+use crate::math::constants::SQRT5;
+use crate::math::general::Increment;
 use crate::math::primes::Primality;
 use crate::math::primes::generate_primes;
 use crate::math::sets::vec_sets::VecSet;
@@ -7,9 +9,15 @@ use crate::math::sets::vec_sets::VecSet;
 #[ignore]
 #[test]
 fn benchmark() {
-    let intersection_run = true;
-    let primes_run = true;
+    let intersection_run = false;
+    let primes_run = false;
+    let fib_run = true;
     println!("Benchmarks in non-optimised mode.");
+
+    if fib_run {
+        println!("\nFibonacci benchmark.");
+        fibonacci(100, 1_000_000);
+    }
 
     if intersection_run {
         println!("\nIntersection Benchmark.");
@@ -21,6 +29,34 @@ fn benchmark() {
         big_is_prime_bench(1_000_000);
         sieve_is_prime_bench(25);
     }
+}
+fn fibonacci(n: u128, iterations: u128) {
+    let mut now = Instant::now();
+
+    for _ in 0..iterations {
+        let mut first_number: u128 = 0;
+        let mut second_number: u128 = 0;
+        let mut current_number: u128 = 1;
+    
+        let mut i: u128 = 1;
+
+        while i < n {
+        
+            first_number = second_number;
+            second_number = current_number;
+            current_number = first_number + second_number;
+            i.inc();
+        }
+    }
+    let mut el = now.elapsed().as_nanos() / iterations;
+    println!("{} ns / iteration (iterative approach).", el);
+
+    now = Instant::now();
+    for _ in 0..iterations {
+        let f = ( (0.5 * (1.0 + SQRT5)).powi(n as i32) / SQRT5 ).round();
+    }
+    el = now.elapsed().as_nanos() / iterations;
+    println!("{} ns / iteration (formula approach).", el);
 }
 
 fn intersection_bench(iterations: u128, set_size: i32) {
