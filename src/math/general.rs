@@ -402,7 +402,7 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
        initial_guess = next_guess;
     }
 }
-/// Computes th nth fibonacci number (up to 186th) accurately using the fastest available method.
+/// Computes th nth fibonacci number (up to 186th) accurately using the fastest available computing method.
 /// # Arguments
 /// * `n` - the nth-fibonacci number to be computed.
 /// # How does it work?
