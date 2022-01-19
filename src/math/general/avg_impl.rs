@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 use super::{Averages, Increment};
 
+// Averages don't work properly when implemented using generics, I don't know why.
+
 impl Averages<f64> for Vec<f64> {
     fn arithmetic_mean(&self) -> f64 {
         self.iter().sum::<f64>() / self.len() as f64
