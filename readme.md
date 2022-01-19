@@ -10,7 +10,7 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.3-preview.1
+0.1.4-preview.1
 _____
 - Much simpler handling of Huffman compression.
 - Added support for calculating a Fibonacci number.
