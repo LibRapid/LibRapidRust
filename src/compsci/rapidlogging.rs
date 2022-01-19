@@ -85,7 +85,7 @@ impl Logger {
         self.buff_count = 0;
         self.buffer = String::new();
     }
-
+    /// For cleaner code, the main functionality is hidden from the user in this function.
     fn backend_log(&mut self) -> Result<bool, String> {
         if self.log_to_file { 
             let file = OpenOptions::new()

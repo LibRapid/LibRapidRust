@@ -101,7 +101,7 @@ impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> Into<u128> for BinaryPref
         self.to_decimal_u128()
     }
 }
-
+/// Conversion rates from a Binary-Prefix value to a regular value.
 pub(crate) const BINARYCONVRATE: [f64; 8] = [1024.0,
                                              1048576.0,
                                              1073741824.0,
