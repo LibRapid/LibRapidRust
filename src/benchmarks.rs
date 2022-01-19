@@ -16,7 +16,7 @@ fn benchmark() {
 
     if fib_run {
         println!("\nFibonacci benchmark.");
-        fibonacci(100, 1_000_000);
+        fibonacci(75, 1_000_000);
     }
 
     if intersection_run {
@@ -32,12 +32,12 @@ fn benchmark() {
 }
 fn fibonacci(n: u128, iterations: u128) {
     let mut now = Instant::now();
+    let mut current_number: u128 = 1;
 
     for _ in 0..iterations {
         let mut first_number: u128 = 0;
         let mut second_number: u128 = 0;
-        let mut current_number: u128 = 1;
-    
+        current_number = 1;
         let mut i: u128 = 1;
 
         while i < n {
@@ -50,13 +50,15 @@ fn fibonacci(n: u128, iterations: u128) {
     }
     let mut el = now.elapsed().as_nanos() / iterations;
     println!("{} ns / iteration (iterative approach).", el);
-
+    println!("{}", &current_number);
+    let mut f = 0.0;
     now = Instant::now();
     for _ in 0..iterations {
-        let f = ( (0.5 * (1.0 + SQRT5)).powi(n as i32) / SQRT5 ).round();
+        f = ( (0.5 * (1.0 + SQRT5)).powi(n as i32) / SQRT5 ).round();
     }
     el = now.elapsed().as_nanos() / iterations;
     println!("{} ns / iteration (formula approach).", el);
+    println!("{}", f as u128);
 }
 
 fn intersection_bench(iterations: u128, set_size: i32) {

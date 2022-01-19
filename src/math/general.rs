@@ -1,6 +1,8 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
 use crate::eval_postfix;
+
+use super::constants::SQRT5;
 pub mod avg_impl;
 /// Trait for several kinds of averages.
 pub trait Averages<T> {
@@ -399,4 +401,35 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
 
        initial_guess = next_guess;
     }
- }
+}
+/// Computes th nth fibonacci number (up to 186th) accurately using the fastest available method.
+/// # Arguments
+/// * `n` - the nth-fibonacci number to be computed.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::nth_fibonacci;
+/// 
+/// assert_eq!(1304969544928657, nth_fibonacci(74));
+/// assert_eq!(332825110087067562321196029789634457848, nth_fibonacci(186));
+/// ```
+pub fn nth_fibonacci(n: u128) -> u128 {
+    if n >= 187 
+    { panic!("Error: The 187th Fibonacci number and all above are not allowed, as they would cause a overflow in the u128 type."); }
+    if n <= 75 {
+        return ( (0.5 * (1.0 + SQRT5)).powi(n as i32) / SQRT5 ).round() as u128;
+    }
+
+    let mut first_number:   u128;
+    let mut second_number:  u128 = 0;
+    let mut current_number: u128 = 1;
+    let mut i:              u128 = 1;
+
+    while i < n {
+        first_number = second_number;
+        second_number = current_number;
+        current_number = first_number + second_number;
+        i.inc();
+    }
+
+    return current_number;
+}
