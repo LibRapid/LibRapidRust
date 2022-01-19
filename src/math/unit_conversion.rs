@@ -220,7 +220,7 @@ impl<T: Into<f32> + Copy> Into<f32> for SIPrefix<T> {
         self.to_decimal_f32()
     }
 }
-
+/// The different rates for converting from a SI prefix to a normalised value.
 pub(crate) const SIRATES: [f64; 20] = [1e-24,
                                        1e-21,
                                        1e-18,

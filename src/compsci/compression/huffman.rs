@@ -11,15 +11,96 @@ use bit_vec::BitVec;
 use serde::{Serialize, Deserialize};
 
 use crate::math::general::Increment;
+/// Encoding trait for minimal code writing.
+pub trait Encode {
+    /// Fully encodes a String.
+    ///
+    /// # Returns
+    /// A `(BitVec, Box<Node>)` tuple.
+    ///
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::compression::huffman::{Node, Encode, Decode};
+    ///
+    /// let s: &str = "Lorem Ipsum";
+    ///
+    /// let enc = s.full_encode();
+    /// let dec = enc.full_decode();
+    /// 
+    /// assert_eq!("Lorem Ipsum".to_owned(), dec);
+    /// ```
+    fn full_encode(&self) -> (BitVec, Box<Node>);
+}
+/// Decoding trait for minimal code writing.
+pub trait Decode {
+    /// Fully decodes a encoded String.
+    ///
+    /// # Returns
+    /// A `String`.
+    ///
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::compression::huffman::{Node, Encode, Decode};
+    ///
+    /// let s: &str = "Lorem Ipsum";
+    ///
+    /// let enc = s.full_encode();
+    /// let dec = enc.full_decode();
+    /// 
+    /// assert_eq!("Lorem Ipsum".to_owned(), dec);
+    /// ```
+    fn full_decode(&self) -> String;
+}
+
+impl Encode for String {
+    fn full_encode(&self) -> (BitVec, Box<Node>) {
+        let root = get_root(self);
+        let mut char_codes: HashMap<char, BitVec> = HashMap::new();
+        assign_codes(&root, &mut char_codes, &mut BitVec::new());
+        (huffman_encode(self, &char_codes), root)
+    }
+}
+
+impl Encode for &str {
+    fn full_encode(&self) -> (BitVec, Box<Node>) {
+        let root = get_root(self);
+        let mut char_codes: HashMap<char, BitVec> = HashMap::new();
+        assign_codes(&root, &mut char_codes, &mut BitVec::new());
+        (huffman_encode(self, &char_codes), root)
+    }
+}
+
+impl Decode for (BitVec, Box<Node>) {
+    fn full_decode(&self) -> String {
+        decode_string(&self.0, &self.1)
+    }
+}
 
 type Link = Option<Box<Node>>;
-
+/// The struct for a node.
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug, Default)]
 pub struct Node {
     pub character: Option<char>,
     pub frequency: u128,
     pub left:      Link,
     pub right:     Link
+}
+
+impl Node {
+    /// Generate a new node.
+    fn new(freq: u128, c: Option<char>) -> Node {
+        Node {
+            frequency: freq,
+            character: c,
+            left:      None, 
+            right:     None,
+        }
+    }
+    
+    /// Alias for `Box::new(n)`.
+    fn new_box(n: Node) -> Box<Node> {
+        Box::new(n)
+    }
 }
 
 // This makes it possible to print Nodes
@@ -31,20 +112,7 @@ impl fmt::Display for Node {
         }
     }
 }
-
-fn new_node(freq: u128, c: Option<char>) -> Node {
-    Node {
-        frequency: freq,
-        character: c,
-        left:      None, 
-        right:     None,
-    }
-}
-
-fn new_box(n: Node) -> Box<Node> {
-    Box::new(n)
-}
-
+/// Get the frequency of the characters in a given String.
 fn get_frequency(s: &str) -> HashMap<char, usize> {
     let mut hm: HashMap<char, usize> = HashMap::new(); // Result
     for c in s.chars() {
@@ -116,21 +184,21 @@ pub fn assign_codes(root: &Box<Node>,
 /// let mut char_codes:HashMap<char, BitVec> = HashMap::new();
 /// assign_codes(&root, &mut char_codes, &mut BitVec::new()); // Assigns codes to characters of s and stores them in char_codes.
 ///
-/// let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
+/// let enc = huffman_encode(s, &char_codes); // Encodes the String s into enc.
 /// ```
 #[must_use]
-pub fn huffman_encode(s: &str, char_codes: &mut HashMap<char, BitVec>) -> BitVec {
+pub fn huffman_encode(s: &str, char_codes: &HashMap<char, BitVec>) -> BitVec {
     let mut res: BitVec = BitVec::new();
-    let mut t:   Option<&mut BitVec>;
+    let mut t:   Option<&BitVec>;
 
     for c in s.chars() {
-        t = char_codes.get_mut(&c);
+        t = char_codes.get(&c);
         res.append(&mut t.cloned()
            .unwrap());
     }
     res
 }
-
+/// Decodes a String.
 fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
     let mut res:     String     = String::new();
     let mut nodeptr: &Box<Node> = root;
@@ -168,8 +236,10 @@ fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
 /// let mut char_codes: HashMap<char, BitVec> = HashMap::new();
 /// assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
 ///
-/// let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
-/// let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
+/// let enc = huffman_encode(s, &char_codes); // Encodes the String s into enc.
+/// let dec = huffman_decode(&enc, &root); // Decodes the BitVec which was created by the last line.
+/// 
+/// assert_eq!("Lorem Ipsum".to_owned(), dec);
 /// ```
 #[must_use]
 pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
@@ -186,13 +256,13 @@ pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
 #[must_use]
 pub fn get_root(s: &str) -> Box<Node> {
     let frequency = get_frequency(s);
-    let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| new_box(new_node(*(x.1) as u128, Some(*(x.0))))).collect();
+    let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| Node::new_box(Node::new(*(x.1) as u128, Some(*(x.0))))).collect();
 
     while vec_nodes.len() > 1 {
         vec_nodes.sort_by(|a: &Box<Node>, b: &Box<Node>| (&(b.frequency)).cmp(&(a.frequency)));
         let a:     Box<Node> = vec_nodes.pop().unwrap();
         let b:     Box<Node> = vec_nodes.pop().unwrap();
-        let mut c: Box<Node> = new_box(new_node( a.frequency + b.frequency, None));
+        let mut c: Box<Node> = Node::new_box(Node::new( a.frequency + b.frequency, None));
 
         c.left  = Some(a);
         c.right = Some(b);
@@ -216,19 +286,11 @@ pub fn get_root(s: &str) -> Box<Node> {
 ///
 /// # Examples
 /// ```
-/// use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file};
-/// use bit_vec::BitVec;
-/// use std::collections::HashMap;
-///
+/// use lib_rapid::compsci::compression::huffman::{Encode, write_to_file};///
 /// let s: &str = "Lorem Ipsum";
-/// let root = get_root(s);
-/// let mut bitvec = BitVec::new();
-/// let mut char_codes: HashMap<char, BitVec> = HashMap::new();
-/// assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
-///
-/// let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
-/// let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
-/// write_to_file("test".to_string(), &enc, &root);
+/// 
+/// let enc = s.full_encode(); // Encodes the String s into enc.
+/// write_to_file("test".to_string(), &enc.0, &enc.1);
 /// ```
 pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
     let mut mainfile: File = File::create(path.clone() + ".hlr").unwrap();
@@ -247,19 +309,13 @@ pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
 ///
 /// # Examples
 /// ```
-/// use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode, write_to_file, read_from_file};
-/// use bit_vec::BitVec;
-/// use std::collections::HashMap;
-///
+/// use lib_rapid::compsci::compression::huffman::{Encode, Decode, write_to_file, read_from_file};
 /// let s: &str = "Lorem Ipsum123123123";
-/// let root = get_root(s);
-/// let mut bitvec = BitVec::new();
-/// let mut char_codes: HashMap<char, BitVec> = HashMap::new();
-/// assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
-///
-/// let enc = huffman_encode(s, &mut char_codes); // Encodes the String s into enc.
-/// let dec = huffman_decode(&bitvec, &root); // Decodes the BitVec which was created by the last line.
-/// write_to_file("test".to_string(), &enc, &root);
+/// 
+/// let enc = s.full_encode(); // Encodes the String s into enc.
+/// let dec = enc.full_decode(); // Decodes the BitVec which was created by the last line.
+/// write_to_file("test".to_string(), &enc.0, &enc.1);
+/// 
 /// let dec_written = read_from_file("test".to_string());
 /// assert_eq!(dec_written, "Lorem Ipsum123123123");
 /// ```
