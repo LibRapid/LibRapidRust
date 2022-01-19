@@ -421,17 +421,17 @@ pub fn nth_fibonacci(n: u128) -> u128 {
         return ( GOLDENRATIO.powi(n as i32) / SQRT5 ).round() as u128;
     }
 
-    let mut first_number:   u128;
-    let mut second_number:  u128 = 0;
-    let mut current_number: u128 = 1;
-    let mut i:              u128 = 1;
+    let mut x: u128;
+    let mut y: u128 = 0;
+    let mut z: u128 = 1;
+    let mut i: u128 = 1;
 
     while i < n {
-        first_number = second_number;
-        second_number = current_number;
-        current_number = first_number + second_number;
+        x = y;
+        y = z;
+        z = x + y;
         i.inc();
     }
 
-    return current_number;
+    return z;
 }
