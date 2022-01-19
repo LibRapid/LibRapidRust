@@ -2,7 +2,7 @@
 //! Everything you need.
 use crate::eval_postfix;
 
-use super::constants::SQRT5;
+use super::constants::{SQRT5, GOLDENRATIO};
 pub mod avg_impl;
 /// Trait for several kinds of averages.
 pub trait Averages<T> {
@@ -418,7 +418,7 @@ pub fn nth_fibonacci(n: u128) -> u128 {
     if n >= 187 
     { panic!("Error: The 187th Fibonacci number and all above are not allowed, as they would cause a overflow in the u128 type."); }
     if n <= 75 {
-        return ( (0.5 * (1.0 + SQRT5)).powi(n as i32) / SQRT5 ).round() as u128;
+        return ( GOLDENRATIO.powi(n as i32) / SQRT5 ).round() as u128;
     }
 
     let mut first_number:   u128;
