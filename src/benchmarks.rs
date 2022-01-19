@@ -2,6 +2,7 @@
 use std::time::Instant;
 use crate::math::constants::SQRT5;
 use crate::math::general::Increment;
+use crate::math::general::nth_fibonacci;
 use crate::math::primes::Primality;
 use crate::math::primes::generate_primes;
 use crate::math::sets::vec_sets::VecSet;
@@ -51,10 +52,10 @@ fn fibonacci(n: u128, iterations: u128) {
     let mut el = now.elapsed().as_nanos() / iterations;
     println!("{} ns / iteration (iterative approach).", el);
     println!("{}", &current_number);
-    let mut f = 0.0;
+    let mut f = 0;
     now = Instant::now();
     for _ in 0..iterations {
-        f = ( (0.5 * (1.0 + SQRT5)).powi(n as i32) / SQRT5 ).round();
+        f = nth_fibonacci(n);
     }
     el = now.elapsed().as_nanos() / iterations;
     println!("{} ns / iteration (formula approach).", el);
