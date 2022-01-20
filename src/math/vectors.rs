@@ -97,7 +97,7 @@ impl MathVector {
     /// assert_eq!(v.get_values(), &vec!(0.5773502691896258; 3));
     /// ```
     pub fn normalise(&mut self) {
-        *self = scalar_mul(1.0 / self.length(), self);
+        *self = scalar_mul(self.length().recip(), self);
         self.length = Some(1.0);
     }
 }
