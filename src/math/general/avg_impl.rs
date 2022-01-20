@@ -11,7 +11,7 @@ impl Averages<f64> for Vec<f64> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / i);
+            r.inc_by(i.recip());
         }
 
         self.len() as f64 / r
@@ -48,7 +48,7 @@ impl Averages<f32> for Vec<f32> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / i);
+            r.inc_by(i.recip());
         }
 
         (self.len() as f32 / r) as f64
@@ -89,7 +89,7 @@ impl Averages<i8> for Vec<i8> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -134,7 +134,7 @@ impl Averages<u8> for Vec<u8> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -180,7 +180,7 @@ impl Averages<u16> for Vec<u16> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -226,7 +226,7 @@ impl Averages<i16> for Vec<i16> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -272,7 +272,7 @@ impl Averages<u32> for Vec<u32> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -318,7 +318,7 @@ impl Averages<i32> for Vec<i32> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -364,7 +364,7 @@ impl Averages<u64> for Vec<u64> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -410,7 +410,7 @@ impl Averages<i64> for Vec<i64> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -456,7 +456,7 @@ impl Averages<u128> for Vec<u128> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -502,7 +502,7 @@ impl Averages<i128> for Vec<i128> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -548,7 +548,7 @@ impl Averages<usize> for Vec<usize> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
@@ -594,7 +594,7 @@ impl Averages<isize> for Vec<isize> {
     fn harmonic_mean(&self) -> f64 {
         let mut r = 0.0;
         for i in self {
-            r.inc_by(1.0 / *i as f64);
+            r.inc_by((*i as f64).recip());
         }
 
         self.len() as f64 / r
