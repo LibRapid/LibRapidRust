@@ -33,7 +33,7 @@ impl<T: Copy +
     /// * `dim` - The dimension for the new MathVector.
     ///
     /// # Returns
-    /// A new MathVector with length 0.
+    /// A new `MathVector<f64>` with length 0.
     #[must_use]
     pub fn new_with_dimension(dim: usize) -> MathVector<f64> {
 
@@ -70,7 +70,7 @@ impl<T: Copy +
     /// Gets the values of a `MathVector`.
     ///
     /// # Returns
-    /// A `&Vec<f64>`.
+    /// A `&Vec<T>`.
     #[must_use]
     pub fn get_values(&self) -> &Vec<T> {
         &self.values
@@ -155,15 +155,15 @@ impl<T: Copy +
         }
     }
 }
-    /// Multiplies a `MathVector` with a scalar product.
-    ///
-    /// # Arguments
-    /// * `scalar` - The scalar product.
-    /// * `other` - The `MathVector` for the calculation.
-    ///
-    /// # Returns
-    /// A new `MathVector`.
-    #[must_use]
+/// Multiplies a `MathVector` with a scalar product.
+///
+/// # Arguments
+/// * `scalar` - The scalar product.
+/// * `other` - The `MathVector` for the calculation.
+///
+/// # Returns
+/// A new `MathVector<T>`.
+#[must_use]
 pub fn scalar_mul<T: Copy +
                      super::general::CommonPowers +
                      From<f64> +
@@ -184,15 +184,15 @@ pub fn scalar_mul<T: Copy +
 /// Creates a new `MathVector` more elegantly from values.
 ///
 /// # Returns
-/// A new `MathVector`.
+/// A new `MathVector<T>`.
 #[macro_export]
 #[must_use]
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
         {
-            let mut temp = Vec::new();
+            let mut temp: Vec<T> = Vec::new();
             $(
-                temp.push($a as f64);
+                temp.push($a);
             )*
             MathVector::new(&temp)
         }
