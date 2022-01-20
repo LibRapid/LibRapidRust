@@ -96,7 +96,7 @@ impl<T: Copy +
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// use lib_rapid::math::vectors::new_mathvec;
-    /// let mut v = new_mathvec!(2,2,2);
+    /// let mut v = new_mathvec!(2.0, 2.0, 2.0);
     /// v.normalise(); // Also sets the Length to 1.0.
     /// assert_eq!(v.length(), 1.0);
     /// assert_eq!(v.get_values(), &vec!(0.5773502691896258; 3));
@@ -190,7 +190,7 @@ pub fn scalar_mul<T: Copy +
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
         {
-            let mut temp: Vec<T> = Vec::new();
+            let mut temp = Vec::new();
             $(
                 temp.push($a);
             )*
