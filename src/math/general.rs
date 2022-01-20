@@ -1,5 +1,8 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
+
+use std::convert::{TryInto, TryFrom};
+
 use crate::eval_postfix;
 
 use super::constants::{SQRT5, GOLDENRATIO};
@@ -85,7 +88,7 @@ pub trait NumDigits {
     /// 
     /// assert_eq!(3u8, 12.cross_sum());
     /// assert_eq!(9u16, 342.cross_sum());
-    /// assert_eq!(52u64, 4928947234.cross_sum());
+    /// assert_eq!(52u64, 4928947234u64.cross_sum());
     /// ```
     #[must_use]
     fn cross_sum(&self) -> Self;
@@ -242,107 +245,34 @@ impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
     }
 }
 
-impl NumDigits for u8 {
+impl<'a, T: std::cmp::PartialEq +
+        std::ops::DivAssign + std::cmp::PartialOrd +
+        std::ops::Rem<Output = T> + Copy + std::ops::AddAssign>
+    NumDigits
+    for T 
+    where
+        u8: TryFrom<T>,
+        T: From<u8> {
     fn cross_sum(&self) -> Self {
-        self.digits().iter().sum()
-    }
-
-    fn digits(&self) -> Vec<u8> {
-        if self == &0u8{ return vec![0]; }
-        let mut v: Self = *self;
-        let mut digits: Vec<u8> = Vec::with_capacity(3);
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n);
-        }
-        digits
-    }
-}
-
-impl NumDigits for u16 {
-    fn cross_sum(&self) -> Self {
-        let mut res = 0;
-        for i in self.digits() {
-            res.inc_by(i as Self);
+        let d: Vec<u8> = self.digits();
+        let mut res: Self = 0.into();
+        for i in 0..d.len() {
+            res += d[i].into();
         }
         res
     }
 
     fn digits(&self) -> Vec<u8> {
-        if self == &0u16 { return vec![0]; }
-        let mut v: Self = *self;
-        let mut digits: Vec<u8> = Vec::with_capacity(5);
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n as u8);
-        }
-        digits
-    }
-}
-
-impl NumDigits for u32 {
-    fn cross_sum(&self) -> Self {
-        let mut res = 0;
-        for i in self.digits() {
-            res.inc_by(i as Self);
-        }
-        res
-    }
-
-    fn digits(&self) -> Vec<u8> {
-        if self == &0u32 { return vec![0]; }
-        let mut v: Self = *self;
-        let mut digits: Vec<u8> = Vec::with_capacity(10);
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n as u8);
-        }
-        digits
-    }
-}
-
-impl NumDigits for u64 {
-    fn cross_sum(&self) -> Self {
-        let mut res = 0;
-        for i in self.digits() {
-            res.inc_by(i as Self);
-        }
-        res
-    }
-
-    fn digits(&self) -> Vec<u8> {
-        if self == &0u64 { return vec![0]; }
-        let mut v: Self = *self;
-        let mut digits: Vec<u8> = Vec::with_capacity(20);
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n as u8);
-        }
-        digits
-    }
-}
-
-impl NumDigits for u128 {
-    fn cross_sum(&self) -> Self {
-        let mut res = 0;
-        for i in self.digits() {
-            res.inc_by(i as Self);
-        }
-        res
-    }
-
-    fn digits(&self) -> Vec<u8> {
-        if self == &0u128 { return vec![0]; }
+        if self == &0u8.into() { return vec![0]; }
         let mut v: Self = *self;
         let mut digits: Vec<u8> = Vec::with_capacity(39);
-        while v > 0 {
-            let n: Self = v % 10;
-            v /= 10;
-            digits.push(n as u8);
+        while v > 0.into() {
+            let n: u8;
+            unsafe { n = (v % 10.into()).try_into().unwrap_unchecked() };
+            if n == 255
+            { panic!("Oops! Something went wrong. please contact the developers using the error code 0x00001.")}
+            v /= 10.into();
+            digits.push(n.into());
         }
         digits
     }
