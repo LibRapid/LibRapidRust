@@ -1,6 +1,7 @@
 //! Traits and functions for converting between units.
 use super::constants;
 /// SI-Prefixes as used in several fields.
+#[derive(PartialEq, Clone, Copy)]
 pub enum SIPrefix<T> {
     /// x · 10⁻²⁴.
     Yocto(T),

@@ -1,5 +1,4 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
-
 use crate::math::general::Increment;
 /// Trait for `binary_insert`.
 pub trait BinaryInsert<T> {

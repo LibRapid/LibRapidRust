@@ -1,5 +1,6 @@
 //! Unit conversions for computer science.
 /// Binary Prefixes (e.g. kibi, mebi).
+#[derive(PartialEq, Clone, Copy)]
 pub enum BinaryPrefix<T> {
     /// x · 2⁰.
     Unity(T),
