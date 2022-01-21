@@ -33,7 +33,7 @@
 /// ```
 /// extern crate lib_rapid;
 /// use lib_rapid::math::postfix::eval_postfix;
-/// println!("{}", eval_postfix!(1.0 1.0 + 2.0 %)); // Prints "0", because (1 + 1) % 2 = 0.
+/// println!("{}", eval_postfix!(1.0 1.0 + 2.0 %)); // Prints "0", because (1 + 1) & 1 = 0.
 /// ```
 /// ```
 /// use lib_rapid::math::postfix::eval_postfix;
