@@ -257,19 +257,21 @@ pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
 pub fn get_root(s: &str) -> Box<Node> {
     let frequency = get_frequency(s);
     let mut vec_nodes: Vec<Box<Node>> = frequency.iter().map(|x| Node::new_box(Node::new(*(x.1) as u128, Some(*(x.0))))).collect();
+    let mut a;
+    let mut b;
+    let mut c;
 
     while vec_nodes.len() > 1 {
         vec_nodes.sort_by(|a: &Box<Node>, b: &Box<Node>| (&(b.frequency)).cmp(&(a.frequency)));
-        let a:     Box<Node> = vec_nodes.pop().unwrap();
-        let b:     Box<Node> = vec_nodes.pop().unwrap();
-        let mut c: Box<Node> = Node::new_box(Node::new( a.frequency + b.frequency, None));
+        a = vec_nodes.pop().unwrap();
+        b = vec_nodes.pop().unwrap();
+        c = Node::new_box(Node::new( a.frequency + b.frequency, None));
 
         c.left  = Some(a);
         c.right = Some(b);
         vec_nodes.push(c);
     }
-    vec_nodes.pop()
-             .unwrap()
+    vec_nodes.pop().unwrap()
 }
 
 /// Writes the encoded message into 2 files.
