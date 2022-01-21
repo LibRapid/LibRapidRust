@@ -94,20 +94,20 @@ pub trait StringIndex {
     /// use lib_rapid::compsci::general::StringIndex;
     /// 
     /// let s = String::from("Hello");
-    /// assert_eq!('H', s.byte_at(0));
-    /// assert_eq!('e', s.byte_at(1));
-    /// assert_eq!('l', s.byte_at(2));
+    /// assert_eq!('H', s.byte_at(0) as char);
+    /// assert_eq!('e', s.byte_at(1) as char);
+    /// assert_eq!('l', s.byte_at(2) as char);
     /// ```
     /// ```
     /// use lib_rapid::compsci::general::StringIndex;
     /// 
     /// let s = "Hello";
-    /// assert_eq!('H', s.byte_at(0));
-    /// assert_eq!('e', s.byte_at(1));
-    /// assert_eq!('l', s.byte_at(2));
+    /// assert_eq!('H', s.byte_at(0) as char);
+    /// assert_eq!('e', s.byte_at(1) as char);
+    /// assert_eq!('l', s.byte_at(2) as char);
     /// ```
     #[must_use]
-    fn byte_at(&self, index: usize) -> char;
+    fn byte_at(&self, index: usize) -> u8;
 }
 /// Trait for functions related to brackets.
 pub trait Brackets {
@@ -219,8 +219,8 @@ impl StringIndex for String {
         self.chars().nth(index)
     }
 
-    fn byte_at(&self, index: usize) -> char {
-        self.as_bytes()[index] as char
+    fn byte_at(&self, index: usize) -> u8 {
+        self.as_bytes()[index]
     }
 }
 
@@ -229,8 +229,8 @@ impl StringIndex for &str {
         self.chars().nth(index)
     }
 
-    fn byte_at(&self, index: usize) -> char {
-        self.as_bytes()[index] as char
+    fn byte_at(&self, index: usize) -> u8 {
+        self.as_bytes()[index]
     }
 }
 
