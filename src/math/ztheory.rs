@@ -8,7 +8,7 @@ pub(crate) fn modpow(x: u64, mut pow: u64, modulus: u64) -> u64 {  //upgrades to
 
 	while pow > 1 {
 
-  		if pow % 2 == 0 {
+  		if pow & 1 == 0 {
       		base = base * base % n;
       		pow  >>= 1;
   		}
