@@ -1,5 +1,6 @@
 #![allow(unused)]
 use std::time::Instant;
+use crate::compsci::compression::huffman::write_to_file;
 use crate::math::constants::SQRT5;
 use crate::math::general::Increment;
 use crate::math::general::nth_fibonacci;
@@ -7,13 +8,19 @@ use crate::math::primes::Primality;
 use crate::math::primes::generate_primes;
 use crate::math::sets::vec_sets::VecSet;
 
-#[ignore]
+
 #[test]
 fn benchmark() {
     let intersection_run = false;
     let primes_run = false;
-    let fib_run = true;
+    let fib_run = false;
+    let huffman_run = true;
     println!("Benchmarks in non-optimised mode.");
+
+    if huffman_run {
+        println!("\nHuffman Compression benchmark.");
+        huffman_bench(100);
+    }
 
     if fib_run {
         println!("\nFibonacci benchmark.");
@@ -114,4 +121,26 @@ fn sieve_is_prime_bench(iters: u128) {
     }
     let el = now.elapsed().as_millis() as u128 / iters;
     println!("{} milliseconds / iteration.\n", el);
+}
+
+fn huffman_bench(iters: u128) {
+    use crate::compsci::compression::huffman::{Encode, Decode, get_root};
+    use std::fs;
+    use std::collections::HashMap;
+
+    let mut lorem = String::with_capacity(13_000_000);
+    lorem.push_str(&fs::read_to_string("./src/10millionchars-lorem-ipsum.txt").unwrap());
+    let now = Instant::now();
+    let mut e = lorem.full_encode();
+    let mut d = String::new();
+    
+    for i in 0..iters as u8 {
+        lorem.push(i as char);
+        e = lorem.full_encode();
+        d = e.full_decode();
+    }
+    let el = now.elapsed().as_millis() / iters;
+    println!("{}", d);
+    println!("{} milliseconds / iteration.\n", el);
+    write_to_file("./src/10millionchars-lorem-ipsum".to_owned(), &e.0, &e.1);
 }

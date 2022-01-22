@@ -29,6 +29,7 @@ pub trait Encode {
     /// 
     /// assert_eq!("Lorem Ipsum".to_owned(), dec);
     /// ```
+    #[must_use]
     fn full_encode(&self) -> (BitVec, Box<Node>);
 }
 /// Decoding trait for minimal code writing.
@@ -49,6 +50,7 @@ pub trait Decode {
     /// 
     /// assert_eq!("Lorem Ipsum".to_owned(), dec);
     /// ```
+    #[must_use]
     fn full_decode(&self) -> String;
 }
 
