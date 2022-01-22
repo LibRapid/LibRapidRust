@@ -5,20 +5,16 @@
 /// Although the efficiency varies for each text, you could say that it is one of the most efficient ways of compressing text.
 ///
 /// ## Example
-/// Task: *Compress a "Lorem Ipsum" .txt file with 10,239,270 Bytes (9.77 MB)*
+/// Task: *Compress a "Lorem Ipsum" .txt file with 10,000,000 Bytes.*
 /// \
 /// \
-/// Average Time (over 100 iterations): **1.17 Seconds**[^1]
+/// Average Time (over 100 iterations in release mode): **710 Milliseconds**
 ///
-/// Old Size: **10,239,270 Bytes** or **9.77 MB**
+/// Old Size: **10,0 Megabytes.**
 ///
-/// New Size: **5,399,428 Bytes** or **5.15 MB**
+/// New Size: **5.3048 Megabytes.**
 ///
-/// Space Savings: **47.27 %** (**4,839,842 Bytes** or **4.62 MB**)
-/// \
-/// \
-/// \
-/// [^1] Note that this also includes reading and writing from/to files which is performance-wise expensive.
+/// Space Savings: **~46.85 %.**
 ///
 /// # Attention
 /// This algorithm roughly gets more efficient the bigger texts it has to store.
