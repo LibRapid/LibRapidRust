@@ -1,7 +1,7 @@
 //! A custom BigInt library, kindly provided by Rust-CAS. Some functions are marked as unstable, as long as some functions do not function as the LibRapid developers wish.
 use std::fmt::Debug;
 
-use number_theory::arithmetic::mpz::Mpz;
+use number_theory::{arithmetic::mpz::Mpz, NumberTheory};
 
 /// The BigInt structure.
 
