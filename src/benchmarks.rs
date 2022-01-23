@@ -8,7 +8,7 @@ use crate::math::primes::Primality;
 use crate::math::primes::generate_primes;
 use crate::math::sets::vec_sets::VecSet;
 
-
+#[ignore]
 #[test]
 fn benchmark() {
     let intersection_run = false;
