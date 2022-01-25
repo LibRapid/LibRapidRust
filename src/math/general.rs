@@ -307,30 +307,15 @@ impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
 /// ```
 /// use lib_rapid::math::general::nth_root;
 /// use lib_rapid::math::constants;
-/// assert_eq!(1.4422495703074085, nth_root(3.0, 3.0));
+/// assert_eq!(constants::CUBEROOT3, nth_root(3.0, 3.0));
 /// ```
 /// ```
 /// use lib_rapid::math::general::nth_root;
 /// use lib_rapid::math::constants;
-/// assert_eq!(1.414213562373095, nth_root(2.0, 2.0));
+/// assert_eq!(constants::SQRT2, nth_root(2.0, 2.0));
 /// ```
 pub fn nth_root(degree: f64, radicand: f64) -> f64 {
-    // Using Newtons method
-    let     p:             f64 = 1e-15_f64;
-    let mut initial_guess: f64 = radicand / degree;
-    let mut next_guess:    f64;
-  
-    loop {
-       next_guess = ((degree - 1.0) * initial_guess 
-                    + radicand / 
-                    f64::powf(initial_guess, degree - 1.0))
-                    / degree; // Guess the next guess
-
-       if (next_guess - initial_guess).abs() <= (initial_guess * p).abs()
-       { return next_guess; }
-
-       initial_guess = next_guess;
-    }
+    radicand.powf(degree.recip())
 }
 /// Computes th nth fibonacci number (up to 186th) accurately using the fastest available computing method.
 /// # Arguments
@@ -352,9 +337,9 @@ pub fn nth_fibonacci(n: u128) -> u128 {
     }
 
     let mut x: u128;
-    let mut y: u128 = 0;
-    let mut z: u128 = 1;
-    let mut i: u128 = 1;
+    let mut y: u128 = 1304969544928657;
+    let mut z: u128 = 2111485077978050;
+    let mut i: u128 = 75;
 
     while i < n {
         x = y;

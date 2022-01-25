@@ -13,13 +13,19 @@ use crate::math::sets::vec_sets::VecSet;
 fn benchmark() {
     let intersection_run = false;
     let primes_run = false;
-    let fib_run = false;
-    let huffman_run = true;
+    let fib_run = true;
+    let huffman_run = false;
+    let nth_root_run = true;
     println!("Benchmarks in non-optimised mode.");
 
     if huffman_run {
         println!("\nHuffman Compression benchmark.");
         huffman_bench(100);
+    }
+
+    if nth_root_run {
+        println!("\nNth root benchmark.");
+        nth_root_bench(1_000_000);
     }
 
     if fib_run {
@@ -37,6 +43,25 @@ fn benchmark() {
         big_is_prime_bench(1_000_000);
         sieve_is_prime_bench(25);
     }
+}
+fn nth_root_bench(iterations: u128) {
+    use crate::math::general::nth_root;
+
+    let mut now = Instant::now();
+    for _ in 0..iterations {
+        nth_root(3.0, 3.0);
+        nth_root(2.0, 2.0);
+    }
+    let mut el = now.elapsed().as_nanos() / iterations;
+    println!("{} ns / iteration (Current approach).", el);
+    now = Instant::now();
+    for _ in 0..iterations {
+        3.0_f64.powf(1.0/3.0);
+        2.0_f64.powf(1.0/2.0);
+    }
+    el = now.elapsed().as_nanos() / iterations;
+    println!("{} ns / iteration (New approach).", el);
+
 }
 fn fibonacci(n: u128, iterations: u128) {
     let mut now = Instant::now();
