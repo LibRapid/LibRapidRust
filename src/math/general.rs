@@ -257,7 +257,7 @@ impl<'a, T: std::cmp::PartialEq +
         let d: Vec<u8> = self.digits();
         let mut res: Self = 0.into();
         for i in 0..d.len() {
-            res += d[i].into();
+            res.inc_by(d[i].into());
         }
         res
     }
