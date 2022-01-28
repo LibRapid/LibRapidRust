@@ -330,9 +330,9 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
 /// assert_eq!(332825110087067562321196029789634457848, nth_fibonacci(186));
 /// ```
 pub fn nth_fibonacci(n: u128) -> u128 {
-    if n >= 187 
+    if n > 186
     { panic!("Error: The 187th Fibonacci number and all above are not allowed, as they would cause a overflow in the u128 type."); }
-    if n <= 75 {
+    if n < 76 {
         return ( GOLDENRATIO.powi(n as i32) / SQRT5 ).round() as u128;
     }
 
