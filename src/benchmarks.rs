@@ -123,11 +123,7 @@ fn generate_primes_bench(iters: u128) {
 }
 
 fn big_is_prime_bench(iters: u128) {
-    println!("9223372036854775783u128.is_prime():");
     let mut now = Instant::now();
-
-    for _ in 0..iters
-    { 9223372036854775783u128.is_prime(); }
 
     let mut el = now.elapsed().as_nanos() / iters;
     println!("{} nanoseconds / iteration.\n", el);
@@ -146,7 +142,7 @@ fn sieve_is_prime_bench(iters: u128) {
     let now = Instant::now();
     for _ in 0..iters {
         for i in 0..1_000_000 {
-            if (i as u128).is_prime() {p.push(i); }
+            if (i as u64).is_prime() {p.push(i); }
         }
     }
     let el = now.elapsed().as_millis() as u128 / iters;
