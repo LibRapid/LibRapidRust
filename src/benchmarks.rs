@@ -12,10 +12,10 @@ use crate::math::sets::vec_sets::VecSet;
 #[test]
 fn benchmark() {
     let intersection_run = false;
-    let primes_run = false;
-    let fib_run = true;
+    let primes_run = true;
+    let fib_run = false;
     let huffman_run = false;
-    let nth_root_run = true;
+    let nth_root_run = false;
     println!("Benchmarks in non-optimised mode.");
 
     if huffman_run {
@@ -40,7 +40,7 @@ fn benchmark() {
     if primes_run {
         println!("\nPrimes Benchmark.");
         generate_primes_bench(100);
-        big_is_prime_bench(1_000_000);
+        big_is_prime_bench(1_000);
         sieve_is_prime_bench(25);
     }
 }
@@ -130,7 +130,12 @@ fn big_is_prime_bench(iters: u128) {
     { 9223372036854775783u128.is_prime(); }
 
     let mut el = now.elapsed().as_nanos() / iters;
+    println!("{} nanoseconds / iteration.\n", el);
+    println!("9223372036854775783u64.is_prime():");
+    for _ in 0..iters
+    { 9223372036854775783u64.is_prime(); }
 
+    el = now.elapsed().as_nanos() / iters;
     println!("{} nanoseconds / iteration.\n", el);
 }
 

@@ -1,12 +1,13 @@
 //! Traits and functions for handling primes and primality.
 use super::general::*;
-use number_theory::traits::NumberTheory;
-
+use crate::math::constants;
 /// Trait for prime functions.
 pub trait Primality {
     /// Determines whether a number is prime.
     /// # Returns
     /// `true` if the number is prime, otherwise `false`.
+    /// # Warning
+    /// There is currently no implementation for `u128`/`i128`, because we want our own BigInt-implementation.
     /// # Examples
     /// ```
     /// use lib_rapid::math::primes::Primality;
@@ -83,55 +84,84 @@ pub trait Primality {
 
 impl Primality for u8 { // promoted to u16 for a more optimized check
     fn is_prime(&self) -> bool {
-        NumberTheory::is_prime(self)
+        if self < &2
+        { return false; }
+
+        for i in constants::PRIMELIST[..6].iter() {
+            if *self == *i as u8
+            { return true; }
+            if self % *i as u8 == 0
+            { return false; }
+        }
+        true
     }
-        
 }
 
 impl Primality for u16 {// Splits 
    fn is_prime(&self) -> bool {
-       NumberTheory::is_prime(self)
+        if *self <= u8::MAX as u16
+        { return (*self as u8).is_prime(); }
+
+        constants::PRIMELIST.binary_search(self).is_ok()
     }
 }
 
 impl Primality for u32 { 
     fn is_prime(&self) -> bool {
-         NumberTheory::is_prime(self)
+        if *self <= u16::MAX as u32
+        { return (*self as u16).is_prime(); }
+          
+            for i in constants::PRIMELIST[..30].iter() {
+                if self % *i as u32 == 0
+                { return false; }
+            }
+        machine_word_prime_32(*self)  
     }
 }
 
 impl Primality for i32 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-         NumberTheory::is_prime(self)
+        (*self as u32).is_prime()
     }
 }
 
 impl Primality for u64 {
    fn is_prime(&self) -> bool {
-     NumberTheory::is_prime(self) 
-   }  
+        if *self <= u32::MAX as u64
+        { return (*self as u32).is_prime(); }
+
+        for i in constants::PRIMELIST[..30].iter() {
+            if self % *i as u64 == 0
+            { return false; }
+        }
+
+        machine_word_prime_64(*self)  
+   }
 }
 
 impl Primality for i64 {
    fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-         NumberTheory::is_prime(self)
-   }
+        (*self as u64).is_prime()
+    }
 }
-
+/*
 impl Primality for u128 {
-  fn is_prime(&self) -> bool{
-     NumberTheory::is_prime(self)
-     }
+    fn is_prime(&self) -> bool {
+        if *self <= u64::MAX as u128
+        { return (*self as u64).is_prime(); }
+        panic!("is_prime is currently not implemented for u128/i128 values bigger than 2^64 - 1.")
+    }
 }
 
 impl Primality for i128 {
     fn is_prime(&self) -> bool {
         if self <= &0 { return false; }
-         NumberTheory::is_prime(self)
+        (*self as u128).is_prime()
     }
 }
+*/
 
 /// Generate a list of prime numbers in the interval `[2;limit[`.
 /// # Arguments
@@ -191,4 +221,106 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
         if sieve[i] { res.push(i); }
     }
     res
+}
+
+fn machine_word_prime_32(n: u32) -> bool {
+    let mut x = (((n >> 16) ^ n) as u128 * 0x45d9f3b) as u64;
+            x = (((x >> 16) ^ x) as u128 * 0x45d9f3b) as u64;
+            x =  ((x >> 16) ^ x) & 255;
+
+    sprp_32(n, constants::BASES_32[x as usize] as u32)
+}
+
+fn machine_word_prime_64(x: u64) -> bool {
+
+    if !sprp_64(x, 2)
+    { return false; }
+
+    let mut h = x;
+    h         = (((h >> 32) ^ h) as u128 * 0x45d9f3b3335b369) as u64;
+    h         = (((h >> 32) ^ h) as u128 * 0x3335b36945d9f3b) as u64;
+    h         =   (h >> 32) ^ h;
+    
+    let b = constants::BASES_64[(h & 16383) as usize];
+    sprp_64(x, (b & 4095) as u64) && sprp_64(x, (b >> 12) as u64)
+}
+
+fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)= -1
+    let zeroes = (p - 1).trailing_zeros() as u32; // d * 2^n -1
+    let d      = (p - 1) / (1 << zeroes);
+    let mut x  = mod_pow_32(&base, &d, &p); // base^d mod p
+
+    if x == 1 || x == p - 1 // base^p = 1 mod p || base^(d * 2^n)= -1
+    { return true; }
+
+    for _ in 0..zeroes - 1 { // checks for all d * 2^zeroes.
+        x = ((x as u64).square() % p as u64) as u32;
+        if x == p - 1
+        { return true; }
+    }
+    false
+}
+
+fn sprp_64(p: u64, base: u64) -> bool {
+    let zeroes = (p - 1).trailing_zeros() as u64;
+    let d      = (p - 1) / (1 << zeroes);
+    let mut x  = mod_pow_64(&base, &d, &p);
+
+    if x == 1 || x == p - 1
+    { return true; }
+
+    for _ in 0..zeroes - 1 {
+        x = (((x as u128).square()) % p as u128) as u64;
+        if x == p - 1
+        { return true; }
+    }
+    false
+}
+
+fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {  
+    if modulus == &0
+    { return 0; }
+    if p == &0 
+    { return 1; }
+    let mut z    = 1;
+    let mut base = *c as u128;
+    let n        = *modulus as u128;
+    let mut pow  = *p;
+
+    while pow > 1 {
+
+        if pow & 1 == 0 {
+            base = base.square() % n;
+            pow  >>= 1;
+            continue;
+        }
+        z    = base * z % n;
+        base = base.square() % n;
+        pow  = (pow - 1) >> 1;
+    }
+    (base * z % n) as u64
+}
+
+fn mod_pow_32(c: &u32, p: &u32, modulus: &u32) -> u32 {  
+    if modulus == &0
+    { return 0; }
+    if p == &0 
+    { return 1; }
+    let mut z    = 1;
+    let mut base = *c as u64;
+    let n        = *modulus as u64;
+    let mut pow  = *p;
+
+    while pow > 1 {
+
+        if pow & 1 == 0 {
+            base = base.square() % n;
+            pow  >>= 1;
+            continue;
+        }
+        z = base * z % n;
+        base = base.square() % n;
+        pow = (pow - 1) >> 1;
+    }
+    (base * z % n) as u32
 }
