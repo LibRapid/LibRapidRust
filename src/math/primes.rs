@@ -146,7 +146,7 @@ impl Primality for i64 {
         (*self as u64).is_prime()
     }
 }
-/*
+
 impl Primality for u128 {
     fn is_prime(&self) -> bool {
         if *self <= u64::MAX as u128
@@ -161,7 +161,7 @@ impl Primality for i128 {
         (*self as u128).is_prime()
     }
 }
-*/
+
 
 /// Generate a list of prime numbers in the interval `[2;limit[`.
 /// # Arguments
@@ -217,8 +217,8 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
         }
     }
 
-    for i in 0..sieve.len() {
-        if sieve[i] { res.push(i); }
+    for (i, val) in sieve.iter().enumerate() {
+        if *val { res.push(i); }
     }
     res
 }
@@ -246,7 +246,7 @@ fn machine_word_prime_64(x: u64) -> bool {
 }
 
 fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)= -1
-    let zeroes = (p - 1).trailing_zeros() as u32; // d * 2^n -1
+    let zeroes = (p - 1).trailing_zeros(); // d * 2^n -1
     let d      = (p - 1) / (1 << zeroes);
     let mut x  = mod_pow_32(&base, &d, &p); // base^d mod p
 
@@ -262,7 +262,7 @@ fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)
 }
 
 fn sprp_64(p: u64, base: u64) -> bool {
-    let zeroes = (p - 1).trailing_zeros() as u64;
+    let zeroes = (p - 1).trailing_zeros();
     let d      = (p - 1) / (1 << zeroes);
     let mut x  = mod_pow_64(&base, &d, &p);
 

@@ -32,7 +32,7 @@ impl Date {
                                leap_year:
                                is_leap_year(year) });
         }
-        return None;
+        None
     }
     /// Adds a given amount of hours to the initialised date.
     ///
@@ -199,7 +199,7 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
         _  => day_in_month = 31,
     }
     if day <= day_in_month { return true; }
-    return false;
+    false
 }
 
 /// Checks if a year is a leap year.
@@ -237,10 +237,6 @@ impl PartialEq for Date {
         self.hour   == other.hour   &&
         self.minute == other.minute &&
         self.second == other.second
-    }
-
-    fn ne(&self, other: &Self) -> bool {
-        !(self == other)
     }
 }
 

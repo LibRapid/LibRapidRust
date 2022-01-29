@@ -256,8 +256,8 @@ impl<'a, T: std::cmp::PartialEq +
     fn cross_sum(&self) -> Self {
         let d: Vec<u8> = self.digits();
         let mut res: Self = 0.into();
-        for i in 0..d.len() {
-            res.inc_by(d[i].into());
+        for i in d {
+            res.inc_by(i.into());
         }
         res
     }
@@ -272,7 +272,7 @@ impl<'a, T: std::cmp::PartialEq +
             if n == 255
             { panic!("Oops! Something went wrong. please contact the developers using the error code 0x00001.")}
             v /= 10.into();
-            digits.push(n.into());
+            digits.push(n);
         }
         digits
     }
@@ -348,5 +348,5 @@ pub fn nth_fibonacci(n: u128) -> u128 {
         i.inc();
     }
 
-    return z;
+    z
 }
