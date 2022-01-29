@@ -106,11 +106,3 @@ impl Logger {
         Ok(true)
     }
 }
-
-#[test]
-fn test() {
-    let mut l: Logger = Logger::new(3, true, false, Some("log.txt".to_string()));
-    let _ = l.log(None, "Test-Log.1");
-    let _ = l.log(None, "Test-Log.2");
-    let _ = l.log(None, "Test-Log.3");
-}

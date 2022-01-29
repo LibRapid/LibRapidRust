@@ -12,15 +12,21 @@ use crate::math::sets::vec_sets::VecSet;
 #[test]
 fn benchmark() {
     let intersection_run = false;
-    let primes_run = true;
+    let primes_run = false;
     let fib_run = false;
     let huffman_run = false;
     let nth_root_run = false;
+    let inc_dec_run = true;
     println!("Benchmarks in non-optimised mode.");
 
     if huffman_run {
         println!("\nHuffman Compression benchmark.");
         huffman_bench(100);
+    }
+
+    if inc_dec_run {
+        println!("\nIncrement and Decrement Testing.");
+        inc_dec(24, 100_000_000);
     }
 
     if nth_root_run {
@@ -63,6 +69,26 @@ fn nth_root_bench(iterations: u128) {
     println!("{} ns / iteration (New approach).", el);
 
 }
+
+fn inc_dec(n: u8, iterations: u128) {
+    let mut c: u8 = 0;
+    let mut now = Instant::now();
+
+    for _ in 0..iterations {
+        c.inc();
+        c = 0;
+    }
+
+    let mut el = now.elapsed().as_nanos() / iterations;
+    println!("{} nanoseconds / iteration. (c.inc())", el);
+    for _ in 0..iterations {
+        c.inc_by(n);
+        c = 0;
+    }
+    el = now.elapsed().as_nanos() / iterations;
+    println!("{} nanoseconds / iteration. (c.inc_by(24))", el);
+}
+
 fn fibonacci(n: u128, iterations: u128) {
     let mut now = Instant::now();
     let mut current_number: u128 = 1;

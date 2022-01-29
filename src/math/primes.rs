@@ -82,7 +82,8 @@ pub trait Primality {
     fn is_prime(&self) -> bool;
 }
 
-impl Primality for u8 { // promoted to u16 for a more optimized check
+impl Primality for u8 {
+    #[inline(always)]
     fn is_prime(&self) -> bool {
         if self < &2
         { return false; }
@@ -151,7 +152,7 @@ impl Primality for u128 {
     fn is_prime(&self) -> bool {
         if *self <= u64::MAX as u128
         { return (*self as u64).is_prime(); }
-        panic!("is_prime is currently not implemented for u128/i128 values bigger than 2^64 - 1.")
+        unimplemented!("is_prime is currently not implemented for u128/i128 values bigger than 2^64 - 1.")
     }
 }
 
