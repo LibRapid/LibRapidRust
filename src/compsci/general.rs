@@ -150,7 +150,6 @@ pub trait Brackets {
     /// 
     /// assert_eq!(Err(3), s.validate_brackets());
     /// ```
-    #[must_use]
     fn validate_brackets(&self) -> Result<bool, usize>;
 }
 
@@ -178,9 +177,9 @@ impl Brackets for &str {
             i.inc();
         }
 
-        if s.len() != 0
+        if !s.is_empty()
         { return Err(i); }
-        return Ok(true);
+        Ok(true)
     }
 }
 
@@ -208,9 +207,9 @@ impl Brackets for String {
             i.inc();
         }
 
-        if s.len() != 0
+        if !s.is_empty()
         { return Err(i); }
-        return Ok(true);
+        Ok(true)
     }
 }
 

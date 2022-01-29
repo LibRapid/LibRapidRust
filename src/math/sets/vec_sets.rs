@@ -156,7 +156,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// s.insert(5);
     /// assert_eq!(s.elements(), &vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// ```
-    #[must_use]
     pub fn insert(&mut self, elem: T) {
         self.elements.binary_insert_no_dup(elem)
     }
@@ -325,11 +324,8 @@ impl<T: ToString> VecSet<'_, T> {
 
     fn rec_to_string(&self, string: &mut String) -> String {
         string.push_str(&self.to_string()); // The child-set at the bottom
-        match self.superset {
-            Some(x)  => { string.push_str(" ⊆ "); // Add subset-character
-                          x.rec_to_string(string); } // Recursively append parent sets
-            None     => { }
-        }
+        if let Some(x) = self.superset { string.push_str(" ⊆ "); // Add subset-character
+        x.rec_to_string(string); } // Recursively append parent sets
         string.to_string()
     }
 }
@@ -361,19 +357,15 @@ impl<T: PartialEq> PartialEq for VecSet<'_, T> {
     fn eq(&self, other: &Self) -> bool {
         self.elements == other.elements
     }
-
-    fn ne(&self, other: &Self) -> bool {
-        self.elements != other.elements
-    }
 }
 
 impl<T: Copy> Iterator for VecSet<'_, T> {
     type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        match self.elements.iter().next() {
-            Some(x) => { return Some(*x); }
-            None    => { return None; }
+        match self.elements.get(0) {
+            Some(x) => { Some(*x) }
+            None    => { None }
         }
     }
 }

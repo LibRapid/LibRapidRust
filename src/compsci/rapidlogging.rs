@@ -57,18 +57,14 @@ impl Logger {
     /// let _ = l.log(Some(vec!["Warning"]), "This is a warning.");
     /// ```
     /// As you can see, we initialise a new Logger `l` with the buffer size 3. This means that only after 3x logging, the logger writes to the file and to the console.
-    #[must_use]
     pub fn log(&mut self, prefixes: Option<Vec<&str>>, msg: &str) -> Result<bool, String> {
         self.buff_count.inc();
         let mut out: String = format!("[{}]", Utc::now()
                                                    .to_rfc3339_opts(SecondsFormat::Secs,
                                                                     true));
-        match prefixes {
-            Some(v) => {
-                for s in v
-                { out.push_str(&format!("[{}]", s)); }
-            }
-            None => { }
+        if let Some(v) = prefixes {
+            for s in v
+            { out.push_str(&format!("[{}]", s)); }
         }
         out.push(' ');
         out.push_str(msg);

@@ -111,7 +111,7 @@ impl Averages<i8> for Vec<i8> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -156,7 +156,7 @@ impl Averages<u8> for Vec<u8> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -202,7 +202,7 @@ impl Averages<u16> for Vec<u16> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -248,7 +248,7 @@ impl Averages<i16> for Vec<i16> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -294,7 +294,7 @@ impl Averages<u32> for Vec<u32> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -340,7 +340,7 @@ impl Averages<i32> for Vec<i32> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -386,7 +386,7 @@ impl Averages<u64> for Vec<u64> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -432,7 +432,7 @@ impl Averages<i64> for Vec<i64> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -478,7 +478,7 @@ impl Averages<u128> for Vec<u128> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -524,7 +524,7 @@ impl Averages<i128> for Vec<i128> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -570,7 +570,7 @@ impl Averages<usize> for Vec<usize> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {
@@ -616,7 +616,7 @@ impl Averages<isize> for Vec<isize> {
         for x in self {
             *hm.entry(*x).or_default() += 1;
         }
-        *hm.iter().max_by(|a, b| a.1.cmp(&b.1)).map(|(k, _v)| k).unwrap()
+        *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
 
     fn mid_range(&self) -> f64 {

@@ -61,9 +61,9 @@ impl<T: Copy +
                            }
                            len         = len.sqrt();
                            self.length = Some(len);
-                           return len;
+                           len
                          }
-            Some(len) => { return len; }
+            Some(len) => { len }
 
         }
     }
@@ -223,9 +223,5 @@ impl<T: Copy +
 impl<T: std::cmp::PartialEq> PartialEq for MathVector<T> {
     fn eq(&self, other: &Self) -> bool {
         self.values == other.values
-    }
-
-    fn ne(&self, other: &Self) -> bool {
-        !(self == other)
     }
 }

@@ -93,12 +93,12 @@ pub trait TempConversionTrait {
 impl TempConversionTrait for f64 {
     fn temp_conversion(&self, mode: TempConversion) -> Self {
         match mode {
-            TempConversion::CelsiusToFahrenheit => { return self * 1.8 + 32.0; }
-            TempConversion::CelsiusToKelvin     => { return self + 273.15; }
-            TempConversion::FahrenheitToCelsius => { return (self - 32.0) / 1.8; }
-            TempConversion::FahrenheitToKelvin  => { return (self - 32.0) / 1.8 + 273.15; }
-            TempConversion::KelvinToCelsius     => { return self - 273.15; }
-            TempConversion::KelvinToFahrenheit  => { return (self - 273.15) * 1.8 + 32.0; }
+            TempConversion::CelsiusToFahrenheit => {  self * 1.8 + 32.0 }
+            TempConversion::CelsiusToKelvin     => {  self + 273.15 }
+            TempConversion::FahrenheitToCelsius => { (self - 32.0) / 1.8 }
+            TempConversion::FahrenheitToKelvin  => { (self - 32.0) / 1.8 + 273.15 }
+            TempConversion::KelvinToCelsius     => {  self - 273.15 }
+            TempConversion::KelvinToFahrenheit  => { (self - 273.15) * 1.8 + 32.0 }
         }
     }
 }
@@ -106,12 +106,12 @@ impl TempConversionTrait for f64 {
 impl TempConversionTrait for f32 {
     fn temp_conversion(&self, mode: TempConversion) -> Self {
         match mode {
-            TempConversion::CelsiusToFahrenheit => { return self * 1.8 + 32.0; }
-            TempConversion::CelsiusToKelvin     => { return self + 273.15; }
-            TempConversion::FahrenheitToCelsius => { return (self - 32.0) / 1.8; }
-            TempConversion::FahrenheitToKelvin  => { return (self - 32.0) / 1.8 + 273.15; }
-            TempConversion::KelvinToCelsius     => { return self - 273.15; }
-            TempConversion::KelvinToFahrenheit  => { return (self - 273.15) * 1.8 + 32.0; }
+            TempConversion::CelsiusToFahrenheit => {  self * 1.8 + 32.0 }
+            TempConversion::CelsiusToKelvin     => {  self + 273.15 }
+            TempConversion::FahrenheitToCelsius => { (self - 32.0) / 1.8 }
+            TempConversion::FahrenheitToKelvin  => { (self - 32.0) / 1.8 + 273.15 }
+            TempConversion::KelvinToCelsius     => {  self - 273.15 }
+            TempConversion::KelvinToFahrenheit  => { (self - 273.15) * 1.8 + 32.0 }
         }
     }
 }
@@ -134,7 +134,7 @@ impl AngleConversionTrait for f32 {
     }
 }
 
-impl<T: Into<f32> + Copy> SIPrefix<T> {
+impl<T: Into<f64> + Copy> SIPrefix<T> {
     /// Converts a SI-Prefix value into a regular `f32`.
     /// # Returns
     /// A `f32`.
@@ -146,29 +146,7 @@ impl<T: Into<f32> + Copy> SIPrefix<T> {
     /// assert_eq!(5000.0, SIPrefix::Kilo(5.0).to_decimal_f32());
     /// ```
     pub fn to_decimal_f32(&self) -> f32 {
-        match self {
-            SIPrefix::Yocto(x) => { return (*x).into() * SIRATES[0]  as f32; },
-            SIPrefix::Zepto(x) => { return (*x).into() * SIRATES[1]  as f32; },
-            SIPrefix::Atto(x)  => { return (*x).into() * SIRATES[2]  as f32; },
-            SIPrefix::Femto(x) => { return (*x).into() * SIRATES[3]  as f32; },
-            SIPrefix::Pico(x)  => { return (*x).into() * SIRATES[4]  as f32; },
-            SIPrefix::Nano(x)  => { return (*x).into() * SIRATES[5]  as f32; },
-            SIPrefix::Micro(x) => { return (*x).into() * SIRATES[6]  as f32; },
-            SIPrefix::Milli(x) => { return (*x).into() * SIRATES[7]  as f32; },
-            SIPrefix::Centi(x) => { return (*x).into() * SIRATES[8]  as f32; },
-            SIPrefix::Deci(x)  => { return (*x).into() * SIRATES[9]  as f32; },
-            SIPrefix::Unity(x) => { return (*x).into();                      },
-            SIPrefix::Deca(x)  => { return (*x).into() * SIRATES[10] as f32; },
-            SIPrefix::Hecto(x) => { return (*x).into() * SIRATES[11] as f32; },
-            SIPrefix::Kilo(x)  => { return (*x).into() * SIRATES[12] as f32; },
-            SIPrefix::Mega(x)  => { return (*x).into() * SIRATES[13] as f32; },
-            SIPrefix::Giga(x)  => { return (*x).into() * SIRATES[14] as f32; },
-            SIPrefix::Tera(x)  => { return (*x).into() * SIRATES[15] as f32; },
-            SIPrefix::Peta(x)  => { return (*x).into() * SIRATES[16] as f32; },
-            SIPrefix::Exa(x)   => { return (*x).into() * SIRATES[17] as f32; },
-            SIPrefix::Zetta(x) => { return (*x).into() * SIRATES[18] as f32; },
-            SIPrefix::Yotta(x) => { return (*x).into() * SIRATES[19] as f32; },
-        }
+        self.to_decimal_f64() as f32
     }
 }
 
@@ -185,27 +163,27 @@ impl<T: Into<f64> + Copy> SIPrefix<T> {
     /// ```
     pub fn to_decimal_f64(&self) -> f64 {
         match self {
-            SIPrefix::Yocto(x) => { return (*x).into() * SIRATES[0];  },
-            SIPrefix::Zepto(x) => { return (*x).into() * SIRATES[1];  },
-            SIPrefix::Atto(x)  => { return (*x).into() * SIRATES[2];  },
-            SIPrefix::Femto(x) => { return (*x).into() * SIRATES[3];  },
-            SIPrefix::Pico(x)  => { return (*x).into() * SIRATES[4];  },
-            SIPrefix::Nano(x)  => { return (*x).into() * SIRATES[5];  },
-            SIPrefix::Micro(x) => { return (*x).into() * SIRATES[6];  },
-            SIPrefix::Milli(x) => { return (*x).into() * SIRATES[7];  },
-            SIPrefix::Centi(x) => { return (*x).into() * SIRATES[8];  },
-            SIPrefix::Deci(x)  => { return (*x).into() * SIRATES[9];  },
-            SIPrefix::Unity(x) => { return (*x).into();               },
-            SIPrefix::Deca(x)  => { return (*x).into() * SIRATES[10]; },
-            SIPrefix::Hecto(x) => { return (*x).into() * SIRATES[11]; },
-            SIPrefix::Kilo(x)  => { return (*x).into() * SIRATES[12]; },
-            SIPrefix::Mega(x)  => { return (*x).into() * SIRATES[13]; },
-            SIPrefix::Giga(x)  => { return (*x).into() * SIRATES[14]; },
-            SIPrefix::Tera(x)  => { return (*x).into() * SIRATES[15]; },
-            SIPrefix::Peta(x)  => { return (*x).into() * SIRATES[16]; },
-            SIPrefix::Exa(x)   => { return (*x).into() * SIRATES[17]; },
-            SIPrefix::Zetta(x) => { return (*x).into() * SIRATES[18]; },
-            SIPrefix::Yotta(x) => { return (*x).into() * SIRATES[19]; },
+            SIPrefix::Yocto(x) => { (*x).into() * SIRATES[0]  },
+            SIPrefix::Zepto(x) => { (*x).into() * SIRATES[1]  },
+            SIPrefix::Atto(x)  => { (*x).into() * SIRATES[2]  },
+            SIPrefix::Femto(x) => { (*x).into() * SIRATES[3]  },
+            SIPrefix::Pico(x)  => { (*x).into() * SIRATES[4]  },
+            SIPrefix::Nano(x)  => { (*x).into() * SIRATES[5]  },
+            SIPrefix::Micro(x) => { (*x).into() * SIRATES[6]  },
+            SIPrefix::Milli(x) => { (*x).into() * SIRATES[7]  },
+            SIPrefix::Centi(x) => { (*x).into() * SIRATES[8]  },
+            SIPrefix::Deci(x)  => { (*x).into() * SIRATES[9]  },
+            SIPrefix::Unity(x) => { (*x).into()               },
+            SIPrefix::Deca(x)  => { (*x).into() * SIRATES[10] },
+            SIPrefix::Hecto(x) => { (*x).into() * SIRATES[11] },
+            SIPrefix::Kilo(x)  => { (*x).into() * SIRATES[12] },
+            SIPrefix::Mega(x)  => { (*x).into() * SIRATES[13] },
+            SIPrefix::Giga(x)  => { (*x).into() * SIRATES[14] },
+            SIPrefix::Tera(x)  => { (*x).into() * SIRATES[15] },
+            SIPrefix::Peta(x)  => { (*x).into() * SIRATES[16] },
+            SIPrefix::Exa(x)   => { (*x).into() * SIRATES[17] },
+            SIPrefix::Zetta(x) => { (*x).into() * SIRATES[18] },
+            SIPrefix::Yotta(x) => { (*x).into() * SIRATES[19] },
         }
     }
 }
@@ -216,7 +194,7 @@ impl<T: Into<f64> + Copy> Into<f64> for SIPrefix<T> {
     }
 }
 
-impl<T: Into<f32> + Copy> Into<f32> for SIPrefix<T> {
+impl<T: Into<f64> + Copy> Into<f32> for SIPrefix<T> {
     fn into(self) -> f32 {
         self.to_decimal_f32()
     }
