@@ -152,94 +152,47 @@ pub trait Brackets {
     /// ```
     fn validate_brackets(&self) -> Result<bool, usize>;
 }
-/// Get bits and bytes from a `f32`.
-pub trait F32Magic {
-    /// Get the raw binary mantissa (fractional part) data from a `f32`.
-    /// # Returns
-    /// A `u32`.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::compsci::general::F32Magic;
-    /// 
-    /// assert_eq!(4788187, 3.1415927_f32.raw_mantissa());
-    /// ```
-    #[must_use]
-    fn raw_mantissa(&self) -> u32;
-    /// Get the raw binary exponent data from a `f32`.
-    /// # Returns
-    /// A `u8`.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::compsci::general::F32Magic;
-    /// 
-    /// assert_eq!(128, 3.1415927_f32.raw_exponent());
-    /// ```
-    #[must_use]
-    fn raw_exponent(&self) -> u8;
-    /// Get the actual mantissa part from a `f32`.
-    /// # Returns
-    /// A `f32`.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::compsci::general::F32Magic;
-    /// 
-    /// assert_eq!(1.5707964, 3.1415927_f32.real_mantissa());
-    /// ```
-    #[must_use]
-    fn real_mantissa(&self) -> f32;
-    /// Get the actual exponent part from a `f32`.
-    /// # Returns
-    /// A `i16`.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::compsci::general::F32Magic;
-    /// 
-    /// assert_eq!(1, 3.1415927_f32.real_exponent());
-    /// ```
-    #[must_use]
-    fn real_exponent(&self) -> i16;
-}
-/// Get bits and bytes from a `f64`.
-pub trait F64Magic {
-    /// Get the raw binary mantissa (fractional part) data from a `f64`.
+/// Get bits and bytes from a floating point number.
+pub trait FloatMagic {
+    /// Get the raw binary mantissa (fractional part) data.
     /// # Returns
     /// A `u64`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::F64Magic;
+    /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(2570638229164439, 3.1415927_f64.raw_mantissa());
     /// ```
     #[must_use]
     fn raw_mantissa(&self) -> u64;
-    /// Get the raw binary exponent data from a `f64`.
+    /// Get the raw binary exponent data.
     /// # Returns
     /// A `u16`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::F64Magic;
+    /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1024, 3.1415927_f64.raw_exponent());
     /// ```
     #[must_use]
     fn raw_exponent(&self) -> u16;
-    /// Get the actual mantissa part from a `f64`.
+    /// Get the actual mantissa part.
     /// # Returns
     /// A `f64`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::F64Magic;
+    /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1.57079635, 3.1415927_f64.real_mantissa());
     /// ```
     #[must_use]
     fn real_mantissa(&self) -> f64;
-    /// Get the actual exponent part from a `f64`.
+    /// Get the actual exponent part.
     /// # Returns
     /// A `i32`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::F64Magic;
+    /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1, 3.1415927_f64.real_exponent());
     /// ```
@@ -247,31 +200,33 @@ pub trait F64Magic {
     fn real_exponent(&self) -> i32;
 }
 
-impl F32Magic for f32 {
+impl FloatMagic for f32 {
     #[inline(always)]
-    fn raw_mantissa(&self) -> u32 {
+    fn raw_mantissa(&self) -> u64 {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        _t & 0b00000000011111111111111111111111
+        (_t & 0b00000000011111111111111111111111) as u64
     }
     #[inline(always)]
-    fn raw_exponent(&self) -> u8 {
+    fn raw_exponent(&self) -> u16 {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        ((_t & 0b01111111100000000000000000000000) >> 23) as u8
+        ((_t & 0b01111111100000000000000000000000) >> 23) as u16
     }
     #[inline(always)]
-    fn real_mantissa(&self) -> f32 {
+    fn real_mantissa(&self) -> f64 {
         let mut _t: u32 = unsafe { std::intrinsics::transmute(*self) };
         _t &= !0b01111111100000000000000000000000;
         _t |=  0b00111111100000000000000000000000;
-        unsafe { std::intrinsics::transmute(_t) }
+        let _m: f32 = unsafe { std::intrinsics::transmute(_t) };
+
+        _m as f64
     }
     #[inline(always)]
-    fn real_exponent(&self) -> i16 {
-        self.raw_exponent() as i16 - 127
+    fn real_exponent(&self) -> i32 {
+        self.raw_exponent() as i32 - 127
     }
 }
 
-impl F64Magic for f64 {
+impl FloatMagic for f64 {
     #[inline(always)]
     fn raw_mantissa(&self) -> u64 {
         let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
