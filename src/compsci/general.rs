@@ -197,7 +197,7 @@ pub trait F32Magic {
     /// assert_eq!(1, 3.1415927_f32.real_exponent());
     /// ```
     #[must_use]
-    fn real_exponent(&self) -> i8;
+    fn real_exponent(&self) -> i16;
 }
 /// Get bits and bytes from a `f64`.
 pub trait F64Magic {
@@ -219,7 +219,7 @@ pub trait F64Magic {
     /// ```
     /// use lib_rapid::compsci::general::F64Magic;
     /// 
-    /// assert_eq!(128, 3.1415927_f64.raw_exponent());
+    /// assert_eq!(1024, 3.1415927_f64.raw_exponent());
     /// ```
     #[must_use]
     fn raw_exponent(&self) -> u16;
@@ -236,7 +236,7 @@ pub trait F64Magic {
     fn real_mantissa(&self) -> f64;
     /// Get the actual exponent part from a `f64`.
     /// # Returns
-    /// A `i16`.
+    /// A `i32`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::F64Magic;
@@ -244,7 +244,7 @@ pub trait F64Magic {
     /// assert_eq!(1, 3.1415927_f64.real_exponent());
     /// ```
     #[must_use]
-    fn real_exponent(&self) -> i16;
+    fn real_exponent(&self) -> i32;
 }
 
 impl F32Magic for f32 {
@@ -266,8 +266,8 @@ impl F32Magic for f32 {
         unsafe { std::intrinsics::transmute(_t) }
     }
     #[inline(always)]
-    fn real_exponent(&self) -> i8 {
-        self.raw_exponent() as i8 - 127
+    fn real_exponent(&self) -> i16 {
+        self.raw_exponent() as i16 - 127
     }
 }
 
@@ -280,7 +280,7 @@ impl F64Magic for f64 {
     #[inline(always)]
     fn raw_exponent(&self) -> u16 {
         let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
-        ((_t & 0b0111111111110000000000000000000000000000000000000000000000000000) >> 55) as u16
+        ((_t & 0b0111111111110000000000000000000000000000000000000000000000000000) >> 52) as u16
     }
     #[inline(always)]
     fn real_mantissa(&self) -> f64 {
@@ -290,8 +290,8 @@ impl F64Magic for f64 {
         unsafe { std::intrinsics::transmute(_t) }
     }
     #[inline(always)]
-    fn real_exponent(&self) -> i16 {
-        self.raw_exponent() as i16 - 127
+    fn real_exponent(&self) -> i32 {
+        self.raw_exponent() as i32 - 1023
     }
 }
 
