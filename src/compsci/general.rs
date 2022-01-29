@@ -192,8 +192,7 @@ impl Brackets for String {
                 '[' => { s.push(c); },
                 '{' => { s.push(c); },
                 '(' => { s.push(c); },
-                ']' => { 
-                         if s.pop() != Some('[')
+                ']' => { if s.pop() != Some('[')
                          { return Err(i); }
                         },
                 '}' => { if s.pop() != Some('{')

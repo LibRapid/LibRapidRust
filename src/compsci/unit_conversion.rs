@@ -81,13 +81,13 @@ impl<T: Copy + Into<f64>> Into<f32> for BinaryPrefix<T> {
         match self {
             BinaryPrefix::Unity(x) => { (x).into()                       as f32 },
             BinaryPrefix::Kibi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Mebi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Gibi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Tebi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Pebi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Exbi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Zebi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
-            BinaryPrefix::Yobi(x)  => { ((x).into() * BINARYCONVRATE[0]) as f32 },
+            BinaryPrefix::Mebi(x)  => { ((x).into() * BINARYCONVRATE[1]) as f32 },
+            BinaryPrefix::Gibi(x)  => { ((x).into() * BINARYCONVRATE[2]) as f32 },
+            BinaryPrefix::Tebi(x)  => { ((x).into() * BINARYCONVRATE[3]) as f32 },
+            BinaryPrefix::Pebi(x)  => { ((x).into() * BINARYCONVRATE[4]) as f32 },
+            BinaryPrefix::Exbi(x)  => { ((x).into() * BINARYCONVRATE[5]) as f32 },
+            BinaryPrefix::Zebi(x)  => { ((x).into() * BINARYCONVRATE[6]) as f32 },
+            BinaryPrefix::Yobi(x)  => { ((x).into() * BINARYCONVRATE[7]) as f32 },
         }
     }
 }

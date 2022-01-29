@@ -69,7 +69,7 @@ impl Logger {
         out.push(' ');
         out.push_str(msg);
         out.push('\n');
-        self.buffer += &out;
+        self.buffer.push_str(&out);
 
         if self.buff_count == self.buff_size
         { return self.backend_log(); }
