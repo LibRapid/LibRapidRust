@@ -70,13 +70,13 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// use lib_rapid::compsci::general::BinaryInsert;
     /// let s:  VecSet<i32> = VecSet::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// let s1: VecSet<i32> = VecSet::new(&vec![11,12,13,13,11,0,0,0]);
     /// 
     /// let c:  VecSet<i32> = s.union(&s1);
-    /// assert_eq!(c, new_set!(0,1,2,3,4,5,6,7,8,9,10,11,12,13));
+    /// assert_eq!(c, set!(0,1,2,3,4,5,6,7,8,9,10,11,12,13));
     /// ```
     #[must_use]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
@@ -101,14 +101,14 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
-    /// use lib_rapid::compsci::general::BinaryInsert; // Used for "new_set!"
+    /// use lib_rapid::math::sets::vec_sets::set;
+    /// use lib_rapid::compsci::general::BinaryInsert; // Used for "set!"
     /// 
     /// let s:  VecSet<i32> = VecSet::new(&vec![0,1,2,3,4,5,6,7,8,9,10,11]);
     /// let s2: VecSet<i32> = VecSet::new(&vec![0,1,2,3,11,0,0,0]);
     /// 
     /// let c:  VecSet<i32> = s.intersection(&s2);
-    /// assert_eq!(c, new_set!(0, 1, 2, 3, 11));
+    /// assert_eq!(c, set!(0, 1, 2, 3, 11));
     /// ```
     #[must_use]
     pub fn intersection(&self, other: &VecSet<T>) -> VecSet<T> {
@@ -128,9 +128,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// 
-    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let set = set!(0, 1, 2, 3, 4, 5, 6);
     /// 
     /// assert_eq!(false, set.has_element(7));
     /// assert_eq!(false, set.has_element(-1));
@@ -150,7 +150,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// let mut s: VecSet<i32> = VecSet::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// 
     /// s.insert(5);
@@ -166,9 +166,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// 
-    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let set = set!(0, 1, 2, 3, 4, 5, 6);
     /// let subset = VecSet::new_subset(&set, |x| x % 2 == 0);
     /// 
     /// assert_eq!(true, subset.has_superset());
@@ -185,9 +185,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// 
-    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let set = set!(0, 1, 2, 3, 4, 5, 6);
     /// let subset = VecSet::new_subset(&set, |x| x % 2 == 0);
     /// 
     /// assert_eq!(&set, subset.get_superset().unwrap());
@@ -203,9 +203,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// 
-    /// let set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let set = set!(0, 1, 2, 3, 4, 5, 6);
     /// 
     /// assert_eq!(7, set.cardinality());
     /// ```
@@ -223,9 +223,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// 
-    /// let mut set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let mut set = set!(0, 1, 2, 3, 4, 5, 6);
     /// set.set_elements(&vec![0, 2, 4, 6]);
     /// 
     /// assert_eq!(&vec![0, 2, 4, 6], set.elements());
@@ -244,9 +244,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// use lib_rapid::math::sets::vec_sets::new_set;
+    /// use lib_rapid::math::sets::vec_sets::set;
     /// 
-    /// let mut set = new_set!(0, 1, 2, 3, 4, 5, 6);
+    /// let mut set = set!(0, 1, 2, 3, 4, 5, 6);
     /// 
     /// assert_eq!(&vec![0, 1, 2, 3, 4, 5, 6], set.elements());
     /// ```
@@ -262,15 +262,15 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
 /// A new `VecSet`.
 /// # Examples
 /// ```
-/// use lib_rapid::new_set;
+/// use lib_rapid::set;
 /// use lib_rapid::math::sets::vec_sets::VecSet; 
 /// 
-/// let set: VecSet<i32> = new_set!(0,1,2,3,4,5,6,-1);
+/// let set: VecSet<i32> = set!(0,1,2,3,4,5,6,-1);
 /// assert_eq!(set.to_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 /// assert_eq!(set.to_full_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 #[macro_export]
 #[must_use]
-macro_rules! new_set {
+macro_rules! set {
     ( $( $a:expr ),* ) => {
         {
             use lib_rapid::compsci::general::BinaryInsert;
@@ -282,7 +282,7 @@ macro_rules! new_set {
         }
     };
 }
-pub use new_set;
+pub use set;
 
 use crate::compsci::general::BinaryInsert;
 
@@ -333,6 +333,7 @@ impl<T: ToString> VecSet<'_, T> {
 // Indexing for Sets
 impl<T> std::ops::Index<usize> for VecSet<'_, T> {
     type Output = T;
+    #[inline(always)]
     fn index(&self, index: usize) -> &Self::Output {
         &self.elements[index]
     }
@@ -354,6 +355,7 @@ impl<T: ToString> std::fmt::Display for VecSet<'_, T> {
 
 // Implement Equality
 impl<T: PartialEq> PartialEq for VecSet<'_, T> {
+    #[inline(always)]
     fn eq(&self, other: &Self) -> bool {
         self.elements == other.elements
     }
