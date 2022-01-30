@@ -252,7 +252,7 @@ impl<'a, T: std::cmp::PartialEq +
         std::ops::DivAssign + std::cmp::PartialOrd +
         std::ops::Rem<Output = T> + Copy + std::ops::AddAssign>
     NumDigits
-    for T 
+    for T
     where
         u8: TryFrom<T>,
         T: From<u8> {
