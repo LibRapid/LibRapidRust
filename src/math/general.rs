@@ -270,8 +270,7 @@ impl<'a, T: std::cmp::PartialEq +
         let mut v: Self = *self;
         let mut digits: Vec<u8> = Vec::with_capacity(39);
         while v > 0.into() {
-            let n: u8;
-            unsafe { n = (v % 10.into()).try_into().unwrap_unchecked() };
+            let n: u8 = unsafe { (v % 10.into()).try_into().unwrap_unchecked() };
             if n == 255
             { panic!("Oops! Something went wrong. please contact the developers using the error code 0x00001.")}
             v /= 10.into();

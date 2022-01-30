@@ -209,11 +209,12 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
 /// * `year` - The year to be checked.
 /// # Returns
 /// A boolean value.
+#[inline(always)]
 #[must_use]
 pub fn is_leap_year(year: i32) -> bool {
     year & 3 == 0 && (year & 24 == 0 || year & 15 == 0)
 }
-
+#[inline(always)]
 fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
     hour <= 24 && minute <= 60 && second <= 60
 }
