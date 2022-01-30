@@ -18,19 +18,27 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     /// 
     /// # Examples
     /// ```
-    /// use lib_rapid::math::sets::vec_sets::VecSet;
-    /// 
-    /// let set = VecSet::new(&vec![0, 1, 1, 2, 3, 4, 5]);
-    /// 
     /// assert_eq!(set.elements(), &vec![0, 1, 2, 3, 4, 5]);
     /// ```
     #[must_use]
-    pub fn new(values: &[T]) -> VecSet<'a, T> {        
+    pub fn new(values: &[T]) -> VecSet<T> {        
         let mut res: VecSet<T> = VecSet { elements: values.to_vec(),
                                     superset: None };
         res.elements.sort_unstable();
         res.elements.dedup();
         res
+    }
+    /// Get the empty set, ∅.
+    /// # Returns
+    /// A `VecSet<T>` with no elements.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::sets::vec_sets::{VecSet, set};
+    /// assert_eq!(set!(), VecSet::empty_set());
+    /// ```
+    #[must_use]
+    pub fn empty_set() -> VecSet<'a, T> {
+        VecSet { elements: vec![], superset: None }
     }
     /// Creates a new `VecSet` using a parent-`VecSet` to which it applies a closure.
     ///
@@ -117,7 +125,6 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
 
         res
     }
-
     /// Checks for disjointness between `self` and `other`.
     /// # Arguments
     /// * `other` - The other set to be checked for disjointness.
@@ -145,10 +152,11 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
         }
         true
     }
-
     /// Checks for mathematical difference between two sets - `A \ B`.
     /// # Arguments
     /// * `other` - The other set to be checked for.
+    /// # Returns
+    /// A `VecSet<T>`.
     /// # Examples
     ///```
     /// use lib_rapid::math::sets::vec_sets::VecSet;
@@ -168,7 +176,31 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
         }
 
         VecSet { elements: res_vec,
-                 superset: None }
+                 superset: Some(&self) }
+    }
+    /// Gets the cartesian product of two sets in `O(n²)`.
+    /// # Arguments
+    /// * `other` - `&VecSet<T>`-
+    /// # Returns
+    /// A `VecSet<(T, T)>`.
+    ///```
+    /// use lib_rapid::math::sets::vec_sets::VecSet;
+    /// use lib_rapid::math::sets::vec_sets::set;
+    /// 
+    /// let s1 = set!(1, 2, 3);
+    /// let s2 = set!(1, 2);
+    /// 
+    /// assert_eq!(set!((1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)), s1.cartesian_product(&s2));
+    ///```
+    #[must_use]
+    pub fn cartesian_product(&self, other: &VecSet<T>) -> VecSet<(T, T)> {
+        let mut res_vec = Vec::with_capacity(self.cardinality() * other.cardinality());
+        for i in &self.elements {
+            for j in &other.elements {
+                res_vec.push((*i, *j));
+            }
+        }
+        VecSet { elements: res_vec, superset: None }
     }
     /// Gets the symmetric difference (Elements either in `self` or `other`, but not in both).
     /// # Arguments
