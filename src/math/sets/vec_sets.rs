@@ -23,6 +23,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let set = VecSet::new(&vec![0, 1, 2, 3, 4, 5]);
     /// assert_eq!(set.elements(), &vec![0, 1, 2, 3, 4, 5]);
     /// ```
+    #[inline]
     #[must_use]
     pub fn new(values: &[T]) -> VecSet<'a, T> {        
         let mut res: VecSet<T> = VecSet { elements: values.to_vec(),
@@ -41,6 +42,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(v, VecSet::empty_set().elements());
     /// ```
+    #[inline]
     #[must_use]
     pub fn empty_set() -> VecSet<'a, T> {
         VecSet { elements: Vec::new(), superset: None }
@@ -64,7 +66,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a VecSet<T>, f: F) -> VecSet<'a, T> {
         let mut res: VecSet<T> = VecSet { elements: Vec::with_capacity(parent.cardinality()),
-                                    superset: Some(parent) };
+                                          superset: Some(parent) };
         for elem in parent {
             if f(elem) {
                 res.elements.push(elem);
@@ -254,6 +256,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// assert_eq!(false, set.has_element(-1));
     /// assert_eq!(true, set.has_element(1));
     /// ```
+    #[inline]
     #[must_use]
     pub fn has_element(&self, elem: T) -> bool {
         self.elements.binary_search(&elem).is_ok()
@@ -274,7 +277,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// s.insert(5);
     /// assert_eq!(s.elements(), &vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// ```
-    #[inline]
     pub fn insert(&mut self, elem: T) {
         self.elements.binary_insert_no_dup(elem)
     }
@@ -352,6 +354,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(&vec![0, 2, 4, 6], set.elements());
     /// ```
+    #[inline]
     pub fn set_elements(&mut self, vals: &[T]) {
         self.elements = vals.to_vec();
         self.elements.sort_unstable();
@@ -487,6 +490,7 @@ impl<T> IntoIterator for VecSet<'_, T> {
 
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
+    #[inline]
     fn into_iter(self) -> Self::IntoIter {
         self.elements.into_iter()
     }
