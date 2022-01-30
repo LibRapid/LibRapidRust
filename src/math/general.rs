@@ -327,7 +327,7 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
 /// # Arguments
 /// * `n` - the nth-fibonacci number to be computed.
 /// # How does it work?
-/// This function uses the function `(½(1 + √5))ⁿ / √5` for all numbers `n ≤ 74`, as this is the maximum precision for that formula. For every number above that, it uses the iterative approach.
+/// This function uses the function `φⁿ / √5` for all numbers `n < 76`, as this is the maximum precision for that formula. For every number above that, it uses the iterative approach.
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::nth_fibonacci;
