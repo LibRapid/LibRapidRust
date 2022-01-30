@@ -7,7 +7,7 @@ pub struct VecSet<'a, T> {
 }
 
 // Main impl
-impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
+impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// Creates a new `VecSet`.
     ///
     /// # Arguments
@@ -65,9 +65,9 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a VecSet<T>, f: F) -> VecSet<'a, T> {
         let mut res: VecSet<T> = VecSet { elements: Vec::with_capacity(parent.cardinality()),
                                     superset: Some(parent) };
-        for elem in &parent.elements {
-            if f(*elem) {
-                res.elements.push(*elem);
+        for elem in parent {
+            if f(elem) {
+                res.elements.push(elem);
             }
         }
         res
@@ -151,8 +151,8 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     /// ```
     #[must_use]
     pub fn is_disjoint_with(&self, other: &VecSet<T>) -> bool {
-        for i in &self.elements {
-            if other.has_element(*i)
+        for i in self {
+            if other.has_element(i)
             { return false; }
         }
         true
@@ -175,9 +175,9 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn difference_with(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res_vec: Vec<T> = Vec::with_capacity(std::cmp::max(self.cardinality(), other.cardinality()));
-        for i in &self.elements {
-            if !other.has_element(*i)
-            { res_vec.push(*i); }
+        for i in self {
+            if !other.has_element(i)
+            { res_vec.push(i); }
         }
 
         VecSet { elements: res_vec,
@@ -200,9 +200,9 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn cartesian_product(&self, other: &VecSet<T>) -> VecSet<(T, T)> {
         let mut res_vec = Vec::with_capacity(self.cardinality() * other.cardinality());
-        for i in &self.elements {
-            for j in &other.elements {
-                res_vec.push((*i, *j));
+        for i in self {
+            for j in other {
+                res_vec.push((i, j));
             }
         }
         VecSet { elements: res_vec, superset: None }
@@ -402,7 +402,7 @@ pub use set;
 
 use crate::compsci::general::BinaryInsert;
 
-impl<T: ToString> VecSet<'_, T> {
+impl<T: ToString + Copy + Ord> VecSet<'_, T> {
     /// Lets you print a set with all its parents recursively.
     ///
     /// # Returns
@@ -456,10 +456,10 @@ impl<T> std::ops::Index<usize> for VecSet<'_, T> {
 }
 
 // Implement Printing
-impl<T: ToString> std::fmt::Display for VecSet<'_, T> {
+impl<T: ToString + Copy + Ord> std::fmt::Display for VecSet<'_, T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut res: String = String::from('{');
-        for elem in &self.elements {
+        for elem in self.elements() {
             res.push(' ');
             res += &elem.to_string();
             res.push(';');
@@ -477,13 +477,21 @@ impl<T: PartialEq> PartialEq for VecSet<'_, T> {
     }
 }
 
-impl<T: Copy> Iterator for VecSet<'_, T> {
+impl<T> IntoIterator for VecSet<'_, T> {
     type Item = T;
 
-    fn next(&mut self) -> Option<Self::Item> {
-        match self.elements.get(0) {
-            Some(x) => { Some(*x) }
-            None    => { None }
-        }
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.elements.into_iter()
+    }
+}
+impl<T: Copy + Clone + Ord> IntoIterator for &VecSet<'_, T> {
+    type Item = T;
+
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.elements().to_owned().into_iter()
     }
 }
