@@ -1,6 +1,6 @@
 //! Vectors can be really handy, sometimes. Do everything you want with your favorite direction pointing data type from mathematics.
 
-use super::general::Increment;
+use super::general::{Increment, CommonPowers};
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /// Mathematical Vectors in Rust.
@@ -59,9 +59,7 @@ impl<T: Copy +
     pub fn length(&mut self) -> f64 {
         match self.length {
             None      => { let mut len: f64 = 0.0; 
-                           for i in &self.values {
-                               len.inc_by(i.square().into());
-                           }
+                           self.values.iter().for_each(|x| len.inc_by(f64::from(*x).square()));
                            len         = len.sqrt();
                            self.length = Some(len);
                            len
