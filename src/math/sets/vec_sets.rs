@@ -7,7 +7,7 @@ pub struct VecSet<'a, T> {
 }
 
 // Main impl
-impl<'a, T: Copy + Ord> VecSet<'a, T> {
+impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     /// Creates a new `VecSet`.
     ///
     /// # Arguments
@@ -81,7 +81,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-                                   superset: None };
+                                         superset: None };
 
         res.elements.append(&mut self.elements.clone());
         res.elements.append(&mut other.elements.clone());
@@ -116,6 +116,80 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         res.elements.retain(|x| other.elements.binary_search(x).is_ok());
 
         res
+    }
+
+    /// Checks for disjointness between `self` and `other`.
+    /// # Arguments
+    /// * `other` - The other set to be checked for disjointness.
+    /// # Returns
+    /// A `bool`
+    /// # Examples
+    ///```
+    /// use lib_rapid::math::sets::vec_sets::VecSet;
+    /// use lib_rapid::math::sets::vec_sets::set;
+    /// 
+    /// let s1 = set!(0, 1, 2, 3, 4, 5, 6, 7, 8);
+    /// let s2 = set!(0, 1, 2, 3, 4, 5, 6,);
+    /// let s3 = set!(8, 9, 10, 11, 12, 13, 14);
+    /// let s4 = set!(9, 10, 11, 12, 13, 14, 15);
+    /// 
+    /// assert_eq!(false, s1.is_disjoint_with(&s2));
+    /// assert_eq!(false, s1.is_disjoint_with(&s3));
+    /// assert_eq!(true, s1.is_disjoint_with(&s4));
+    /// ```
+    #[must_use]
+    pub fn is_disjoint_with(&self, other: &VecSet<T>) -> bool {
+        for i in &self.elements {
+            if other.has_element(*i)
+            { return false; }
+        }
+        true
+    }
+
+    /// Checks for mathematical difference between two sets - `A \ B`.
+    /// # Arguments
+    /// * `other` - The other set to be checked for.
+    /// # Examples
+    ///```
+    /// use lib_rapid::math::sets::vec_sets::VecSet;
+    /// use lib_rapid::math::sets::vec_sets::set;
+    /// 
+    /// let s1 = set!(1, 2, 3, 4, 5);
+    /// let s2 = set!(3, 4, 5);
+    /// 
+    /// assert_eq!(set!(1, 2), s1.difference_with(&s2));
+    ///```
+    #[must_use]
+    pub fn difference_with(&self, other: &VecSet<T>) -> VecSet<T> {
+        let mut res_vec: Vec<T> = Vec::with_capacity(std::cmp::max(self.cardinality(), other.cardinality()));
+        for i in &self.elements {
+            if !other.has_element(*i)
+            { res_vec.push(*i); }
+        }
+
+        VecSet { elements: res_vec,
+                 superset: None }
+    }
+    /// Gets the symmetric difference (Elements either in `self` or `other`, but not in both).
+    /// # Arguments
+    /// * `other` - A `&VecSet<T>`.
+    /// # Examples
+    ///```
+    /// use lib_rapid::math::sets::vec_sets::VecSet;
+    /// use lib_rapid::math::sets::vec_sets::set;
+    /// 
+    /// let s1 = set!(1, 2, 3, 4, 5);
+    /// let s2 = set!(3, 4);
+    /// 
+    /// assert_eq!(set!(1, 2, 5), s1.symmetric_difference_with(&s2));
+    ///```
+    #[must_use]
+    pub fn symmetric_difference_with(&self, other: &VecSet<T>) -> VecSet<T> {
+        let diff1 = self.difference_with(other);
+        let diff2 = other.difference_with(self);
+
+        VecSet { elements: (diff1.clone().union(&diff2).collect::<Vec<_>>()),
+                 superset: None }
     }
     /// Lets you check for an element in a set.
     ///
