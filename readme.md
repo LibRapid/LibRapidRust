@@ -10,11 +10,12 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.4-preview.1
+0.1.4-preview.3
 _____
-- Much simpler handling of Huffman compression.
-- Added support for calculating a Fibonacci number.
-- Added support for calculating the nth-root.
+- Slightly changed algorithms for primality checks.
+- Added `FloatMagic` trait.
+- Removed `BigInt` library part due to not stable functions.
+- Added several `#[inline(always)]`.
 
 Credits
 -----
