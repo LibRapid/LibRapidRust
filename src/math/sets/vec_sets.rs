@@ -18,12 +18,15 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     /// 
     /// # Examples
     /// ```
+    /// use lib_rapid::math::sets::vec_sets::VecSet;
+    /// 
+    /// let set = VecSet::new(&vec![0, 1, 2, 3, 4, 5]);
     /// assert_eq!(set.elements(), &vec![0, 1, 2, 3, 4, 5]);
     /// ```
     #[must_use]
-    pub fn new(values: &[T]) -> VecSet<T> {        
+    pub fn new(values: &[T]) -> VecSet<'a, T> {        
         let mut res: VecSet<T> = VecSet { elements: values.to_vec(),
-                                    superset: None };
+                                          superset: None };
         res.elements.sort_unstable();
         res.elements.dedup();
         res
@@ -33,12 +36,14 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     /// A `VecSet<T>` with no elements.
     /// # Examples
     /// ```
-    /// use lib_rapid::sets::vec_sets::{VecSet, set};
-    /// assert_eq!(set!(), VecSet::empty_set());
+    /// use lib_rapid::math::sets::vec_sets::{VecSet, set};
+    /// let v: Vec<u8> = Vec::new();
+    /// 
+    /// assert_eq!(v, VecSet::empty_set().elements());
     /// ```
     #[must_use]
     pub fn empty_set() -> VecSet<'a, T> {
-        VecSet { elements: vec![], superset: None }
+        VecSet { elements: Vec::new(), superset: None }
     }
     /// Creates a new `VecSet` using a parent-`VecSet` to which it applies a closure.
     ///
@@ -136,7 +141,7 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     /// use lib_rapid::math::sets::vec_sets::set;
     /// 
     /// let s1 = set!(0, 1, 2, 3, 4, 5, 6, 7, 8);
-    /// let s2 = set!(0, 1, 2, 3, 4, 5, 6,);
+    /// let s2 = set!(0, 1, 2, 3, 4, 5, 6);
     /// let s3 = set!(8, 9, 10, 11, 12, 13, 14);
     /// let s4 = set!(9, 10, 11, 12, 13, 14, 15);
     /// 
@@ -176,7 +181,7 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
         }
 
         VecSet { elements: res_vec,
-                 superset: Some(&self) }
+                 superset: None }
     }
     /// Gets the cartesian product of two sets in `O(n²)`.
     /// # Arguments
@@ -217,11 +222,18 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
     ///```
     #[must_use]
     pub fn symmetric_difference_with(&self, other: &VecSet<T>) -> VecSet<T> {
-        let diff1 = self.difference_with(other);
-        let diff2 = other.difference_with(self);
+        let diff1 = self.difference_with(&other);
+        let diff2 = other.difference_with(&self).clone();
 
-        VecSet { elements: (diff1.clone().union(&diff2).collect::<Vec<_>>()),
-                 superset: None }
+        let mut res: VecSet<T> = VecSet {elements: Vec::new(),
+            superset: None };
+
+        res.elements.append(&mut diff1.elements.clone());
+        res.elements.append(&mut diff2.elements.clone());
+
+        res.elements.sort_unstable(); 
+        res.elements.dedup();
+        res
     }
     /// Lets you check for an element in a set.
     ///
@@ -372,19 +384,17 @@ impl<'a, T: Copy + Clone + Ord> VecSet<'a, T> {
 /// use lib_rapid::math::sets::vec_sets::VecSet; 
 /// 
 /// let set: VecSet<i32> = set!(0,1,2,3,4,5,6,-1);
-/// assert_eq!(set.to_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
-/// assert_eq!(set.to_full_string(), "{ -1; 0; 1; 2; 3; 4; 5; 6 }");
 #[macro_export]
 #[must_use]
 macro_rules! set {
     ( $( $a:expr ),* ) => {
         {
             use lib_rapid::compsci::general::BinaryInsert;
-            let mut temp = Vec::new();
+            let mut res_vec = Vec::new();
             $(
-                temp.binary_insert_no_dup($a);
+                res_vec.binary_insert_no_dup($a);
             )*
-            VecSet::new(&temp)
+            VecSet::new(&res_vec)
         }
     };
 }
