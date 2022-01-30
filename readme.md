@@ -15,7 +15,7 @@ _____
 - Slightly changed algorithms for primality checks.
 - Added `FloatMagic` trait.
 - Removed `BigInt` library part due to not stable functions.
-- Added several `#[inline(always)]`.
+- Added several `#[inline]`.
 
 Credits
 -----

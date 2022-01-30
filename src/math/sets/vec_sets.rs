@@ -274,6 +274,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// s.insert(5);
     /// assert_eq!(s.elements(), &vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// ```
+    #[inline]
     pub fn insert(&mut self, elem: T) {
         self.elements.binary_insert_no_dup(elem)
     }
@@ -292,6 +293,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// assert_eq!(true, subset.has_superset());
     /// assert_eq!(false, set.has_superset());
     /// ```
+    #[inline]
     #[must_use]
     pub fn has_superset(&self) -> bool {
         self.superset.is_some()
@@ -310,6 +312,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(&set, subset.get_superset().unwrap());
     /// ```
+    #[inline]
     #[must_use]
     pub fn get_superset(&self) -> Option<&VecSet<T>> {
         self.superset
@@ -327,6 +330,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(7, set.cardinality());
     /// ```
+    #[inline]
     #[must_use]
     pub fn cardinality(&self) -> usize {
         self.elements.len()
@@ -368,6 +372,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(&vec![0, 1, 2, 3, 4, 5, 6], set.elements());
     /// ```
+    #[inline]
     #[must_use]
     pub fn elements(&self) -> &[T] {
         &self.elements
@@ -449,7 +454,7 @@ impl<T: ToString + Copy + Ord> VecSet<'_, T> {
 // Indexing for Sets
 impl<T> std::ops::Index<usize> for VecSet<'_, T> {
     type Output = T;
-    #[inline(always)]
+    #[inline]
     fn index(&self, index: usize) -> &Self::Output {
         &self.elements[index]
     }
@@ -471,7 +476,7 @@ impl<T: ToString + Copy + Ord> std::fmt::Display for VecSet<'_, T> {
 
 // Implement Equality
 impl<T: PartialEq> PartialEq for VecSet<'_, T> {
-    #[inline(always)]
+    #[inline]
     fn eq(&self, other: &Self) -> bool {
         self.elements == other.elements
     }

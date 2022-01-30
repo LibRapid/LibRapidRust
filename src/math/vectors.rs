@@ -34,6 +34,7 @@ impl<T: Copy +
     ///
     /// # Returns
     /// A new `MathVector<f64>` with length 0.
+    #[inline]
     #[must_use]
     pub fn new_with_dimension(dim: usize) -> MathVector<f64> {
 
@@ -44,6 +45,7 @@ impl<T: Copy +
     ///
     /// # Returns
     /// A `usize`.
+    #[inline]
     #[must_use]
     pub fn dimension(&self) -> usize {
         self.values.len()
@@ -52,6 +54,7 @@ impl<T: Copy +
     ///
     /// # Returns
     /// A `f64`.
+    #[inline]
     #[must_use]
     pub fn length(&mut self) -> f64 {
         match self.length {
@@ -71,6 +74,7 @@ impl<T: Copy +
     ///
     /// # Returns
     /// A `&Vec<T>`.
+    #[inline]
     #[must_use]
     pub fn get_values(&self) -> &Vec<T> {
         &self.values
@@ -101,6 +105,7 @@ impl<T: Copy +
     /// assert_eq!(v.length(), 1.0);
     /// assert_eq!(v.get_values(), &vec!(0.5773502691896258; 3));
     /// ```
+    #[inline]
     pub fn normalise(&mut self) {
         *self = scalar_mul(self.length().recip(), self);
         self.length = Some(1.0);
@@ -163,6 +168,7 @@ impl<T: Copy +
 ///
 /// # Returns
 /// A new `MathVector<T>`.
+#[inline]
 #[must_use]
 pub fn scalar_mul<T: Copy +
                      super::general::CommonPowers +
@@ -173,10 +179,9 @@ pub fn scalar_mul<T: Copy +
                      f64: From<T> {
 
     let mut vals: Vec<T> = Vec::with_capacity(other.dimension());
+    let scal = T::from(scalar);
 
-    for i in 0..other.dimension() {
-        vals.push(T::from(scalar) * other.values[i]);
-    }
+    other.values.iter().for_each(|x| vals.push(*x * scal));
     MathVector { values: vals,
                  length: None }
 }

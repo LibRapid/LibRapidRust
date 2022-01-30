@@ -83,7 +83,7 @@ pub trait Primality {
 }
 
 impl Primality for u8 {
-    #[inline(always)]
+    #[inline]
     fn is_prime(&self) -> bool {
         if self < &2
         { return false; }

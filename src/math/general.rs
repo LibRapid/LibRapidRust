@@ -226,23 +226,23 @@ pub trait Decrement {
 }
 
 impl<T: std::ops::AddAssign + From<u8>> Increment for T {
-    #[inline(always)]
+    #[inline]
     fn inc(&mut self) {
         *self += 1u8.into();
     }
-    #[inline(always)]
+    #[inline]
     fn inc_by(&mut self, n: Self) {
         *self += n;
     }
 }
 
 impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
-    #[inline(always)]
+    #[inline]
     fn dec(&mut self) {
         *self -= 1u8.into();
     }
 
-    #[inline(always)]
+    #[inline]
     fn dec_by(&mut self, n: Self) {
         *self -= n;
     }
@@ -285,18 +285,18 @@ impl<T: std::ops::Add<Output = T> +
         std::ops::Mul<Output = T> + 
         std::ops::Div<Output = T> + 
         Copy> MapToNumRange<T> for T {
-            #[inline(always)]
+            #[inline]
             fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T {
                 eval_postfix!(start2 end2 start2 - + (*self) start1 - end1 / start1 - *)
             }
         }
 
 impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
-    #[inline(always)]
+    #[inline]
     fn square(&self) -> Self {
         *self * *self
     }
-    #[inline(always)]
+    #[inline]
     fn cube(&self) -> Self {
         *self * *self * *self
     }
@@ -318,7 +318,7 @@ impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
 /// use lib_rapid::math::constants;
 /// assert_eq!(constants::SQRT2, nth_root(2.0, 2.0));
 /// ```
-#[inline(always)]
+#[inline]
 pub fn nth_root(degree: f64, radicand: f64) -> f64 {
     radicand.powf(degree.recip())
 }

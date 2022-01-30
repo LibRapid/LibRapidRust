@@ -27,6 +27,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// let mut wrapped = WrapperHashSet::wrap(books);
     /// ```
+    #[inline]
     #[must_use]
     pub fn wrap(existing: HashSet<T>) -> WrapperHashSet<'a, T> {
         WrapperHashSet { hs: existing, parent: None }
@@ -82,7 +83,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// assert_eq!(true, subset.has_emerged());
     /// ```
-    #[inline(always)]
+    #[inline]
     #[must_use]
     pub fn has_emerged(&self) -> bool {
         self.parent.is_some()
@@ -107,7 +108,7 @@ impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// 
     /// assert_eq!(&wrapped, subset.get_superset().unwrap());
     /// ```
-    #[inline(always)]
+    #[inline]
     #[must_use]
     pub fn get_superset(&self) -> Option<&Self> {
         self.parent

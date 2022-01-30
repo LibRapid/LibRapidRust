@@ -201,17 +201,17 @@ pub trait FloatMagic {
 }
 
 impl FloatMagic for f32 {
-    #[inline(always)]
+    #[inline]
     fn raw_mantissa(&self) -> u64 {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
         (_t & 0b00000000011111111111111111111111) as u64
     }
-    #[inline(always)]
+    #[inline]
     fn raw_exponent(&self) -> u16 {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
         ((_t & 0b01111111100000000000000000000000) >> 23) as u16
     }
-    #[inline(always)]
+    #[inline]
     fn real_mantissa(&self) -> f64 {
         let mut _t: u32 = unsafe { std::intrinsics::transmute(*self) };
         _t &= !0b01111111100000000000000000000000;
@@ -220,31 +220,31 @@ impl FloatMagic for f32 {
 
         _m as f64
     }
-    #[inline(always)]
+    #[inline]
     fn real_exponent(&self) -> i32 {
         self.raw_exponent() as i32 - 127
     }
 }
 
 impl FloatMagic for f64 {
-    #[inline(always)]
+    #[inline]
     fn raw_mantissa(&self) -> u64 {
         let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
         (_t &  0b0000000000001111111111111111111111111111111111111111111111111111) as u64
     }
-    #[inline(always)]
+    #[inline]
     fn raw_exponent(&self) -> u16 {
         let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
         ((_t & 0b0111111111110000000000000000000000000000000000000000000000000000) >> 52) as u16
     }
-    #[inline(always)]
+    #[inline]
     fn real_mantissa(&self) -> f64 {
         let mut _t: u64 = unsafe { std::intrinsics::transmute(*self) };
         _t &= !0b0111111111110000000000000000000000000000000000000000000000000000;
         _t |=  0b0011111111110000000000000000000000000000000000000000000000000000;
         unsafe { std::intrinsics::transmute(_t) }
     }
-    #[inline(always)]
+    #[inline]
     fn real_exponent(&self) -> i32 {
         self.raw_exponent() as i32 - 1023
     }
@@ -310,33 +310,36 @@ impl Brackets for String {
 }
 
 impl StringIndex for String {
+    #[inline]
     fn char_at(&self, index: usize) -> Option<char> {
         self.chars().nth(index)
     }
-
+    #[inline]
     fn byte_at(&self, index: usize) -> u8 {
         self.as_bytes()[index]
     }
 }
 
 impl StringIndex for &str {
+    #[inline]
     fn char_at(&self, index: usize) -> Option<char> {
         self.chars().nth(index)
     }
-
+    #[inline]
     fn byte_at(&self, index: usize) -> u8 {
         self.as_bytes()[index]
     }
 }
 
 impl<T: Ord + Copy> BinaryInsert<T> for Vec<T> {
+    #[inline]
     fn binary_insert(&mut self, value: T) {
         match self.binary_search(&value) {
             Ok(pos)  => self.insert(pos + 1, value),
             Err(pos) => self.insert(pos, value),
         }
     }
-
+    #[inline]
     fn binary_insert_no_dup(&mut self, value: T) {
         match self.binary_search(&value) {
             Ok(_)    => { },
