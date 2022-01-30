@@ -332,14 +332,12 @@ impl StringIndex for &str {
 }
 
 impl<T: Ord + Copy> BinaryInsert<T> for Vec<T> {
-    #[inline]
     fn binary_insert(&mut self, value: T) {
         match self.binary_search(&value) {
             Ok(pos)  => self.insert(pos + 1, value),
             Err(pos) => self.insert(pos, value),
         }
     }
-    #[inline]
     fn binary_insert_no_dup(&mut self, value: T) {
         match self.binary_search(&value) {
             Ok(_)    => { },
