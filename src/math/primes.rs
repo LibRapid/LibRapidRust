@@ -188,10 +188,10 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
     let mut res: Vec<usize> = Vec::with_capacity(limit >> 2 + 2);
     res.push(2);
     res.push(3);
+    let mut n: usize;
     let mut sieve: Vec<bool> = vec![false; limit];
     
     for x in (1..).take_while(|n| n.square() < limit) {
-        let mut n: usize;
         for y in (1..).take_while(|n| n.square() < limit) {
 
             n = 4 * x.square() + y.square();
