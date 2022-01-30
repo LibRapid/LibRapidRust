@@ -1,4 +1,5 @@
 //! Simple Dates. Do not expect anything fancy from this part of the library, as the focus does not lie on date-functions.
+use core::cmp::Ordering::Equal;
 /// The structure for dates in LibRapid.
 pub struct Date {
     year:      i32,
@@ -49,7 +50,7 @@ impl Date {
                        self.hour   = hour;
                        self.minute = minute;
                        self.second = second; }
-            false => { core::panic!("Error: Expected valid hour, minute and second.") }
+            false => { panic!("Error: Expected valid hour, minute and second.") }
         }
     }
     /// Checks if a year is a leap year.
@@ -77,7 +78,7 @@ impl Date {
     pub fn set_year(&mut self, year: i32) {
         match is_valid_day(year, self.month, self.day) {
             true  => { self.leap_year = is_leap_year(year); }
-            false => { core::panic!("Error: Invalid year.") }
+            false => { panic!("Error: Invalid year.") }
         }
         self.year = year;
     }
@@ -98,7 +99,7 @@ impl Date {
     pub fn set_month(&mut self, month: u8) {
         match is_valid_day(self.year, month, self.day) {
             true  => { self.month = month; }
-            false => { core::panic!("Error: Invalid month.") }
+            false => { panic!("Error: Invalid month.") }
         }
     }
 
@@ -118,7 +119,7 @@ impl Date {
     pub fn set_day(&mut self, day: u8) {
         match is_valid_day(self.year, self.month, day) {
             true  => { self.day = day; }
-            false => { core::panic!("Error: Invalid day.") }
+            false => { panic!("Error: Invalid day.") }
         }
     }
 
@@ -138,7 +139,7 @@ impl Date {
     pub fn set_hour(&mut self, hour: u8) {
         match is_valid_hms(hour, self.minute, self.second) {
             true  => { self.hour = hour; }
-            false => { core::panic!("Error: Invalid hour.") }
+            false => { panic!("Error: Invalid hour.") }
         }
     }
 
@@ -158,7 +159,7 @@ impl Date {
     pub fn set_minute(&mut self, minute: u8) {
         match is_valid_hms(self.hour, minute, self.second) {
             true  => { self.minute = minute; }
-            false => { core::panic!("Error: Invalid minute.") }
+            false => { panic!("Error: Invalid minute.") }
         }
     }
 
@@ -178,7 +179,7 @@ impl Date {
     pub fn set_second(&mut self, second: u8) {
         match is_valid_hms(self.hour, self.minute, second) {
             true  => { self.second = second; }
-            false => { core::panic!("Error: Invalid second.") }
+            false => { panic!("Error: Invalid second.") }
         }
     }
 }
@@ -243,27 +244,27 @@ impl PartialEq for Date {
 impl core::cmp::PartialOrd for Date {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         match self.year.partial_cmp(&other.year) {
-            Some(core::cmp::Ordering::Equal) => {}
+            Some(Equal) => {}
             ord => return ord,
         }
         match self.month.partial_cmp(&other.month) {
-            Some(core::cmp::Ordering::Equal) => {}
+            Some(Equal) => {}
             ord => return ord,
         }
         match self.day.partial_cmp(&other.day) {
-            Some(core::cmp::Ordering::Equal) => {}
+            Some(Equal) => {}
             ord => return ord,
         }
         match self.hour.partial_cmp(&other.hour) {
-            Some(core::cmp::Ordering::Equal) => {}
+            Some(Equal) => {}
             ord => return ord,
         }
         match self.minute.partial_cmp(&other.minute) {
-            Some(core::cmp::Ordering::Equal) => {}
+            Some(Equal) => {}
             ord => return ord,
         }
         match self.second.partial_cmp(&other.second) {
-            Some(core::cmp::Ordering::Equal) => {}
+            Some(Equal) => {}
             ord => return ord,
         }
         None
