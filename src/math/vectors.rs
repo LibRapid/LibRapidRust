@@ -86,7 +86,7 @@ impl<T: Copy +
         match vals.len() == self.dimension() {
             true  => { self.values = vals.to_owned();
                        self.length = None; }
-            false => { core::panic!("{}", INV_DIM); } 
+            false => { panic!("{}", INV_DIM); } 
         }
     }
 
@@ -126,7 +126,7 @@ impl<T: Copy +
                 MathVector { values: vals,
                              length: None }
             }
-            false => { core::panic!("{}", INV_DIM) }
+            false => { panic!("{}", INV_DIM) }
         }
     }
 }
@@ -151,7 +151,7 @@ impl<T: Copy +
                 MathVector { values: vals,
                              length: None }
             }
-            false => { core::panic!("{}", INV_DIM) }
+            false => { panic!("{}", INV_DIM) }
         }
     }
 }
