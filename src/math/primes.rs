@@ -1,4 +1,9 @@
 //! Traits and functions for handling primes and primality.
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+// | Original implementations by Rust-CAS (on GitHub). Modified by NervousNullPtr. |
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+
 use super::general::*;
 use crate::math::constants;
 /// Trait for prime functions.
