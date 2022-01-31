@@ -1,7 +1,7 @@
 //! Traits and functions for handling primes and primality.
 
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
-// | Original implementations by Rust-CAS (on GitHub). Modified by NervousNullPtr. |
+// | Original implementations by Forisek, Jancina & J.A. Sory (rust-cas.org). Modified by NervousNullPtr. |
 // *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
 use super::general::*;
