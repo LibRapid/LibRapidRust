@@ -254,7 +254,7 @@ fn machine_word_prime_64(x: u64) -> bool {
 
 fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)= -1
     let zeroes = (p - 1).trailing_zeros(); // d * 2^n -1
-    let d      = (p - 1) / (1 << zeroes);
+    let d      = (p - 1) >> zeroes;
     let mut x  = mod_pow_32(&base, &d, &p); // base^d mod p
 
     if x == 1 || x == p - 1 // base^p = 1 mod p || base^(d * 2^n)= -1
@@ -270,7 +270,7 @@ fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)
 
 fn sprp_64(p: u64, base: u64) -> bool {
     let zeroes = (p - 1).trailing_zeros();
-    let d      = (p - 1) / (1 << zeroes);
+    let d      = (p - 1) >> zeroes;
     let mut x  = mod_pow_64(&base, &d, &p);
 
     if x == 1 || x == p - 1
