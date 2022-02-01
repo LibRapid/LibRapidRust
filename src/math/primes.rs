@@ -83,6 +83,7 @@ pub trait Primality {
     /// }
     /// 
     /// assert_eq!(p, f);
+    /// assert_eq!(true, 18446744073709551557u64.is_prime());
     /// ```
     #[must_use]
     fn is_prime(&self) -> bool;
