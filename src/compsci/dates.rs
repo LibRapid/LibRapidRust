@@ -61,7 +61,6 @@ impl Date {
     pub fn leap_year(&self) -> &bool {
         &self.leap_year
     }
-
     /// Gets the year.
     ///
     /// # Returns
@@ -70,7 +69,6 @@ impl Date {
     pub fn year(&self) -> &i32 {
         &self.year
     }
-
     /// Sets the year.
     ///
     /// # Returns
@@ -82,7 +80,6 @@ impl Date {
         }
         self.year = year;
     }
-
     /// Gets the month.
     ///
     /// # Returns
@@ -91,7 +88,6 @@ impl Date {
     pub fn month(&self) -> &u8 {
         &self.month
     }
-
     /// Sets the month.
     ///
     /// # Returns
@@ -102,8 +98,6 @@ impl Date {
             false => { panic!("Error: Invalid month.") }
         }
     }
-
-
     /// Gets the day.
     ///
     /// # Returns
@@ -111,7 +105,6 @@ impl Date {
     pub fn day(&self) -> &u8 {
         &self.day
     }
-
     /// Sets the day.
     ///
     /// # Returns
@@ -122,7 +115,6 @@ impl Date {
             false => { panic!("Error: Invalid day.") }
         }
     }
-
     /// Gets the hour.
     ///
     /// # Returns
@@ -131,7 +123,6 @@ impl Date {
     pub fn hour(&self) -> &u8 {
         &self.hour
     }
-
     /// Sets the hour.
     ///
     /// # Returns
@@ -142,7 +133,6 @@ impl Date {
             false => { panic!("Error: Invalid hour.") }
         }
     }
-
     /// Gets the minute.
     ///
     /// # Returns
@@ -151,7 +141,6 @@ impl Date {
     pub fn minute(&self) -> &u8 {
         &self.minute
     }
-
     /// Sets the minute.
     ///
     /// # Returns
@@ -162,7 +151,6 @@ impl Date {
             false => { panic!("Error: Invalid minute.") }
         }
     }
-
     /// Gets the second.
     ///
     /// # Returns
@@ -171,7 +159,6 @@ impl Date {
     pub fn second(&self) -> &u8 {
         &self.second
     }
-
     /// Sets the second.
     ///
     /// # Returns
@@ -202,7 +189,6 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
     if day <= day_in_month { return true; }
     false
 }
-
 /// Checks if a year is a leap year.
 ///
 /// # Arguments
