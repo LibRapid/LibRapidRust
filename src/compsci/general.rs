@@ -154,9 +154,12 @@ pub trait Brackets {
 }
 /// Get bits and bytes from a floating point number.
 pub trait FloatMagic {
+    type Mantissa;
+    type Exponent;
+    type RealExponent;
     /// Get the raw binary mantissa (fractional part) data.
     /// # Returns
-    /// A `u64`.
+    /// A `u32` if the input is a `f32`, otherwise a `u64`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::FloatMagic;
@@ -164,29 +167,31 @@ pub trait FloatMagic {
     /// assert_eq!(2570638229164439, 3.1415927_f64.raw_mantissa());
     /// ```
     #[must_use]
-    fn raw_mantissa(&self) -> u64;
+    fn raw_mantissa(&self) -> Self::Mantissa;
     /// Get the raw binary exponent data.
     /// # Returns
-    /// A `u16`.
+    /// A `u8` if the input is a `f32`, otherwise a `u16`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1024, 3.1415927_f64.raw_exponent());
+    /// assert_eq!(1, f32::MIN.raw_exponent());
     /// ```
     #[must_use]
-    fn raw_exponent(&self) -> u16;
+    fn raw_exponent(&self) -> Self::Exponent;
     /// Get the actual mantissa part.
     /// # Returns
-    /// A `f64`.
+    /// A `Self`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1.57079635, 3.1415927_f64.real_mantissa());
+    /// assert_eq!(-1.9999999, f32::MIN.real_mantissa());
     /// ```
     #[must_use]
-    fn real_mantissa(&self) -> f64;
+    fn real_mantissa(&self) -> Self;
     /// Get the actual exponent part.
     /// # Returns
     /// A `i32`.
@@ -195,58 +200,89 @@ pub trait FloatMagic {
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1, 3.1415927_f64.real_exponent());
+    /// assert_eq!(-126, f32::MIN.real_exponent());
+    /// assert_eq!(-1022, 2.2250738585072014e-308.real_exponent()); // Minimal f64 value.
     /// ```
     #[must_use]
-    fn real_exponent(&self) -> i32;
+    fn real_exponent(&self) -> Self::RealExponent;
+    /// Decompose a floating point number into it's core components.
+    /// Returns a tuple with this order:
+    /// * `u8` - The sign.
+    /// * `u8` or `u16` - The raw exponent.
+    /// * `u32` or `u64` - The raw mantissa.
+    /// ```
+    /// use lib_rapid::compsci::general::FloatMagic;
+    /// 
+    /// assert_eq!((0, 1024, 2570638229164439), 3.1415927_f64.decompose());
+    /// ```
+    #[must_use]
+    fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa);
 }
 
 impl FloatMagic for f32 {
+    type Mantissa = u32;
+    type Exponent = u8;
+    type RealExponent = i16;
+
     #[inline]
-    fn raw_mantissa(&self) -> u64 {
+    fn raw_mantissa(&self) -> Self::Mantissa {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        (_t & 0b00000000011111111111111111111111) as u64
+        _t & 0b00000000011111111111111111111111
     }
     #[inline]
-    fn raw_exponent(&self) -> u16 {
+    fn raw_exponent(&self) -> Self::Exponent {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        ((_t & 0b01111111100000000000000000000000) >> 23) as u16
+        (!(_t & 0b01111111100000000000000000000000) >> 23) as u8
     }
     #[inline]
-    fn real_mantissa(&self) -> f64 {
+    fn real_mantissa(&self) -> Self {
         let mut _t: u32 = unsafe { std::intrinsics::transmute(*self) };
         _t &= !0b01111111100000000000000000000000;
         _t |=  0b00111111100000000000000000000000;
         let _m: f32 = unsafe { std::intrinsics::transmute(_t) };
 
-        _m as f64
+        _m
     }
     #[inline]
-    fn real_exponent(&self) -> i32 {
-        self.raw_exponent() as i32 - 127
+    fn real_exponent(&self) -> Self::RealExponent {
+        self.raw_exponent() as i16 - 127
+    }
+
+    #[inline]
+    fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa) {
+        (self.is_sign_negative() as u8, self.raw_exponent(), self.raw_mantissa())
     }
 }
 
 impl FloatMagic for f64 {
+    type Mantissa = u64;
+    type Exponent = u16;
+    type RealExponent = i32;
+
     #[inline]
-    fn raw_mantissa(&self) -> u64 {
+    fn raw_mantissa(&self) -> Self::Mantissa {
         let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
         (_t &  0b0000000000001111111111111111111111111111111111111111111111111111) as u64
     }
     #[inline]
-    fn raw_exponent(&self) -> u16 {
+    fn raw_exponent(&self) -> Self::Exponent {
         let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
         ((_t & 0b0111111111110000000000000000000000000000000000000000000000000000) >> 52) as u16
     }
     #[inline]
-    fn real_mantissa(&self) -> f64 {
+    fn real_mantissa(&self) -> Self {
         let mut _t: u64 = unsafe { std::intrinsics::transmute(*self) };
         _t &= !0b0111111111110000000000000000000000000000000000000000000000000000;
         _t |=  0b0011111111110000000000000000000000000000000000000000000000000000;
         unsafe { std::intrinsics::transmute(_t) }
     }
     #[inline]
-    fn real_exponent(&self) -> i32 {
-        self.raw_exponent() as i32 - 1023
+    fn real_exponent(&self) -> Self::RealExponent {
+       self.raw_exponent() as i32 - 1023
+    }
+    #[inline]
+    fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa) {
+        (self.is_sign_negative() as u8, self.raw_exponent(), self.raw_mantissa())
     }
 }
 
