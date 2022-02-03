@@ -1,7 +1,7 @@
 use super::general::Decrement;
 
 // Binary gcd
-pub(crate) fn gcd(mut a: u64, mut b: u64) -> u64{
+pub(crate) fn gcd(mut a: u64, mut b: u64) -> u64 {
     
     if b == 0 
     { return a; } 
@@ -38,7 +38,7 @@ pub(crate) fn eea(p: i64 , q: i64) -> (i64, i64, i64) {
     let mut bezout_2: i64 = 0;
     let mut new_t:    i64 = 1;
     
-    while new_r !=0 {
+    while new_r != 0 {
         let quotient: i64 = gcd / new_r;
         let mut temp: i64 = new_r;
         new_r = gcd - quotient * temp;
