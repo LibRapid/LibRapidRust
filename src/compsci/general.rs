@@ -302,7 +302,7 @@ impl FloatMagic for f32 {
         if sign     > 1       { panic!("A sign bigger than 1 is not allowed."); }
         if mantissa > 8388607 { panic!("A mantissa bigger than 8388607 is not allowed."); }
 
-        let mut _res = mantissa | ((exponent as u32) << 23);
+        let _res = mantissa | ((exponent as u32) << 23);
         unsafe { std::intrinsics::transmute(_res | (sign as u32) << 31) }
     }
 }
@@ -347,7 +347,7 @@ impl FloatMagic for f64 {
         if exponent > 2047             { panic!("An exponent bigger than 2047 is not allowed."); }
         if mantissa > 4503599627370000 { panic!("A mantissa bigger than 8388607 is not allowed."); }
 
-        let mut _res = mantissa | ((exponent as u64) << 52);
+        let _res = mantissa | ((exponent as u64) << 52);
         unsafe { std::intrinsics::transmute(_res | (sign as u64) << 63) }
     }
 }
