@@ -109,7 +109,7 @@ impl Averages<i8> for Vec<i8> {
     fn mode(&self) -> i8 {
         let mut hm: HashMap<i8, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -154,7 +154,7 @@ impl Averages<u8> for Vec<u8> {
     fn mode(&self) -> u8 {
         let mut hm: HashMap<u8, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -200,7 +200,7 @@ impl Averages<u16> for Vec<u16> {
     fn mode(&self) -> u16 {
         let mut hm: HashMap<u16, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -246,7 +246,7 @@ impl Averages<i16> for Vec<i16> {
     fn mode(&self) -> i16 {
         let mut hm: HashMap<i16, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -292,7 +292,7 @@ impl Averages<u32> for Vec<u32> {
     fn mode(&self) -> u32 {
         let mut hm: HashMap<u32, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -338,7 +338,7 @@ impl Averages<i32> for Vec<i32> {
     fn mode(&self) -> i32 {
         let mut hm: HashMap<i32, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -384,7 +384,7 @@ impl Averages<u64> for Vec<u64> {
     fn mode(&self) -> u64 {
         let mut hm: HashMap<u64, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -430,7 +430,7 @@ impl Averages<i64> for Vec<i64> {
     fn mode(&self) -> i64 {
         let mut hm: HashMap<i64, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -476,7 +476,7 @@ impl Averages<u128> for Vec<u128> {
     fn mode(&self) -> u128 {
         let mut hm: HashMap<u128, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -522,7 +522,7 @@ impl Averages<i128> for Vec<i128> {
     fn mode(&self) -> i128 {
         let mut hm: HashMap<i128, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -568,7 +568,7 @@ impl Averages<usize> for Vec<usize> {
     fn mode(&self) -> usize {
         let mut hm: HashMap<usize, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
@@ -614,7 +614,7 @@ impl Averages<isize> for Vec<isize> {
     fn mode(&self) -> isize {
         let mut hm: HashMap<isize, usize> = HashMap::new();
         for x in self {
-            *hm.entry(*x).or_default() += 1;
+            hm.entry(*x).or_default().inc();
         }
         *hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap()
     }
