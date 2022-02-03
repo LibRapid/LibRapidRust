@@ -206,10 +206,12 @@ pub trait FloatMagic {
     #[must_use]
     fn real_exponent(&self) -> Self::RealExponent;
     /// Decompose a floating point number into it's core components.
-    /// Returns a tuple with this order:
+    /// # Returns
+    /// a tuple with this order:
     /// * `u8` - The sign.
     /// * `u8` or `u16` - The raw exponent.
     /// * `u32` or `u64` - The raw mantissa.
+    /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
@@ -218,10 +220,12 @@ pub trait FloatMagic {
     #[must_use]
     fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa);
     /// Decompose a floating point number into it's core components.
-    /// Returns a tuple with this order:
+    /// # Returns
+    /// A tuple with this order:
     /// * `u8` - The sign.
     /// * `i16` or `i32` - The real exponent.
     /// * `f32` or `f64` - The real mantissa.
+    /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
@@ -230,6 +234,30 @@ pub trait FloatMagic {
     /// ```
     #[must_use]
     fn real_decompose(&self) -> (u8, Self::RealExponent, Self);
+    /// Compose a floating point value out of the raw parts.
+    /// # Returns
+    /// A `Self`.
+    /// # Panics
+    /// Panics if one of the parts is out of range for `Self`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::FloatMagic;
+    /// 
+    /// let my_float: f32 = 3.1415927;
+    /// let sign          = my_float.is_sign_negative() as u8;
+    /// let exponent      = my_float.raw_exponent();
+    /// let mantissa      = my_float.raw_mantissa();
+    /// 
+    /// let my_double       = my_float as f64;
+    /// let sign_1          = my_double.is_sign_negative() as u8;
+    /// let exponent_1      = my_double.raw_exponent();
+    /// let mantissa_1      = my_double.raw_mantissa();
+    /// 
+    /// assert_eq!(3.1415927, f32::raw_compose(sign, exponent, mantissa));
+    /// assert_eq!(3.1415927410125732, f64::raw_compose(sign, exponent_1, mantissa_1));
+    /// ```
+    #[must_use]
+    fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self;
 }
 
 impl FloatMagic for f32 {
@@ -269,6 +297,14 @@ impl FloatMagic for f32 {
     fn real_decompose(&self) -> (u8, Self::RealExponent, Self) {
         (self.is_sign_negative() as u8, self.real_exponent(), self.real_mantissa())
     }
+    #[inline]
+    fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self {
+        if sign     > 1       { panic!("A sign bigger than 1 is not allowed."); }
+        if mantissa > 8388607 { panic!("A mantissa bigger than 8388607 is not allowed."); }
+
+        let mut _res = mantissa | ((exponent as u32) << 23);
+        unsafe { std::intrinsics::transmute(_res | (sign as u32) << 31) }
+    }
 }
 
 impl FloatMagic for f64 {
@@ -304,6 +340,15 @@ impl FloatMagic for f64 {
     #[inline]
     fn real_decompose(&self) -> (u8, Self::RealExponent, Self) {
         (self.is_sign_negative() as u8, self.real_exponent(), self.real_mantissa())
+    }
+    #[inline]
+    fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self {
+        if sign     > 1                { panic!("A sign bigger than 1 is not allowed."); }
+        if exponent > 2047             { panic!("An exponent bigger than 2047 is not allowed."); }
+        if mantissa > 4503599627370000 { panic!("A mantissa bigger than 8388607 is not allowed."); }
+
+        let mut _res = mantissa | ((exponent as u64) << 52);
+        unsafe { std::intrinsics::transmute(_res | (sign as u64) << 63) }
     }
 }
 
