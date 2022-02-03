@@ -176,7 +176,7 @@ pub trait FloatMagic {
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1024, 3.1415927_f64.raw_exponent());
-    /// assert_eq!(1, f32::MIN.raw_exponent());
+    /// assert_eq!(1, 1.1754943508e-38f32.raw_exponent());
     /// ```
     #[must_use]
     fn raw_exponent(&self) -> Self::Exponent;
@@ -188,7 +188,7 @@ pub trait FloatMagic {
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1.57079635, 3.1415927_f64.real_mantissa());
-    /// assert_eq!(-1.9999999, f32::MIN.real_mantissa());
+    /// assert_eq!(1.0, 1.1754943508e-38f32.real_mantissa());
     /// ```
     #[must_use]
     fn real_mantissa(&self) -> Self;
@@ -200,7 +200,7 @@ pub trait FloatMagic {
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// assert_eq!(1, 3.1415927_f64.real_exponent());
-    /// assert_eq!(-126, f32::MIN.real_exponent());
+    /// assert_eq!(-126, 1.1754943508e-38f32.real_exponent());
     /// assert_eq!(-1022, 2.2250738585072014e-308.real_exponent()); // Minimal f64 value.
     /// ```
     #[must_use]
@@ -213,10 +213,23 @@ pub trait FloatMagic {
     /// ```
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
-    /// assert_eq!((0, 1024, 2570638229164439), 3.1415927_f64.decompose());
+    /// assert_eq!((0, 1024, 2570638229164439), 3.1415927_f64.raw_decompose());
     /// ```
     #[must_use]
     fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa);
+    /// Decompose a floating point number into it's core components.
+    /// Returns a tuple with this order:
+    /// * `u8` - The sign.
+    /// * `i16` or `i32` - The real exponent.
+    /// * `f32` or `f64` - The real mantissa.
+    /// ```
+    /// use lib_rapid::compsci::general::FloatMagic;
+    /// 
+    /// assert_eq!((0, 1, 1.5707964), 3.1415927_f32.real_decompose());
+    /// assert_eq!((0, 1, 1.57079635), 3.1415927_f64.real_decompose());
+    /// ```
+    #[must_use]
+    fn real_decompose(&self) -> (u8, Self::RealExponent, Self);
 }
 
 impl FloatMagic for f32 {
@@ -232,7 +245,7 @@ impl FloatMagic for f32 {
     #[inline]
     fn raw_exponent(&self) -> Self::Exponent {
         let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        (!(_t & 0b01111111100000000000000000000000) >> 23) as u8
+        ((_t & 0b01111111100000000000000000000000) >> 23) as u8
     }
     #[inline]
     fn real_mantissa(&self) -> Self {
@@ -251,6 +264,10 @@ impl FloatMagic for f32 {
     #[inline]
     fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa) {
         (self.is_sign_negative() as u8, self.raw_exponent(), self.raw_mantissa())
+    }
+    #[inline]
+    fn real_decompose(&self) -> (u8, Self::RealExponent, Self) {
+        (self.is_sign_negative() as u8, self.real_exponent(), self.real_mantissa())
     }
 }
 
@@ -283,6 +300,10 @@ impl FloatMagic for f64 {
     #[inline]
     fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa) {
         (self.is_sign_negative() as u8, self.raw_exponent(), self.raw_mantissa())
+    }
+    #[inline]
+    fn real_decompose(&self) -> (u8, Self::RealExponent, Self) {
+        (self.is_sign_negative() as u8, self.real_exponent(), self.real_mantissa())
     }
 }
 
