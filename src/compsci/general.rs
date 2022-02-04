@@ -152,6 +152,57 @@ pub trait Brackets {
     /// ```
     fn validate_brackets(&self) -> Result<bool, usize>;
 }
+/// Simple methods for characters.
+pub trait CharTools {
+    /// Determines whether a character is a opening bracket.
+    /// # Returns
+    /// A `bool`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::CharTools;
+    /// 
+    /// assert_eq!(true, '('.is_open_bracket());
+    /// assert_eq!(true, '['.is_open_bracket());
+    /// assert_eq!(false, '}'.is_open_bracket());
+    /// ```
+    fn is_open_bracket(&self) -> bool;
+    /// Determines whether a character is a closing bracket.
+    /// # Returns
+    /// A `bool`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::CharTools;
+    /// 
+    /// assert_eq!(true, ')'.is_closed_bracket());
+    /// assert_eq!(true, ']'.is_closed_bracket());
+    /// assert_eq!(false, '{'.is_closed_bracket());
+    /// ```
+    fn is_closed_bracket(&self) -> bool;
+    /// Gets the corresponding opening bracket if there is one..
+    /// # Returns
+    /// A `Option<char>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::CharTools;
+    /// 
+    /// assert_eq!(None, '('.get_opening_bracket());
+    /// assert_eq!(Some('('), ')'.get_opening_bracket());
+    /// assert_eq!(Some('{'), '}'.get_opening_bracket());
+    /// ```
+    fn get_opening_bracket(&self) -> Option<char>;
+    /// Gets the corresponding closing bracket if there is one..
+    /// # Returns
+    /// A `Option<char>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::CharTools;
+    /// 
+    /// assert_eq!(Some(')'), '('.get_closing_bracket());
+    /// assert_eq!(None, ')'.get_closing_bracket());
+    /// assert_eq!(Some('}'), '{'.get_closing_bracket());
+    /// ```
+    fn get_closing_bracket(&self) -> Option<char>;
+}
 /// Get bits and bytes from a floating point number.
 pub trait FloatMagic {
     type Mantissa;
@@ -258,6 +309,44 @@ pub trait FloatMagic {
     /// ```
     #[must_use]
     fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self;
+}
+
+impl CharTools for char {
+    fn is_open_bracket(&self) -> bool {
+        match self {
+            '(' => { true }
+            '{' => { true }
+            '[' => { true }
+            _   => { false }
+        }
+    }
+
+    fn is_closed_bracket(&self) -> bool {
+        match self {
+            ')' => { true }
+            '}' => { true }
+            ']' => { true }
+            _   => { false }
+        }
+    }
+
+    fn get_closing_bracket(&self) -> Option<char> {
+        match self {
+            '(' => { Some(')') }
+            '{' => { Some('}') }
+            '[' => { Some(']') }
+            _   => { None }
+        }
+    }
+
+    fn get_opening_bracket(&self) -> Option<char> {
+        match self {
+            ')' => { Some('(') }
+            ']' => { Some('[') }
+            '}' => { Some('{') }
+            _   => { None }
+        }
+    }
 }
 
 impl FloatMagic for f32 {
