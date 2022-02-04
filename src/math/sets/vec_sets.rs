@@ -185,7 +185,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         VecSet { elements: res_vec,
                  superset: None }
     }
-    /// Gets the cartesian product of two sets in `O(n²)`.
+    /// Gets the cartesian product of two sets in `O(n·m)`.
     /// # Arguments
     /// * `other` - `&VecSet<T>`-
     /// # Returns
