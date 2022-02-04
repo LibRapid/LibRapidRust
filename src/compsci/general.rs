@@ -165,6 +165,7 @@ pub trait CharTools {
     /// assert_eq!(true, '['.is_open_bracket());
     /// assert_eq!(false, '}'.is_open_bracket());
     /// ```
+    #[must_use]
     fn is_open_bracket(&self) -> bool;
     /// Determines whether a character is a closing bracket.
     /// # Returns
@@ -177,6 +178,7 @@ pub trait CharTools {
     /// assert_eq!(true, ']'.is_closed_bracket());
     /// assert_eq!(false, '{'.is_closed_bracket());
     /// ```
+    #[must_use]
     fn is_closed_bracket(&self) -> bool;
     /// Gets the corresponding opening bracket if there is one..
     /// # Returns
@@ -188,7 +190,7 @@ pub trait CharTools {
     /// assert_eq!(None, '('.get_opening_bracket());
     /// assert_eq!(Some('('), ')'.get_opening_bracket());
     /// assert_eq!(Some('{'), '}'.get_opening_bracket());
-    /// ```
+    #[must_use]
     fn get_opening_bracket(&self) -> Option<char>;
     /// Gets the corresponding closing bracket if there is one..
     /// # Returns
@@ -201,6 +203,7 @@ pub trait CharTools {
     /// assert_eq!(None, ')'.get_closing_bracket());
     /// assert_eq!(Some('}'), '{'.get_closing_bracket());
     /// ```
+    #[must_use]
     fn get_closing_bracket(&self) -> Option<char>;
 }
 /// Get bits and bytes from a floating point number.
@@ -291,7 +294,8 @@ pub trait FloatMagic {
     /// # Panics
     /// Panics if one of the parts is out of range for `Self`.
     /// # Examples
-    /// ```
+    /// ```    fn raw_exponent(&self) -> Self::Exponent {
+
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// let my_float: f32 = 3.1415927;
