@@ -1,5 +1,6 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
 use crate::math::general::Increment;
+use std::intrinsics::transmute;
 /// Trait for `binary_insert`.
 pub trait BinaryInsert<T> {
     /// Insert an element into a ***sorted*** `vec` whilst maintaining the order, consuming `other`.
@@ -360,22 +361,19 @@ impl FloatMagic for f32 {
 
     #[inline]
     fn raw_mantissa(&self) -> Self::Mantissa {
-        let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        _t & 0b00000000011111111111111111111111
+        (unsafe { transmute::<f32, u32>(*self) }) & 0b00000000011111111111111111111111
     }
     #[inline]
     fn raw_exponent(&self) -> Self::Exponent {
-        let _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        ((_t & 0b01111111100000000000000000000000) >> 23) as u8
+        ((unsafe { transmute::<f32, u32>(*self) } &
+                   0b01111111100000000000000000000000) >> 23) as u8
     }
     #[inline]
     fn real_mantissa(&self) -> Self {
-        let mut _t: u32 = unsafe { std::intrinsics::transmute(*self) };
-        _t &= !0b01111111100000000000000000000000;
-        _t |=  0b00111111100000000000000000000000;
-        let _m: f32 = unsafe { std::intrinsics::transmute(_t) };
-
-        _m
+        unsafe { transmute(transmute::<f32, u32>(*self) &
+                           0b10000000011111111111111111111111 |
+                           0b00111111100000000000000000000000)
+        }
     }
     #[inline]
     fn real_exponent(&self) -> Self::RealExponent {
@@ -394,9 +392,10 @@ impl FloatMagic for f32 {
     fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self {
         if sign     > 1       { panic!("A sign bigger than 1 is not allowed."); }
         if mantissa > 8388607 { panic!("A mantissa bigger than 8388607 is not allowed."); }
-
-        let _res = mantissa | ((exponent as u32) << 23);
-        unsafe { std::intrinsics::transmute(_res | (sign as u32) << 31) }
+        
+        unsafe { transmute((mantissa |
+               ((exponent as u32) << 23)) |
+                (sign     as u32) << 31) }
     }
 }
 
@@ -407,20 +406,20 @@ impl FloatMagic for f64 {
 
     #[inline]
     fn raw_mantissa(&self) -> Self::Mantissa {
-        let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
-        (_t &  0b0000000000001111111111111111111111111111111111111111111111111111) as u64
+        (unsafe { transmute::<f64, u64>(*self) } &
+                  0b0000000000001111111111111111111111111111111111111111111111111111) as u64
     }
     #[inline]
     fn raw_exponent(&self) -> Self::Exponent {
-        let _t: u64 = unsafe { std::intrinsics::transmute(*self) };
-        ((_t & 0b0111111111110000000000000000000000000000000000000000000000000000) >> 52) as u16
+        ((unsafe { transmute::<f64, u64>(*self) } &
+                   0b0111111111110000000000000000000000000000000000000000000000000000) >> 52) as u16
     }
     #[inline]
     fn real_mantissa(&self) -> Self {
-        let mut _t: u64 = unsafe { std::intrinsics::transmute(*self) };
-        _t &= !0b0111111111110000000000000000000000000000000000000000000000000000;
-        _t |=  0b0011111111110000000000000000000000000000000000000000000000000000;
-        unsafe { std::intrinsics::transmute(_t) }
+        unsafe { transmute(transmute::<f64, u64>(*self)  &
+                           0b1000000000001111111111111111111111111111111111111111111111111111 |
+                           0b0011111111110000000000000000000000000000000000000000000000000000)
+        }
     }
     #[inline]
     fn real_exponent(&self) -> Self::RealExponent {
@@ -440,8 +439,9 @@ impl FloatMagic for f64 {
         if exponent > 2047             { panic!("An exponent bigger than 2047 is not allowed."); }
         if mantissa > 4503599627370000 { panic!("A mantissa bigger than 8388607 is not allowed."); }
 
-        let _res = mantissa | ((exponent as u64) << 52);
-        unsafe { std::intrinsics::transmute(_res | (sign as u64) << 63) }
+        unsafe { transmute((mantissa |
+                          ((exponent as u64) << 23)) |
+                           (sign     as u64) << 31) }
     }
 }
 
