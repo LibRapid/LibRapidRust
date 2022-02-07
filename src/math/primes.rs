@@ -232,9 +232,9 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
 }
 
 fn machine_word_prime_32(n: u32) -> bool {
-    let mut x = (((n >> 16) ^ n) as u128 * 0x45d9f3b) as u64;
-            x = (((x >> 16) ^ x) as u128 * 0x45d9f3b) as u64;
-            x =  ((x >> 16) ^ x) & 255;
+    let mut x: u64 = (((n >> 16) ^ n) as u128 * 0x45d9f3b) as u64;
+            x      = (((x >> 16) ^ x) as u128 * 0x45d9f3b) as u64;
+            x      =  ((x >> 16) ^ x) & 255;
 
     sprp_32(n, constants::BASES_32[x as usize] as u32)
 }
@@ -249,14 +249,14 @@ fn machine_word_prime_64(x: u64) -> bool {
     h         = (((h >> 32) ^ h) as u128 * 0x3335b36945d9f3b) as u64;
     h         =   (h >> 32) ^ h;
     
-    let b = constants::BASES_64[(h & 16383) as usize];
+    let b: u32 = constants::BASES_64[(h & 16383) as usize];
     sprp_64(x, (b & 4095) as u64) && sprp_64(x, (b >> 12) as u64)
 }
 
 fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)= -1
-    let zeroes = (p - 1).trailing_zeros(); // d * 2^n -1
-    let d      = (p - 1) >> zeroes;
-    let mut x  = mod_pow_32(&base, &d, &p); // base^d mod p
+    let zeroes: u32 = (p - 1).trailing_zeros(); // d * 2^n -1
+    let d:      u32 = (p - 1) >> zeroes;
+    let mut x:  u32 = mod_pow_32(&base, &d, &p); // base^d mod p
 
     if x == 1 || x == p - 1 // base^p = 1 mod p || base^(d * 2^n)= -1
     { return true; }
@@ -270,9 +270,9 @@ fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)
 }
 
 fn sprp_64(p: u64, base: u64) -> bool {
-    let zeroes = (p - 1).trailing_zeros();
-    let d      = (p - 1) >> zeroes;
-    let mut x  = mod_pow_64(&base, &d, &p);
+    let zeroes: u32 = (p - 1).trailing_zeros();
+    let d:      u64 = (p - 1) >> zeroes;
+    let mut x:  u64 = mod_pow_64(&base, &d, &p);
 
     if x == 1 || x == p - 1
     { return true; }
@@ -287,13 +287,13 @@ fn sprp_64(p: u64, base: u64) -> bool {
 
 fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {  
     if modulus == &0
-    { return 0; }
+    { return *modulus; }
     if p == &0 
     { return 1; }
-    let mut z    = 1;
-    let mut base = *c as u128;
-    let n        = *modulus as u128;
-    let mut pow  = *p;
+    let mut z:    u128 = 1;
+    let mut base: u128 = *c as u128;
+    let n:        u128 = *modulus as u128;
+    let mut pow:  u64  = *p;
 
     while pow > 1 {
 
@@ -314,10 +314,10 @@ fn mod_pow_32(c: &u32, p: &u32, modulus: &u32) -> u32 {
     { return 0; }
     if p == &0 
     { return 1; }
-    let mut z    = 1;
-    let mut base = *c as u64;
-    let n        = *modulus as u64;
-    let mut pow  = *p;
+    let mut z:    u64 = 1;
+    let mut base: u64 = *c as u64;
+    let n:        u64 = *modulus as u64;
+    let mut pow:  u32 = *p;
 
     while pow > 1 {
 

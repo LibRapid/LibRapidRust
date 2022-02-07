@@ -9,7 +9,7 @@ impl Averages<f64> for Vec<f64> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by(i.recip());
         }
@@ -18,7 +18,7 @@ impl Averages<f64> for Vec<f64> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<f64> = self.clone();
         cloned.sort_by(|a, b| a.partial_cmp(b).unwrap());
         if self.len() & 1 != 0
         { return cloned[self.len() >> 1usize]; }
@@ -33,7 +33,7 @@ impl Averages<f64> for Vec<f64> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<f64> = self.clone();
         cloned.sort_by(|a, b| a.partial_cmp(b).unwrap());
 
         (cloned[0] + cloned[cloned.len() - 1]) / 2.0
@@ -46,7 +46,7 @@ impl Averages<f32> for Vec<f32> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f32 = 0.0;
         for i in self {
             r.inc_by(i.recip());
         }
@@ -55,7 +55,7 @@ impl Averages<f32> for Vec<f32> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<f32> = self.clone();
         cloned.sort_by(|a, b| a.partial_cmp(b).unwrap());
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -70,7 +70,7 @@ impl Averages<f32> for Vec<f32> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<f32> = self.clone();
         cloned.sort_by(|a, b| a.partial_cmp(b).unwrap());
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -79,7 +79,7 @@ impl Averages<f32> for Vec<f32> {
 
 impl Averages<i8> for Vec<i8> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -87,7 +87,7 @@ impl Averages<i8> for Vec<i8> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -96,7 +96,7 @@ impl Averages<i8> for Vec<i8> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i8> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -124,7 +124,7 @@ impl Averages<i8> for Vec<i8> {
 
 impl Averages<u8> for Vec<u8> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -132,7 +132,7 @@ impl Averages<u8> for Vec<u8> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -141,12 +141,12 @@ impl Averages<u8> for Vec<u8> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u8> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst: u8 = cloned[self.len() / 2];
+        let snd: u8 = cloned[self.len() / 2 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -160,7 +160,7 @@ impl Averages<u8> for Vec<u8> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u8> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -170,7 +170,7 @@ impl Averages<u8> for Vec<u8> {
 
 impl Averages<u16> for Vec<u16> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -178,7 +178,7 @@ impl Averages<u16> for Vec<u16> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -187,7 +187,7 @@ impl Averages<u16> for Vec<u16> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u16> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -216,7 +216,7 @@ impl Averages<u16> for Vec<u16> {
 
 impl Averages<i16> for Vec<i16> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -224,7 +224,7 @@ impl Averages<i16> for Vec<i16> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -233,7 +233,7 @@ impl Averages<i16> for Vec<i16> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i16> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -262,7 +262,7 @@ impl Averages<i16> for Vec<i16> {
 
 impl Averages<u32> for Vec<u32> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -270,7 +270,7 @@ impl Averages<u32> for Vec<u32> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -279,7 +279,7 @@ impl Averages<u32> for Vec<u32> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u32> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -308,7 +308,7 @@ impl Averages<u32> for Vec<u32> {
 
 impl Averages<i32> for Vec<i32> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -316,7 +316,7 @@ impl Averages<i32> for Vec<i32> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -325,7 +325,7 @@ impl Averages<i32> for Vec<i32> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i32> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -344,7 +344,7 @@ impl Averages<i32> for Vec<i32> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i32> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -354,7 +354,7 @@ impl Averages<i32> for Vec<i32> {
 
 impl Averages<u64> for Vec<u64> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -362,7 +362,7 @@ impl Averages<u64> for Vec<u64> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -371,7 +371,7 @@ impl Averages<u64> for Vec<u64> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u64> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -390,7 +390,7 @@ impl Averages<u64> for Vec<u64> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u64> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -400,7 +400,7 @@ impl Averages<u64> for Vec<u64> {
 
 impl Averages<i64> for Vec<i64> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -408,7 +408,7 @@ impl Averages<i64> for Vec<i64> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -417,7 +417,7 @@ impl Averages<i64> for Vec<i64> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i64> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -436,7 +436,7 @@ impl Averages<i64> for Vec<i64> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i64> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -446,7 +446,7 @@ impl Averages<i64> for Vec<i64> {
 
 impl Averages<u128> for Vec<u128> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -454,7 +454,7 @@ impl Averages<u128> for Vec<u128> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -463,7 +463,7 @@ impl Averages<u128> for Vec<u128> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u128> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -482,7 +482,7 @@ impl Averages<u128> for Vec<u128> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<u128> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -492,7 +492,7 @@ impl Averages<u128> for Vec<u128> {
 
 impl Averages<i128> for Vec<i128> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -500,7 +500,7 @@ impl Averages<i128> for Vec<i128> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -509,7 +509,7 @@ impl Averages<i128> for Vec<i128> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<i128> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -538,7 +538,7 @@ impl Averages<i128> for Vec<i128> {
 
 impl Averages<usize> for Vec<usize> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -546,7 +546,7 @@ impl Averages<usize> for Vec<usize> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -555,7 +555,7 @@ impl Averages<usize> for Vec<usize> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<usize> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -574,7 +574,7 @@ impl Averages<usize> for Vec<usize> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<usize> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
@@ -584,7 +584,7 @@ impl Averages<usize> for Vec<usize> {
 
 impl Averages<isize> for Vec<isize> {
     fn arithmetic_mean(&self) -> f64 {
-        let mut s = 0;
+        let mut s: usize = 0;
         for i in self {
             s.inc_by(*i as usize);
         }
@@ -592,7 +592,7 @@ impl Averages<isize> for Vec<isize> {
     }
 
     fn harmonic_mean(&self) -> f64 {
-        let mut r = 0.0;
+        let mut r: f64 = 0.0;
         for i in self {
             r.inc_by((*i as f64).recip());
         }
@@ -601,7 +601,7 @@ impl Averages<isize> for Vec<isize> {
     }
 
     fn median(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<isize> = self.clone();
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
@@ -620,7 +620,7 @@ impl Averages<isize> for Vec<isize> {
     }
 
     fn mid_range(&self) -> f64 {
-        let mut cloned = self.clone();
+        let mut cloned: Vec<isize> = self.clone();
         cloned.sort_unstable();
 
         (cloned[0] + cloned[cloned.len() - 1]) as f64 / 2.0
