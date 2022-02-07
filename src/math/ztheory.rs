@@ -11,9 +11,9 @@ pub(crate) fn gcd(mut a: u64, mut b: u64) -> u64 {
     if a == 0
     { return b; }
 
-    let a_two_factor = a.trailing_zeros();  
-    let b_two_factor = b.trailing_zeros(); 
-    let min_two_factor = std::cmp::min(a_two_factor, b_two_factor);
+    let a_two_factor:   u32 = a.trailing_zeros();  
+    let b_two_factor:   u32 = b.trailing_zeros(); 
+    let min_two_factor: u32 = std::cmp::min(a_two_factor, b_two_factor);
     a >>= a_two_factor;
 	b >>= b_two_factor;
     loop {
