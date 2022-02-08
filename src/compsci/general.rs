@@ -1,6 +1,67 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
 use crate::math::general::Increment;
 use std::intrinsics::transmute;
+use core::mem::{size_of_val, size_of};
+/// Bitwise operations on slices of arbitrary (numeric) types.
+pub trait BitwiseSlice<T, U> {
+    /// XORs a slice of type `[T]` with a slice of type `[U]`.
+    /// # Returns
+    /// A `Vec<T>`.
+    /// # Panics
+    /// Panics if:
+    /// * The length of `self` and `other` in bytes differ or
+    /// * the size of `[U]` is bigger than the size of `T`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::BitwiseSlice;
+    /// let fs: Vec<u16> = vec!(0b00000000____00000001, 0b00000000____00000010);
+    /// let sn: Vec<u8>  = vec!(0b00000000, 0b00000001, 0b00000000, 0b00000010);
+    /// 
+    /// let fs2: Vec<u16> = vec!(0b00000000____00000000);
+    /// let sn2: Vec<u8>  = vec!(0b00000000, 0b00000011);
+    /// assert_eq!(vec!(0, 0), fs.xor_with(&sn));
+    /// assert_eq!(vec!(3), fs2.xor_with(&sn2));
+    /// ```
+    fn xor_with(&self, other: &[U]) -> Vec<T>;
+    /// ORs a slice of type `[T]` with a slice of type `[U]`.
+    /// # Returns
+    /// A `Vec<T>`.
+    /// # Panics
+    /// Panics if:
+    /// * The length of `self` and `other` in bytes differ or
+    /// * the size of `[U]` is bigger than the size of `T`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::BitwiseSlice;
+    /// let fs: Vec<u16> = vec!(0b00000000____00000001, 0b00000000____00000010);
+    /// let sn: Vec<u8>  = vec!(0b00000000, 0b00000001, 0b00000000, 0b00000010);
+    /// 
+    /// let fs2: Vec<u16> = vec!(0b00000000____00000100);
+    /// let sn2: Vec<u8>  = vec!(0b00000000, 0b00000011);
+    /// assert_eq!(vec!(1, 2), fs.or_with(&sn));
+    /// assert_eq!(vec!(7), fs2.or_with(&sn2));
+    /// ```
+    fn or_with(&self, other: &[U]) -> Vec<T>;
+    /// ANDs a slice of type `[T]` with a slice of type `[U]`.
+    /// # Returns
+    /// A `Vec<T>`.
+    /// # Panics
+    /// Panics if:
+    /// * The length of `self` and `other` in bytes differ or
+    /// * the size of `[U]` is bigger than the size of `T`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::BitwiseSlice;
+    /// let fs: Vec<u16> = vec!(0b00100000____00000001, 0b00000000____00000011);
+    /// let sn: Vec<u8>  = vec!(0b00000000, 0b00000001, 0b00000000, 0b00000010);
+    /// 
+    /// let fs2: Vec<u16> = vec!(0b00000000____00000101);
+    /// let sn2: Vec<u8>  = vec!(0b00000000, 0b00000011);
+    /// assert_eq!(vec!(1, 2), fs.and_with(&sn));
+    /// assert_eq!(vec!(1), fs2.and_with(&sn2));
+    /// ```
+    fn and_with(&self, other: &[U]) -> Vec<T>;
+}
 /// Trait for `binary_insert`.
 pub trait BinaryInsert<T> {
     /// Insert an element into a ***sorted*** `vec` whilst maintaining the order, consuming `other`.
@@ -538,5 +599,114 @@ impl<T: Ord + Copy> BinaryInsert<T> for Vec<T> {
             Ok(_)    => { },
             Err(pos) => self.insert(pos, value),
         }
+    }
+}
+
+impl<T: std::ops::BitXorAssign +
+        From<u8> +
+        Clone +
+        std::ops::BitOrAssign +
+        std::ops::BitAndAssign +
+        std::ops::Shl<Output = T> +
+        std::fmt::Debug +
+        std::convert::TryFrom<U>,
+        U: Clone +
+        Copy +
+        std::fmt::Debug +
+        std::ops::Shl<Output = U> +
+        From<u8>>
+        
+    BitwiseSlice<T, U> for [T] where <T as std::convert::TryFrom<U>>::Error: std::fmt::Debug {
+    fn xor_with(&self, other: &[U]) -> Vec<T> {
+        if size_of_val(self) != size_of_val(other)
+        { panic!("Arguments were not the same size in memory."); }
+
+        let t_size = size_of::<T>();
+        let u_size = size_of::<U>();
+        
+        let mut _res = self.clone().to_vec();
+        let multiplier;
+        
+        if t_size >= u_size {
+            multiplier = t_size / u_size;
+
+            for (index, slice) in other.chunks(multiplier).enumerate() {
+                let mut slice = slice.clone().to_vec();
+                slice.reverse();
+                let mut end_prod: T = T::from(0);
+
+                for (inner_idx, inner_ref) in slice.iter().enumerate() {
+                    end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
+                }
+                _res[index] ^= end_prod;
+            }
+        }
+        else {
+            panic!("U is bigger than T. Consider reversing the arguments.");
+        }
+
+        _res.to_vec()
+    }
+
+    fn or_with(&self, other: &[U]) -> Vec<T> {
+        if size_of_val(self) != size_of_val(other)
+        { panic!("Arguments were not the same size in memory."); }
+
+        let t_size = size_of::<T>();
+        let u_size = size_of::<U>();
+        
+        let mut _res = self.clone().to_vec();
+        let multiplier;
+        
+        if t_size >= u_size {
+            multiplier = t_size / u_size;
+
+            for (index, slice) in other.chunks(multiplier).enumerate() {
+                let mut slice = slice.clone().to_vec();
+                slice.reverse();
+                let mut end_prod: T = T::from(0);
+
+                for (inner_idx, inner_ref) in slice.iter().enumerate() {
+                    end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
+                }
+                _res[index] |= end_prod;
+            }
+        }
+        else {
+            panic!("U is bigger than T. Consider reversing the arguments.");
+        }
+
+        _res.to_vec()
+    }
+
+    fn and_with(&self, other: &[U]) -> Vec<T> {
+        if size_of_val(self) != size_of_val(other)
+        { panic!("Arguments were not the same size in memory."); }
+
+        let t_size = size_of::<T>();
+        let u_size = size_of::<U>();
+        
+        let mut _res = self.clone().to_vec();
+        let multiplier;
+        
+        if t_size >= u_size {
+            multiplier = t_size / u_size;
+
+            for (index, slice) in other.chunks(multiplier).enumerate() {
+                let mut slice = slice.clone().to_vec();
+                slice.reverse();
+                let mut end_prod: T = T::from(0);
+
+                for (inner_idx, inner_ref) in slice.iter().enumerate() {
+                    end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
+                }
+                _res[index] &= end_prod;
+            }
+        }
+        else {
+            panic!("U is bigger than T. Consider reversing the arguments.");
+        }
+
+        _res.to_vec()
     }
 }
