@@ -27,7 +27,7 @@ the best possible user experience and consistency over all libraries.
 Why X? Why Y?
 -----
 
-Sometimes I have to yank some versions. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
+Sometimes I have to yank a version. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
 
 Contributing
 -----
@@ -36,7 +36,7 @@ You want to contribute? Sure! You can contribute with:
 
 - 🚩 Issues
 - 🙇 Pull Requests (See `FORMATRULES.md` for more information)
-- 💡 Feature Suggestions (Via Discussions)
+- 💡 Feature Suggestions (Via Discussions or Issues)
 
 Be sure to add documentation to any new public API with examples, and running `cargo test` to ensure that your changes are valid.
 
@@ -44,7 +44,7 @@ Documentation
 -----
 
 Depending on the current published LibRapid version and how many crates are in queue on docs.rs, you may need to build the docs yourself.
-To do that, simply git-clone this repository and then run `cargo doc`. After that, your documentation should be ready in `src/target/doc/index.html`.
+To do that, simply git-clone this repository and then run `cargo doc --open`. After that, your documentation should open automatically.
 
 How does it work?
 -----
