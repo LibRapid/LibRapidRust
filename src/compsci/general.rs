@@ -18,13 +18,13 @@ pub trait BitwiseSlice<T, U> {
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::BitwiseSlice;
-    /// let fs: Vec<u16> = vec!(0b00000000____00000001, 0b00000000____00000010);
-    /// let sn: Vec<u8>  = vec!(0b00000000, 0b00000001, 0b00000000, 0b00000010);
+    /// let fs: Vec<u16> = vec!(0b10000000____00000001, 0b10000000____00000010);
+    /// let sn: Vec<u8>  = vec!(0b10000000, 0b00000001, 0b10000000, 0b00000010);
     /// 
     /// let fs2: Vec<u16> = vec!(0b00000000____00000000);
-    /// let sn2: Vec<u8>  = vec!(0b00000000, 0b00000011);
+    /// let sn2: Vec<u8>  = vec!(0b00000001, 0b00000011);
     /// assert_eq!(vec!(0, 0), fs.xor_with(&sn));
-    /// assert_eq!(vec!(3), fs2.xor_with(&sn2));
+    /// assert_eq!(vec!(259), fs2.xor_with(&sn2));
     /// ```
     fn xor_with(&self, other: &[U]) -> Vec<T>;
     /// ORs a slice of type `[T]` with a slice of type `[U]`.
@@ -38,11 +38,11 @@ pub trait BitwiseSlice<T, U> {
     /// ```
     /// use lib_rapid::compsci::general::BitwiseSlice;
     /// let fs: Vec<u16> = vec!(0b00000000____00000001, 0b00000000____00000010);
-    /// let sn: Vec<u8>  = vec!(0b00000000, 0b00000001, 0b00000000, 0b00000010);
+    /// let sn: Vec<u8>  = vec!(0b00000000, 0b10000001, 0b00000000, 0b00000010);
     /// 
     /// let fs2: Vec<u16> = vec!(0b00000000____00000100);
     /// let sn2: Vec<u8>  = vec!(0b00000000, 0b00000011);
-    /// assert_eq!(vec!(1, 2), fs.or_with(&sn));
+    /// assert_eq!(vec!(129, 2), fs.or_with(&sn));
     /// assert_eq!(vec!(7), fs2.or_with(&sn2));
     /// ```
     fn or_with(&self, other: &[U]) -> Vec<T>;
@@ -641,7 +641,7 @@ impl<T: BitXorAssign +
             let mut end_prod: T = T::from(0);
             
             for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                end_prod |= T::from(*inner_ref) << (inner_idx as u8).into();
+                end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
             }
             _res[index] ^= end_prod;
         }
@@ -666,7 +666,7 @@ impl<T: BitXorAssign +
             let mut end_prod: T = T::from(0);
 
             for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                end_prod |= T::from(*inner_ref) << (inner_idx as u8).into();
+                end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
             }
             _res[index] |= end_prod;
         }
@@ -692,7 +692,7 @@ impl<T: BitXorAssign +
             let mut end_prod: T = T::from(0);
 
             for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                end_prod |= T::from(*inner_ref) << (inner_idx as u8).into();
+                end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
             }
             _res[index] &= end_prod;
         }
