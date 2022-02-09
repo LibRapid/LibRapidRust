@@ -10,16 +10,13 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.4
+0.1.5-preview.1
 _____
-- Added Public API: `FloatMagic` trait.
-- Added Public API: `nth_fibonacci` function.
-- Added Public API: `nth_root` function.
-- Added Public API: `NumDigits` trait.
-- Changed Public API: `MathVec` is now generic.
-- Removed Public API: `BigInt` due to not stable functions.
-- Added several `#[inline]`s.
-- Slightly changed algorithms for primality checks.
+- Added Public API: `BitwiseSlice`-Trait.
+- Added Public API: `VecSets`: `difference_with()`.
+- Added Public API: `VecSets`: `cartesian_product()`.
+- Added Public API: `VecSets`: `symmetric_difference_with()`.
+- Added Public API: `VecSets`: `is_disjoint_with()`.
 
 Credits
 -----
