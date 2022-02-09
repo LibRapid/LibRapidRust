@@ -2,6 +2,10 @@
 use crate::math::general::Increment;
 use std::intrinsics::transmute;
 use core::mem::{size_of_val, size_of};
+
+const BITWISE_ERR1: &str = "Arguments were not the same size in memory.";
+const BITWISE_ERR2: &str = "U is bigger than T. Consider reversing the arguments.";
+
 /// Bitwise operations on slices of arbitrary (numeric) types.
 pub trait BitwiseSlice<T, U> {
     /// XORs a slice of type `[T]` with a slice of type `[U]`.
@@ -616,33 +620,30 @@ impl<T: std::ops::BitXorAssign +
         std::ops::Shl<Output = U> +
         From<u8>>
         
-    BitwiseSlice<T, U> for [T] where <T as std::convert::TryFrom<U>>::Error: std::fmt::Debug {
+    BitwiseSlice<T, U> for [T]
+    where
+    <T as std::convert::TryFrom<U>>::Error: std::fmt::Debug {
     fn xor_with(&self, other: &[U]) -> Vec<T> {
         if size_of_val(self) != size_of_val(other)
-        { panic!("Arguments were not the same size in memory."); }
+        { panic!("{}", BITWISE_ERR1); }
 
-        let t_size = size_of::<T>();
-        let u_size = size_of::<U>();
+        let t_size: usize = size_of::<T>();
+        let u_size: usize = size_of::<U>();
+        if t_size < u_size
+        { panic!("{}", BITWISE_ERR2); }
         
-        let mut _res = self.clone().to_vec();
-        let multiplier;
-        
-        if t_size >= u_size {
-            multiplier = t_size / u_size;
+        let mut _res: Vec<T> = self.clone().to_vec();
+        let multiplier: usize = t_size / u_size;
 
-            for (index, slice) in other.chunks(multiplier).enumerate() {
-                let mut slice = slice.clone().to_vec();
-                slice.reverse();
-                let mut end_prod: T = T::from(0);
-
-                for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                    end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
-                }
-                _res[index] ^= end_prod;
+        for (index, slice) in other.chunks(multiplier).enumerate() {
+            let mut slice: Vec<U> = slice.clone().to_vec();
+            slice.reverse();
+            let mut end_prod: T = T::from(0);
+            
+            for (inner_idx, inner_ref) in slice.iter().enumerate() {
+                end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
             }
-        }
-        else {
-            panic!("U is bigger than T. Consider reversing the arguments.");
+            _res[index] ^= end_prod;
         }
 
         _res.to_vec()
@@ -650,30 +651,24 @@ impl<T: std::ops::BitXorAssign +
 
     fn or_with(&self, other: &[U]) -> Vec<T> {
         if size_of_val(self) != size_of_val(other)
-        { panic!("Arguments were not the same size in memory."); }
+        { panic!("{}", BITWISE_ERR1); }
 
-        let t_size = size_of::<T>();
-        let u_size = size_of::<U>();
-        
-        let mut _res = self.clone().to_vec();
-        let multiplier;
-        
-        if t_size >= u_size {
-            multiplier = t_size / u_size;
+        let t_size: usize = size_of::<T>();
+        let u_size: usize = size_of::<U>();
+        if t_size < u_size
+        { panic!("{}", BITWISE_ERR2); }
 
-            for (index, slice) in other.chunks(multiplier).enumerate() {
-                let mut slice = slice.clone().to_vec();
-                slice.reverse();
-                let mut end_prod: T = T::from(0);
+        let mut _res: Vec<T> = self.clone().to_vec();
+        let multiplier: usize = t_size / u_size;
+        for (index, slice) in other.chunks(multiplier).enumerate() {
+            let mut slice: Vec<U> = slice.clone().to_vec();
+            slice.reverse();
+            let mut end_prod: T = T::from(0);
 
-                for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                    end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
-                }
-                _res[index] |= end_prod;
+            for (inner_idx, inner_ref) in slice.iter().enumerate() {
+                end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
             }
-        }
-        else {
-            panic!("U is bigger than T. Consider reversing the arguments.");
+            _res[index] |= end_prod;
         }
 
         _res.to_vec()
@@ -681,30 +676,25 @@ impl<T: std::ops::BitXorAssign +
 
     fn and_with(&self, other: &[U]) -> Vec<T> {
         if size_of_val(self) != size_of_val(other)
-        { panic!("Arguments were not the same size in memory."); }
+        { panic!("{}", BITWISE_ERR1); }
 
-        let t_size = size_of::<T>();
-        let u_size = size_of::<U>();
+        let t_size: usize = size_of::<T>();
+        let u_size: usize = size_of::<U>();
+        if t_size < u_size
+        { panic!("{}", BITWISE_ERR2); }
         
-        let mut _res = self.clone().to_vec();
-        let multiplier;
-        
-        if t_size >= u_size {
-            multiplier = t_size / u_size;
+        let mut _res: Vec<T> = self.clone().to_vec();
+        let multiplier: usize = t_size / u_size;
 
-            for (index, slice) in other.chunks(multiplier).enumerate() {
-                let mut slice = slice.clone().to_vec();
-                slice.reverse();
-                let mut end_prod: T = T::from(0);
+        for (index, slice) in other.chunks(multiplier).enumerate() {
+            let mut slice: Vec<U> = slice.clone().to_vec();
+            slice.reverse();
+            let mut end_prod: T = T::from(0);
 
-                for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                    end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
-                }
-                _res[index] &= end_prod;
+            for (inner_idx, inner_ref) in slice.iter().enumerate() {
+                end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
             }
-        }
-        else {
-            panic!("U is bigger than T. Consider reversing the arguments.");
+            _res[index] &= end_prod;
         }
 
         _res.to_vec()
