@@ -608,12 +608,12 @@ impl<T: Ord + Copy> BinaryInsert<T> for Vec<T> {
 
 impl<T: BitXorAssign +
         From<u8> +
+        From<U> +
         Clone +
         BitOrAssign +
         BitAndAssign +
         Shl<Output = T> +
-        Debug +
-        TryFrom<U>,
+        Debug,
         U: Clone +
         Copy +
         Debug +
@@ -632,21 +632,21 @@ impl<T: BitXorAssign +
         if t_size < u_size
         { panic!("{}", BITWISE_ERR2); }
         
-        let mut _res: Vec<T> = self.clone().to_vec();
+        let mut _res: Vec<T> = self.to_vec();
         let multiplier: usize = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
-            let mut slice: Vec<U> = slice.clone().to_vec();
+            let mut slice: Vec<U> = slice.to_vec();
             slice.reverse();
             let mut end_prod: T = T::from(0);
             
             for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
+                end_prod |= T::from(*inner_ref) << (inner_idx as u8).into();
             }
             _res[index] ^= end_prod;
         }
 
-        _res.to_vec()
+        _res
     }
 
     fn or_with(&self, other: &[U]) -> Vec<T> {
@@ -658,20 +658,20 @@ impl<T: BitXorAssign +
         if t_size < u_size
         { panic!("{}", BITWISE_ERR2); }
 
-        let mut _res: Vec<T> = self.clone().to_vec();
+        let mut _res: Vec<T> = self.to_vec();
         let multiplier: usize = t_size / u_size;
         for (index, slice) in other.chunks(multiplier).enumerate() {
-            let mut slice: Vec<U> = slice.clone().to_vec();
+            let mut slice: Vec<U> = slice.to_vec();
             slice.reverse();
             let mut end_prod: T = T::from(0);
 
             for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
+                end_prod |= T::from(*inner_ref) << (inner_idx as u8).into();
             }
             _res[index] |= end_prod;
         }
 
-        _res.to_vec()
+        _res
     }
 
     fn and_with(&self, other: &[U]) -> Vec<T> {
@@ -683,20 +683,20 @@ impl<T: BitXorAssign +
         if t_size < u_size
         { panic!("{}", BITWISE_ERR2); }
         
-        let mut _res: Vec<T> = self.clone().to_vec();
+        let mut _res: Vec<T> = self.to_vec();
         let multiplier: usize = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
-            let mut slice: Vec<U> = slice.clone().to_vec();
+            let mut slice: Vec<U> = slice.to_vec();
             slice.reverse();
             let mut end_prod: T = T::from(0);
 
             for (inner_idx, inner_ref) in slice.iter().enumerate() {
-                end_prod |= T::try_from(*inner_ref).unwrap() << (inner_idx as u8).into();
+                end_prod |= T::from(*inner_ref) << (inner_idx as u8).into();
             }
             _res[index] &= end_prod;
         }
 
-        _res.to_vec()
+        _res
     }
 }
