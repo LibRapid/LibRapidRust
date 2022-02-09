@@ -1,6 +1,6 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
 use crate::math::general::Increment;
-use std::intrinsics::transmute;
+use std::{intrinsics::transmute, fmt::Debug, ops::{BitAndAssign, Shl, BitOrAssign, BitXorAssign}, convert::TryFrom};
 use core::mem::{size_of_val, size_of};
 
 const BITWISE_ERR1: &str = "Arguments were not the same size in memory.";
@@ -606,23 +606,23 @@ impl<T: Ord + Copy> BinaryInsert<T> for Vec<T> {
     }
 }
 
-impl<T: std::ops::BitXorAssign +
+impl<T: BitXorAssign +
         From<u8> +
         Clone +
-        std::ops::BitOrAssign +
-        std::ops::BitAndAssign +
-        std::ops::Shl<Output = T> +
-        std::fmt::Debug +
-        std::convert::TryFrom<U>,
+        BitOrAssign +
+        BitAndAssign +
+        Shl<Output = T> +
+        Debug +
+        TryFrom<U>,
         U: Clone +
         Copy +
-        std::fmt::Debug +
-        std::ops::Shl<Output = U> +
+        Debug +
+        Shl<Output = U> +
         From<u8>>
         
     BitwiseSlice<T, U> for [T]
     where
-    <T as std::convert::TryFrom<U>>::Error: std::fmt::Debug {
+    <T as TryFrom<U>>::Error: Debug {
     fn xor_with(&self, other: &[U]) -> Vec<T> {
         if size_of_val(self) != size_of_val(other)
         { panic!("{}", BITWISE_ERR1); }
