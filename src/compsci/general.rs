@@ -26,6 +26,7 @@ pub trait BitwiseSlice<T, U> {
     /// assert_eq!(vec!(0, 0), fs.xor_with(&sn));
     /// assert_eq!(vec!(259), fs2.xor_with(&sn2));
     /// ```
+    #[must_use]
     fn xor_with(&self, other: &[U]) -> Vec<T>;
     /// ORs a slice of type `[T]` with a slice of type `[U]`.
     /// # Returns
@@ -45,6 +46,7 @@ pub trait BitwiseSlice<T, U> {
     /// assert_eq!(vec!(129, 2), fs.or_with(&sn));
     /// assert_eq!(vec!(7), fs2.or_with(&sn2));
     /// ```
+    #[must_use]
     fn or_with(&self, other: &[U]) -> Vec<T>;
     /// ANDs a slice of type `[T]` with a slice of type `[U]`.
     /// # Returns
@@ -64,6 +66,7 @@ pub trait BitwiseSlice<T, U> {
     /// assert_eq!(vec!(1, 2), fs.and_with(&sn));
     /// assert_eq!(vec!(1), fs2.and_with(&sn2));
     /// ```
+    #[must_use]
     fn and_with(&self, other: &[U]) -> Vec<T>;
 }
 /// Trait for `binary_insert`.
@@ -632,8 +635,8 @@ impl<T: BitXorAssign +
         if t_size < u_size
         { panic!("{}", BITWISE_ERR2); }
         
-        let mut _res: Vec<T> = self.to_vec();
-        let multiplier: usize = t_size / u_size;
+        let mut _res:   Vec<T> = self.to_vec();
+        let multiplier: usize  = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
             let mut slice: Vec<U> = slice.to_vec();
@@ -658,8 +661,8 @@ impl<T: BitXorAssign +
         if t_size < u_size
         { panic!("{}", BITWISE_ERR2); }
 
-        let mut _res: Vec<T> = self.to_vec();
-        let multiplier: usize = t_size / u_size;
+        let mut _res:   Vec<T> = self.to_vec();
+        let multiplier: usize  = t_size / u_size;
         for (index, slice) in other.chunks(multiplier).enumerate() {
             let mut slice: Vec<U> = slice.to_vec();
             slice.reverse();
@@ -683,8 +686,8 @@ impl<T: BitXorAssign +
         if t_size < u_size
         { panic!("{}", BITWISE_ERR2); }
         
-        let mut _res: Vec<T> = self.to_vec();
-        let multiplier: usize = t_size / u_size;
+        let mut _res:   Vec<T> = self.to_vec();
+        let multiplier: usize  = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
             let mut slice: Vec<U> = slice.to_vec();
