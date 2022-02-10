@@ -5,6 +5,14 @@ use core::mem::{size_of_val, size_of};
 
 const BITWISE_ERR1: &str = "Arguments were not the same size in memory.";
 const BITWISE_ERR2: &str = "U is bigger than T. Consider reversing the arguments.";
+const MANTISSA_MASK_64:      u64 = 0b0000000000001111111111111111111111111111111111111111111111111111;
+const EXPONENT_MASK_64:      u64 = 0b0111111111110000000000000000000000000000000000000000000000000000;
+const SET_EXP_ZERO_MASK_64:  u64 = 0b0011111111110000000000000000000000000000000000000000000000000000;
+const GET_SMANTISSA_MASK_64: u64 = 0b1000000000001111111111111111111111111111111111111111111111111111;
+const MANTISSA_MASK_32:      u32 = 0b00000000011111111111111111111111;
+const EXPONENT_MASK_32:      u32 = 0b01111111100000000000000000000000;
+const SET_EXP_ZERO_MASK_32:  u32 = 0b00111111100000000000000000000000;
+const GET_SMANTISSA_MASK_32: u32 = 0b10000000011111111111111111111111;
 
 /// Bitwise operations on slices of arbitrary (numeric) types.
 pub trait BitwiseSlice<T, U> {
@@ -429,18 +437,18 @@ impl FloatMagic for f32 {
 
     #[inline]
     fn raw_mantissa(&self) -> Self::Mantissa {
-        (unsafe { transmute::<f32, u32>(*self) }) & 0b00000000011111111111111111111111
+        (unsafe { transmute::<f32, u32>(*self) }) & MANTISSA_MASK_32
     }
     #[inline]
     fn raw_exponent(&self) -> Self::Exponent {
         ((unsafe { transmute::<f32, u32>(*self) } &
-                   0b01111111100000000000000000000000) >> 23) as u8
+                   EXPONENT_MASK_32) >> 23) as u8
     }
     #[inline]
     fn real_mantissa(&self) -> Self {
         unsafe { transmute(transmute::<f32, u32>(*self) &
-                           0b10000000011111111111111111111111 |
-                           0b00111111100000000000000000000000)
+                           GET_SMANTISSA_MASK_32 |
+                           SET_EXP_ZERO_MASK_32)
         }
     }
     #[inline]
@@ -475,18 +483,18 @@ impl FloatMagic for f64 {
     #[inline]
     fn raw_mantissa(&self) -> Self::Mantissa {
         (unsafe { transmute::<f64, u64>(*self) } &
-                  0b0000000000001111111111111111111111111111111111111111111111111111) as u64
+                  MANTISSA_MASK_64)
     }
     #[inline]
     fn raw_exponent(&self) -> Self::Exponent {
         ((unsafe { transmute::<f64, u64>(*self) } &
-                   0b0111111111110000000000000000000000000000000000000000000000000000) >> 52) as u16
+                   EXPONENT_MASK_64) >> 52) as u16
     }
     #[inline]
     fn real_mantissa(&self) -> Self {
-        unsafe { transmute(transmute::<f64, u64>(*self)  &
-                           0b1000000000001111111111111111111111111111111111111111111111111111 |
-                           0b0011111111110000000000000000000000000000000000000000000000000000)
+        unsafe { transmute(transmute::<f64, u64>(*self) &
+                           GET_SMANTISSA_MASK_64 |
+                           SET_EXP_ZERO_MASK_64)
         }
     }
     #[inline]
