@@ -337,12 +337,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// ```
     #[must_use]
     pub fn is_subset_of(&self, other: &VecSet<T>) -> bool {
-        match self.emerged {
-            Some(i) => { if i == other
-                         { return true; }
-                        }
-            None    => { }
-        }
         for i in self {
             if !other.has_element(i)
             { return false; }
