@@ -639,11 +639,9 @@ impl<T: BitXorAssign +
         let multiplier: usize  = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
-            let mut slice: Vec<U> = slice.to_vec();
-            slice.reverse();
             let mut end_prod: T = T::from(0);
             
-            for (inner_idx, inner_ref) in slice.iter().enumerate() {
+            for (inner_idx, inner_ref) in slice.iter().rev().enumerate() {
                 end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
             }
             _res[index] ^= end_prod;
@@ -664,11 +662,9 @@ impl<T: BitXorAssign +
         let mut _res:   Vec<T> = self.to_vec();
         let multiplier: usize  = t_size / u_size;
         for (index, slice) in other.chunks(multiplier).enumerate() {
-            let mut slice: Vec<U> = slice.to_vec();
-            slice.reverse();
             let mut end_prod: T = T::from(0);
 
-            for (inner_idx, inner_ref) in slice.iter().enumerate() {
+            for (inner_idx, inner_ref) in slice.iter().rev().enumerate() {
                 end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
             }
             _res[index] |= end_prod;
@@ -690,11 +686,9 @@ impl<T: BitXorAssign +
         let multiplier: usize  = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
-            let mut slice: Vec<U> = slice.to_vec();
-            slice.reverse();
             let mut end_prod: T = T::from(0);
 
-            for (inner_idx, inner_ref) in slice.iter().enumerate() {
+            for (inner_idx, inner_ref) in slice.iter().rev().enumerate() {
                 end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
             }
             _res[index] &= end_prod;
