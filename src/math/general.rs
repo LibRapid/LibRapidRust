@@ -318,6 +318,7 @@ impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
 /// use lib_rapid::math::constants;
 /// assert_eq!(constants::SQRT2, nth_root(2.0, 2.0));
 /// ```
+#[must_use]
 #[inline]
 pub fn nth_root(degree: f64, radicand: f64) -> f64 {
     radicand.powf(degree.recip())
@@ -334,6 +335,7 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
 /// assert_eq!(1304969544928657, nth_fibonacci(74));
 /// assert_eq!(332825110087067562321196029789634457848, nth_fibonacci(186));
 /// ```
+#[must_use]
 pub fn nth_fibonacci(n: u128) -> u128 {
     if n > 186
     { panic!("Error: The 187th Fibonacci number and all above are not allowed, as they would cause a overflow in the u128 type."); }
