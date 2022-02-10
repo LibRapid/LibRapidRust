@@ -3,7 +3,7 @@
 #[derive(Debug, Clone)]
 pub struct VecSet<'a, T> {
     elements: Vec<T>,
-    emerged: Option<&'a VecSet<'a, T>>,
+    parent: Option<&'a VecSet<'a, T>>,
 }
 
 // Main impl
@@ -27,7 +27,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn new(values: &[T]) -> VecSet<'a, T> {        
         let mut res: VecSet<T> = VecSet { elements: values.to_vec(),
-                                          emerged: None };
+                                          parent: None };
         res.elements.sort_unstable();
         res.elements.dedup();
         res
@@ -45,7 +45,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     #[inline]
     #[must_use]
     pub fn empty_set() -> VecSet<'a, T> {
-        VecSet { elements: Vec::new(), emerged: None }
+        VecSet { elements: Vec::new(), parent: None }
     }
     /// Creates a new `VecSet` using a parent-`VecSet` to which it applies a closure.
     ///
@@ -66,7 +66,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn new_subset<F: Fn(T) -> bool>(parent: &'a VecSet<T>, f: F) -> VecSet<'a, T> {
         let mut res: VecSet<T> = VecSet { elements: Vec::with_capacity(parent.cardinality()),
-                                          emerged: Some(parent) };
+                                          parent: Some(parent) };
         for elem in parent {
             if f(elem) {
                 res.elements.push(elem);
@@ -96,7 +96,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     #[must_use]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-                                         emerged: None };
+                                         parent: None };
 
         res.elements.append(&mut self.elements.clone());
         res.elements.append(&mut other.elements.clone());
@@ -183,7 +183,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         }
 
         VecSet { elements: res_vec,
-                 emerged: None }
+                 parent: None }
     }
     /// Gets the cartesian product of two sets in `O(n·m)`.
     /// # Arguments
@@ -207,7 +207,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
                 res_vec.push((i, j));
             }
         }
-        VecSet { elements: res_vec, emerged: None }
+        VecSet { elements: res_vec, parent: None }
     }
     /// Gets the symmetric difference (Elements either in `self` or `other`, but not in both).
     /// # Arguments
@@ -228,7 +228,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         let diff2 = other.difference_with(&self).clone();
 
         let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-            emerged: None };
+            parent: None };
 
         res.elements.append(&mut diff1.elements.clone());
         res.elements.append(&mut diff2.elements.clone());
@@ -292,13 +292,13 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let set = set!(0, 1, 2, 3, 4, 5, 6);
     /// let subset = VecSet::new_subset(&set, |x| x % 2 == 0);
     /// 
-    /// assert_eq!(true, subset.has_superset());
-    /// assert_eq!(false, set.has_superset());
+    /// assert_eq!(true, subset.has_emerged());
+    /// assert_eq!(false, set.has_emerged());
     /// ```
     #[inline]
     #[must_use]
-    pub fn has_superset(&self) -> bool {
-        self.emerged.is_some()
+    pub fn has_emerged(&self) -> bool {
+        self.parent.is_some()
     }
     /// Gets you the optional superset from which the Set emerged.
     ///
@@ -312,12 +312,12 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let set = set!(0, 1, 2, 3, 4, 5, 6);
     /// let subset = VecSet::new_subset(&set, |x| x % 2 == 0);
     /// 
-    /// assert_eq!(&set, subset.get_superset().unwrap());
+    /// assert_eq!(&set, subset.get_parent().unwrap());
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_superset(&self) -> Option<&VecSet<T>> {
-        self.emerged
+    pub fn get_parent(&self) -> Option<&VecSet<T>> {
+        self.parent
     }
     /// Determines whether `self` is a subset of `other`, unconditional from whether `self` emerged from `other`.
     /// # Arguments
@@ -473,7 +473,7 @@ impl<T: ToString + Copy + Ord> VecSet<'_, T> {
 
     fn rec_to_string(&self, string: &mut String) -> String {
         string.push_str(&self.to_string()); // The child-set at the bottom
-        if let Some(x) = self.emerged { string.push_str(" ⊆ "); // Add subset-character
+        if let Some(x) = self.parent { string.push_str(" ⊆ "); // Add subset-character
         x.rec_to_string(string); } // Recursively append parent sets
         string.to_string()
     }
