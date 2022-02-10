@@ -14,7 +14,7 @@ pub trait BitwiseSlice<T, U> {
     /// # Panics
     /// Panics if:
     /// * The length of `self` and `other` in bytes differ or
-    /// * the size of `[U]` is bigger than the size of `T`.
+    /// * the size of `U` is bigger than the size of `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::BitwiseSlice;
@@ -34,7 +34,7 @@ pub trait BitwiseSlice<T, U> {
     /// # Panics
     /// Panics if:
     /// * The length of `self` and `other` in bytes differ or
-    /// * the size of `[U]` is bigger than the size of `T`.
+    /// * the size of `U` is bigger than the size of `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::BitwiseSlice;
@@ -54,7 +54,7 @@ pub trait BitwiseSlice<T, U> {
     /// # Panics
     /// Panics if:
     /// * The length of `self` and `other` in bytes differ or
-    /// * the size of `[U]` is bigger than the size of `T`.
+    /// * the size of `U` is bigger than the size of `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::general::BitwiseSlice;
