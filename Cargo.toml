@@ -1,6 +1,6 @@
 [package]
 name         = "lib_rapid"
-version      = "0.1.5-preview.1"
+version      = "0.1.5-preview.2"
 authors      = ["Maximilian 'NervousNullPtr' Schleicher <NervousNullPtr@librapid.org>", "Toby 'Pencilcaseman' Davis <pencilcaseman@librapid.org>"]
 license      = "MIT"
 description  = "LibRapid - a library specifically built for mathematical calculations and scientific applications."
