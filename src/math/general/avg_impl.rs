@@ -22,8 +22,8 @@ impl Averages<f64> for Vec<f64> {
         cloned.sort_by(|a, b| a.partial_cmp(b).unwrap());
         if self.len() & 1 != 0
         { return cloned[self.len() >> 1usize]; }
-        let fst = cloned[self.len() / 2 - 1];
-        let snd = cloned[self.len() / 2];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -59,8 +59,8 @@ impl Averages<f32> for Vec<f32> {
         cloned.sort_by(|a, b| a.partial_cmp(b).unwrap());
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -100,8 +100,8 @@ impl Averages<i8> for Vec<i8> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -145,8 +145,8 @@ impl Averages<u8> for Vec<u8> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst: u8 = cloned[self.len() / 2];
-        let snd: u8 = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -191,8 +191,8 @@ impl Averages<u16> for Vec<u16> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -237,8 +237,8 @@ impl Averages<i16> for Vec<i16> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -283,8 +283,8 @@ impl Averages<u32> for Vec<u32> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -329,8 +329,8 @@ impl Averages<i32> for Vec<i32> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -375,8 +375,8 @@ impl Averages<u64> for Vec<u64> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -421,8 +421,8 @@ impl Averages<i64> for Vec<i64> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -467,8 +467,8 @@ impl Averages<u128> for Vec<u128> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -513,8 +513,8 @@ impl Averages<i128> for Vec<i128> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -559,8 +559,8 @@ impl Averages<usize> for Vec<usize> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
@@ -605,8 +605,8 @@ impl Averages<isize> for Vec<isize> {
         cloned.sort_unstable();
         if self.len() & 1 == 0
         { return cloned[self.len() >> 1] as f64; }
-        let fst = cloned[self.len() / 2];
-        let snd = cloned[self.len() / 2 + 1];
+        let fst = cloned[self.len() >> 1];
+        let snd = cloned[self.len() >> 1 + 1];
 
         ((fst + snd) as f64) / 2.0
     }
