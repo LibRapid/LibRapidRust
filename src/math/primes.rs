@@ -230,7 +230,7 @@ pub fn generate_primes(limit: usize) -> Vec<usize> {
     }
     res
 }
-
+#[must_use]
 fn machine_word_prime_32(n: u32) -> bool {
     let mut x: u64 = (((n >> 16) ^ n) as u128 * 0x45d9f3b) as u64;
             x      = (((x >> 16) ^ x) as u128 * 0x45d9f3b) as u64;
@@ -238,7 +238,7 @@ fn machine_word_prime_32(n: u32) -> bool {
 
     sprp_32(n, constants::BASES_32[x as usize] as u32)
 }
-
+#[must_use]
 fn machine_word_prime_64(x: u64) -> bool {
 
     if !sprp_64(x, 2)
@@ -252,7 +252,7 @@ fn machine_word_prime_64(x: u64) -> bool {
     let b: u32 = constants::BASES_64[(h & 16383) as usize];
     sprp_64(x, (b & 4095) as u64) && sprp_64(x, (b >> 12) as u64)
 }
-
+#[must_use]
 fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)= -1
     let zeroes: u32 = (p - 1).trailing_zeros(); // d * 2^n -1
     let d:      u32 = (p - 1) >> zeroes;
@@ -268,7 +268,7 @@ fn sprp_32(p: u32, base: u32) -> bool { // if base^p = 1 mod p || base^(d * 2^n)
     }
     false
 }
-
+#[must_use]
 fn sprp_64(p: u64, base: u64) -> bool {
     let zeroes: u32 = (p - 1).trailing_zeros();
     let d:      u64 = (p - 1) >> zeroes;
@@ -284,7 +284,7 @@ fn sprp_64(p: u64, base: u64) -> bool {
     }
     false
 }
-
+#[must_use]
 fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {  
     if modulus == &0
     { return *modulus; }
@@ -308,7 +308,7 @@ fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {
     }
     (base * z % n) as u64
 }
-
+#[must_use]
 fn mod_pow_32(c: &u32, p: &u32, modulus: &u32) -> u32 {  
     if modulus == &0
     { return 0; }

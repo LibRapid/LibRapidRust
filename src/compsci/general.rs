@@ -690,7 +690,7 @@ impl<T: BitXorAssign +
         _res
     }
 }
-
+#[must_use]
 fn bitwise_from<T: From<u8> +
                    From<U> +
                    Shl<Output = T> +
