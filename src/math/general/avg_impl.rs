@@ -29,7 +29,7 @@ impl Averages<f64> for Vec<f64> {
     }
 
     fn mode(&self) -> f64 {
-        panic!("Error: Mode is not implemented yet for f64/f32.")
+        unimplemented!("Error: Mode is not implemented yet for f64/f32.")
     }
 
     fn mid_range(&self) -> f64 {
@@ -66,7 +66,7 @@ impl Averages<f32> for Vec<f32> {
     }
 
     fn mode(&self) -> f32 {
-        panic!("Error: Mode is not implemented yet for f64/f32.")
+        unimplemented!("Error: Mode is not implemented yet for f64/f32.")
     }
 
     fn mid_range(&self) -> f64 {
