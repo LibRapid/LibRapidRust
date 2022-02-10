@@ -17,6 +17,7 @@ _____
 - Added Public API: `VecSets`: `cartesian_product()`.
 - Added Public API: `VecSets`: `symmetric_difference_with()`.
 - Added Public API: `VecSets`: `is_disjoint_with()`.
+- Added Public API: `VecSets`: `is_subset_of()`.
 
 Credits
 -----
