@@ -700,7 +700,7 @@ fn bitwise_from<T: From<u8> +
     let mut end_prod: T = T::from(0);
 
     for (inner_idx, inner_ref) in slice.iter().rev().enumerate() {
-        end_prod |= T::from(*inner_ref) << (inner_idx as u8 * 8).into();
+        end_prod |= T::from(*inner_ref) << ((inner_idx as u8) << 3u8).into();
     }
 
     end_prod
