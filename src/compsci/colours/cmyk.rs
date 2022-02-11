@@ -264,3 +264,13 @@ impl std::fmt::Debug for CMYK {
                                                   self.black())
     }
 }
+/// Iterate over a `CMYK` struct in the order `C, M, Y, K`.
+impl IntoIterator for CMYK {
+    type Item = f32;
+
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        vec![self.cyan(), self.magenta(), self.yellow(), self.black()].into_iter()
+    }
+}
