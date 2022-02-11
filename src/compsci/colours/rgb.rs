@@ -74,6 +74,28 @@ impl RGB {
                               black:   f32) -> RGB {
         RGB::new_from_cmyk_struct(&CMYK::new(cyan, magenta, yellow, black))
     }
+    /// Copies the values from `self` into a new `RGBa` with `alpha = 255`.
+    /// # Returns
+    /// A new `RGB`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::colours::rgb::*;
+    /// 
+    /// let rgb  = RGB::WHITE;
+    /// let rgba = RGBa::WHITE;
+    /// 
+    /// assert_eq!(rgba, rgb.as_rgba());
+    /// ```
+    #[inline]
+    #[must_use]
+    pub fn as_rgba(&self) -> RGBa {
+        RGBa {
+            red:   self.red,
+            green: self.green,
+            blue:  self.blue,
+            alpha: 255
+        }
+    }
     /// The pure colour red, Hex-Code `FF0000`.
     pub const RED: RGB = RGB { red: 255, green: 0, blue: 0};
     /// The pure colour green, Hex-Code `00FF00`.
@@ -199,6 +221,27 @@ impl RGBa {
     #[must_use]
     pub fn is_opaque(&self) -> bool {
         self.alpha == 255
+    }
+    /// Ignores `alpha` and generates a new `RGB` struct.
+    /// # Returns
+    /// A new `RGB`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::colours::rgb::*;
+    /// 
+    /// let rgb  = RGB::WHITE;
+    /// let rgba = RGBa::WHITE;
+    /// 
+    /// assert_eq!(rgb, rgba.as_rgb());
+    /// ```
+    #[inline]
+    #[must_use]
+    pub fn as_rgb(&self) -> RGB {
+        RGB {
+            red:   self.red,
+            green: self.green,
+            blue:  self.blue
+        }
     }
     /// Create a new `RGBa` struct from `CMYK` values.
     /// # Arguments
