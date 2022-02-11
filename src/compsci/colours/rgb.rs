@@ -74,6 +74,20 @@ impl RGB {
                               black:   f32) -> RGB {
         RGB::new_from_cmyk_struct(&CMYK::new(cyan, magenta, yellow, black))
     }
+    /// The pure colour red, Hex-Code `FF0000`.
+    pub const RED: RGB = RGB { red: 255, green: 0, blue: 0};
+    /// The pure colour green, Hex-Code `00FF00`.
+    pub const GREEN: RGB = RGB { red: 0, green: 255, blue: 0};
+    /// The pure colour blue, Hex-Code `0000FF`.
+    pub const BLUE: RGB = RGB { red: 0, green: 0, blue: 255};
+    /// The pure colour white, Hex-Code `FFFFFF`.
+    pub const WHITE: RGB = RGB { red: 255, green: 255, blue: 255};
+    /// The pure colour black, Hex-Code `000000`.
+    pub const BLACK: RGB = RGB { red: 0, green: 0, blue: 0};
+    /// LibRapid Blue, Hex-Code `9074FF`.
+    pub const LIBRAPID_BLUE: RGB = RGB { red: 144, green: 116, blue: 255};
+    /// LibRapid Red, Hex-Code `FF3600`.
+    pub const LIBRAPID_RED: RGB = RGB { red: 255, green: 54, blue: 0};
 }
 
 impl std::fmt::Debug for RGB {

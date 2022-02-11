@@ -245,6 +245,20 @@ impl CMYK {
 
         self.black = value;
     }
+    /// The pure colour red, Hex-Code `FF0000`.
+    pub const RED: CMYK = CMYK { cyan: 0.0, magenta: 1.0, yellow: 1.0, black: 0.0 };
+    /// The pure colour green, Hex-Code `00FF00`.
+    pub const GREEN: CMYK = CMYK { cyan: 1.0, magenta: 0.0, yellow: 1.0, black: 0.0 };
+    /// The pure colour blue, Hex-Code `0000FF`.
+    pub const BLUE: CMYK = CMYK { cyan: 1.0, magenta: 1.0, yellow: 0.0, black: 0.0 };
+    /// The pure colour white, Hex-Code `FFFFFF`.
+    pub const WHITE: CMYK = CMYK { cyan: 0.0, magenta: 0.0, yellow: 0.0, black: 0.0 };
+    /// The pure colour black, Hex-Code `000000`.
+    pub const BLACK: CMYK = CMYK { cyan: 0.0, magenta: 1.0, yellow: 1.0, black: 1.0 };
+    /// LibRapid Blue, Hex-Code `9074FF`.
+    pub const LIBRAPID_BLUE: CMYK = CMYK { cyan: 0.44, magenta: 0.55, yellow: 0.0, black: 0.0 };
+    /// LibRapid Red, Hex-Code `FF3600`.
+    pub const LIBRAPID_RED: CMYK = CMYK { cyan: 0.0, magenta: 0.79, yellow: 1.0, black: 0.0 };
 }
 
 impl std::fmt::Display for CMYK {
