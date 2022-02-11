@@ -61,14 +61,14 @@ impl CMYK {
     #[inline]
     #[must_use]
     pub fn new_from_rgb_struct(rgb: &RGB) -> CMYK {
-        let r = rgb.red as f32 / 255.0;
-        let g = rgb.green as f32 / 255.0;
-        let b = rgb.blue as f32 / 255.0;
+        let r: f32 = rgb.red as f32 / 255.0;
+        let g: f32 = rgb.green as f32 / 255.0;
+        let b: f32 = rgb.blue as f32 / 255.0;
 
-        let k = 1.0 - r.min(g).min(b);
-        let c = (1.0 - r - k) / (1.0 - k);
-        let m = (1.0 - g - k) / (1.0 - k);
-        let y = (1.0 - b - k) / (1.0 - k);
+        let k: f32 = 1.0 - r.min(g).min(b);
+        let c: f32 = (1.0 - r - k) / (1.0 - k);
+        let m: f32 = (1.0 - g - k) / (1.0 - k);
+        let y: f32 = (1.0 - b - k) / (1.0 - k);
 
         CMYK { cyan:    c,
                magenta: m,
