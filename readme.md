@@ -18,7 +18,7 @@ _____
 - Added Public API: `VecSets`: `symmetric_difference_with()`.
 - Added Public API: `VecSets`: `is_disjoint_with()`.
 - Added Public API: `VecSets`: `is_subset_of()`.
-- Added Public API: `CMYK`,`RGB`, `RGBa` colour spaces.
+- Added Public API: `CMYK`, `RGBa` colour spaces.
 - Added Public API: `is_in_range()` for numeric types.
 - Changed Public API: `VecSets`: Functions related to `Subset`s have changed names.
 

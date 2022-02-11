@@ -1,6 +1,6 @@
 //! In here you'll find the struct for the `CMYK` colour-definition.
 use crate::math::general::IsInRange;
-use crate::compsci::colours::rgb::RGB;
+use crate::compsci::colours::rgba::RGBa;
 
 const ARG_ERR: &str = "Arguments must range from 0 to 1.";
 /// A struct for storing CMYK-Values.
@@ -43,24 +43,24 @@ impl CMYK {
 
         CMYK { cyan, magenta, yellow, black }
     }
-    /// Create a new `CMYK` struct from an existing `RGB` struct.
+    /// Create a new `CMYK` struct from an existing `RGBa` struct.
     /// # Arguments
-    /// * `rgb: &RGB` - The `RGB` struct.
+    /// * `rgb: &RGBa` - The `RGBa` struct.
     /// # Returns
     /// A new `CMYK` struct.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::colours::{cmyk::CMYK, rgb::RGB};
+    /// use lib_rapid::compsci::colours::{cmyk::CMYK, rgba::RGBa};
     /// 
-    /// let nice_blue_rgb = RGB::new(128, 191, 255);
+    /// let nice_blue_rgba = RGBa::new(128, 191, 255, 255);
     /// let nice_blue_cmyk = CMYK::new_from_rgb_vals(128, 191, 255);
     /// 
-    /// assert_eq!(CMYK::new_from_rgb_struct(&nice_blue_rgb),
+    /// assert_eq!(CMYK::new_from_rgba_struct(&nice_blue_rgba),
     ///            nice_blue_cmyk);
     /// ```
     #[inline]
     #[must_use]
-    pub fn new_from_rgb_struct(rgb: &RGB) -> CMYK {
+    pub fn new_from_rgba_struct(rgb: &RGBa) -> CMYK {
         let r: f32 = rgb.red as f32 / 255.0;
         let g: f32 = rgb.green as f32 / 255.0;
         let b: f32 = rgb.blue as f32 / 255.0;
@@ -84,18 +84,18 @@ impl CMYK {
     /// A new `CMYK` struct.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::colours::{cmyk::CMYK, rgb::RGB};
+    /// use lib_rapid::compsci::colours::{cmyk::CMYK, rgba::RGBa};
     /// 
-    /// let nice_blue_rgb = RGB::new(128, 191, 255);
+    /// let nice_blue_rgba = RGBa::new(128, 191, 255, 255);
     /// let nice_blue_cmyk = CMYK::new_from_rgb_vals(128, 191, 255);
     /// 
-    /// assert_eq!(RGB::new_from_cmyk_struct(&nice_blue_cmyk),
-    ///            nice_blue_rgb);
+    /// assert_eq!(RGBa::new_from_cmyk_struct(&nice_blue_cmyk),
+    ///            nice_blue_rgba);
     /// ```
     #[inline]
     #[must_use]
     pub fn new_from_rgb_vals(red: u8, green: u8, blue: u8) -> CMYK {
-        CMYK::new_from_rgb_struct(&RGB::new(red, green, blue))
+        CMYK::new_from_rgba_struct(&RGBa::new(red, green, blue, 255))
     }
     /// Get the reference to the `cyan` field.
     /// # Returns
