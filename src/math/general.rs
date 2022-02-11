@@ -131,7 +131,22 @@ pub trait MapToNumRange<T> {
     #[must_use]
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
 }
-
+/// Trait for determining whether a number is in a given range.
+pub trait IsInRange {
+    /// Determine whether `self` is in the interval `[start; end]`.
+    /// # Returns
+    /// A `bool`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::IsInRange;
+    /// 
+    /// assert_eq!(true, 5.is_in_range(0, 10));
+    /// assert_eq!(true, 5.is_in_range(0, 5));
+    /// assert_eq!(false, 3.14.is_in_range(5.0, 10.0));
+    /// ```
+    #[must_use]
+    fn is_in_range(&self, start: Self, end: Self) -> bool;
+}
 /// Common powers.
 pub trait CommonPowers {
     /// Square a number.
@@ -223,6 +238,13 @@ pub trait Decrement {
     /// assert_eq!(five, 3);
     /// ```
     fn dec_by(&mut self, n: Self);
+}
+
+impl<T: std::cmp::PartialOrd> IsInRange for T {
+    #[inline]
+    fn is_in_range(&self, start: Self, end: Self) -> bool {
+        self >= &start && self <= &end
+    }
 }
 
 impl<T: std::ops::AddAssign + From<u8>> Increment for T {
