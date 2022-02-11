@@ -81,8 +81,8 @@ impl RGB {
     /// ```
     /// use lib_rapid::compsci::colours::rgb::*;
     /// 
-    /// let rgb  = RGB::WHITE;
-    /// let rgba = RGBa::WHITE;
+    /// let rgb  = RGB::SOLID_WHITE;
+    /// let rgba = RGBa::SOLID_WHITE;
     /// 
     /// assert_eq!(rgba, rgb.as_rgba());
     /// ```
@@ -97,19 +97,19 @@ impl RGB {
         }
     }
     /// The pure colour red, Hex-Code `FF0000`.
-    pub const RED: RGB = RGB { red: 255, green: 0, blue: 0};
+    pub const SOLID_RED: RGB = RGB { red: 255, green: 0, blue: 0};
     /// The pure colour green, Hex-Code `00FF00`.
-    pub const GREEN: RGB = RGB { red: 0, green: 255, blue: 0};
+    pub const SOLID_GREEN: RGB = RGB { red: 0, green: 255, blue: 0};
     /// The pure colour blue, Hex-Code `0000FF`.
-    pub const BLUE: RGB = RGB { red: 0, green: 0, blue: 255};
+    pub const SOLID_BLUE: RGB = RGB { red: 0, green: 0, blue: 255};
     /// The pure colour white, Hex-Code `FFFFFF`.
-    pub const WHITE: RGB = RGB { red: 255, green: 255, blue: 255};
+    pub const SOLID_WHITE: RGB = RGB { red: 255, green: 255, blue: 255};
     /// The pure colour black, Hex-Code `000000`.
-    pub const BLACK: RGB = RGB { red: 0, green: 0, blue: 0};
+    pub const SOLID_BLACK: RGB = RGB { red: 0, green: 0, blue: 0};
     /// LibRapid Blue, Hex-Code `9074FF`.
-    pub const LIBRAPID_BLUE: RGB = RGB { red: 144, green: 116, blue: 255};
+    pub const LIBRAPID_SOLID_BLUE: RGB = RGB { red: 144, green: 116, blue: 255};
     /// LibRapid Red, Hex-Code `FF3600`.
-    pub const LIBRAPID_RED: RGB = RGB { red: 255, green: 54, blue: 0};
+    pub const LIBRAPID_SOLID_RED: RGB = RGB { red: 255, green: 54, blue: 0};
 }
 
 impl std::fmt::Debug for RGB {
@@ -231,8 +231,8 @@ impl RGBa {
     /// ```
     /// use lib_rapid::compsci::colours::rgb::*;
     /// 
-    /// let rgb  = RGB::WHITE;
-    /// let rgba = RGBa::WHITE;
+    /// let rgb  = RGB::SOLID_WHITE;
+    /// let rgba = RGBa::SOLID_WHITE;
     /// 
     /// assert_eq!(rgb, rgba.as_rgb());
     /// ```
@@ -268,19 +268,19 @@ impl RGBa {
         RGBa::new_from_cmyk_struct(&CMYK::new(cyan, magenta, yellow, black))
     }
     /// The pure colour red, Hex-Code `FF0000FF`.
-    pub const RED: RGBa = RGBa { red: 255, green: 0, blue: 0, alpha: 255};
+    pub const SOLID_RED: RGBa = RGBa { red: 255, green: 0, blue: 0, alpha: 255};
     /// The pure colour green, Hex-Code `00FF00FF`.
-    pub const GREEN: RGBa = RGBa { red: 0, green: 255, blue: 0, alpha: 255};
+    pub const SOLID_GREEN: RGBa = RGBa { red: 0, green: 255, blue: 0, alpha: 255};
     /// The pure colour blue, Hex-Code `0000FFFF`.
-    pub const BLUE: RGBa = RGBa { red: 0, green: 0, blue: 255, alpha: 255};
+    pub const SOLID_BLUE: RGBa = RGBa { red: 0, green: 0, blue: 255, alpha: 255};
     /// The pure colour white, Hex-Code `FFFFFFFF`.
-    pub const WHITE: RGBa = RGBa { red: 255, green: 255, blue: 255, alpha: 255};
+    pub const SOLID_WHITE: RGBa = RGBa { red: 255, green: 255, blue: 255, alpha: 255};
     /// The pure colour black, Hex-Code `000000FF`.
-    pub const BLACK: RGBa = RGBa { red: 0, green: 0, blue: 0, alpha: 255};
+    pub const SOLID_BLACK: RGBa = RGBa { red: 0, green: 0, blue: 0, alpha: 255};
     /// LibRapid Blue, Hex-Code `9074FFFF`.
-    pub const LIBRAPID_BLUE: RGBa = RGBa { red: 144, green: 116, blue: 255, alpha: 255};
+    pub const LIBRAPID_SOLID_BLUE: RGBa = RGBa { red: 144, green: 116, blue: 255, alpha: 255};
     /// LibRapid Red, Hex-Code `FF3600FF`.
-    pub const LIBRAPID_RED: RGBa = RGBa { red: 255, green: 54, blue: 0, alpha: 255};
+    pub const LIBRAPID_SOLID_RED: RGBa = RGBa { red: 255, green: 54, blue: 0, alpha: 255};
 }
 
 impl std::fmt::Debug for RGBa {
