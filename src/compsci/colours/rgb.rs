@@ -87,3 +87,13 @@ impl std::fmt::Display for RGB {
         write!(f, "#{:02X}{:02X}{:02X}", self.red, self.green, self.blue)
     }
 }
+/// Iterate over a `RGB` struct in the order `R, G, B`.
+impl IntoIterator for RGB {
+    type Item = u8;
+
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        vec![self.red, self.green, self.blue].into_iter()
+    }
+}
