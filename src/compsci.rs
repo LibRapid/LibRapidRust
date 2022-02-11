@@ -4,3 +4,4 @@ pub mod general;
 pub mod dates;
 pub mod rapidlogging;
 pub mod unit_conversion;
+pub mod colours;
