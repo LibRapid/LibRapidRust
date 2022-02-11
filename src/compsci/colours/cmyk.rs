@@ -53,7 +53,7 @@ impl CMYK {
     /// use lib_rapid::compsci::colours::{cmyk::CMYK, rgba::RGBa};
     /// 
     /// let nice_blue_rgba = RGBa::new(128, 191, 255, 255);
-    /// let nice_blue_cmyk = CMYK::new_from_rgb_vals(128, 191, 255);
+    /// let nice_blue_cmyk = CMYK::new_from_rgba_vals(128, 191, 255);
     /// 
     /// assert_eq!(CMYK::new_from_rgba_struct(&nice_blue_rgba),
     ///            nice_blue_cmyk);
@@ -87,14 +87,14 @@ impl CMYK {
     /// use lib_rapid::compsci::colours::{cmyk::CMYK, rgba::RGBa};
     /// 
     /// let nice_blue_rgba = RGBa::new(128, 191, 255, 255);
-    /// let nice_blue_cmyk = CMYK::new_from_rgb_vals(128, 191, 255);
+    /// let nice_blue_cmyk = CMYK::new_from_rgba_vals(128, 191, 255);
     /// 
     /// assert_eq!(RGBa::new_from_cmyk_struct(&nice_blue_cmyk),
     ///            nice_blue_rgba);
     /// ```
     #[inline]
     #[must_use]
-    pub fn new_from_rgb_vals(red: u8, green: u8, blue: u8) -> CMYK {
+    pub fn new_from_rgba_vals(red: u8, green: u8, blue: u8) -> CMYK {
         CMYK::new_from_rgba_struct(&RGBa::new(red, green, blue, 255))
     }
     /// Get the reference to the `cyan` field.
