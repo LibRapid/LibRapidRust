@@ -1,3 +1,4 @@
+#[derive(Clone, Copy)]
 pub struct RGB {
     pub red:   u8,
     pub green: u8,
@@ -5,6 +6,8 @@ pub struct RGB {
 }
 
 impl RGB {
+    #[inline]
+    #[must_use]
     pub fn new(red: u8, green: u8, blue: u8) -> RGB {
         RGB { red, green, blue }
     }
