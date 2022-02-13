@@ -45,12 +45,12 @@ impl RGBa {
     /// let nice_blue_cmyk = CMYK::new(0.5, 0.25, 0.0, 0.0);
     /// let nice_blue_rgba = RGBa::new(128, 191, 255, 255);
     /// 
-    /// assert_eq!(RGBa::new_from_cmyk_struct(&nice_blue_cmyk),
+    /// assert_eq!(RGBa::from_cmyk_struct(&nice_blue_cmyk),
     ///            nice_blue_rgba);
     /// ```
     #[inline]
     #[must_use]
-    pub fn new_from_cmyk_struct(cmyk: &CMYK) -> RGBa {
+    pub fn from_cmyk_struct(cmyk: &CMYK) -> RGBa {
         RGBa { red:   (255.0 * (1.0 - cmyk.cyan()) * (1.0 - cmyk.black())).round() as u8,
                green: (255.0 * (1.0 - cmyk.magenta()) * (1.0 - cmyk.black())).round() as u8,
                blue:  (255.0 * (1.0 - cmyk.yellow()) * (1.0 - cmyk.black())).round() as u8,
@@ -112,16 +112,16 @@ impl RGBa {
     /// 
     /// let nice_blue_RGBa = RGBa::new(128, 191, 255, 255);
     /// 
-    /// assert_eq!(RGBa::new_from_cmyk_vals(0.5, 0.25, 0.0, 0.0),
+    /// assert_eq!(RGBa::from_cmyk_vals(0.5, 0.25, 0.0, 0.0),
     ///            nice_blue_RGBa);
     /// ```
     #[inline]
     #[must_use]
-    pub fn new_from_cmyk_vals(cyan:    f32,
+    pub fn from_cmyk_vals(cyan:    f32,
                               magenta: f32,
                               yellow:  f32,
                               black:   f32) -> RGBa {
-        RGBa::new_from_cmyk_struct(&CMYK::new(cyan, magenta, yellow, black))
+        RGBa::from_cmyk_struct(&CMYK::new(cyan, magenta, yellow, black))
     }
     /// The pure colour red, Hex-Code `FF0000FF`.
     pub const SOLID_RED: RGBa = RGBa { red: 255, green: 0, blue: 0, alpha: 255};
