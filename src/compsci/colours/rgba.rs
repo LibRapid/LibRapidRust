@@ -30,7 +30,7 @@ impl RGBa {
     /// ```
     #[inline]
     #[must_use]
-    pub fn new(red: u8, green: u8, blue: u8, alpha: u8) -> RGBa {
+    pub const fn new(red: u8, green: u8, blue: u8, alpha: u8) -> RGBa {
         RGBa { red, green, blue, alpha }
     }
     /// Create a new `RGBa` struct.
@@ -56,7 +56,7 @@ impl RGBa {
                blue:  (255.0 * (1.0 - cmyk.yellow()) * (1.0 - cmyk.black())).round() as u8,
                alpha: 255 }
     }
-    /// Determines whethe `self` is transparent or not. `true` if `alpha == 0`, otherwise `false`.
+    /// Determines whethe `self` is transparent or not. `true` if `alpha != 255`, otherwise `false`.
     /// # Returns
     /// A `bool`.
     /// # Examples
@@ -68,8 +68,8 @@ impl RGBa {
     /// ```
     #[inline]
     #[must_use]
-    pub fn is_transparent(&self) -> bool {
-        self.alpha == 0
+    pub const fn is_transparent(&self) -> bool {
+        !self.is_opaque()
     }
     /// Determines whethe `self` is opaque or not. `true` if `alpha == 255`, otherwise `false`.
     /// # Returns
@@ -83,7 +83,7 @@ impl RGBa {
     /// ```
     #[inline]
     #[must_use]
-    pub fn is_opaque(&self) -> bool {
+    pub const fn is_opaque(&self) -> bool {
         self.alpha == 255
     }
     /// Convert `self` into a string with no alpha value.

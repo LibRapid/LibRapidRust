@@ -109,7 +109,7 @@ impl CMYK {
     /// ```
     #[inline]
     #[must_use]
-    pub fn cyan(&self) -> f32 {
+    pub const fn cyan(&self) -> f32 {
         self.cyan
     }
     /// Get the reference to the `magenta` field.
@@ -124,7 +124,7 @@ impl CMYK {
     /// ```
     #[inline]
     #[must_use]
-    pub fn magenta(&self) -> f32 {
+    pub const fn magenta(&self) -> f32 {
         self.magenta
     }
     /// Get the reference to the `yellow` field.
@@ -139,7 +139,7 @@ impl CMYK {
     /// ```
     #[inline]
     #[must_use]
-    pub fn yellow(&self) -> f32 {
+    pub const fn yellow(&self) -> f32 {
         self.yellow
     }
     /// Get the reference to the `black` field.
@@ -154,7 +154,7 @@ impl CMYK {
     /// ```
     #[inline]
     #[must_use]
-    pub fn black(&self) -> f32 {
+    pub const fn black(&self) -> f32 {
         self.black
     }
     /// Set the `cyan` field.
