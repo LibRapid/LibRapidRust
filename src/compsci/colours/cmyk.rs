@@ -171,7 +171,6 @@ impl CMYK {
     /// assert_eq!(1.0, nice_blue.cyan());
     /// ```
     #[inline]
-    #[must_use]
     pub fn set_cyan(&mut self, value: f32) {
         if !value.is_in_range(0.0, 1.0)
         { panic!("{}", ARG_ERR); }
@@ -193,7 +192,6 @@ impl CMYK {
     /// assert_eq!(1.0, nice_blue.magenta());
     /// ```
     #[inline]
-    #[must_use]
     pub fn set_magenta(&mut self, value: f32) {
         if !value.is_in_range(0.0, 1.0)
         { panic!("{}", ARG_ERR); }
@@ -215,7 +213,6 @@ impl CMYK {
     /// assert_eq!(0.5, nice_blue.yellow());
     /// ```
     #[inline]
-    #[must_use]
     pub fn set_yellow(&mut self, value: f32) {
         if !value.is_in_range(0.0, 1.0)
         { panic!("{}", ARG_ERR); }
@@ -237,7 +234,6 @@ impl CMYK {
     /// assert_eq!(0.5, nice_blue.black());
     /// ```
     #[inline]
-    #[must_use]
     pub fn set_black(&mut self, value: f32) {
         if !value.is_in_range(0.0, 1.0)
         { panic!("{}", ARG_ERR); }
