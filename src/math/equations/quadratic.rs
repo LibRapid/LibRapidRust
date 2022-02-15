@@ -1,5 +1,7 @@
+//! Quadratic functions.
 use crate::math::general::CommonPowers;
-#[derive(Clone, Copy, Debug)]
+/// A struct for storing quadratic equations of the form `f(x) = ax² + bx + c`.
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct QuadraticEquation {
     a:         f64,
     b:         f64,
@@ -9,6 +11,20 @@ pub struct QuadraticEquation {
 }
 
 impl QuadraticEquation {
+    /// Create a new `QuadraticEquation` with the values `a = 1, b = 0, c = 0`.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, 0.0, 0.0);
+    /// f_x.get_vertex();
+    /// f_x.get_solutions();
+    /// 
+    /// assert_eq!(QuadraticEquation::new(), f_x);
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn new() -> QuadraticEquation {
         QuadraticEquation { a:         1.0,
                             b:         0.0,
@@ -16,7 +32,20 @@ impl QuadraticEquation {
                             vertex:    Some((0.0, 0.0)),
                             solutions: Some((0.0, 0.0)) }
     }
-
+    /// Create a new `QuadraticEquation` from coefficients.
+    /// 
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, 0.0, 0.0);
+    /// f_x.get_vertex();
+    /// f_x.get_solutions();
+    /// 
+    /// assert_eq!(QuadraticEquation::new(), f_x);
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn new_from_coefficients(a: f64, b: f64, c: f64) -> QuadraticEquation {
         if a == 0.0
         { panic!("a was zero and is thus not allowed."); }
@@ -26,33 +55,120 @@ impl QuadraticEquation {
                             vertex:    None,
                             solutions: None }
     }
-    
+    /// Get `a` of a `QuadraticEquation`.
+    /// # Returns
+    /// A `f64.`
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(-2.0, f_x.b());
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn a(&self) -> f64 {
         self.a
     }
-    
+    /// Get `b` of a `QuadraticEquation`.
+    /// # Returns
+    /// A `f64.`
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(-2.0, f_x.b());
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn b(&self) -> f64 {
         self.b
     }
-    
+    /// Get `c` of a `QuadraticEquation`.
+    /// # Returns
+    /// A `f64.`
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(-3.0, f_x.c());
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn c(&self) -> f64 {
         self.c 
     }
-    
+    /// Set `c` of a `QuadraticEquation`.
+    /// # Panics
+    /// Panics if `value` is zero.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(1.0, f_x.a());
+    /// 
+    /// f_x.set_a(-1.0);
+    /// 
+    /// assert_eq!(-1.0, f_x.a());
+    /// ```
+    #[inline]
     pub fn set_a(&mut self, value: f64) {
         if value == 0.0
         { panic!("a was zero and is thus not allowed."); }
         self.a = value;
     }
-    
+    /// Set `b` of a `QuadraticEquation`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(-2.0, f_x.b());
+    /// 
+    /// f_x.set_b(-1.0);
+    /// 
+    /// assert_eq!(-1.0, f_x.b());
+    /// ```
+    #[inline] 
     pub fn set_b(&mut self, value: f64) {
         self.b = value;
     }
-    
+    /// Set `c` of a `QuadraticEquation`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(-3.0, f_x.c());
+    /// 
+    /// f_x.set_c(-1.0);
+    /// 
+    /// assert_eq!(-1.0, f_x.c());
+    /// ```
+    #[inline]
     pub fn set_c(&mut self, value: f64) {
         self.c = value;
     }
-
+    /// Get the solutions of a quadratic equation. Also returns two values if there only is one solution.
+    /// # Returns
+    /// A `Option<(f64, f64)>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
+    /// 
+    /// assert_eq!(Some((3.0, -1.0)), f_x.get_solutions());
+    /// ```
     pub fn get_solutions(&mut self) -> Option<(f64, f64)> {
         if self.solutions.is_some()
         { return self.solutions; }
@@ -66,7 +182,19 @@ impl QuadraticEquation {
 
         self.solutions
     }
-
+    /// Get the vertex of a quadratic equation.
+    /// # Returns
+    /// A `(f64, f64)`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, 3.0);
+    /// 
+    /// assert_eq!((1.0, 2.0), f_x.get_vertex());
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn get_vertex(&mut self) -> (f64, f64) {
         if self.vertex.is_some()
         { return unsafe { self.vertex.unwrap_unchecked() }; }
@@ -74,7 +202,19 @@ impl QuadraticEquation {
         self.vertex = Some((x, self.a * x.square() + self.b * x + self.c));
         unsafe { self.vertex.unwrap_unchecked() }
     }
-
+    /// Get the value of a value `x` under the function of the `QuadraticEquation`.
+    /// # Returns
+    /// A `f64`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, 3.0);
+    /// 
+    /// assert_eq!(2.0, f_x.get_fun_val_of(1));
+    /// ```
+    #[inline]
+    #[must_use]
     pub fn get_fun_val_of<T>(&self, x: T) -> f64
     where f64: From<T> {
         let _x = f64::from(x);
@@ -84,6 +224,12 @@ impl QuadraticEquation {
 
 impl std::fmt::Display for QuadraticEquation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if self.b < 0.0 {
+            if self.c < 0.0
+            { return write!(f, "f(x) = {}x^2 - {}x - {}", self.a, self.b, self.c); }
+            else
+            { return write!(f, "f(x) = {}x^2 - {}x + {}", self.a, self.b, self.c); }
+        }
         write!(f, "f(x) = {}x^2 + {}x + {}", self.a, self.b, self.c)
     }
 }
