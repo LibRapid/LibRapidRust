@@ -7,7 +7,7 @@ pub struct QuadraticEquation {
     b:         f64,
     c:         f64,
     vertex:    Option<(f64, f64)>,
-    solutions: Option<(f64, f64)>
+    solutions: Option<(Option<f64>, Option<f64>)>
 }
 
 impl QuadraticEquation {
@@ -30,7 +30,7 @@ impl QuadraticEquation {
                             b:         0.0,
                             c:         0.0,
                             vertex:    Some((0.0, 0.0)),
-                            solutions: Some((0.0, 0.0)) }
+                            solutions: Some((Some(0.0), None)) }
     }
     /// Create a new `QuadraticEquation` from coefficients.
     /// 
@@ -158,18 +158,18 @@ impl QuadraticEquation {
     pub fn set_c(&mut self, value: f64) {
         self.c = value;
     }
-    /// Get the solutions of a quadratic equation. Also returns two values if there only is one solution.
+    /// Get the solutions of a quadratic equation.
     /// # Returns
-    /// A `Option<(f64, f64)>`.
+    /// A `Option<(Option<f64>, Option<f64>)>`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
     /// 
     /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
     /// 
-    /// assert_eq!(Some((3.0, -1.0)), f_x.get_solutions());
+    /// assert_eq!(Some((Some(3.0), Some(-1.0))), f_x.get_solutions());
     /// ```
-    pub fn get_solutions(&mut self) -> Option<(f64, f64)> {
+    pub fn get_solutions(&mut self) -> Option<(Option<f64>, Option<f64>)> {
         if self.solutions.is_some()
         { return self.solutions; }
         let discriminant = self.b.square() - 4.0 * self.a * self.c;
@@ -177,9 +177,11 @@ impl QuadraticEquation {
         { return None; }
         let x_1 = (- self.b + discriminant.sqrt()) / (2.0 * self.a);
         let x_2 = (- self.b - discriminant.sqrt()) / (2.0 * self.a);
-    
-        self.solutions = Some((x_1, x_2));
-
+        
+        match x_1 == x_2 {
+            true  => { self.solutions = Some((Some(x_1), None)); }
+            false => { self.solutions = Some((Some(x_1), Some(x_2))); }
+        }
         self.solutions
     }
     /// Get the vertex of a quadratic equation.
