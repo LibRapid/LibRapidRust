@@ -10,18 +10,9 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.5
+0.1.6-preview.1
 _____
-- Added Public API: `BitwiseSlice`-Trait.
-- Added Public API: `VecSets`: `difference_with()`.
-- Added Public API: `VecSets`: `cartesian_product()`.
-- Added Public API: `VecSets`: `symmetric_difference_with()`.
-- Added Public API: `VecSets`: `is_disjoint_with()`.
-- Added Public API: `VecSets`: `is_subset_of()`.
-- Added Public API: `CMYK`, `RGBa` colour spaces.
-- Added Public API: `QuadraticEquation`, `LinearEquation` structs.
-- Added Public API: `is_in_range()` for numeric types.
-- Changed Public API: `VecSets`: Functions related to `Subset`s have changed names.
+- Changed Public API: `QuadraticEquation`: `get_solutions()` now returns a `Option<(Option<f64>, Option<f64>)>`
 
 Credits
 -----
