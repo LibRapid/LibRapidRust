@@ -23,6 +23,13 @@ impl QuadraticEquation {
     /// 
     /// assert_eq!(QuadraticEquation::new(), f_x);
     /// ```
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, 0.0, -1.5);
+    /// 
+    /// assert_eq!("f(x) = 1x^2 + 0x - 1.5", &f_x.to_string());
+    /// ```
     #[inline]
     #[must_use]
     pub fn new() -> QuadraticEquation {
@@ -226,12 +233,16 @@ impl QuadraticEquation {
 
 impl std::fmt::Display for QuadraticEquation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        if self.b < 0.0 {
-            if self.c < 0.0
-            { return write!(f, "f(x) = {}x^2 - {}x - {}", self.a, self.b, self.c); }
-            else
-            { return write!(f, "f(x) = {}x^2 - {}x + {}", self.a, self.b, self.c); }
-        }
-        write!(f, "f(x) = {}x^2 + {}x + {}", self.a, self.b, self.c)
+        let res;
+        let _  = write!(f, "f(x) = {}x^2", self.a);
+        if self.b < 0.0
+        { let _ = write!(f, " - {}x", self.b.abs()); }
+        else
+        { let _ = write!(f, " + {}x", self.b); }
+        if self.c < 0.0
+        { res = write!(f, " - {}", self.c.abs()); }
+        else
+        { res = write!(f, " + {}", self.c); }
+        res
     }
 }
