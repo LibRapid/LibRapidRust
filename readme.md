@@ -13,6 +13,7 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 0.1.6-preview.1
 _____
 - Changed Public API: `QuadraticEquation`: `get_solutions()` now returns a `Option<(Option<f64>, Option<f64>)>`
+- Changed Public API: `QuadraticEquation`: Fixed `Display` bug.
 
 Credits
 -----
