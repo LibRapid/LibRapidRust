@@ -236,11 +236,11 @@ impl std::fmt::Display for QuadraticEquation {
         let res;
         let _  = write!(f, "f(x) = {}x^2", self.a);
         if self.b < 0.0
-        { let _ = write!(f, " - {}x", self.b.abs()); }
+        { let _ = write!(f, " - {}x", - self.b); }
         else
         { let _ = write!(f, " + {}x", self.b); }
         if self.c < 0.0
-        { res = write!(f, " - {}", self.c.abs()); }
+        { res = write!(f, " - {}", - self.c); }
         else
         { res = write!(f, " + {}", self.c); }
         res
