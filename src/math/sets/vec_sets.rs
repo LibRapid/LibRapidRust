@@ -98,8 +98,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         let mut res: VecSet<T> = VecSet {elements: Vec::new(),
                                          parent: None };
 
-        res.elements.append(&mut self.elements.clone());
-        res.elements.append(&mut other.elements.clone());
+        res.elements.extend_from_slice(&self.elements);
+        res.elements.extend_from_slice(&other.elements);
 
         res.elements.sort_unstable(); 
         res.elements.dedup();
@@ -227,15 +227,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         let diff1 = self.difference_with(&other);
         let diff2 = other.difference_with(&self).clone();
 
-        let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-            parent: None };
-
-        res.elements.append(&mut diff1.elements.clone());
-        res.elements.append(&mut diff2.elements.clone());
-
-        res.elements.sort_unstable(); 
-        res.elements.dedup();
-        res
+        VecSet {elements: diff1.union(&diff2).elements,
+                parent:   None }
     }
     /// Lets you check for an element in a set.
     ///
