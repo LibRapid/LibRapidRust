@@ -14,6 +14,31 @@ const EXPONENT_MASK_32:      u32 = 0b01111111100000000000000000000000;
 const SET_EXP_ZERO_MASK_32:  u32 = 0b00111111100000000000000000000000;
 const GET_SMANTISSA_MASK_32: u32 = 0b10000000011111111111111111111111;
 
+/// Trait for several functions that extend the functionality of slices.
+pub trait VecStackOps<T> {
+    /// Look at the top of a slice `[T]`. Returns the top value but does not pop it.
+    /// # Returns
+    /// A `T`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::VecStackOps;
+    /// 
+    /// let v = vec![0.2, 3.2];
+    /// assert_eq!(3.2, v.peek());
+    /// assert_eq!(vec![0.2, 3.2], v);
+    #[must_use]
+    fn peek(&self) -> T;
+    /// Swap the top two elements of a slice `[T]`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::VecStackOps;
+    /// 
+    /// let mut v = vec![0.2, 3.2];
+    /// v.swap_top();
+    /// assert_eq!(vec![3.2, 0.2], v);
+    fn swap_top(&mut self);
+}
+
 /// Bitwise operations on slices of arbitrary (numeric) types.
 pub trait BitwiseSlice<T, U> {
     /// XORs a slice of type `[T]` with a slice of type `[U]`.
@@ -690,6 +715,22 @@ impl<T: BitXorAssign +
         _res
     }
 }
+
+impl<T: Clone> VecStackOps<T> for [T] {
+    #[inline]
+    fn peek(&self) -> T {
+        self[self.len() - 1].clone()
+    }
+    #[inline]
+    fn swap_top(&mut self) {
+        let a: T = self[self.len() - 1].clone();
+        let b: T = self[self.len() - 2].clone();
+
+        self[self.len() - 1] = b;
+        self[self.len() - 2] = a;
+    }
+}
+
 #[must_use]
 fn bitwise_from<T: From<u8> +
                    From<U> +
