@@ -198,7 +198,7 @@ const fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
 #[inline]
 #[must_use]
 pub const fn is_leap_year(year: i32) -> bool {
-    year & 3 == 0 && (year & 24 == 0 || year & 15 == 0)
+    year & 3 == 0 && (year % 25 == 0 || year & 15 == 0)
 }
 #[inline]
 const fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
