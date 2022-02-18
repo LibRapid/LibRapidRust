@@ -53,10 +53,10 @@ impl RGBa {
         if s.len() != 8
         { panic!("String did not have the required length of 8 or was not ASCII."); }
         let mut vals: Vec<u8> = Vec::with_capacity(4);
-        for _s in s.as_bytes().chunks(2).enumerate() {
+        for _s in s.as_bytes().chunks(2) {
             let mut r = String::new();
-            r.push(_s.1[0] as char);
-            r.push(_s.1[1] as char);
+            r.push(_s[0] as char);
+            r.push(_s[1] as char);
             vals.push(u8::from_str_radix(&r, 16).unwrap());
         }
 
