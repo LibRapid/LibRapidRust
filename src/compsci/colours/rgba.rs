@@ -36,6 +36,8 @@ impl RGBa {
     /// Create a new `RGBa` struct from a `&str` of the form `00000000`.
     /// # Arguments
     /// * `s: &str` - The string from which the struct should be created.
+    /// # Panics
+    /// Panics if the length of `s` is not equal to 8 or if it couldn't parse one of the numbers as such.
     /// # Returns
     /// A new `RGBa` struct.
     /// ```
@@ -48,7 +50,7 @@ impl RGBa {
     #[inline]
     #[must_use]
     pub fn from_str(s: &str) -> RGBa {
-        if s.len() != 8 || !s.is_ascii()
+        if s.len() != 8
         { panic!("String did not have the required length of 8 or was not ASCII."); }
         let mut vals: Vec<u8> = Vec::with_capacity(4);
         for _s in s.as_bytes().chunks(2).enumerate() {
