@@ -58,16 +58,16 @@ impl Date {
     /// # Returns
     /// A boolean value.
     #[must_use]
-    pub const fn leap_year(&self) -> &bool {
-        &self.leap_year
+    pub const fn leap_year(&self) -> bool {
+        self.leap_year
     }
     /// Gets the year.
     ///
     /// # Returns
-    /// A `&i32`.
+    /// A `i32`.
     #[must_use]
-    pub const fn year(&self) -> &i32 {
-        &self.year
+    pub const fn year(&self) -> i32 {
+        self.year
     }
     /// Sets the year.
     ///
@@ -85,8 +85,8 @@ impl Date {
     /// # Returns
     /// A `&u8`.
     #[must_use]
-    pub const fn month(&self) -> &u8 {
-        &self.month
+    pub const fn month(&self) -> u8 {
+        self.month
     }
     /// Sets the month.
     ///
@@ -101,9 +101,9 @@ impl Date {
     /// Gets the day.
     ///
     /// # Returns
-    /// A `&u8`.
-    pub const fn day(&self) -> &u8 {
-        &self.day
+    /// A `u8`.
+    pub const fn day(&self) -> u8 {
+        self.day
     }
     /// Sets the day.
     ///
@@ -118,10 +118,10 @@ impl Date {
     /// Gets the hour.
     ///
     /// # Returns
-    /// A `&u8`.
+    /// A `u8`.
     #[must_use]
-    pub const fn hour(&self) -> &u8 {
-        &self.hour
+    pub const fn hour(&self) -> u8 {
+        self.hour
     }
     /// Sets the hour.
     ///
@@ -136,10 +136,10 @@ impl Date {
     /// Gets the minute.
     ///
     /// # Returns
-    /// A `&u8`.
+    /// A `u8`.
     #[must_use]
-    pub const fn minute(&self) -> &u8 {
-        &self.minute
+    pub const fn minute(&self) -> u8 {
+        self.minute
     }
     /// Sets the minute.
     ///
@@ -154,10 +154,10 @@ impl Date {
     /// Gets the second.
     ///
     /// # Returns
-    /// A `&u8`.
+    /// A `u8`.
     #[must_use]
-    pub const fn second(&self) -> &u8 {
-        &self.second
+    pub const fn second(&self) -> u8 {
+        self.second
     }
     /// Sets the second.
     ///
