@@ -10,7 +10,7 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.6-preview.1
+0.1.6
 _____
 - Added Public API: `VecStackOps` trait.
 - Added Public API: `RGBa`: `from_str`.
