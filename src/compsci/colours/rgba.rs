@@ -33,6 +33,36 @@ impl RGBa {
     pub const fn new(red: u8, green: u8, blue: u8, alpha: u8) -> RGBa {
         RGBa { red, green, blue, alpha }
     }
+    /// Create a new `RGBa` struct from a `&str` of the form `00000000`.
+    /// # Arguments
+    /// * `s: &str` - The string from which the struct should be created.
+    /// # Returns
+    /// A new `RGBa` struct.
+    /// ```
+    /// use lib_rapid::compsci::colours::rgba::RGBa;
+    /// 
+    /// let c_1 = RGBa::from_str("ffffffff");
+    /// let c_2 = RGBa::new(255, 255, 255, 255);
+    /// assert_eq!(c_1, c_2);
+    /// ```
+    #[inline]
+    #[must_use]
+    pub fn from_str(s: &str) -> RGBa {
+        if s.len() != 8 || !s.is_ascii()
+        { panic!("String did not have the required length of 8 or was not ASCII."); }
+        let mut vals: Vec<u8> = Vec::with_capacity(4);
+        for _s in s.as_bytes().chunks(2).enumerate() {
+            let mut r = String::new();
+            r.push(_s.1[0] as char);
+            r.push(_s.1[1] as char);
+            vals.push(u8::from_str_radix(&r, 16).unwrap());
+        }
+
+        RGBa { red:   vals[0],
+               green: vals[1],
+               blue:  vals[2],
+               alpha: vals[3] }
+    }
     /// Create a new `RGBa` struct.
     /// # Arguments
     /// * `cmyk: &CMYK` - The CMYK struct.
