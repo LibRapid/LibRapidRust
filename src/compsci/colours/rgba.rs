@@ -51,7 +51,7 @@ impl RGBa {
     #[must_use]
     pub fn from_str(s: &str) -> RGBa {
         if s.len() != 8
-        { panic!("String did not have the required length of 8 or was not ASCII."); }
+        { panic!("String did not have the required length of 8."); }
         let mut vals: Vec<u8> = Vec::with_capacity(4);
         for _s in s.as_bytes().chunks(2) {
             let mut r = String::new();
