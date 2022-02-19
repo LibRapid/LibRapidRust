@@ -15,13 +15,13 @@ const SET_EXP_ZERO_MASK_32:  u32 = 0b00111111100000000000000000000000;
 const GET_SMANTISSA_MASK_32: u32 = 0b10000000011111111111111111111111;
 
 /// Trait for several functions that extend the functionality of slices.
-pub trait VecStackOps<T> {
+pub trait SliceOps<T> {
     /// Look at the top of a slice `[T]`. Returns the top value but does not pop it.
     /// # Returns
     /// A `T`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::VecStackOps;
+    /// use lib_rapid::compsci::general::SliceOps;
     /// 
     /// let v = vec![0.2, 3.2];
     /// assert_eq!(3.2, v.peek());
@@ -31,12 +31,34 @@ pub trait VecStackOps<T> {
     /// Swap the top two elements of a slice `[T]`.
     /// # Examples
     /// ```
-    /// use lib_rapid::compsci::general::VecStackOps;
+    /// use lib_rapid::compsci::general::SliceOps;
     /// 
     /// let mut v = vec![0.2, 3.2];
     /// v.swap_top();
     /// assert_eq!(vec![3.2, 0.2], v);
     fn swap_top(&mut self);
+    /// Find the number of times a item is contained in a slice `[T]`.
+    /// # Returns
+    /// A `usize`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::SliceOps;
+    /// 
+    /// let mut v = vec![4, 0, 0, 2, 3, 4, 4, 4];
+    /// assert_eq!(4, v.count_of(4));
+    #[must_use]
+    fn count_of(&self, item: T) -> usize;
+    /// Get the indexes at which a item resides in a slice `[T]`.
+    /// # Returns
+    /// A `Vec<usize>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::general::SliceOps;
+    /// 
+    /// let mut v = vec![4, 0, 0, 2, 3, 4, 4, 4];
+    /// assert_eq!(vec![0, 5, 6, 7], v.positions_of(4));
+    #[must_use]
+    fn positions_of(&self, item: T) -> Vec<usize>;
 }
 
 /// Bitwise operations on slices of arbitrary (numeric) types.
@@ -716,7 +738,7 @@ impl<T: BitXorAssign +
     }
 }
 
-impl<T: Clone> VecStackOps<T> for [T] {
+impl<T: Clone + std::cmp::PartialEq> SliceOps<T> for [T] {
     #[inline]
     fn peek(&self) -> T {
         self[self.len() - 1].clone()
@@ -728,6 +750,24 @@ impl<T: Clone> VecStackOps<T> for [T] {
 
         self[self.len() - 1] = b;
         self[self.len() - 2] = a;
+    }
+
+    fn count_of(&self, item: T) -> usize {
+        let mut res: usize = 0;
+        for i in self {
+            if i == &item
+            { res.inc(); }
+        }
+        res
+    }
+
+    fn positions_of(&self, item: T) -> Vec<usize> {
+        let mut res = Vec::with_capacity(self.len());
+        for i in self.iter().enumerate() {
+            if i.1 == &item
+            { res.push(i.0); }
+        }
+        res
     }
 }
 
