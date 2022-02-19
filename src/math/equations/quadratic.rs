@@ -32,7 +32,7 @@ impl QuadraticEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn new() -> QuadraticEquation {
+    pub const fn new() -> QuadraticEquation {
         QuadraticEquation { a:         1.0,
                             b:         0.0,
                             c:         0.0,
@@ -75,7 +75,7 @@ impl QuadraticEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn a(&self) -> f64 {
+    pub const fn a(&self) -> f64 {
         self.a
     }
     /// Get `b` of a `QuadraticEquation`.
@@ -91,7 +91,7 @@ impl QuadraticEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn b(&self) -> f64 {
+    pub const fn b(&self) -> f64 {
         self.b
     }
     /// Get `c` of a `QuadraticEquation`.
@@ -107,7 +107,7 @@ impl QuadraticEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn c(&self) -> f64 {
+    pub const fn c(&self) -> f64 {
         self.c 
     }
     /// Set `c` of a `QuadraticEquation`.

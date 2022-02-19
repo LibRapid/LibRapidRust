@@ -43,7 +43,7 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn m(&self) -> f64 {
+    pub const fn m(&self) -> f64 {
         self.m
     }
     /// Get the y-intercept of a `LinearEquation`.
@@ -59,7 +59,7 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn c(&self) -> f64 {
+    pub const fn c(&self) -> f64 {
         self.c
     }
     /// set the slope of a `LinearEquation`.
@@ -140,7 +140,7 @@ impl LinearEquation {
 impl std::fmt::Display for LinearEquation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.c > 0.0 {
-            true => { write!(f, "f(x) = {}x + {}", self.m, self.c) }
+            true  => { write!(f, "f(x) = {}x + {}", self.m, self.c) }
             false => { write!(f, "f(x) = {}x - {}", self.m, - self.c) }
         }
     }

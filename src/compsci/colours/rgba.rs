@@ -150,9 +150,9 @@ impl RGBa {
     #[inline]
     #[must_use]
     pub fn from_cmyk_vals(cyan:    f32,
-                              magenta: f32,
-                              yellow:  f32,
-                              black:   f32) -> RGBa {
+                          magenta: f32,
+                          yellow:  f32,
+                          black:   f32) -> RGBa {
         RGBa::from_cmyk_struct(&CMYK::new(cyan, magenta, yellow, black))
     }
     /// The pure colour red, Hex-Code `FF0000FF`.
