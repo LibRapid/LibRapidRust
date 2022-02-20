@@ -1,4 +1,5 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, intrinsics::transmute};
+
 use super::{Averages, Increment};
 
 // Averages don't work properly when implemented using generics, I don't know why.
@@ -29,7 +30,13 @@ impl Averages<f64> for Vec<f64> {
     }
 
     fn mode(&self) -> f64 {
-        unimplemented!("Error: Mode is not implemented yet for f64/f32.")
+        let mut hm: HashMap<u64, usize> = HashMap::new();
+        for x in self {
+            hm.entry(x.to_bits()).or_default().inc();
+        }
+        unsafe {
+            transmute(*hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap())
+        }
     }
 
     fn mid_range(&self) -> f64 {
@@ -66,7 +73,13 @@ impl Averages<f32> for Vec<f32> {
     }
 
     fn mode(&self) -> f32 {
-        unimplemented!("Error: Mode is not implemented yet for f64/f32.")
+        let mut hm: HashMap<u32, usize> = HashMap::new();
+        for x in self {
+            hm.entry(x.to_bits()).or_default().inc();
+        }
+        unsafe {
+            transmute(*hm.iter().max_by(|a, b| a.1.cmp(b.1)).map(|(k, _v)| k).unwrap())
+        }
     }
 
     fn mid_range(&self) -> f64 {
