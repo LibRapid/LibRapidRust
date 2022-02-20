@@ -28,7 +28,7 @@ the best possible user experience and consistency over all libraries.
 Why X? Why Y?
 -----
 
-Sometimes I have to yank a version. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
+Sometimes I have to yank a version. To stay updated and to chat with us, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
 
 Contributing
 -----
@@ -52,8 +52,3 @@ How does it work?
 
 The Rust-port of LibRapid is a derivative from the main library made for C++ and Python. It's goal is to be optimised for speedy calculations, mathematical and
 scientific applications.
-
-Performance
------
-
-LibRapid for Rust is fully optimised - meaning your calculations for game scripts and maths will be faster as a result.
