@@ -487,7 +487,7 @@ impl<T: ToString + Copy + Ord> std::fmt::Display for VecSet<'_, T> {
         let mut res: String = String::from('{');
         for elem in self.elements() {
             res.push(' ');
-            res += &elem.to_string();
+            res.push_str(&elem.to_string());
             res.push(';');
         }
         res.pop();
