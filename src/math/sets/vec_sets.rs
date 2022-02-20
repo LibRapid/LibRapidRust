@@ -95,8 +95,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// ```
     #[must_use]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
-        let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-                                         parent: None };
+        let mut res: VecSet<T> = VecSet {elements: Vec::with_capacity(self.cardinality() +
+                                                                      other.cardinality()),
+                                         parent:   None };
 
         res.elements.extend_from_slice(&self.elements);
         res.elements.extend_from_slice(&other.elements);
@@ -416,7 +417,7 @@ macro_rules! set {
     ( $( $a:expr ),* ) => {
         {
             use lib_rapid::compsci::general::BinaryInsert;
-            let mut res_vec = Vec::new();
+            let mut res_vec = Vec::with_capacity(20);
             $(
                 res_vec.binary_insert_no_dup($a);
             )*

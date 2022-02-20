@@ -190,7 +190,7 @@ pub fn assign_codes(root: &Box<Node>,
 /// ```
 #[must_use]
 pub fn huffman_encode(s: &str, char_codes: &HashMap<char, BitVec>) -> BitVec {
-    let mut res: BitVec = BitVec::new();
+    let mut res: BitVec = BitVec::with_capacity(s.len());
     let mut t:   Option<&BitVec>;
 
     for c in s.chars() {
