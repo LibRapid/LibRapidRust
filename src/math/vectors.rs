@@ -193,7 +193,7 @@ pub fn scalar_mul<T: Copy +
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
         {
-            let mut temp = Vec::new();
+            let mut temp = Vec::with_capacity(5);
             $(
                 temp.push($a);
             )*
