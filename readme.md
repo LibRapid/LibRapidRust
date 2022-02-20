@@ -17,6 +17,7 @@ _____
 - Changed Public API: `QuadraticEquation`: `get_solutions()` now returns a `Option<(Option<f64>, Option<f64>)>`
 - Changed Public API: `QuadraticEquation`: Fixed `Display` bug.
 - Changed Public API: `Date`: Changed return value of getters.
+- Changed Public API: `Averages`: `Mode` is now implemented for `f32` and `f64`.
 
 Credits
 -----
