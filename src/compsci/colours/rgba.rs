@@ -1,5 +1,5 @@
 //! In here you'll find the struct for the classic `RGB` colour-definition and the extended `RGBa`-definition.
-use crate::compsci::colours::cmyk::CMYK;
+use crate::{compsci::colours::cmyk::CMYK, math::general::Averages};
 /// A struct for storing RGBa-Values.
 #[derive(Clone, Copy, PartialEq)]
 pub struct RGBa {
@@ -193,5 +193,28 @@ impl IntoIterator for RGBa {
 
     fn into_iter(self) -> Self::IntoIter {
         vec![self.red, self.green, self.blue, self.alpha].into_iter()
+    }
+}
+
+/// Only uses the R, B and G values.
+impl<T: std::convert::From<f32>> Averages<T> for RGBa {
+    fn arithmetic_mean(&self) -> f64 {
+        vec![self.red as f32, self.green as f32, self.blue as f32].arithmetic_mean()
+    }
+
+    fn harmonic_mean(&self) -> f64 {
+        vec![self.red as f32, self.green as f32, self.blue as f32].harmonic_mean()
+    }
+
+    fn median(&self) -> f64 {
+        vec![self.red, self.green, self.blue].median()
+    }
+
+    fn mode(&self) -> T {
+        vec![self.red as f32, self.green as f32, self.blue as f32].mode().into()
+    }
+
+    fn mid_range(&self) -> f64 {
+        vec![self.red as f32, self.green as f32, self.blue as f32].mid_range()
     }
 }
