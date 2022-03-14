@@ -193,7 +193,7 @@ pub fn scalar_mul<T: Copy +
 macro_rules! new_mathvec {
     ( $( $a:expr ),* ) => {
         {
-            let mut temp = Vec::new();
+            let mut temp = Vec::with_capacity(5);
             $(
                 temp.push($a);
             )*
@@ -215,8 +215,7 @@ impl<T: Copy +
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut finstring: String = String::from("( ");
         for i in 0..self.dimension() {
-            finstring += &self.values[i].to_string();
-            finstring.push_str("; ");
+            finstring.push_str(&(self.values[i].to_string() + "; "));
         }
         finstring.drain(finstring.len()-2..finstring.len());
         write!(f, "{} )", finstring)

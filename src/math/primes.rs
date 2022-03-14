@@ -285,10 +285,10 @@ fn sprp_64(p: u64, base: u64) -> bool {
     false
 }
 #[must_use]
-fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {  
-    if modulus == &0
+const fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {  
+    if *modulus == 0
     { return *modulus; }
-    if p == &0 
+    if *p == 0 
     { return 1; }
     let mut z:    u128 = 1;
     let mut base: u128 = *c as u128;
@@ -298,21 +298,21 @@ fn mod_pow_64(c: &u64, p: &u64, modulus: &u64) -> u64 {
     while pow > 1 {
 
         if pow & 1 == 0 {
-            base = base.square() % n;
+            base = base * base % n;
             pow  >>= 1;
             continue;
         }
         z    = base * z % n;
-        base = base.square() % n;
+        base = base * base % n;
         pow  = (pow - 1) >> 1;
     }
     (base * z % n) as u64
 }
 #[must_use]
-fn mod_pow_32(c: &u32, p: &u32, modulus: &u32) -> u32 {  
-    if modulus == &0
+const fn mod_pow_32(c: &u32, p: &u32, modulus: &u32) -> u32 {  
+    if *modulus == 0
     { return 0; }
-    if p == &0 
+    if *p == 0 
     { return 1; }
     let mut z:    u64 = 1;
     let mut base: u64 = *c as u64;
@@ -322,12 +322,12 @@ fn mod_pow_32(c: &u32, p: &u32, modulus: &u32) -> u32 {
     while pow > 1 {
 
         if pow & 1 == 0 {
-            base = base.square() % n;
+            base = base * base % n;
             pow  >>= 1;
             continue;
         }
         z = base * z % n;
-        base = base.square() % n;
+        base = base * base % n;
         pow = (pow - 1) >> 1;
     }
     (base * z % n) as u32

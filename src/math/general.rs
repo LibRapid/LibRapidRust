@@ -61,7 +61,7 @@ pub trait Averages<T> {
     /// ```
     #[must_use]
     fn mode(&self) -> T;
-    /// Calculate the mode.
+    /// Calculate the mid range.
     /// # Returns
     /// A `T`.
     /// # Examples

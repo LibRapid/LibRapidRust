@@ -22,7 +22,7 @@ pub struct Logger {
 impl Logger {
     /// Creates a new `Logger` object.
     #[must_use]
-    pub fn new(buff_size:      usize,
+    pub const fn new(buff_size:      usize,
                log_to_console: bool,
                log_to_file:    bool,
                file_path:      Option<String>)
@@ -36,7 +36,7 @@ impl Logger {
     }
     /// Creates a new `Logger` object with default values.
     #[must_use]
-    pub fn new_default() -> Logger {
+    pub const fn new_default() -> Logger {
         Logger { buff_size:      10,
                  buff_count:     0,
                  buffer:         String::new(),

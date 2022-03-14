@@ -22,7 +22,7 @@ impl Date {
     /// # Returns
     /// `none` if the date is invalid, otherwise a new date.
     #[must_use]
-    pub fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
+    pub const fn new_ymd(year: i32, month: u8, day: u8) -> Option<Date> {
         if is_valid_day(year, month, day) {
             return Some(Date { year,
                                month,
@@ -58,16 +58,16 @@ impl Date {
     /// # Returns
     /// A boolean value.
     #[must_use]
-    pub fn leap_year(&self) -> &bool {
-        &self.leap_year
+    pub const fn leap_year(&self) -> bool {
+        self.leap_year
     }
     /// Gets the year.
     ///
     /// # Returns
-    /// A `&i32`.
+    /// A `i32`.
     #[must_use]
-    pub fn year(&self) -> &i32 {
-        &self.year
+    pub const fn year(&self) -> i32 {
+        self.year
     }
     /// Sets the year.
     ///
@@ -85,8 +85,8 @@ impl Date {
     /// # Returns
     /// A `&u8`.
     #[must_use]
-    pub fn month(&self) -> &u8 {
-        &self.month
+    pub const fn month(&self) -> u8 {
+        self.month
     }
     /// Sets the month.
     ///
@@ -101,9 +101,9 @@ impl Date {
     /// Gets the day.
     ///
     /// # Returns
-    /// A `&u8`.
-    pub fn day(&self) -> &u8 {
-        &self.day
+    /// A `u8`.
+    pub const fn day(&self) -> u8 {
+        self.day
     }
     /// Sets the day.
     ///
@@ -118,10 +118,10 @@ impl Date {
     /// Gets the hour.
     ///
     /// # Returns
-    /// A `&u8`.
+    /// A `u8`.
     #[must_use]
-    pub fn hour(&self) -> &u8 {
-        &self.hour
+    pub const fn hour(&self) -> u8 {
+        self.hour
     }
     /// Sets the hour.
     ///
@@ -136,10 +136,10 @@ impl Date {
     /// Gets the minute.
     ///
     /// # Returns
-    /// A `&u8`.
+    /// A `u8`.
     #[must_use]
-    pub fn minute(&self) -> &u8 {
-        &self.minute
+    pub const fn minute(&self) -> u8 {
+        self.minute
     }
     /// Sets the minute.
     ///
@@ -154,10 +154,10 @@ impl Date {
     /// Gets the second.
     ///
     /// # Returns
-    /// A `&u8`.
+    /// A `u8`.
     #[must_use]
-    pub fn second(&self) -> &u8 {
-        &self.second
+    pub const fn second(&self) -> u8 {
+        self.second
     }
     /// Sets the second.
     ///
@@ -171,7 +171,7 @@ impl Date {
     }
 }
 
-fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
+const fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
     let day_in_month: u8;
 
     match month {
@@ -197,11 +197,11 @@ fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
 /// A boolean value.
 #[inline]
 #[must_use]
-pub fn is_leap_year(year: i32) -> bool {
-    year & 3 == 0 && (year & 24 == 0 || year & 15 == 0)
+pub const fn is_leap_year(year: i32) -> bool {
+    year & 3 == 0 && (year % 25 == 0 || year & 15 == 0)
 }
 #[inline]
-fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
+const fn is_valid_hms(hour: u8, minute: u8, second: u8) -> bool {
     hour <= 24 && minute <= 60 && second <= 60
 }
 

@@ -10,17 +10,14 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.5-preview.3
+0.1.6
 _____
-- Added Public API: `BitwiseSlice`-Trait.
-- Added Public API: `VecSets`: `difference_with()`.
-- Added Public API: `VecSets`: `cartesian_product()`.
-- Added Public API: `VecSets`: `symmetric_difference_with()`.
-- Added Public API: `VecSets`: `is_disjoint_with()`.
-- Added Public API: `VecSets`: `is_subset_of()`.
-- Added Public API: `CMYK` and `RGB` colour spaces.
-- Added Public API: `is_in_range()` for numeric types.
-- Changed Public API: `VecSets`: Functions related to `Subset`s have changed names.
+- Added Public API: `SliceOps` trait.
+- Added Public API: `RGBa`: `from_str`.
+- Changed Public API: `QuadraticEquation`: `get_solutions()` now returns a `Option<(Option<f64>, Option<f64>)>`
+- Changed Public API: `QuadraticEquation`: Fixed `Display` bug.
+- Changed Public API: `Date`: Changed return value of getters.
+- Changed Public API: `Averages`: `Mode` is now implemented for `f32` and `f64`.
 
 Credits
 -----
@@ -31,7 +28,7 @@ the best possible user experience and consistency over all libraries.
 Why X? Why Y?
 -----
 
-Sometimes I have to yank a version. To stay updated, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
+Sometimes I have to yank a version. To stay updated and to chat with us, please consider joining our Discord! https://discord.gg/cGxTFTgCAC
 
 Contributing
 -----
@@ -55,8 +52,3 @@ How does it work?
 
 The Rust-port of LibRapid is a derivative from the main library made for C++ and Python. It's goal is to be optimised for speedy calculations, mathematical and
 scientific applications.
-
-Performance
------
-
-LibRapid for Rust is fully optimised - meaning your calculations for game scripts and maths will be faster as a result.
