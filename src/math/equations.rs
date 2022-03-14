@@ -2,4 +2,3 @@
 
 pub mod quadratic;
 pub mod linear;
-pub mod points;
