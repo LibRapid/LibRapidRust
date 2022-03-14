@@ -10,14 +10,11 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.6
+0.1.7
 _____
-- Added Public API: `SliceOps` trait.
-- Added Public API: `RGBa`: `from_str`.
-- Changed Public API: `QuadraticEquation`: `get_solutions()` now returns a `Option<(Option<f64>, Option<f64>)>`
-- Changed Public API: `QuadraticEquation`: Fixed `Display` bug.
-- Changed Public API: `Date`: Changed return value of getters.
-- Changed Public API: `Averages`: `Mode` is now implemented for `f32` and `f64`.
+- Added Public API: `IsInRange`: Added exclusive function.
+- Changed Public API: `QuadraticEquation` is now generic.
+- Changed Public API: `LinearEquation` is now generic.
 
 Credits
 -----
