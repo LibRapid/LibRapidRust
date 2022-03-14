@@ -1,18 +1,28 @@
 //! Linear functions.
 
+use std::fmt::Display;
+
 #[derive(Clone, Copy, Debug, PartialEq)]
 /// The struct for storing linear functions of the form `f(x) = mx + c`.
-pub struct LinearEquation {
-    m:    f64,
-    c:    f64,
-    root: Option<f64>
+pub struct LinearEquation<T> {
+    m:    T,
+    c:    T,
+    root: Option<T>
 }
 
-impl LinearEquation {
+impl<T: Copy +
+        Clone +
+        From<u8> +
+        std::ops::Div<Output = T> +
+        std::ops::Sub<Output = T> +
+        std::ops::Neg<Output = T> +
+        std::ops::Mul<Output = T> +
+        std::ops::Add<Output = T> +
+        std::cmp::PartialEq> LinearEquation<T> {
     /// Create a new `LinearEquation`.
     /// # Arguments
-    /// * `m: f64` - The slope of the function.
-    /// * `c: f64` - The y-intercept of the function.
+    /// * `m: T` - The slope of the function.
+    /// * `c: T` - The y-intercept of the function.
     /// # Returns
     /// A new `LinearEquation`.
     /// # Examples
@@ -25,14 +35,14 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn new(m: f64, c: f64) -> LinearEquation {
-        if m == 0.0
+    pub fn new(m: T, c: T) -> LinearEquation<T> {
+        if m == T::from(0u8)
         { panic!("m cannot be zero."); }
         LinearEquation { m, c, root: None }
     }
     /// Get the slope of a `LinearEquation`.
     /// # Returns
-    /// A `f64`.
+    /// A `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::linear::LinearEquation;
@@ -43,12 +53,12 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub const fn m(&self) -> f64 {
+    pub fn m(&self) -> T {
         self.m
     }
     /// Get the y-intercept of a `LinearEquation`.
     /// # Returns
-    /// A `f64`.
+    /// A `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::linear::LinearEquation;
@@ -59,7 +69,7 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub const fn c(&self) -> f64 {
+    pub fn c(&self) -> T {
         self.c
     }
     /// set the slope of a `LinearEquation`.
@@ -76,8 +86,8 @@ impl LinearEquation {
     /// assert_eq!(1.1, f_x.m());
     /// ```
     #[inline]
-    pub fn set_m(&mut self, value: f64) {
-        if value == 0.0
+    pub fn set_m(&mut self, value: T) {
+        if value == T::from(0)
         { panic!("m cannot be zero."); }
         self.m = value
     }
@@ -95,7 +105,7 @@ impl LinearEquation {
     /// assert_eq!(3.14, f_x.c());
     /// ```
     #[inline]
-    pub fn set_c(&mut self, value: f64) {
+    pub fn set_c(&mut self, value: T) {
         self.c = value;
     }
     /// Get the x-coordinate of the root of a `LinearEquation`.
@@ -111,7 +121,7 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_root(&mut self) -> f64 {
+    pub fn get_root(&mut self) -> T {
         if self.root.is_some()
         { return unsafe { self.root.unwrap_unchecked() }; }
 
@@ -120,7 +130,7 @@ impl LinearEquation {
     }
     /// Get the value of a value `x` under the function of the `LinearEquation`.
     /// # Returns
-    /// A `f64`.
+    /// A `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::linear::LinearEquation;
@@ -131,15 +141,39 @@ impl LinearEquation {
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_fun_val_of<T>(&self, x: T) -> f64
-    where f64: From<T> {
-        self.m * f64::from(x) + self.c
+    pub fn get_fun_val_of<S>(&self, x: S) -> T
+    where T: From<S> {
+        self.m * T::from(x) + self.c
+    }
+    /// Get the interception point between `self` and `other`.
+    /// # Arguments
+    /// * `self`.
+    /// * `other: &LinearEquation`.
+    /// # Returns
+    /// A `(T, T)` tuple.
+    /// ```
+    /// use lib_rapid::math::equations::linear::LinearEquation;
+    /// 
+    /// let mut f_x = LinearEquation::new(1.5, -2.0);
+    /// let mut g_x = LinearEquation::new(-2.0, 5.0);
+    /// 
+    /// assert_eq!((2.0, 1.0), f_x.intcept_point_with(&g_x));
+    #[inline]
+    #[must_use]
+    pub fn intcept_point_with(&self, other: &LinearEquation<T>) -> (T, T) {
+            let x = (other.c - self.c) / (self.m - other.m);
+            let y = self.m * x + self.c;
+            (x, y)
     }
 }
 
-impl std::fmt::Display for LinearEquation {
+impl<T: From<u8> +
+        Display +
+        std::ops::Neg<Output = T> +
+        PartialOrd +
+        Copy> std::fmt::Display for LinearEquation<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self.c > 0.0 {
+        match self.c > T::from(0) {
             true  => { write!(f, "f(x) = {}x + {}", self.m, self.c) }
             false => { write!(f, "f(x) = {}x - {}", self.m, - self.c) }
         }
