@@ -146,6 +146,18 @@ pub trait IsInRange {
     /// ```
     #[must_use]
     fn is_in_range(&self, start: Self, end: Self) -> bool;
+    /// Determine whether `self` is in the interval `(start; end)`.
+    /// # Returns
+    /// A `bool`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::IsInRange;
+    /// 
+    /// assert_eq!(true, 5.is_in_range_exclusive(0, 10));
+    /// assert_eq!(false, 5.is_in_range_exclusive(0, 5));
+    /// ```
+    #[must_use]
+    fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool;
 }
 /// Common powers.
 pub trait CommonPowers {
@@ -244,6 +256,10 @@ impl<T: std::cmp::PartialOrd> IsInRange for T {
     #[inline]
     fn is_in_range(&self, start: Self, end: Self) -> bool {
         self >= &start && self <= &end
+    }
+
+    fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool {
+        self > &start && self < &end
     }
 }
 
