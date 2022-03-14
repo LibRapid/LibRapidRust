@@ -1,6 +1,6 @@
 //! Quadratic functions.
 use std::fmt::Display;
-
+use std::convert::{TryFrom, TryInto};
 use crate::math::general::CommonPowers;
 
 use super::linear::LinearEquation;
@@ -17,7 +17,7 @@ pub struct QuadraticEquation<T> {
 impl<T: Copy +
         Clone +
         From<u8> +
-        From<f64> +
+        TryFrom<f64> +
         PartialEq +
         PartialOrd +
         CommonPowers +
@@ -27,7 +27,8 @@ impl<T: Copy +
         std::ops::Div<Output = T> +
         std::ops::Neg<Output = T>> QuadraticEquation<T>
         where
-        f64: From<T> {
+        f64: From<T>,
+        <T as TryFrom<f64>>::Error: std::fmt::Debug {
     /// Create a new `QuadraticEquation` with the values `a = 1, b = 0, c = 0`.
     /// 
     /// # Examples
@@ -184,14 +185,14 @@ impl<T: Copy +
     }
     /// Get the solutions of a quadratic equation.
     /// # Returns
-    /// A `Option<(Option<f64>, Option<f64>)>`.
+    /// A `(Option<f64>, Option<f64>)`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
     /// 
     /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, -3.0);
     /// 
-    /// assert_eq!(Some((Some(3.0), Some(-1.0))), f_x.get_solutions());
+    /// assert_eq!((Some(3.0), Some(-1.0)), f_x.get_solutions());
     /// ```
     pub fn get_solutions(&mut self) -> (Option<T>, Option<T>) {
         if self.solutions != (None, None)
@@ -199,8 +200,11 @@ impl<T: Copy +
         let discriminant = self.b.square() - T::from(4) * self.a * self.c;
         if discriminant < T::from(0)
         { return (None, None); }
-        let x_1 = (- self.b + T::from(f64::from(discriminant).sqrt())) / (T::from(2) * self.a);
-        let x_2 = (- self.b - T::from(f64::from(discriminant).sqrt())) / (T::from(2) * self.a);
+        let x_1 = (- self.b + (f64::from(discriminant).sqrt()).try_into().unwrap()) /
+                  (T::from(2) * self.a);
+
+        let x_2 = (- self.b - T::try_from(f64::from(discriminant).sqrt()).unwrap()) /
+                  (T::from(2) * self.a);
         
         match x_1 == x_2 {
             true  => { self.solutions = (Some(x_1), None); }

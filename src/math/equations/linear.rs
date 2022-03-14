@@ -1,6 +1,6 @@
 //! Linear functions.
 
-use std::fmt::Display;
+use std::{fmt::Display, convert::TryFrom};
 
 use super::quadratic::QuadraticEquation;
 
@@ -15,16 +15,17 @@ pub struct LinearEquation<T> {
 impl<T: Copy +
         Clone +
         From<u8> +
+        TryFrom<f64> +
         std::ops::Div<Output = T> +
         std::ops::Sub<Output = T> +
         std::ops::Neg<Output = T> +
         std::ops::Mul<Output = T> +
         std::ops::Add<Output = T> +
         std::cmp::PartialEq +
-        std::cmp::PartialOrd +
-        From<f64>> LinearEquation<T>
+        std::cmp::PartialOrd> LinearEquation<T>
         where
-        f64: From<T> {
+        f64: From<T>,
+        <T as TryFrom<f64>>::Error: std::fmt::Debug {
     /// Create a new `LinearEquation`.
     /// # Arguments
     /// * `m: T` - The slope of the function.
@@ -42,8 +43,6 @@ impl<T: Copy +
     #[inline]
     #[must_use]
     pub fn new(m: T, c: T) -> LinearEquation<T> {
-        if m == T::from(0u8)
-        { panic!("m cannot be zero."); }
         LinearEquation { m, c, root: None }
     }
     /// Get the slope of a `LinearEquation`.
@@ -93,8 +92,6 @@ impl<T: Copy +
     /// ```
     #[inline]
     pub fn set_m(&mut self, value: T) {
-        if value == T::from(0)
-        { panic!("m cannot be zero."); }
         self.m = value
     }
     /// set the y-intercept of a `LinearEquation`.
@@ -143,13 +140,12 @@ impl<T: Copy +
     /// 
     /// let mut f_x = LinearEquation::new(1.0, -2.0);
     /// 
-    /// assert_eq!(-1.0, f_x.get_fun_val_of(1));
+    /// assert_eq!(-1.0, f_x.get_fun_val_of(1.0));
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_fun_val_of<S>(&self, x: S) -> T
-    where T: From<S> {
-        self.m * T::from(x) + self.c
+    pub fn get_fun_val_of(&self, x: T) -> T {
+        self.m * x + self.c
     }
     /// Get the interception point between `self` and `other` if there is some.
     /// # Arguments
@@ -190,6 +186,18 @@ impl<T: Copy +
     /// assert_eq!( ( Some((1.8257418583505536, 5.651483716701107)),
     ///               Some((-1.8257418583505536, -1.6514837167011072)) ),
     ///             f_x.intcept_point_with_quadratic(&g_x));
+    /// ```
+    /// ```
+    /// use lib_rapid::math::equations::linear::LinearEquation;
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = LinearEquation::new(0.0, 1.0);
+    /// let mut g_x = QuadraticEquation::new_from_coefficients(1.0, 0.0, 1.0);
+    /// 
+    /// assert_eq!( ( Some((0.0, 1.0)),
+    ///               None ),
+    ///             f_x.intcept_point_with_quadratic(&g_x));
+    /// ```
     #[inline]
     #[must_use]
     pub fn intcept_point_with_quadratic(&self, other: &QuadraticEquation<T>)
@@ -205,8 +213,10 @@ impl<T: Copy +
 
         let q0: T = unsafe { q.get_solutions().0.unwrap_unchecked() };
         let q1: Option<T> = q.get_solutions().1;
-        let mut res: (Option<(T, T)>, Option<(T, T)>) =
-        ( Some( (q0, self.get_fun_val_of(q0) ) ), None );
+        let mut res: (Option<(T, T)>,
+                      Option<(T, T)>) =
+        ( Some((q0, self.get_fun_val_of(q0))),
+          None );
 
         if q1.is_some() { 
             let uq: T = unsafe { q1.unwrap_unchecked() };
