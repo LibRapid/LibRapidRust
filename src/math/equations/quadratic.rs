@@ -2,6 +2,8 @@
 use std::fmt::Display;
 
 use crate::math::general::CommonPowers;
+
+use super::linear::LinearEquation;
 /// A struct for storing quadratic equations of the form `f(x) = ax² + bx + c`.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct QuadraticEquation<T> {
@@ -9,7 +11,7 @@ pub struct QuadraticEquation<T> {
     b:         T,
     c:         T,
     vertex:    Option<(T, T)>,
-    solutions: Option<(Option<T>, Option<T>)>
+    solutions: (Option<T>, Option<T>)
 }
 
 impl<T: Copy +
@@ -52,7 +54,7 @@ impl<T: Copy +
                             b:         T::from(0),
                             c:         T::from(0),
                             vertex:    Some((T::from(0), T::from(0))),
-                            solutions: Some((Some(T::from(0)), None)) }
+                            solutions: (Some(T::from(0)), None) }
     }
     /// Create a new `QuadraticEquation` from coefficients.
     /// 
@@ -75,7 +77,7 @@ impl<T: Copy +
                             b,
                             c,
                             vertex:    None,
-                            solutions: None }
+                            solutions: (None, None) }
     }
     /// Get `a` of a `QuadraticEquation`.
     /// # Returns
@@ -191,20 +193,42 @@ impl<T: Copy +
     /// 
     /// assert_eq!(Some((Some(3.0), Some(-1.0))), f_x.get_solutions());
     /// ```
-    pub fn get_solutions(&mut self) -> Option<(Option<T>, Option<T>)> {
-        if self.solutions.is_some()
+    pub fn get_solutions(&mut self) -> (Option<T>, Option<T>) {
+        if self.solutions != (None, None)
         { return self.solutions; }
         let discriminant = self.b.square() - T::from(4) * self.a * self.c;
         if discriminant < T::from(0)
-        { return None; }
+        { return (None, None); }
         let x_1 = (- self.b + T::from(f64::from(discriminant).sqrt())) / (T::from(2) * self.a);
         let x_2 = (- self.b - T::from(f64::from(discriminant).sqrt())) / (T::from(2) * self.a);
         
         match x_1 == x_2 {
-            true  => { self.solutions = Some((Some(x_1), None)); }
-            false => { self.solutions = Some((Some(x_1), Some(x_2))); }
+            true  => { self.solutions = (Some(x_1), None); }
+            false => { self.solutions = (Some(x_1), Some(x_2)); }
         }
         self.solutions
+    }
+    /// Get the interception point between `self` and a linear equation if there is some.
+    /// # Arguments
+    /// * `self`.
+    /// * `other: &LinearEquation`.
+    /// # Returns
+    /// A `(Option<(T, T)>, Option<(T, T)>)` tuple.
+    /// ```
+    /// use lib_rapid::math::equations::linear::LinearEquation;
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = LinearEquation::new(2.0, 2.0);
+    /// let mut g_x = QuadraticEquation::new_from_coefficients(1.2, 2.0, -2.0);
+    /// 
+    /// assert_eq!( ( Some((1.8257418583505536, 5.651483716701107)),
+    ///               Some((-1.8257418583505536, -1.6514837167011072)) ),
+    ///             g_x.intcept_point_with_linear(&f_x));
+    #[inline]
+    #[must_use]
+    pub fn intcept_point_with_linear(&self, other: &LinearEquation<T>)
+    -> (Option<(T, T)>, Option<(T, T)>) {
+        other.intcept_point_with_quadratic(self)
     }
     /// Get the vertex of a quadratic equation.
     /// # Returns
