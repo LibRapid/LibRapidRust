@@ -95,11 +95,12 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// ```
     #[must_use]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
-        let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-                                         parent: None };
+        let mut res: VecSet<T> = VecSet {elements: Vec::with_capacity(self.cardinality() +
+                                                                      other.cardinality()),
+                                         parent:   None };
 
-        res.elements.append(&mut self.elements.clone());
-        res.elements.append(&mut other.elements.clone());
+        res.elements.extend_from_slice(&self.elements);
+        res.elements.extend_from_slice(&other.elements);
 
         res.elements.sort_unstable(); 
         res.elements.dedup();
@@ -227,15 +228,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         let diff1 = self.difference_with(&other);
         let diff2 = other.difference_with(&self).clone();
 
-        let mut res: VecSet<T> = VecSet {elements: Vec::new(),
-            parent: None };
-
-        res.elements.append(&mut diff1.elements.clone());
-        res.elements.append(&mut diff2.elements.clone());
-
-        res.elements.sort_unstable(); 
-        res.elements.dedup();
-        res
+        VecSet {elements: diff1.union(&diff2).elements,
+                parent:   None }
     }
     /// Lets you check for an element in a set.
     ///
@@ -423,7 +417,7 @@ macro_rules! set {
     ( $( $a:expr ),* ) => {
         {
             use lib_rapid::compsci::general::BinaryInsert;
-            let mut res_vec = Vec::new();
+            let mut res_vec = Vec::with_capacity(20);
             $(
                 res_vec.binary_insert_no_dup($a);
             )*
@@ -494,7 +488,7 @@ impl<T: ToString + Copy + Ord> std::fmt::Display for VecSet<'_, T> {
         let mut res: String = String::from('{');
         for elem in self.elements() {
             res.push(' ');
-            res += &elem.to_string();
+            res.push_str(&elem.to_string());
             res.push(';');
         }
         res.pop();

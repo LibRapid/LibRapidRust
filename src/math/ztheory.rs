@@ -32,7 +32,7 @@ pub(crate) fn gcd(mut a: u64, mut b: u64) -> u64 {
 
 
 // Extended Euclidean algorithm
-pub(crate) fn eea(p: i64 , q: i64) -> (i64, i64, i64) {
+pub(crate) const fn eea(p: i64 , q: i64) -> (i64, i64, i64) {
     let mut gcd:      i64 = p; 
     let mut new_r:    i64 = q;
     let mut bezout_1: i64 = 1;
