@@ -7,11 +7,12 @@ use super::linear::LinearEquation;
 /// A struct for storing quadratic equations of the form `f(x) = ax² + bx + c`.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct QuadraticEquation<T> {
-    a:         T,
-    b:         T,
-    c:         T,
-    vertex:    Option<(T, T)>,
-    solutions: (Option<T>, Option<T>)
+    a:          T,
+    b:          T,
+    c:          T,
+    vertex:     Option<(T, T)>,
+    solutions:  (Option<T>, Option<T>),
+    derivative: Option<LinearEquation<T>>
 }
 
 impl<T: Copy +
@@ -51,11 +52,12 @@ impl<T: Copy +
     #[inline]
     #[must_use]
     pub fn new() -> QuadraticEquation<T> {
-        QuadraticEquation { a:         T::from(1),
-                            b:         T::from(0),
-                            c:         T::from(0),
-                            vertex:    Some((T::from(0), T::from(0))),
-                            solutions: (Some(T::from(0)), None) }
+        QuadraticEquation { a:          T::from(1),
+                            b:          T::from(0),
+                            c:          T::from(0),
+                            vertex:     Some((T::from(0), T::from(0))),
+                            solutions:  (Some(T::from(0)), None),
+                            derivative: None }
     }
     /// Create a new `QuadraticEquation` from coefficients.
     /// 
@@ -77,8 +79,9 @@ impl<T: Copy +
         QuadraticEquation { a,
                             b,
                             c,
-                            vertex:    None,
-                            solutions: (None, None) }
+                            vertex:     None,
+                            solutions: (None, None),
+                            derivative: None }
     }
     /// Get `a` of a `QuadraticEquation`.
     /// # Returns
@@ -147,6 +150,7 @@ impl<T: Copy +
     pub fn set_a(&mut self, value: T) {
         if value == T::from(0)
         { panic!("a was zero and is thus not allowed."); }
+        self.derivative = None;
         self.a = value;
     }
     /// Set `b` of a `QuadraticEquation`.
@@ -164,6 +168,7 @@ impl<T: Copy +
     /// ```
     #[inline] 
     pub fn set_b(&mut self, value: T) {
+        self.derivative = None;
         self.b = value;
     }
     /// Set `c` of a `QuadraticEquation`.
@@ -307,6 +312,28 @@ impl<T: Copy +
     #[must_use]
     pub fn get_fun_val_of(&self, x: T) -> T {
         self.a * x.square() + self.b * x + self.c
+    }
+    /// Get the derivative of a `QuadraticEquation<T>`.
+    /// # Returns
+    /// A `LinearEquation<T>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// use lib_rapid::math::equations::linear::LinearEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, 3.0);
+    /// 
+    /// assert_eq!(LinearEquation::new(2.0, -2.0), f_x.get_derivative());
+    /// ```
+    #[inline]
+    #[must_use]
+    pub fn get_derivative(&mut self) -> LinearEquation<T> {
+        match self.derivative {
+            Some(d) => { return d; }
+            None    => { self.derivative = Some(LinearEquation::new(T::from(2) * self.a, self.b)); }
+        }
+
+        unsafe { self.derivative.unwrap_unchecked() }
     }
 }
 
