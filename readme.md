@@ -13,6 +13,7 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 0.1.7
 _____
 - Added Public API: `QuadraticEquation`: Added `intsect_with`.
+- Added Public API: `QuadraticEquation`: Added `get_derivative`.
 - Added Public API: `QuadraticEquation`: Added `intsect_with_linear`.
 - Added Public API: `LinearEquation`: Added `intsect_with_quadratic`.
 - Added Public API: `LinearEquation`: Added `intsect_with`.
