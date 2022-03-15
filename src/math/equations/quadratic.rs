@@ -212,7 +212,45 @@ impl<T: Copy +
         }
         self.solutions
     }
-    /// Get the interception point between `self` and a linear equation if there is some.
+    /// Get the intersection point(s) between `self` and `other`.
+    /// # Arguments
+    /// * `self`.
+    /// * `other: &QuadraticEquation`.
+    /// # Returns
+    /// A `(Option<(T, T)>, Option<(T, T)>)` tuple.
+    /// ```
+    /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
+    /// 
+    /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, 2.0, 0.0);
+    /// let mut g_x = QuadraticEquation::new_from_coefficients(1.0, 2.0, 0.0);
+    /// let mut h_x = QuadraticEquation::new_from_coefficients(0.5, 1.0, 0.0);
+    /// 
+    /// assert_eq!( (None, None), f_x.intsect_with(&g_x));
+    /// assert_eq!( (Some( (0.0, 0.0) ), Some( (-2.0, 0.0) )), g_x.intsect_with(&h_x) );
+    /// ```
+    #[inline]
+    #[must_use]
+    pub fn intsect_with(&self, other: &QuadraticEquation<T>)
+    -> (Option<(T, T)>, Option<(T, T)>) {
+        if self == other
+        { return (None, None) }
+        let solquad = QuadraticEquation::new_from_coefficients(self.a - other.a,
+                                                               self.b - other.b,
+                                                               self.c - other.c).get_solutions();
+        if solquad == (None, None)
+        { return (None, None); }
+        let solquad0_unsafe = unsafe { solquad.0.unwrap_unchecked() };
+        let mut res = (Some((solquad0_unsafe, self.get_fun_val_of(solquad0_unsafe))), None );
+        match solquad {
+            (Some(_), None)     => { }
+            (Some(_), Some(s1)) => {
+                res.1 = Some((s1, self.get_fun_val_of(s1)));
+            }
+            _                   => { }
+        }
+        res
+    }
+    /// Get the intersection point(s) between `self` and a linear equation if there is some.
     /// # Arguments
     /// * `self`.
     /// * `other: &LinearEquation`.
@@ -227,12 +265,12 @@ impl<T: Copy +
     /// 
     /// assert_eq!( ( Some((1.8257418583505536, 5.651483716701107)),
     ///               Some((-1.8257418583505536, -1.6514837167011072)) ),
-    ///             g_x.intcept_point_with_linear(&f_x));
+    ///             g_x.intsect_with_linear(&f_x));
     #[inline]
     #[must_use]
-    pub fn intcept_point_with_linear(&self, other: &LinearEquation<T>)
+    pub fn intsect_with_linear(&self, other: &LinearEquation<T>)
     -> (Option<(T, T)>, Option<(T, T)>) {
-        other.intcept_point_with_quadratic(self)
+        other.intsect_with_quadratic(self)
     }
     /// Get the vertex of a quadratic equation.
     /// # Returns
@@ -263,15 +301,12 @@ impl<T: Copy +
     /// 
     /// let f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, 3.0);
     /// 
-    /// assert_eq!(2.0, f_x.get_fun_val_of(1));
+    /// assert_eq!(2.0, f_x.get_fun_val_of(1.0));
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_fun_val_of<S: CommonPowers>(&self, x: S) -> T
-    where f64: From<T>,
-          T: From<S> {
-        let _x = T::from(x);
-        self.a * _x.square() + self.b * _x + self.c
+    pub fn get_fun_val_of(&self, x: T) -> T {
+        self.a * x.square() + self.b * x + self.c
     }
 }
 

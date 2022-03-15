@@ -147,7 +147,7 @@ impl<T: Copy +
     pub fn get_fun_val_of(&self, x: T) -> T {
         self.m * x + self.c
     }
-    /// Get the interception point between `self` and `other` if there is some.
+    /// Get the intersection point between `self` and `other` if there is some.
     /// # Arguments
     /// * `self`.
     /// * `other: &LinearEquation`.
@@ -159,10 +159,10 @@ impl<T: Copy +
     /// let mut f_x = LinearEquation::new(1.5, -2.0);
     /// let mut g_x = LinearEquation::new(-2.0, 5.0);
     /// 
-    /// assert_eq!(Some((2.0, 1.0)), f_x.intcept_point_with(&g_x));
+    /// assert_eq!(Some((2.0, 1.0)), f_x.intsect_with(&g_x));
     #[inline]
     #[must_use]
-    pub fn intcept_point_with(&self, other: &LinearEquation<T>) -> Option<(T, T)> {
+    pub fn intsect_with(&self, other: &LinearEquation<T>) -> Option<(T, T)> {
         if self.m == other.m
         { return None; }
         let x: T = (other.c - self.c) / (self.m - other.m);
@@ -170,7 +170,7 @@ impl<T: Copy +
         Some((x, y))
     }
 
-    /// Get the interception point between `self` and a quadratic equation if there is some.
+    /// Get the intersection point(s) between `self` and a quadratic equation if there is some.
     /// # Arguments
     /// * `self`.
     /// * `other: &QuadraticEquation`.
@@ -185,7 +185,7 @@ impl<T: Copy +
     /// 
     /// assert_eq!( ( Some((1.8257418583505536, 5.651483716701107)),
     ///               Some((-1.8257418583505536, -1.6514837167011072)) ),
-    ///             f_x.intcept_point_with_quadratic(&g_x));
+    ///             f_x.intsect_with_quadratic(&g_x));
     /// ```
     /// ```
     /// use lib_rapid::math::equations::linear::LinearEquation;
@@ -196,11 +196,11 @@ impl<T: Copy +
     /// 
     /// assert_eq!( ( Some((0.0, 1.0)),
     ///               None ),
-    ///             f_x.intcept_point_with_quadratic(&g_x));
+    ///             f_x.intsect_with_quadratic(&g_x));
     /// ```
     #[inline]
     #[must_use]
-    pub fn intcept_point_with_quadratic(&self, other: &QuadraticEquation<T>)
+    pub fn intsect_with_quadratic(&self, other: &QuadraticEquation<T>)
     -> (Option<(T, T)>, Option<(T, T)>) {
         let mut q: QuadraticEquation<T> =
         QuadraticEquation::new_from_coefficients(other.a(),
