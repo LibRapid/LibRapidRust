@@ -218,6 +218,7 @@ impl<T: Copy +
         self.solutions
     }
     /// Get the intersection point(s) between `self` and `other`.
+    /// Returns `(None, None)` if both arguments are equal.
     /// # Arguments
     /// * `self`.
     /// * `other: &QuadraticEquation`.
@@ -277,7 +278,7 @@ impl<T: Copy +
     -> (Option<(T, T)>, Option<(T, T)>) {
         other.intsect_with_quadratic(self)
     }
-    /// Get the vertex of a quadratic equation.
+    /// Get the vertex (lowest or highest point) of a quadratic equation.
     /// # Returns
     /// A `(f64, f64)`.
     /// # Examples
@@ -313,7 +314,8 @@ impl<T: Copy +
     pub fn get_fun_val_of(&self, x: T) -> T {
         self.a * x.square() + self.b * x + self.c
     }
-    /// Get the derivative of a `QuadraticEquation<T>`.
+    /// Get the derivative of a `QuadraticEquation<T>`. The derivative is the graph of the
+    /// development of the slope for a given function `self`.
     /// # Returns
     /// A `LinearEquation<T>`.
     /// # Examples
