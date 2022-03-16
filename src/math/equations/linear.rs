@@ -92,6 +92,7 @@ impl<T: Copy +
     /// ```
     #[inline]
     pub fn set_m(&mut self, value: T) {
+        self.root = None;
         self.m = value
     }
     /// set the y-intercept of a `LinearEquation`.
@@ -109,6 +110,7 @@ impl<T: Copy +
     /// ```
     #[inline]
     pub fn set_c(&mut self, value: T) {
+        self.root = None;
         self.c = value;
     }
     /// Get the x-coordinate of the root of a `LinearEquation`.

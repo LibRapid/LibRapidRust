@@ -150,6 +150,7 @@ impl<T: Copy +
     pub fn set_a(&mut self, value: T) {
         if value == T::from(0)
         { panic!("a was zero and is thus not allowed."); }
+        self.solutions = (None, None);
         self.derivative = None;
         self.a = value;
     }
@@ -168,6 +169,7 @@ impl<T: Copy +
     /// ```
     #[inline] 
     pub fn set_b(&mut self, value: T) {
+        self.solutions = (None, None);
         self.derivative = None;
         self.b = value;
     }
@@ -186,6 +188,7 @@ impl<T: Copy +
     /// ```
     #[inline]
     pub fn set_c(&mut self, value: T) {
+        self.solutions = (None, None);
         self.c = value;
     }
     /// Get the solutions of a quadratic equation.
