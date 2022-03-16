@@ -348,16 +348,16 @@ impl<T: Display +
         From<u8> +
         Copy> std::fmt::Display for QuadraticEquation<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let res;
-        let _  = write!(f, "f(x) = {}x^2", self.a);
+        let mut res = String::with_capacity(22);
+        res.push_str(&format!("f(x) = {}x^2", self.a));
         if self.b < T::from(0)
-        { let _ = write!(f, " - {}x", - self.b); }
+        { res.push_str(&format!(" - {}x", self.b)); }
         else
-        { let _ = write!(f, " + {}x", self.b); }
+        { res.push_str(&format!(" + {}x", self.b)); }
         if self.c < T::from(0)
-        { res = write!(f, " - {}", - self.c); }
+        { res.push_str(&format!(" - {}", - self.c)); }
         else
-        { res = write!(f, " + {}", self.c); }
-        res
+        { res.push_str(&format!(" + {}", self.c)); }
+        write!(f, "{}", res)
     }
 }
