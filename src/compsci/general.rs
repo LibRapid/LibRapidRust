@@ -570,60 +570,13 @@ impl FloatMagic for f64 {
 
 impl Brackets for &str {
     fn validate_brackets(&self) -> Result<bool, usize> {
-        let mut s: Vec<char> = Vec::with_capacity(self.len());
-        let mut i: usize = 0;
-        for c in self.chars() {
-            match c {
-                '[' => { s.push(c); },
-                '{' => { s.push(c); },
-                '(' => { s.push(c); },
-                ']' => { 
-                         if s.pop() != Some('[')
-                         { return Err(i); }
-                        },
-                '}' => { if s.pop() != Some('{')
-                         { return Err(i); }
-                        },
-                ')' => { if s.pop() != Some('(')
-                         { return Err(i); }
-                        },
-                _   => { }
-            }
-            i.inc();
-        }
-
-        if !s.is_empty()
-        { return Err(i); }
-        Ok(true)
+        backend_val_brackets(*self)
     }
 }
 
 impl Brackets for String {
     fn validate_brackets(&self) -> Result<bool, usize> {
-        let mut s: Vec<char> = Vec::with_capacity(self.len());
-        let mut i: usize = 0;
-        for c in self.chars() {
-            match c {
-                '[' => { s.push(c); },
-                '{' => { s.push(c); },
-                '(' => { s.push(c); },
-                ']' => { if s.pop() != Some('[')
-                         { return Err(i); }
-                        },
-                '}' => { if s.pop() != Some('{')
-                         { return Err(i); }
-                        },
-                ')' => { if s.pop() != Some('(')
-                         { return Err(i); }
-                        },
-                _   => { }
-            }
-            i.inc();
-        }
-
-        if !s.is_empty()
-        { return Err(i); }
-        Ok(true)
+        backend_val_brackets(&self)
     }
 }
 
@@ -785,4 +738,32 @@ fn bitwise_from<T: From<u8> +
     }
 
     end_prod
+}
+
+fn backend_val_brackets(s: &str) -> Result<bool, usize> {
+    let mut res_vec: Vec<char> = Vec::with_capacity(s.len());
+    let mut i: usize = 0;
+    for c in s.chars() {
+        match c {
+            '[' => { res_vec.push(c); },
+            '{' => { res_vec.push(c); },
+            '(' => { res_vec.push(c); },
+            ']' => { 
+                     if res_vec.pop() != Some('[')
+                     { return Err(i); }
+                    },
+            '}' => { if res_vec.pop() != Some('{')
+                     { return Err(i); }
+                    },
+            ')' => { if res_vec.pop() != Some('(')
+                     { return Err(i); }
+                    },
+            _   => { }
+        }
+        i.inc();
+    }
+
+    if !res_vec.is_empty()
+    { return Err(i); }
+    Ok(true)
 }
