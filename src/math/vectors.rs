@@ -4,6 +4,7 @@ use super::general::{Increment, CommonPowers};
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /// Mathematical Vectors in Rust.
+#[derive(Clone)]
 pub struct MathVector<T> {
     values: Vec<T>,
     length: Option<f64>,
