@@ -1,6 +1,6 @@
 //! Vectors can be really handy, sometimes. Do everything you want with your favorite direction pointing data type from mathematics.
 
-use super::general::{Increment, CommonPowers};
+use super::general::NumTools;
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /// Mathematical Vectors in Rust.
@@ -11,7 +11,7 @@ pub struct MathVector<T> {
 }
 
 impl<T: Copy +
-        super::general::CommonPowers +
+        NumTools<T> +
         From<f64> +
         std::ops::Mul<Output = T>> MathVector<T>
         where
@@ -112,7 +112,7 @@ impl<T: Copy +
 }
 
 impl<T: Copy +
-        super::general::CommonPowers +
+        super::general::NumTools<T> +
         From<f64> + Into<f64> +
         std::ops::Mul<Output = T> +
         std::ops::Add<Output = T>>
@@ -136,7 +136,7 @@ impl<T: Copy +
 }
 
 impl<T: Copy +
-        super::general::CommonPowers +
+        super::general::NumTools<T> +
         From<f64> +
         Into<f64> +
         std::ops::Mul<Output = T> +
@@ -170,7 +170,7 @@ impl<T: Copy +
 #[inline]
 #[must_use]
 pub fn scalar_mul<T: Copy +
-                     super::general::CommonPowers +
+                     super::general::NumTools<T> +
                      From<f64> +
                      std::ops::Mul<Output = T>>
                      (scalar: f64, other: &MathVector<T>) -> MathVector<T> 
@@ -206,7 +206,7 @@ macro_rules! new_mathvec {
 pub use new_mathvec;
 
 impl<T: Copy +
-        super::general::CommonPowers +
+        super::general::NumTools<T> +
         Into<f64> +
         std::fmt::Display + From<f64> +
         std::ops::Mul<Output = T>>

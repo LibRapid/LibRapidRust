@@ -10,16 +10,18 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.1.7
+0.2.0 - BREAKING CHANGES.
 _____
 - Added Public API: `QuadraticEquation`: Added `intsect_with`.
 - Added Public API: `QuadraticEquation`: Added `get_derivative`.
 - Added Public API: `QuadraticEquation`: Added `intsect_with_linear`.
 - Added Public API: `LinearEquation`: Added `intsect_with_quadratic`.
 - Added Public API: `LinearEquation`: Added `intsect_with`.
+- Added Public API: `Averages`: Added `type Output`.
 - Added Public API: `IsInRange`: Added exclusive function.
 - Changed Public API: `QuadraticEquation` is now generic.
 - Changed Public API: `LinearEquation` is now generic.
+- Moved almost all trait functions in `lib_rapid::math::general` to the new `NumTools` trait.
 
 Credits
 -----
