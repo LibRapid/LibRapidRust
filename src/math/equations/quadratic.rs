@@ -1,7 +1,7 @@
 //! Quadratic functions.
 use std::fmt::Display;
 use std::convert::{TryFrom, TryInto};
-use crate::math::general::CommonPowers;
+use crate::math::general::NumTools;
 
 use super::linear::LinearEquation;
 /// A struct for storing quadratic equations of the form `f(x) = ax² + bx + c`.
@@ -21,7 +21,7 @@ impl<T: Copy +
         TryFrom<f64> +
         PartialEq +
         PartialOrd +
-        CommonPowers +
+        NumTools<T> +
         std::ops::Mul<Output = T> +
         std::ops::Add<Output = T> +
         std::ops::Sub<Output = T> +

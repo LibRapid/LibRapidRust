@@ -2,6 +2,8 @@
 
 use std::{fmt::Display, convert::TryFrom};
 
+use crate::math::general::NumTools;
+
 use super::quadratic::QuadraticEquation;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -22,7 +24,8 @@ impl<T: Copy +
         std::ops::Mul<Output = T> +
         std::ops::Add<Output = T> +
         std::cmp::PartialEq +
-        std::cmp::PartialOrd> LinearEquation<T>
+        std::cmp::PartialOrd +
+        NumTools<T>> LinearEquation<T>
         where
         f64: From<T>,
         <T as TryFrom<f64>>::Error: std::fmt::Debug {

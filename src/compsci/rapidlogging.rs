@@ -3,7 +3,7 @@ use chrono::{Utc, SecondsFormat};
 use std::io::prelude::*;
 use std::fs::OpenOptions;
 
-use crate::math::general::Increment;
+use crate::math::general::NumTools;
 
 /// The structure for the RapidLogger.
 pub struct Logger {

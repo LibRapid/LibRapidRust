@@ -1,7 +1,7 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
 
-use std::convert::{TryInto, TryFrom};
+use std::{convert::{TryInto, TryFrom}, ops::{Div, Sub, Add, Mul, AddAssign, SubAssign}};
 
 use crate::eval_postfix;
 
@@ -9,6 +9,7 @@ use super::constants::{SQRT5, GOLDENRATIO};
 pub mod avg_impl;
 /// Trait for several kinds of averages.
 pub trait Averages<T> {
+    type Output;
     /// Calculate the arithmetic mean.
     /// # Returns
     /// A `f64`.
@@ -21,7 +22,7 @@ pub trait Averages<T> {
     /// assert_eq!(3.125, v.arithmetic_mean());
     /// ```
     #[must_use]
-    fn arithmetic_mean(&self) -> f64;
+    fn arithmetic_mean(&self) -> Self::Output;
     /// Calculate the harmonic mean.
     /// # Returns
     /// A `f64`.
@@ -34,7 +35,7 @@ pub trait Averages<T> {
     /// assert_eq!(2.318840579710145, v.harmonic_mean());
     /// ```
     #[must_use]
-    fn harmonic_mean(&self) -> f64;
+    fn harmonic_mean(&self) -> Self::Output;
     /// Calculate the median.
     /// # Returns
     /// A `f64`.
@@ -47,7 +48,7 @@ pub trait Averages<T> {
     /// assert_eq!(2.5, v.median());
     /// ```
     #[must_use]
-    fn median(&self) -> f64;
+    fn median(&self) -> Self::Output;
     /// Calculate the mode.
     /// # Returns
     /// A `T`.
@@ -73,7 +74,7 @@ pub trait Averages<T> {
     /// assert_eq!(3.5, v.mid_range());
     /// ```
     #[must_use]
-    fn mid_range(&self) -> f64;
+    fn mid_range(&self) -> Self::Output;
 }
 /// Trait for the Digits of a given number.
 pub trait NumDigits {
@@ -107,8 +108,33 @@ pub trait NumDigits {
     #[must_use]
     fn digits(&self) -> Vec<u8>;
 }
-/// Trait for mapping numbers to another number range.
-pub trait MapToNumRange<T> {
+/// Trait for several useful generic functions.
+pub trait NumTools<T> {
+    /// Determine whether `self` is in the interval `[start; end]`.
+    /// # Returns
+    /// A `bool`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumTools;
+    /// 
+    /// assert_eq!(true, 5.is_in_range(0, 10));
+    /// assert_eq!(true, 5.is_in_range(0, 5));
+    /// assert_eq!(false, 3.14.is_in_range(5.0, 10.0));
+    /// ```
+    #[must_use]
+    fn is_in_range(&self, start: Self, end: Self) -> bool;
+    /// Determine whether `self` is in the interval `(start; end)`.
+    /// # Returns
+    /// A `bool`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumTools;
+    /// 
+    /// assert_eq!(true, 5.is_in_range_exclusive(0, 10));
+    /// assert_eq!(false, 5.is_in_range_exclusive(0, 5));
+    /// ```
+    #[must_use]
+    fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool;
     /// Maps a given number of a range onto another range.
     ///
     /// # Arguments
@@ -123,44 +149,65 @@ pub trait MapToNumRange<T> {
     ///
     /// # Examples
     /// ```
-    /// use lib_rapid::math::general::MapToNumRange;
+    /// use lib_rapid::math::general::NumTools;
     ///
     /// let result: f32 = 5.0.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
     /// ```
     #[must_use]
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
-}
-/// Trait for determining whether a number is in a given range.
-pub trait IsInRange {
-    /// Determine whether `self` is in the interval `[start; end]`.
+    /// Increment a number by one.
     /// # Returns
-    /// A `bool`.
+    /// Nothing.
     /// # Examples
     /// ```
-    /// use lib_rapid::math::general::IsInRange;
-    /// 
-    /// assert_eq!(true, 5.is_in_range(0, 10));
-    /// assert_eq!(true, 5.is_in_range(0, 5));
-    /// assert_eq!(false, 3.14.is_in_range(5.0, 10.0));
+    /// use lib_rapid::math::general::NumTools;
+    /// let mut five: i32 = 5;
+    /// five.inc();
+    /// assert_eq!(five, 6);
     /// ```
-    #[must_use]
-    fn is_in_range(&self, start: Self, end: Self) -> bool;
-    /// Determine whether `self` is in the interval `(start; end)`.
+    fn inc(&mut self);
+    /// Increment a number by a specified value.
+    /// # Arguments
+    /// * `n` - The value to be incremented by.
     /// # Returns
-    /// A `bool`.
+    /// Nothing.
     /// # Examples
     /// ```
-    /// use lib_rapid::math::general::IsInRange;
-    /// 
-    /// assert_eq!(true, 5.is_in_range_exclusive(0, 10));
-    /// assert_eq!(false, 5.is_in_range_exclusive(0, 5));
+    /// use lib_rapid::math::general::NumTools;
+    /// let mut five: i32 = 5;
+    /// five.inc_by(2);
+    /// assert_eq!(five, 7);
     /// ```
-    #[must_use]
-    fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool;
-}
-/// Common powers.
-pub trait CommonPowers {
+    fn inc_by(&mut self, n: Self);
+    /// Decrement a number by one.
+    /// # Returns
+    /// Nothing.
+    /// # Warning
+    /// Does not check for underflow.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumTools;
+    /// let mut five: i32 = 5;
+    /// five.dec();
+    /// assert_eq!(five, 4);
+    /// ```
+    fn dec(&mut self);
+    /// Decrement a number by a specified value.
+    /// # Arguments
+    /// * `n` - The value to be decremented by.
+    /// # Returns
+    /// Nothing.
+    /// # Warning
+    /// Does not check for underflow.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumTools;
+    /// let mut five: i32 = 5;
+    /// five.dec_by(2);
+    /// assert_eq!(five, 3);
+    /// ```
+    fn dec_by(&mut self, n: Self);
     /// Square a number.
     /// # Returns
     /// The square of the number.
@@ -168,7 +215,7 @@ pub trait CommonPowers {
     /// This function does not check if overflow occurs.
     /// # Examples
     /// ```
-    ///use lib_rapid::math::general::CommonPowers;
+    ///use lib_rapid::math::general::NumTools;
     ///let i = 12;
     ///let res = i.square();
     ///
@@ -184,7 +231,7 @@ pub trait CommonPowers {
     /// This function does not check if overflow occurs.
     /// # Examples
     /// ```
-    ///use lib_rapid::math::general::CommonPowers;
+    ///use lib_rapid::math::general::NumTools;
     ///let i = 12;
     ///let res = i.cube();
     ///
@@ -193,88 +240,31 @@ pub trait CommonPowers {
     #[must_use]
     fn cube(&self) -> Self;
 }
-/// Trait for incrementing by value. Shorthand syntax for `x += y;`.
-pub trait Increment {
-    /// Increment a number by one.
-    /// # Returns
-    /// Nothing.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::math::general::Increment;
-    /// let mut five: i32 = 5;
-    /// five.inc();
-    /// assert_eq!(five, 6);
-    /// ```
-    fn inc(&mut self);
-    /// Increment a number by a specified value.
-    /// # Arguments
-    /// * `n` - The value to be incremented by.
-    /// # Returns
-    /// Nothing.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::math::general::Increment;
-    /// let mut five: i32 = 5;
-    /// five.inc_by(2);
-    /// assert_eq!(five, 7);
-    /// ```
-    fn inc_by(&mut self, n: Self);
-}
-/// Trait for incrementing by value. Shorthand syntax for `x -= y;`.
-pub trait Decrement {
-    /// Decrement a number by one.
-    /// # Returns
-    /// Nothing.
-    /// # Warning
-    /// Does not check for underflow.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::math::general::Decrement;
-    /// let mut five: i32 = 5;
-    /// five.dec();
-    /// assert_eq!(five, 4);
-    /// ```
-    fn dec(&mut self);
-    /// Decrement a number by a specified value.
-    /// # Arguments
-    /// * `n` - The value to be decremented by.
-    /// # Returns
-    /// Nothing.
-    /// # Warning
-    /// Does not check for underflow.
-    /// # Examples
-    /// ```
-    /// use lib_rapid::math::general::Decrement;
-    /// let mut five: i32 = 5;
-    /// five.dec_by(2);
-    /// assert_eq!(five, 3);
-    /// ```
-    fn dec_by(&mut self, n: Self);
-}
 
-impl<T: std::cmp::PartialOrd> IsInRange for T {
+impl<T: std::cmp::PartialOrd +
+        Sub<Output = T> +
+        Add<Output = T> +
+        Div<Output = T> +
+        Mul<Output = T> +
+        From<u8> +
+        Copy +
+        SubAssign +
+        AddAssign> NumTools<T> for T {
     #[inline]
     fn is_in_range(&self, start: Self, end: Self) -> bool {
         self >= &start && self <= &end
     }
 
+    #[inline]
     fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool {
         self > &start && self < &end
     }
-}
 
-impl<T: std::ops::AddAssign + From<u8>> Increment for T {
     #[inline]
-    fn inc(&mut self) {
-        *self += 1u8.into();
+    fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T {
+        eval_postfix!(start2 end2 start2 - + (*self) start1 - end1 / start1 - *)
     }
-    #[inline]
-    fn inc_by(&mut self, n: Self) {
-        *self += n;
-    }
-}
 
-impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
     #[inline]
     fn dec(&mut self) {
         *self -= 1u8.into();
@@ -284,11 +274,35 @@ impl<T: std::ops::SubAssign + From<u8>> Decrement for T {
     fn dec_by(&mut self, n: Self) {
         *self -= n;
     }
+
+    #[inline]
+    fn inc(&mut self) {
+        *self += 1u8.into();
+    }
+    #[inline]
+    fn inc_by(&mut self, n: Self) {
+        *self += n;
+    }
+    #[inline]
+    fn square(&self) -> Self {
+        *self * *self
+    }
+    #[inline]
+    fn cube(&self) -> Self {
+        *self * *self * *self
+    }
 }
 
 impl<'a, T: std::cmp::PartialEq +
         std::ops::DivAssign + std::cmp::PartialOrd +
-        std::ops::Rem<Output = T> + Copy + std::ops::AddAssign>
+        std::ops::Rem<Output = T> + Copy +
+        std::ops::AddAssign +
+        Div<Output = T> +
+        Sub<Output = T> +
+        Add<Output = T> +
+        Mul<Output = T> +
+        AddAssign +
+        SubAssign>
     NumDigits
     for T
     where
@@ -315,28 +329,6 @@ impl<'a, T: std::cmp::PartialEq +
             digits.push(n);
         }
         digits
-    }
-}
-
-impl<T: std::ops::Add<Output = T> + 
-        std::ops::Sub<Output = T> + 
-        std::ops::Mul<Output = T> + 
-        std::ops::Div<Output = T> + 
-        Copy> MapToNumRange<T> for T {
-            #[inline]
-            fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T {
-                eval_postfix!(start2 end2 start2 - + (*self) start1 - end1 / start1 - *)
-            }
-        }
-
-impl<T: std::ops::Mul<Output = T> + Copy> CommonPowers for T {
-    #[inline]
-    fn square(&self) -> Self {
-        *self * *self
-    }
-    #[inline]
-    fn cube(&self) -> Self {
-        *self * *self * *self
     }
 }
 /// Compute the nth-root of a number.

@@ -2,7 +2,7 @@
 use std::time::Instant;
 use crate::compsci::compression::huffman::write_to_file;
 use crate::math::constants::SQRT5;
-use crate::math::general::Increment;
+use crate::math::general::NumTools;
 use crate::math::general::nth_fibonacci;
 use crate::math::primes::Primality;
 use crate::math::primes::generate_primes;

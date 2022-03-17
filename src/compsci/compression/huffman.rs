@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use bit_vec::BitVec;
 use serde::{Serialize, Deserialize};
 
-use crate::math::general::Increment;
+use crate::math::general::NumTools;
 /// Encoding trait for minimal code writing.
 pub trait Encode {
     /// Fully encodes a String.

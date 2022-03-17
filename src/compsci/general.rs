@@ -1,5 +1,5 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
-use crate::math::general::Increment;
+use crate::math::general::NumTools;
 use std::{intrinsics::transmute, fmt::Debug, ops::{BitAndAssign, Shl, BitOrAssign, BitXorAssign}, convert::TryFrom};
 use core::mem::{size_of_val, size_of};
 

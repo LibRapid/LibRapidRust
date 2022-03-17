@@ -198,15 +198,17 @@ impl IntoIterator for RGBa {
 
 /// Only uses the R, B and G values.
 impl<T: std::convert::From<f32>> Averages<T> for RGBa {
-    fn arithmetic_mean(&self) -> f64 {
+    type Output = f32;
+
+    fn arithmetic_mean(&self) -> Self::Output {
         vec![self.red as f32, self.green as f32, self.blue as f32].arithmetic_mean()
     }
 
-    fn harmonic_mean(&self) -> f64 {
+    fn harmonic_mean(&self) -> Self::Output {
         vec![self.red as f32, self.green as f32, self.blue as f32].harmonic_mean()
     }
 
-    fn median(&self) -> f64 {
+    fn median(&self) -> Self::Output {
         vec![self.red, self.green, self.blue].median()
     }
 
@@ -214,7 +216,7 @@ impl<T: std::convert::From<f32>> Averages<T> for RGBa {
         vec![self.red as f32, self.green as f32, self.blue as f32].mode().into()
     }
 
-    fn mid_range(&self) -> f64 {
+    fn mid_range(&self) -> Self::Output {
         vec![self.red as f32, self.green as f32, self.blue as f32].mid_range()
     }
 }

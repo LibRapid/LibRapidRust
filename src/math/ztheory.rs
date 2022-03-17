@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use super::general::Decrement;
+use super::general::NumTools;
 
 // Binary gcd
 pub(crate) fn gcd(mut a: u64, mut b: u64) -> u64 {
