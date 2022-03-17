@@ -749,16 +749,9 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
             '[' => { res_vec.push(c); },
             '{' => { res_vec.push(c); },
             '(' => { res_vec.push(c); },
-            ']' => { 
-                     if res_vec.pop() != Some('[')
-                     { return Err(i); }
-                    },
-            '}' => { if res_vec.pop() != Some('{')
-                     { return Err(i); }
-                    },
-            ')' => { if res_vec.pop() != Some('(')
-                     { return Err(i); }
-                    },
+            ']' if res_vec.pop() != Some('[') => { return Err(i); }
+            '}' if res_vec.pop() != Some('{') => { return Err(i); }
+            ')' if res_vec.pop() != Some('(') => { return Err(i); }
             _   => { }
         }
         i.inc();
