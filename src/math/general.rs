@@ -12,7 +12,7 @@ pub trait Averages<T> {
     type Output;
     /// Calculate the arithmetic mean.
     /// # Returns
-    /// A `f64`.
+    /// A `f32` by default, except for the `&[f64]` input type.
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
@@ -25,7 +25,7 @@ pub trait Averages<T> {
     fn arithmetic_mean(&self) -> Self::Output;
     /// Calculate the harmonic mean.
     /// # Returns
-    /// A `f64`.
+    /// A `f32` by default, except for the `&[f64]` input type.
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
@@ -38,7 +38,7 @@ pub trait Averages<T> {
     fn harmonic_mean(&self) -> Self::Output;
     /// Calculate the median.
     /// # Returns
-    /// A `f64`.
+    /// A `f32` by default, except for the `&[f64]` input type.
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
@@ -64,7 +64,7 @@ pub trait Averages<T> {
     fn mode(&self) -> T;
     /// Calculate the mid range.
     /// # Returns
-    /// A `T`.
+    /// A `f32` by default, except for the `&[f64]` input type.
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
