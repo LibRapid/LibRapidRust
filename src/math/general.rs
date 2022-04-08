@@ -7,6 +7,7 @@ use crate::eval_postfix;
 
 use super::constants::{SQRT5, GOLDENRATIO};
 pub mod avg_impl;
+pub mod avg_macros;
 /// Trait for several kinds of averages.
 pub trait Averages<T> {
     type Output;
