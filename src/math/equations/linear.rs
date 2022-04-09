@@ -116,7 +116,7 @@ impl<T: Copy +
     }
     /// Get the x-coordinate of the root of a `LinearEquation`.
     /// # Returns
-    /// A `f64`.
+    /// A `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::linear::LinearEquation;

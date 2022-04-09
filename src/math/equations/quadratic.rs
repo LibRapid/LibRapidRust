@@ -83,7 +83,7 @@ impl<T: Copy +
     }
     /// Get `a` of a `QuadraticEquation`.
     /// # Returns
-    /// A `f64.`
+    /// A `T.`
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
@@ -99,7 +99,7 @@ impl<T: Copy +
     }
     /// Get `b` of a `QuadraticEquation`.
     /// # Returns
-    /// A `f64.`
+    /// A `T.`
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
@@ -115,7 +115,7 @@ impl<T: Copy +
     }
     /// Get `c` of a `QuadraticEquation`.
     /// # Returns
-    /// A `f64.`
+    /// A `T.`
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
@@ -191,7 +191,7 @@ impl<T: Copy +
     }
     /// Get the solutions of a quadratic equation.
     /// # Returns
-    /// A `(Option<f64>, Option<f64>)`.
+    /// A `(Option<T>, Option<T>)`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
@@ -281,7 +281,7 @@ impl<T: Copy +
     }
     /// Get the vertex (lowest or highest point) of a quadratic equation.
     /// # Returns
-    /// A `(f64, f64)`.
+    /// A `(T, T)`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
@@ -301,7 +301,7 @@ impl<T: Copy +
     }
     /// Get the value of a value `x` under the function of the `QuadraticEquation`.
     /// # Returns
-    /// A `f64`.
+    /// A `T`.
     /// # Examples
     /// ```
     /// use lib_rapid::math::equations::quadratic::QuadraticEquation;
