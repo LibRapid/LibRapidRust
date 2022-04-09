@@ -495,16 +495,8 @@ impl<T: BitXorAssign +
     where
     <T as TryFrom<U>>::Error: Debug {
     fn xor_with(&self, other: &[U]) -> Vec<T> {
-        if size_of_val(self) != size_of_val(other)
-        { panic!("{}", BITWISE_ERR1); }
-
-        let t_size: usize = size_of::<T>();
-        let u_size: usize = size_of::<U>();
-        if t_size < u_size
-        { panic!("{}", BITWISE_ERR2); }
-        
+        let multiplier: usize  = bitwise_preproc::<T, U>(self, other);
         let mut _res:   Vec<T> = self.to_vec();
-        let multiplier: usize  = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
             _res[index] ^= bitwise_from(slice);
@@ -514,16 +506,9 @@ impl<T: BitXorAssign +
     }
 
     fn or_with(&self, other: &[U]) -> Vec<T> {
-        if size_of_val(self) != size_of_val(other)
-        { panic!("{}", BITWISE_ERR1); }
-
-        let t_size: usize = size_of::<T>();
-        let u_size: usize = size_of::<U>();
-        if t_size < u_size
-        { panic!("{}", BITWISE_ERR2); }
-
+        let multiplier: usize  = bitwise_preproc::<T, U>(self, other);
         let mut _res:   Vec<T> = self.to_vec();
-        let multiplier: usize  = t_size / u_size;
+
         for (index, slice) in other.chunks(multiplier).enumerate() {
             _res[index] |= bitwise_from(slice);
         }
@@ -532,16 +517,8 @@ impl<T: BitXorAssign +
     }
 
     fn and_with(&self, other: &[U]) -> Vec<T> {
-        if size_of_val(self) != size_of_val(other)
-        { panic!("{}", BITWISE_ERR1); }
-
-        let t_size: usize = size_of::<T>();
-        let u_size: usize = size_of::<U>();
-        if t_size < u_size
-        { panic!("{}", BITWISE_ERR2); }
-        
+        let multiplier: usize  = bitwise_preproc::<T, U>(self, other);
         let mut _res:   Vec<T> = self.to_vec();
-        let multiplier: usize  = t_size / u_size;
 
         for (index, slice) in other.chunks(multiplier).enumerate() {
             _res[index] &= bitwise_from(slice);
@@ -598,4 +575,16 @@ fn bitwise_from<T: From<u8> +
     }
 
     end_prod
+}
+
+#[inline(always)]
+fn bitwise_preproc<T,U>(a: &[T], b: &[U]) -> usize {
+    if size_of_val(a) != size_of_val(b)
+    { panic!("{}", BITWISE_ERR1); }
+
+    let t_size: usize = size_of::<T>();
+    let u_size: usize = size_of::<U>();
+    if t_size < u_size
+    { panic!("{}", BITWISE_ERR2); }
+    t_size / u_size
 }
