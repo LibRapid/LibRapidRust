@@ -785,15 +785,15 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 /// // 72 == 'H' in ASCII.
 /// // 104 == `h` in ASCII.
 /// ```
-pub fn strcmp(s1: &str, s2: &str) -> i16 {
+pub const fn strcmp(s1: &str, s2: &str) -> i16 {
     let mut i: usize = 0;
     let mut flag: i16 = 0;
     while flag == 0 {
-        flag = s1.byte_at(i) as i16 - s2.byte_at(i) as i16;
+        flag = s1.as_bytes()[i] as i16 - s2.as_bytes()[i] as i16;
         if i + 1 == s1.len()
         { break; }
 
-        i.inc();
+        i += 1;
     }
     flag
 }
