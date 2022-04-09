@@ -135,7 +135,6 @@ impl StringUtils for String {
     fn validate_brackets(&self) -> Result<bool, usize> {
         backend_val_brackets(self)
     }
-
     fn is_alphanumeric(&self) -> Result<bool, usize> {
         for c in self.chars().enumerate() {
             if !((c.1 >= '0' && c.1 <= '9') ||
@@ -145,7 +144,6 @@ impl StringUtils for String {
         }
         Ok(true)
     }
-
     fn is_numeric(&self) -> Result<bool, usize> {
         for c in self.chars().enumerate() {
             if !((c.1) as u8).is_in_range(48, 57)
@@ -167,7 +165,6 @@ impl StringUtils for str {
     fn validate_brackets(&self) -> Result<bool, usize> {
         backend_val_brackets(self)
     }
-
     fn is_alphanumeric(&self) -> Result<bool, usize> {
         for c in self.chars().enumerate() {
             if !((c.1 >= '0' && c.1 <= '9') ||
@@ -177,7 +174,6 @@ impl StringUtils for str {
         }
         Ok(true)
     }
-
     fn is_numeric(&self) -> Result<bool, usize> {
         for c in self.chars().enumerate() {
             if !((c.1) as u8).is_in_range(48, 57)

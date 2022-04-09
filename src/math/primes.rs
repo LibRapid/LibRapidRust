@@ -170,7 +170,6 @@ impl Primality for i128 {
     }
 }
 
-
 /// Generate a list of prime numbers in the interval `[2;limit[`.
 /// # Arguments
 /// * `limit: usize` The limit up to which the function should search for primes.

@@ -1,9 +1,7 @@
 //! Linear functions.
 
-use std::{fmt::Display, convert::TryFrom};
-
+use std::{fmt::Display, convert::TryFrom, ops::*, cmp::*};
 use crate::math::general::NumTools;
-
 use super::quadratic::QuadraticEquation;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -18,13 +16,13 @@ impl<T: Copy +
         Clone +
         From<u8> +
         TryFrom<f64> +
-        std::ops::Div<Output = T> +
-        std::ops::Sub<Output = T> +
-        std::ops::Neg<Output = T> +
-        std::ops::Mul<Output = T> +
-        std::ops::Add<Output = T> +
-        std::cmp::PartialEq +
-        std::cmp::PartialOrd +
+        Div<Output = T> +
+        Sub<Output = T> +
+        Neg<Output = T> +
+        Mul<Output = T> +
+        Add<Output = T> +
+        PartialEq +
+        PartialOrd +
         NumTools<T>> LinearEquation<T>
         where
         f64: From<T>,
@@ -233,7 +231,7 @@ impl<T: Copy +
 
 impl<T: From<u8> +
         Display +
-        std::ops::Neg<Output = T> +
+        Neg<Output = T> +
         PartialOrd +
         Copy> std::fmt::Display for LinearEquation<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

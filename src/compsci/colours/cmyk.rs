@@ -1,6 +1,5 @@
 //! In here you'll find the struct for the `CMYK` colour-definition.
-use crate::math::general::NumTools;
-use crate::compsci::colours::rgba::RGBa;
+use crate::{math::general::NumTools, compsci::colours::rgba::RGBa};
 
 const ARG_ERR: &str = "Arguments must range from 0 to 1.";
 /// A struct for storing CMYK-Values.

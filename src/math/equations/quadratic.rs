@@ -1,8 +1,6 @@
 //! Quadratic functions.
-use std::fmt::Display;
-use std::convert::{TryFrom, TryInto};
+use std::{fmt::Display, convert::*, ops::*};
 use crate::math::general::NumTools;
-
 use super::linear::LinearEquation;
 /// A struct for storing quadratic equations of the form `f(x) = ax² + bx + c`.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -22,11 +20,11 @@ impl<T: Copy +
         PartialEq +
         PartialOrd +
         NumTools<T> +
-        std::ops::Mul<Output = T> +
-        std::ops::Add<Output = T> +
-        std::ops::Sub<Output = T> +
-        std::ops::Div<Output = T> +
-        std::ops::Neg<Output = T>> QuadraticEquation<T>
+        Mul<Output = T> +
+        Add<Output = T> +
+        Sub<Output = T> +
+        Div<Output = T> +
+        Neg<Output = T>> QuadraticEquation<T>
         where
         f64: From<T>,
         <T as TryFrom<f64>>::Error: std::fmt::Debug {

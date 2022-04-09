@@ -1,4 +1,5 @@
 //! Unit conversions for computer science.
+use std::ops::*;
 /// Binary Prefixes (e.g. kibi, mebi).
 #[derive(PartialEq, Clone, Copy)]
 pub enum BinaryPrefix<T> {
@@ -22,7 +23,7 @@ pub enum BinaryPrefix<T> {
     Yobi(T),
 }
 
-impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> BinaryPrefix<T> {
+impl<T: Copy + Shl<Output = T> + Into<u128>> BinaryPrefix<T> {
     /// Converts a Binary-Prefix value into a regular `u128`.
     /// # Returns
     /// A `u128`.
@@ -97,7 +98,7 @@ impl<T: Copy + Into<f64>> Into<f32> for BinaryPrefix<T> {
 /// assert_eq!(3145728u128, BinaryPrefix::Mebi(3 as u128).into());
 /// assert_eq!(4096u128, BinaryPrefix::Kibi(4 as u128).into());
 /// ```
-impl<T: Copy + std::ops::Shl<Output = T> + Into<u128>> Into<u128> for BinaryPrefix<T> {
+impl<T: Copy + Shl<Output = T> + Into<u128>> Into<u128> for BinaryPrefix<T> {
     fn into(self) -> u128 {
         self.to_decimal_u128()
     }
