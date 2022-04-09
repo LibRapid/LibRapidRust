@@ -180,10 +180,7 @@ const fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
                 else
                 { day_in_month = 28; }
             }
-        4  => day_in_month = 30,
-        6  => day_in_month = 30,
-        9  => day_in_month = 30,
-        11 => day_in_month = 30,
+        4 | 6 | 9 | 11  => day_in_month = 30,
         _  => day_in_month = 31,
     }
     if day <= day_in_month { return true; }
