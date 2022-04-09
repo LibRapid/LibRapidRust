@@ -193,9 +193,7 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
     let mut i: usize = 0;
     for c in s.chars() {
         match c {
-            '[' => { res_vec.push(c); },
-            '{' => { res_vec.push(c); },
-            '(' => { res_vec.push(c); },
+            '[' | '{' | '(' => { res_vec.push(c); },
             ']' if res_vec.pop() != Some('[') => { return Err(i); }
             '}' if res_vec.pop() != Some('{') => { return Err(i); }
             ')' if res_vec.pop() != Some('(') => { return Err(i); }

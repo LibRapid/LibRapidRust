@@ -340,19 +340,15 @@ pub trait FloatMagic {
 impl CharTools for char {
     fn is_open_bracket(&self) -> bool {
         match self {
-            '(' => { true }
-            '{' => { true }
-            '[' => { true }
-            _   => { false }
+            '(' | '{' | '[' => { true }
+            _               => { false }
         }
     }
 
     fn is_closed_bracket(&self) -> bool {
         match self {
-            ')' => { true }
-            '}' => { true }
-            ']' => { true }
-            _   => { false }
+            ')' | '}' | ']' => { true }
+            _               => { false }
         }
     }
 
