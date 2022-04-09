@@ -12,8 +12,10 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 -----
 0.2.1-preview.1 - BREAKING CHANGES.
 _____
-- Added Public API: `strcmp` in `compsci::general`.
-- Changed Public API: Moved String related traits to `compsci::general::StringUtils`.
+- Added Public API: `strcmp` in `compsci::stringhelpers`.
+- Added Public API: `is_alphanumeric()` in `compsci::stringhelpers::StringUtils`.
+- Added Public API: `is_numeric()` in `compsci::stringhelpers::StringUtils`.
+- Changed Public API: Moved String related traits to `compsci::stringhelpers::StringUtils`.
 
 Credits
 -----
