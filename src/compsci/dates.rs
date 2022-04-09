@@ -1,6 +1,6 @@
 //! Simple Dates. Do not expect anything fancy from this part of the library, as the focus does not lie on date-functions.
-use core::cmp::Ordering::Equal;
 /// The structure for dates in LibRapid.
+#[derive(PartialEq, Eq, PartialOrd, Ord)]
 pub struct Date {
     year:      i32,
     month:     u8,
@@ -193,46 +193,5 @@ impl std::fmt::Display for Date {
              &format!("{:0>2}", &self.minute.to_string()) + ":" +
              &format!("{:0>2}", &self.second.to_string());
         write!(f, "{}", finstring)
-    }
-}
-
-impl PartialEq for Date {
-    fn eq(&self, other: &Self) -> bool {
-        self.year   == other.year   &&
-        self.month  == other.month  &&
-        self.day    == other.day    &&
-        self.hour   == other.hour   &&
-        self.minute == other.minute &&
-        self.second == other.second
-    }
-}
-
-impl core::cmp::PartialOrd for Date {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        match self.year.partial_cmp(&other.year) {
-            Some(Equal) => {}
-            ord => return ord,
-        }
-        match self.month.partial_cmp(&other.month) {
-            Some(Equal) => {}
-            ord => return ord,
-        }
-        match self.day.partial_cmp(&other.day) {
-            Some(Equal) => {}
-            ord => return ord,
-        }
-        match self.hour.partial_cmp(&other.hour) {
-            Some(Equal) => {}
-            ord => return ord,
-        }
-        match self.minute.partial_cmp(&other.minute) {
-            Some(Equal) => {}
-            ord => return ord,
-        }
-        match self.second.partial_cmp(&other.second) {
-            Some(Equal) => {}
-            ord => return ord,
-        }
-        None
     }
 }
