@@ -768,8 +768,8 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 /// let a = "hello";
 /// let b = "hEllo";
 /// assert!(strcmp(a, b) == 101 - 69);
-/// /// 101 == 'e' in ASCII.
-/// /// 69 == `E` in ASCII.
+/// // 101 == 'e' in ASCII.
+/// // 69 == `E` in ASCII.
 /// ```
 /// ```
 /// use lib_rapid::compsci::general::strcmp;
@@ -782,8 +782,8 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 /// let a = "Hello";
 /// let b = "hello";
 /// assert!(strcmp(a, b) == 72 - 104);
-/// /// 72 == 'H' in ASCII.
-/// /// 104 == `h` in ASCII.
+/// // 72 == 'H' in ASCII.
+/// // 104 == `h` in ASCII.
 /// ```
 pub fn strcmp(s1: &str, s2: &str) -> i16 {
     let mut i: usize = 0;
