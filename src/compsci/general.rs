@@ -454,7 +454,7 @@ impl FloatMagic for f64 {
     fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self {
         if sign     > 1                { panic!("A sign bigger than 1 is not allowed."); }
         if exponent > 2047             { panic!("An exponent bigger than 2047 is not allowed."); }
-        if mantissa > 4503599627370000 { panic!("A mantissa bigger than 8388607 is not allowed."); }
+        if mantissa > 4503599627370000 { panic!("A mantissa bigger than 4503599627370000 is not allowed."); }
 
         unsafe { transmute((mantissa |
                           ((exponent as u64) << 23)) |
