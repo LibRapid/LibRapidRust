@@ -8,7 +8,6 @@ pub trait StringUtils {
     /// 
     /// # Arguments
     /// * `index` - The index of the character
-    ///
     /// # Returns
     /// A `Option<char>`.
     /// 
@@ -36,7 +35,6 @@ pub trait StringUtils {
     /// 
     /// # Arguments
     /// * `index` - The index of the byte
-    ///
     /// # Returns
     /// A `u8`.
     /// 

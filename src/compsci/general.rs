@@ -127,13 +127,10 @@ pub trait BitwiseSlice<T, U> {
 /// Trait for `binary_insert`.
 pub trait BinaryInsert<T> {
     /// Insert an element into a ***sorted*** `vec` whilst maintaining the order, consuming `other`.
-    ///
     /// # Arguments
     /// * `value` - The value which needs to be inserted.
-    ///
     /// # Returns
     /// Nothing.
-    ///
     /// # Warning
     /// This function ***will not*** check if the parsed `vec` is sorted.
     /// # Examples

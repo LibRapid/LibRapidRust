@@ -14,16 +14,12 @@ use crate::math::general::NumTools;
 /// Encoding trait for minimal code writing.
 pub trait Encode {
     /// Fully encodes a String.
-    ///
     /// # Returns
     /// A `(BitVec, Box<Node>)` tuple.
-    ///
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::compression::huffman::{Node, Encode, Decode};
-    ///
     /// let s: &str = "Lorem Ipsum";
-    ///
     /// let enc = s.full_encode();
     /// let dec = enc.full_decode();
     /// 
@@ -35,16 +31,12 @@ pub trait Encode {
 /// Decoding trait for minimal code writing.
 pub trait Decode {
     /// Fully decodes a encoded String.
-    ///
     /// # Returns
     /// A `String`.
-    ///
     /// # Examples
     /// ```
     /// use lib_rapid::compsci::compression::huffman::{Node, Encode, Decode};
-    ///
     /// let s: &str = "Lorem Ipsum";
-    ///
     /// let enc = s.full_encode();
     /// let dec = enc.full_decode();
     /// 
@@ -126,21 +118,17 @@ fn get_frequency(s: &str) -> HashMap<char, usize> {
 }
 
 /// Assigns Huffman-codes to each character.
-///
 /// # Arguments
 /// * `root` - The Huffman tree.
 /// * `hashmap` - The variable in which the result is stored.
 /// * `bitvec` - A temporary BitVec.
-///
 /// # Returns
 /// Nothing.
-///
 /// # Examples
 /// ```
 /// use lib_rapid::compsci::compression::huffman::{get_root, assign_codes};
 /// use bit_vec::BitVec;
 /// use std::collections::HashMap;
-///
 /// let s = "Lorem Ipsum";
 /// let root = get_root(s);
 /// let mut char_codes:HashMap<char, BitVec> = HashMap::new();
@@ -167,25 +155,20 @@ pub fn assign_codes(root: &Box<Node>,
 }
 
 /// Encodes a string.
-///
 /// # Arguments
 /// * `s` - The string to be encoded.
 /// * `char_codes` - The assigned Huffman codes of the characters.
-///
 /// # Returns
 /// A BitVec which contains the Huffman encoded string.
-///
 /// # Examples
 /// ```
 /// use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode};
 /// use bit_vec::BitVec;
 /// use std::collections::HashMap;
-///
 /// let s = "Lorem Ipsum";
 /// let root = get_root(s);
 /// let mut char_codes:HashMap<char, BitVec> = HashMap::new();
 /// assign_codes(&root, &mut char_codes, &mut BitVec::new()); // Assigns codes to characters of s and stores them in char_codes.
-///
 /// let enc = huffman_encode(s, &char_codes); // Encodes the String s into enc.
 /// ```
 #[must_use]
@@ -218,26 +201,21 @@ fn decode_string(bitvec: &BitVec, root: &Box<Node>) -> String {
 }
 
 /// Decodes a Huffman encoded BitVec.
-///
 /// # Arguments
 /// * `bitvec` - The assigned Huffman codes of the characters.
 /// * `root` - The Huffman tree.
-///
 /// # Returns
 /// A BitVec which contains the Huffman encoded string.
-///
 /// # Examples
 /// ```
 /// use lib_rapid::compsci::compression::huffman::{get_root, assign_codes, huffman_encode, huffman_decode};
 /// use bit_vec::BitVec;
 /// use std::collections::HashMap;
-///
 /// let s: &str = "Lorem Ipsum";
 /// let root = get_root(s);
 /// let mut bitvec = BitVec::new();
 /// let mut char_codes: HashMap<char, BitVec> = HashMap::new();
 /// assign_codes(&root, &mut char_codes, &mut bitvec); // Assigns codes to characters of s and stores them in char_codes.
-///
 /// let enc = huffman_encode(s, &char_codes); // Encodes the String s into enc.
 /// let dec = huffman_decode(&enc, &root); // Decodes the BitVec which was created by the last line.
 /// 
@@ -249,10 +227,8 @@ pub fn huffman_decode(bitvec: &BitVec, root: &Box<Node>) -> String {
 }
 
 /// Gets the Huffman tree for a string.
-///
 /// # Arguments
 /// * `s` - The string of which the tree should be created.
-///
 /// # Returns
 /// A Box<Node> containing the entire tree.
 #[must_use]
@@ -277,21 +253,17 @@ pub fn get_root(s: &str) -> Box<Node> {
 }
 
 /// Writes the encoded message into 2 files.
-///
 /// # Arguments
 /// * `path` - The path to be written to.
 /// * `bitvec` - The Huffman codes assigned to the characters.
 /// * `root` - The Huffman tree.
-///
 /// # Returns
 /// Nothing. Writes to 2 files:
 /// name.hlr: The main file in which the encoded message is stored.
 /// name.htlr: The file in which the huffman tree is stored.
-///
 /// # Examples
 /// ```
-/// use lib_rapid::compsci::compression::huffman::{Encode, write_to_file};///
-/// let s: &str = "Lorem Ipsum";
+/// use lib_rapid::compsci::compression::huffman::{Encode, write_to_file};/// let s: &str = "Lorem Ipsum";
 /// 
 /// let enc = s.full_encode(); // Encodes the String s into enc.
 /// write_to_file("test".to_string(), &enc.0, &enc.1);
@@ -304,13 +276,10 @@ pub fn write_to_file(path: String, bitvec: &BitVec, root: &Box<Node>) {
 }
 
 /// Reads and decodes the message stored in the .hlr and .htlr files.
-///
 /// # Arguments
 /// * `path` - The path to be read from.
-///
 /// # Returns
 /// A String containing the decoded message.
-///
 /// # Examples
 /// ```
 /// use lib_rapid::compsci::compression::huffman::{Encode, Decode, write_to_file, read_from_file};
