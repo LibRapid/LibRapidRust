@@ -760,14 +760,16 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 /// # Returns
 /// It returns:
 /// * `0`, if `s1 == s2`.
-/// * `1`, if `s1[i] < s2[i]` in ASCII.
-/// * `-1`, if `s1[i] > s2[i]` in ASCII.
+/// * `s2[i] - s1[i]`, if `s1[i] < s2[i]` in ASCII.
+/// * `s1[i] - s2[i]`, if `s1[i] > s2[i]` in ASCII.
 /// # Examples
 /// ```
 /// use lib_rapid::compsci::general::strcmp;
 /// let a = "hello";
 /// let b = "hEllo";
-/// assert!(strcmp(a, b) > 0);
+/// assert!(strcmp(a, b) == 101 - 69);
+/// /// 101 == 'e' in ASCII.
+/// /// 69 == `E` in ASCII.
 /// ```
 /// ```
 /// use lib_rapid::compsci::general::strcmp;
@@ -779,16 +781,15 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 /// use lib_rapid::compsci::general::strcmp;
 /// let a = "Hello";
 /// let b = "hello";
-/// assert!(strcmp(a, b) < 0);
+/// assert!(strcmp(a, b) == 72 - 104);
+/// /// 72 == 'H' in ASCII.
+/// /// 104 == `h` in ASCII.
 /// ```
-pub fn strcmp(s1: &str, s2: &str) -> i8 {
+pub fn strcmp(s1: &str, s2: &str) -> i16 {
     let mut i: usize = 0;
-    let mut flag: i8 = 0;
+    let mut flag: i16 = 0;
     while flag == 0 {
-        if s1.byte_at(i) > s2.byte_at(i)
-        { flag = 1; }
-        else if s1.byte_at(i) < s2.byte_at(i)
-        { flag = -1; }
+        flag = s1.byte_at(i) as i16 - s2.byte_at(i) as i16;
         if i + 1 == s1.len()
         { break; }
 
