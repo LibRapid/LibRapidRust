@@ -13,12 +13,10 @@ pub struct Date {
 
 impl Date {
     /// Initializes a new date with the given parameters.
-    ///
     /// # Arguments
     /// * `year` - The Year.
     /// * `month` - The month.
     /// * `day` - The day.
-    ///
     /// # Returns
     /// `none` if the date is invalid, otherwise a new date.
     #[must_use]
@@ -36,12 +34,10 @@ impl Date {
         None
     }
     /// Adds a given amount of hours to the initialised date.
-    ///
     /// #Arguments
     /// * `hour` - The hour.
     /// * `minute` - The minute.
     /// * `second` - The second.
-    ///
     /// # Returns
     /// Nothing.
     pub fn with_hms(&mut self, hour: u8, minute: u8, second: u8) {
@@ -54,7 +50,6 @@ impl Date {
         }
     }
     /// Checks if a year is a leap year.
-    ///
     /// # Returns
     /// A boolean value.
     #[must_use]
@@ -62,7 +57,6 @@ impl Date {
         self.leap_year
     }
     /// Gets the year.
-    ///
     /// # Returns
     /// A `i32`.
     #[must_use]
@@ -70,7 +64,6 @@ impl Date {
         self.year
     }
     /// Sets the year.
-    ///
     /// # Returns
     /// Nothing.
     pub fn set_year(&mut self, year: i32) {
@@ -81,7 +74,6 @@ impl Date {
         self.year = year;
     }
     /// Gets the month.
-    ///
     /// # Returns
     /// A `&u8`.
     #[must_use]
@@ -89,7 +81,6 @@ impl Date {
         self.month
     }
     /// Sets the month.
-    ///
     /// # Returns
     /// Nothing.
     pub fn set_month(&mut self, month: u8) {
@@ -99,14 +90,12 @@ impl Date {
         }
     }
     /// Gets the day.
-    ///
     /// # Returns
     /// A `u8`.
     pub const fn day(&self) -> u8 {
         self.day
     }
     /// Sets the day.
-    ///
     /// # Returns
     /// Nothing.
     pub fn set_day(&mut self, day: u8) {
@@ -116,7 +105,6 @@ impl Date {
         }
     }
     /// Gets the hour.
-    ///
     /// # Returns
     /// A `u8`.
     #[must_use]
@@ -124,7 +112,6 @@ impl Date {
         self.hour
     }
     /// Sets the hour.
-    ///
     /// # Returns
     /// Nothing.
     pub fn set_hour(&mut self, hour: u8) {
@@ -134,7 +121,6 @@ impl Date {
         }
     }
     /// Gets the minute.
-    ///
     /// # Returns
     /// A `u8`.
     #[must_use]
@@ -142,7 +128,6 @@ impl Date {
         self.minute
     }
     /// Sets the minute.
-    ///
     /// # Returns
     /// Nothing.
     pub fn set_minute(&mut self, minute: u8) {
@@ -152,7 +137,6 @@ impl Date {
         }
     }
     /// Gets the second.
-    ///
     /// # Returns
     /// A `u8`.
     #[must_use]
@@ -160,7 +144,6 @@ impl Date {
         self.second
     }
     /// Sets the second.
-    ///
     /// # Returns
     /// Nothing.
     pub fn set_second(&mut self, second: u8) {
@@ -187,7 +170,6 @@ const fn is_valid_day(year: i32, month: u8, day: u8) -> bool {
     false
 }
 /// Checks if a year is a leap year.
-///
 /// # Arguments
 /// * `year` - The year to be checked.
 /// # Returns

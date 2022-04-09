@@ -65,11 +65,9 @@ pub enum AngleConversion {
 /// Trait for angle conversion.
 pub trait AngleConversionTrait {
     /// Performs a angle conversion.
-    ///
     /// # Arguments
     /// * `&self` - The value to be converted.
     /// * `mode` - The mode ( e.g. RadiansToDegrees ).
-    ///
     /// # Returns
     /// A `Self` containing the result.
     #[must_use]
@@ -79,11 +77,9 @@ pub trait AngleConversionTrait {
 /// Trait for temperature conversion.
 pub trait TempConversionTrait {
     /// Performs a temperature conversion.
-    ///
     /// # Arguments
     /// * `&self` - The value to be converted.
     /// * `mode` - The mode ( e.g. CelsiusToFahrenheit ).
-    ///
     /// # Returns
     /// A `Self` containing the result.
     #[must_use]

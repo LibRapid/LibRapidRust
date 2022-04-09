@@ -17,10 +17,8 @@ impl<T: Copy +
         where
         f64: From<T> {
     /// Creates a new `MathVector`.
-    ///
     /// # Arguments
     /// * `values` - The values for the new MathVector.
-    ///
     /// # Returns
     /// A new MathVector.
     #[must_use]
@@ -29,10 +27,8 @@ impl<T: Copy +
                      length: None }
     }
     /// Creates a new `MathVector` with the specified capacity.
-    ///
     /// # Arguments
     /// * `dim` - The dimension for the new MathVector.
-    ///
     /// # Returns
     /// A new `MathVector<f64>` with length 0.
     #[inline]
@@ -43,7 +39,6 @@ impl<T: Copy +
                      length: None }
     }
     /// Gets the dimension in which a `MathVector` lives.
-    ///
     /// # Returns
     /// A `usize`.
     #[inline]
@@ -52,7 +47,6 @@ impl<T: Copy +
         self.values.len()
     }
     /// Gets the length of a `MathVector`.
-    ///
     /// # Returns
     /// A `f64`.
     #[inline]
@@ -70,7 +64,6 @@ impl<T: Copy +
         }
     }
     /// Gets the values of a `MathVector`.
-    ///
     /// # Returns
     /// A `&Vec<T>`.
     #[inline]
@@ -79,10 +72,8 @@ impl<T: Copy +
         &self.values
     }
     /// Sets the values of a `MathVector`.
-    ///
     /// # Arguments
     /// * `vals` - The Vector of the new values.
-    ///
     /// # Panic
     /// Panics if the values don't have the same dimension as before.
     pub fn set_values(&mut self, vals: &[T]) {
@@ -94,7 +85,6 @@ impl<T: Copy +
     }
 
     /// Normalises a `MathVector`.
-    ///
     /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
@@ -160,11 +150,9 @@ impl<T: Copy +
     }
 }
 /// Multiplies a `MathVector` with a scalar product.
-///
 /// # Arguments
 /// * `scalar` - The scalar product.
 /// * `other` - The `MathVector` for the calculation.
-///
 /// # Returns
 /// A new `MathVector<T>`.
 #[inline]
@@ -186,7 +174,6 @@ pub fn scalar_mul<T: Copy +
 }
 
 /// Creates a new `MathVector` more elegantly from values.
-///
 /// # Returns
 /// A new `MathVector<T>`.
 #[macro_export]

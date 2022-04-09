@@ -80,7 +80,6 @@ pub trait Averages<T> {
 /// Trait for the Digits of a given number.
 pub trait NumDigits {
     /// Calculates the cross sum of a number.
-    ///
     /// # Returns
     /// A `Self` containing the result.
     /// 
@@ -95,7 +94,6 @@ pub trait NumDigits {
     #[must_use]
     fn cross_sum(&self) -> Self;
     /// Gets the digits as a number with the 1s place at index 0.
-    ///
     /// # Returns
     /// A `Vec<u8>`.
     /// 
@@ -137,21 +135,17 @@ pub trait NumTools<T> {
     #[must_use]
     fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool;
     /// Maps a given number of a range onto another range.
-    ///
     /// # Arguments
     /// * `self` - The value which is to be mapped.
     /// * `start1` - The original start value of the number range.
     /// * `end1` - The original end value of the number range.
     /// * `start2` - The new start value of the number range.
     /// * `end2` - The new start value of the number range.
-    ///
     /// # Returns
     /// A number containing the new mapped value.
-    ///
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
-    ///
     /// let result: f32 = 5.0.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
     /// ```
@@ -219,7 +213,6 @@ pub trait NumTools<T> {
     ///use lib_rapid::math::general::NumTools;
     ///let i = 12;
     ///let res = i.square();
-    ///
     ///assert_eq!(144, res);
     /// ```
     #[must_use]
@@ -235,7 +228,6 @@ pub trait NumTools<T> {
     ///use lib_rapid::math::general::NumTools;
     ///let i = 12;
     ///let res = i.cube();
-    ///
     ///assert_eq!(1728, res);
     /// ```
     #[must_use]

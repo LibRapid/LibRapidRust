@@ -9,10 +9,8 @@ pub struct VecSet<'a, T> {
 // Main impl
 impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// Creates a new `VecSet`.
-    ///
     /// # Arguments
     /// * `values` - The values for the `VecSet`.
-    ///
     /// # Returns
     /// A new `VecSet`.
     /// 
@@ -48,11 +46,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         VecSet { elements: Vec::new(), parent: None }
     }
     /// Creates a new `VecSet` using a parent-`VecSet` to which it applies a closure.
-    ///
     /// # Arguments
     /// * `parent` - The `VecSet` from which the new `VecSet` emerges.
     /// * `f` - The closure after which the new `VecSet` is created.
-    ///
     /// # Returns
     /// A child `VecSet`.
     /// # Examples
@@ -79,7 +75,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// # Arguments
     /// * `self` - The first set.
     /// * `other` - The second set.
-    ///
     /// # Returns
     /// A new `VecSet<T>`: `self ∪ other`.
     /// # Examples
@@ -107,11 +102,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         res
     }
     /// Does a mathematical intersection on two sets.
-    ///
     /// # Arguments
     /// * `self` - The first set.
     /// * `other` - The second set.
-    ///
     /// # Returns
     /// A new `VecSet<T>`: `self ∩ other`.
     /// # Examples
@@ -232,10 +225,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
                 parent:   None }
     }
     /// Lets you check for an element in a set.
-    ///
     /// # Arguments
     /// * `elem` - The element to check for.
-    ///
     /// # Returns
     /// A boolean value which determines if `elem ∈ self`. 
     /// 
@@ -256,10 +247,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         self.elements.binary_search(&elem).is_ok()
     }
     /// Lets you insert an element into a set. Does not insert already present values.
-    ///
     /// # Arguments
     /// * `elem` - The element to insert.
-    ///
     /// # Returns
     /// Nothing.
     /// # Examples
@@ -275,7 +264,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         self.elements.binary_insert_no_dup(elem)
     }
     /// Lets you check wether a set has a parent (emerged from another set) or not.
-    ///
     /// # Returns
     /// A boolean value which determines if the set is a subset of any other set.
     /// # Examples
@@ -295,7 +283,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         self.parent.is_some()
     }
     /// Gets you the optional superset from which the Set emerged.
-    ///
     /// # Returns
     /// A `Option<&VecSet<T>>`.
     /// # Examples
@@ -338,7 +325,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         true
     }
     /// Gets the cardinality of a set.
-    ///
     /// # Returns
     /// A `usize`: `|self|`.
     /// # Examples
@@ -356,10 +342,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         self.elements.len()
     }
     /// Lets you set the elements of a set.
-    ///
     /// # Arguments
     /// * `vals` - The Vec to change the values to.
-    ///
     /// # Returns
     /// Nothing. 
     /// # Examples
@@ -378,10 +362,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         self.elements.sort_unstable();
     }
     /// Lets you get the elements of a set.
-    ///
     /// # Arguments
     /// * none
-    ///
     /// # Returns
     /// A `&[T]` containing all elements. 
     /// # Examples
@@ -401,7 +383,6 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
 }
 
 /// Creates a new `VecSet` more elegantly from values.
-///
 /// # Returns
 /// A new `VecSet`.
 /// # Examples
@@ -431,7 +412,6 @@ use crate::compsci::general::BinaryInsert;
 
 impl<T: ToString + Copy + Ord> VecSet<'_, T> {
     /// Lets you print a set with all its parents recursively.
-    ///
     /// # Returns
     /// Nothing. 
     /// # Examples
@@ -448,7 +428,6 @@ impl<T: ToString + Copy + Ord> VecSet<'_, T> {
         println!("{}", self.rec_to_string(&mut String::new()));
     }
     /// Converts a set with all subsets to a string.
-    ///
     /// # Returns
     /// A String containing the result. 
     /// # Examples
@@ -457,7 +436,6 @@ impl<T: ToString + Copy + Ord> VecSet<'_, T> {
     /// let s:  VecSet<i32> = VecSet::new(&vec![0,1,2,3,4,5,6,7,8,9,10]);
     /// let s1: VecSet<i32> = VecSet::new_subset(&s, |x| x % 2 == 0);
     /// let s2: VecSet<i32> = VecSet::new_subset(&s1, |x| x == 4);
-    ///
     /// assert_eq!(s2.to_full_string(), "{ 4 } ⊆ { 0; 2; 4; 6; 8; 10 } ⊆ { 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10 }".to_string());
     /// ```
     #[must_use]

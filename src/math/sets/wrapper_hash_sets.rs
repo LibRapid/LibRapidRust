@@ -33,10 +33,8 @@ impl<'a, T: Clone + Eq + std::hash::Hash> WrapperHashSet<'a, T> {
         WrapperHashSet { hs: existing, parent: None }
     }
     /// Creates a new `WrapperHashSet` from `self` to which it applies a closure.
-    ///
     /// # Arguments
     /// * `f` - The closure after which the new `VecSet` is created.
-    ///
     /// # Returns
     /// A child `WrapperHashSet`.
     /// # Examples
@@ -65,7 +63,6 @@ impl<'a, T: Clone + Eq + std::hash::Hash> WrapperHashSet<'a, T> {
         WrapperHashSet { hs: res, parent: Some(self) }
     }
     /// Lets you check wether a set has a parent (emerged from another set) or not.
-    ///
     /// # Returns
     /// A boolean value which determines if the set is a subset of any other set.
     /// # Examples
@@ -90,7 +87,6 @@ impl<'a, T: Clone + Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     }
 
     /// Gets you the optional superset.
-    ///
     /// # Returns
     /// A `Option<&VecSet<T>>`.
     /// # Examples
