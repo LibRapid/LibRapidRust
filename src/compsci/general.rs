@@ -174,9 +174,9 @@ pub trait BinaryInsert<T> {
     /// ```
     fn binary_insert_no_dup(&mut self, value: T);
 }
-/// Trait for a kind of indexing Strings in Rust.
-pub trait StringIndex {
-    /// Get the `char` at a given index from a `String` or `&str`.
+/// Useful String related functions.
+pub trait StringUtils {
+        /// Get the `char` at a given index from a `String` or `&str`.
     /// If only dealing with ASCII-characters, `byte_at` is recommended.
     /// 
     /// # Arguments
@@ -232,9 +232,6 @@ pub trait StringIndex {
     /// ```
     #[must_use]
     fn byte_at(&self, index: usize) -> u8;
-}
-/// Trait for functions related to brackets.
-pub trait Brackets {
     /// Determines whether the given `&str` or `String` has valid brackets.
     /// # Returns
     /// `Ok(true)` if all brackets were closed, otherwise `Err(usize)`, where `usize` is the index of the String at which the error occured.
@@ -568,19 +565,10 @@ impl FloatMagic for f64 {
     }
 }
 
-impl Brackets for &str {
+impl StringUtils for String {
     fn validate_brackets(&self) -> Result<bool, usize> {
         backend_val_brackets(self)
     }
-}
-
-impl Brackets for String {
-    fn validate_brackets(&self) -> Result<bool, usize> {
-        backend_val_brackets(self)
-    }
-}
-
-impl StringIndex for String {
     #[inline]
     fn char_at(&self, index: usize) -> Option<char> {
         self.chars().nth(index)
@@ -591,7 +579,7 @@ impl StringIndex for String {
     }
 }
 
-impl StringIndex for &str {
+impl StringUtils for &str {
     #[inline]
     fn char_at(&self, index: usize) -> Option<char> {
         self.chars().nth(index)
@@ -599,6 +587,9 @@ impl StringIndex for &str {
     #[inline]
     fn byte_at(&self, index: usize) -> u8 {
         self.as_bytes()[index]
+    }
+    fn validate_brackets(&self) -> Result<bool, usize> {
+        backend_val_brackets(self)
     }
 }
 
@@ -760,4 +751,48 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
     if !res_vec.is_empty()
     { return Err(i); }
     Ok(true)
+}
+
+/// A Rust implementation of C's `strcmp()` function.
+/// # Arguments
+/// * `s1` - The String reference to be compared to.
+/// * `s2` - The String which is compared with `s1`.
+/// # Returns
+/// It returns:
+/// * `0`, if `s1 == s2`.
+/// * `1`, if `s1[i] < s2[i]` in ASCII.
+/// * `-1`, if `s1[i] > s2[i]` in ASCII.
+/// # Examples
+/// ```
+/// use lib_rapid::compsci::general::strcmp;
+/// let a = "hello";
+/// let b = "hEllo";
+/// assert!(strcmp(a, b) > 0);
+/// ```
+/// ```
+/// use lib_rapid::compsci::general::strcmp;
+/// let a = "hello";
+/// let b = "hello";
+/// assert!(strcmp(a, b) == 0);
+/// ```
+/// ```
+/// use lib_rapid::compsci::general::strcmp;
+/// let a = "Hello";
+/// let b = "hello";
+/// assert!(strcmp(a, b) < 0);
+/// ```
+pub fn strcmp(s1: &str, s2: &str) -> i8 {
+    let mut i: usize = 0;
+    let mut flag: i8 = 0;
+    while flag == 0 {
+        if s1.byte_at(i) > s2.byte_at(i)
+        { flag = 1; }
+        else if s1.byte_at(i) < s2.byte_at(i)
+        { flag = -1; }
+        if i + 1 == s1.len()
+        { break; }
+
+        i.inc();
+    }
+    flag
 }
