@@ -1,7 +1,7 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
 
-use std::{convert::{TryInto, TryFrom}, ops::{Div, Sub, Add, Mul, AddAssign, SubAssign}};
+use std::{convert::{TryInto, TryFrom}, ops::*, cmp::*};
 
 use crate::eval_postfix;
 
@@ -242,7 +242,7 @@ pub trait NumTools<T> {
     fn cube(&self) -> Self;
 }
 
-impl<T: std::cmp::PartialOrd +
+impl<T: PartialOrd +
         Sub<Output = T> +
         Add<Output = T> +
         Div<Output = T> +
@@ -253,12 +253,14 @@ impl<T: std::cmp::PartialOrd +
         AddAssign> NumTools<T> for T {
     #[inline]
     fn is_in_range(&self, start: Self, end: Self) -> bool {
-        self >= &start && self <= &end
+        self >= &start &&
+        self <= &end
     }
 
     #[inline]
     fn is_in_range_exclusive(&self, start: Self, end: Self) -> bool {
-        self > &start && self < &end
+        self > &start &&
+        self < &end
     }
 
     #[inline]
@@ -294,10 +296,10 @@ impl<T: std::cmp::PartialOrd +
     }
 }
 
-impl<'a, T: std::cmp::PartialEq +
-        std::ops::DivAssign + std::cmp::PartialOrd +
-        std::ops::Rem<Output = T> + Copy +
-        std::ops::AddAssign +
+impl<'a, T: PartialEq +
+        DivAssign + PartialOrd +
+        Rem<Output = T> + Copy +
+        AddAssign +
         Div<Output = T> +
         Sub<Output = T> +
         Add<Output = T> +
@@ -310,8 +312,8 @@ impl<'a, T: std::cmp::PartialEq +
         u8: TryFrom<T>,
         T: From<u8> {
     fn cross_sum(&self) -> Self {
-        let d: Vec<u8> = self.digits();
-        let mut res: Self = 0.into();
+        let     d:   Vec<u8> = self.digits();
+        let mut res: Self    = 0.into();
         for i in d {
             res.inc_by(i.into());
         }

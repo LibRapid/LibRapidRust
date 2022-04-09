@@ -1,8 +1,6 @@
 //! Basic logging functionality.
 use chrono::{Utc, SecondsFormat};
-use std::io::prelude::*;
-use std::fs::OpenOptions;
-
+use std::{io::prelude::*, fs::OpenOptions};
 use crate::math::general::NumTools;
 
 /// The structure for the RapidLogger.

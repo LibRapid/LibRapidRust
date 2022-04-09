@@ -1,5 +1,5 @@
 //! In here you'll find several traits for Rusts own set types.
-use std::{collections::{HashSet, hash_map::RandomState}, hash::BuildHasher};
+use std::{collections::{HashSet, hash_map::RandomState}, hash::BuildHasher, cmp::*};
 use core::hash::Hash;
 /// A wrapper for the HashSet type which implements more functions.
 /// Everything you need to do with a HashSet needs to be done using `WrapperHashSet.hs.[function]` for now.
@@ -10,7 +10,7 @@ pub struct WrapperHashSet<'a, T, S = RandomState> {
     parent: Option<&'a WrapperHashSet<'a, T>>
 }
 
-impl<'a, T: Clone + std::cmp::Eq + std::hash::Hash> WrapperHashSet<'a, T> {
+impl<'a, T: Clone + Eq + std::hash::Hash> WrapperHashSet<'a, T> {
     /// Wrap a existing HashSet in this Wrapper-struct.
     /// # Arguments
     /// * `existing` - The existing HashSet.
@@ -121,7 +121,7 @@ impl<'a, T: std::fmt::Debug> std::fmt::Display for WrapperHashSet<'a, T> {
     }
 }
 
-impl<'a, T: std::cmp::Eq + Hash, S: BuildHasher> PartialEq<WrapperHashSet<'a, T, S>> for WrapperHashSet<'a, T, S> {
+impl<'a, T: Eq + Hash, S: BuildHasher> PartialEq<WrapperHashSet<'a, T, S>> for WrapperHashSet<'a, T, S> {
     fn eq(&self, other: &WrapperHashSet<T, S>) -> bool {
 
         if self.hs.len() != other.hs.len() {

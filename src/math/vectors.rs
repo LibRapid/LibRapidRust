@@ -1,5 +1,5 @@
 //! Vectors can be really handy, sometimes. Do everything you want with your favorite direction pointing data type from mathematics.
-
+use std::ops::*;
 use super::general::NumTools;
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
@@ -13,7 +13,7 @@ pub struct MathVector<T> {
 impl<T: Copy +
         NumTools<T> +
         From<f64> +
-        std::ops::Mul<Output = T>> MathVector<T>
+        Mul<Output = T>> MathVector<T>
         where
         f64: From<T> {
     /// Creates a new `MathVector`.
@@ -114,9 +114,9 @@ impl<T: Copy +
 impl<T: Copy +
         super::general::NumTools<T> +
         From<f64> + Into<f64> +
-        std::ops::Mul<Output = T> +
-        std::ops::Add<Output = T>>
-        std::ops::Add for MathVector<T>
+        Mul<Output = T> +
+        Add<Output = T>>
+        Add for MathVector<T>
         where
         f64: From<T> {
     type Output = Self;
@@ -139,9 +139,9 @@ impl<T: Copy +
         super::general::NumTools<T> +
         From<f64> +
         Into<f64> +
-        std::ops::Mul<Output = T> +
-        std::ops::Sub<Output = T>>
-        std::ops::Sub for MathVector<T>
+        Mul<Output = T> +
+        Sub<Output = T>>
+        Sub for MathVector<T>
         where
         f64: From<T> {
     type Output = Self;
@@ -172,7 +172,7 @@ impl<T: Copy +
 pub fn scalar_mul<T: Copy +
                      super::general::NumTools<T> +
                      From<f64> +
-                     std::ops::Mul<Output = T>>
+                     Mul<Output = T>>
                      (scalar: f64, other: &MathVector<T>) -> MathVector<T> 
                      where 
                      f64: From<T> {
@@ -209,7 +209,7 @@ impl<T: Copy +
         super::general::NumTools<T> +
         Into<f64> +
         std::fmt::Display + From<f64> +
-        std::ops::Mul<Output = T>>
+        Mul<Output = T>>
         std::fmt::Display for MathVector<T> 
         where 
         f64: From<T> {
@@ -223,7 +223,7 @@ impl<T: Copy +
     }
 }
 
-impl<T: std::cmp::PartialEq> PartialEq for MathVector<T> {
+impl<T: PartialEq> PartialEq for MathVector<T> {
     fn eq(&self, other: &Self) -> bool {
         self.values == other.values
     }

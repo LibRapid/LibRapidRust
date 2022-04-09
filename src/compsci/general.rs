@@ -1,7 +1,7 @@
 //! General purpose functionalities for computer science. Got any wishes? Tell us on GitHub or our Discord.
 use crate::math::general::NumTools;
-use std::{intrinsics::transmute, fmt::Debug, ops::{BitAndAssign, Shl, BitOrAssign, BitXorAssign}, convert::TryFrom};
-use core::mem::{size_of_val, size_of};
+use std::{intrinsics::transmute, fmt::Debug, ops::{*}, convert::TryFrom};
+use core::mem::*;
 
 const BITWISE_ERR1: &str = "Arguments were not the same size in memory.";
 const BITWISE_ERR2: &str = "U is bigger than T. Consider reversing the arguments.";
