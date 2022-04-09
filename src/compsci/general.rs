@@ -313,8 +313,8 @@ pub trait FloatMagic {
     /// # Panics
     /// Panics if one of the parts is out of range for `Self`.
     /// # Examples
-    /// ```    fn raw_exponent(&self) -> Self::Exponent {
-
+    /// ```
+    /// fn raw_exponent(&self) -> Self::Exponent {
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// let my_float: f32 = 3.1415927;
