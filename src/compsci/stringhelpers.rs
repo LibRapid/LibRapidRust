@@ -144,7 +144,7 @@ impl StringUtils for String {
     }
     fn is_numeric(&self) -> Result<bool, usize> {
         for c in self.chars().enumerate() {
-            if !((c.1) as u8).is_in_range(48, 57)
+            if !(c.1 as u8).is_in_range(48, 57)
             { return Err(c.0); }
         }
         Ok(true)
@@ -174,7 +174,7 @@ impl StringUtils for str {
     }
     fn is_numeric(&self) -> Result<bool, usize> {
         for c in self.chars().enumerate() {
-            if !((c.1) as u8).is_in_range(48, 57)
+            if !(c.1 as u8).is_in_range(48, 57)
             { return Err(c.0); }
         }
         Ok(true)
