@@ -15,7 +15,7 @@ _____
 - Added Public API: `strcmp` in `compsci::stringhelpers`.
 - Added Public API: `is_alphanumeric()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `is_numeric()` in `compsci::stringhelpers::StringUtils`.
-- Added Public API: `delta()` in `math::general::NumTools`.
+- Added Public API: `delta()` in `math::general`.
 - Changed Public API: Moved String related traits to `compsci::stringhelpers::StringUtils`.
 
 Credits
