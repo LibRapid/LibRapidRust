@@ -334,20 +334,21 @@ pub trait FloatMagic {
 }
 
 impl CharTools for char {
+    #[inline]
     fn is_open_bracket(&self) -> bool {
         match self {
             '(' | '{' | '[' => { true }
             _               => { false }
         }
     }
-
+    #[inline]
     fn is_closed_bracket(&self) -> bool {
         match self {
             ')' | '}' | ']' => { true }
             _               => { false }
         }
     }
-
+    #[inline]
     fn get_closing_bracket(&self) -> Option<char> {
         match self {
             '(' => { Some(')') }
@@ -356,7 +357,7 @@ impl CharTools for char {
             _   => { None }
         }
     }
-
+    #[inline]
     fn get_opening_bracket(&self) -> Option<char> {
         match self {
             ')' => { Some('(') }
