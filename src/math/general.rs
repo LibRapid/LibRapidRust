@@ -400,6 +400,7 @@ pub fn nth_fibonacci(n: u128) -> u128 {
 /// assert_eq!(3.14, delta(6.28, 3.14));
 /// assert_eq!(4.905, delta(4.905, 9.81));
 /// ```
+#[inline]
 pub fn delta<T: Sub<Output = T> +
                 PartialOrd>(a: T, b: T) -> T {
     match a > b {
