@@ -409,3 +409,21 @@ pub fn delta<T: Sub<Output = T> +
         false => { return b - a; }
     }
 }
+
+/// Panics if a given value `x` is odd.
+/// # Arguments
+/// - `x: T` - The number to be checked.
+/// # Examples
+/// ```should_panic
+/// use lib_rapid::math::general::better_be_even;
+/// 
+/// better_be_even(-3); // Panics, because -3 is odd.
+/// ```
+pub fn better_be_even<T: From<bool> +
+                         BitAnd<Output = T> +
+                         PartialEq +
+                         std::fmt::Display +
+                         Copy>(x: T) {
+    if x & true.into() != false.into()
+    { core::panic!("Oops! {} was not even.", x); }
+}

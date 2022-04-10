@@ -21,6 +21,7 @@ impl<T: Copy +
     /// * `values` - The values for the new MathVector.
     /// # Returns
     /// A new MathVector.
+    /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// 
@@ -38,6 +39,7 @@ impl<T: Copy +
     /// * `dim` - The dimension for the new MathVector.
     /// # Returns
     /// A new `MathVector<f32>` with length 0.
+    /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// 
@@ -55,6 +57,7 @@ impl<T: Copy +
     /// Gets the dimension in which a `MathVector` lives.
     /// # Returns
     /// A `usize`.
+    /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// 
@@ -70,6 +73,7 @@ impl<T: Copy +
     /// Gets the length of a `MathVector`.
     /// # Returns
     /// A `f64`.
+    /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// 
@@ -94,6 +98,7 @@ impl<T: Copy +
     /// Gets the values of a `MathVector`.
     /// # Returns
     /// A `&Vec<T>`.
+    /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// 
@@ -111,6 +116,7 @@ impl<T: Copy +
     /// * `vals` - The Vector of the new values.
     /// # Panic
     /// Panics if the values don't have the same dimension as before.
+    /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
     /// 
@@ -140,7 +146,7 @@ impl<T: Copy +
     /// ```
     #[inline]
     pub fn normalise(&mut self) {
-        *self = scalar_mul(self.length().recip(), self);
+        *self = scalar_mul(T::from(self.length().recip()), self);
         self.length = Some(1.0);
     }
 }
@@ -199,21 +205,29 @@ impl<T: Copy +
 /// * `other` - The `MathVector` for the calculation.
 /// # Returns
 /// A new `MathVector<T>`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::vectors::MathVector;
+/// use lib_rapid::math::vectors::scalar_mul;
+/// 
+/// let v = MathVector::new([1.0, 1.0, 1.0]);
+/// 
+/// assert_eq!(MathVector::new([2.0, 2.0, 2.0]), scalar_mul(2.0, &v));
+/// ```
 #[inline]
 #[must_use]
 pub fn scalar_mul<T: Copy +
                      super::general::NumTools<T> +
                      From<f64> +
                      Mul<Output = T>, const C: usize>
-                     (scalar: f64, other: &MathVector<C, T>) -> MathVector<C, T> 
+                     (scalar: T, other: &MathVector<C, T>) -> MathVector<C, T> 
                      where 
                      f64: From<T> {
 
     let mut vals = [0.0.into(); C];
-    let scal = T::from(scalar);
 
     for x in other.values.iter().enumerate() {
-        vals[x.0] = *x.1 * scal;
+        vals[x.0] = *x.1 * scalar;
     }
     MathVector { values: vals,
                  length: None }

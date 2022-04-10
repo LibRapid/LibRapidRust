@@ -10,12 +10,13 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.2.1-preview.3 - BREAKING CHANGES.
+0.2.1-preview.4 - BREAKING CHANGES.
 _____
 - Added Public API: `strcmp` in `compsci::stringhelpers`.
 - Added Public API: `is_alphanumeric()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `is_numeric()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `delta()` in `math::general`.
+- Added Public API: `better_be_even()` in `math::general`.
 - Changed Public API: Major rewrite of `math::vectors::MathVector`.
 - Changed Public API: Moved String related traits to `compsci::stringhelpers::StringUtils`.
 - Fixed breaking bug of `f64::raw_compose()`.
