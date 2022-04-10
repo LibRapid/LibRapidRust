@@ -314,7 +314,6 @@ pub trait FloatMagic {
     /// Panics if one of the parts is out of range for `Self`.
     /// # Examples
     /// ```
-    /// fn raw_exponent(&self) -> Self::Exponent {
     /// use lib_rapid::compsci::general::FloatMagic;
     /// 
     /// let my_float: f32 = 3.1415927;
@@ -322,13 +321,13 @@ pub trait FloatMagic {
     /// let exponent      = my_float.raw_exponent();
     /// let mantissa      = my_float.raw_mantissa();
     /// 
-    /// let my_double       = my_float as f64;
-    /// let sign_1          = my_double.is_sign_negative() as u8;
-    /// let exponent_1      = my_double.raw_exponent();
-    /// let mantissa_1      = my_double.raw_mantissa();
+    /// let my_double: f64 = 3.141592653589793;
+    /// let sign_1         = my_double.is_sign_negative() as u8;
+    /// let exponent_1     = my_double.raw_exponent();
+    /// let mantissa_1     = my_double.raw_mantissa();
     /// 
     /// assert_eq!(3.1415927, f32::raw_compose(sign, exponent, mantissa));
-    /// assert_eq!(3.1415927410125732, f64::raw_compose(sign, exponent_1, mantissa_1));
+    /// assert_eq!(3.141592653589793, f64::raw_compose(sign_1, exponent_1, mantissa_1));
     /// ```
     #[must_use]
     fn raw_compose(sign: u8, exponent: Self::Exponent, mantissa: Self::Mantissa) -> Self;
@@ -414,8 +413,8 @@ impl FloatMagic for f32 {
 }
 
 impl FloatMagic for f64 {
-    type Mantissa = u64;
-    type Exponent = u16;
+    type Mantissa     = u64;
+    type Exponent     = u16;
     type RealExponent = i32;
 
     #[inline]
@@ -454,8 +453,8 @@ impl FloatMagic for f64 {
         if mantissa > 4503599627370000 { panic!("A mantissa bigger than 4503599627370000 is not allowed."); }
 
         unsafe { transmute((mantissa |
-                          ((exponent as u64) << 23)) |
-                           (sign     as u64) << 31) }
+                          ((exponent as u64) << 52)) |
+                           (sign     as u64) << 63) }
     }
 }
 

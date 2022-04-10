@@ -263,7 +263,8 @@ pub fn get_root(s: &str) -> Box<Node> {
 /// name.htlr: The file in which the huffman tree is stored.
 /// # Examples
 /// ```
-/// use lib_rapid::compsci::compression::huffman::{Encode, write_to_file};/// let s: &str = "Lorem Ipsum";
+/// use lib_rapid::compsci::compression::huffman::{Encode, write_to_file};
+/// let s: &str = "Lorem Ipsum";
 /// 
 /// let enc = s.full_encode(); // Encodes the String s into enc.
 /// write_to_file("test".to_string(), &enc.0, &enc.1);
