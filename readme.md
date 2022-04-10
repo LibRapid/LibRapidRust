@@ -17,6 +17,7 @@ _____
 - Added Public API: `is_numeric()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `delta()` in `math::general`.
 - Changed Public API: Moved String related traits to `compsci::stringhelpers::StringUtils`.
+- Fixed breaking bug of `f64::raw_compose()`.
 
 Credits
 -----
