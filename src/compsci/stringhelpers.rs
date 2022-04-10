@@ -130,12 +130,15 @@ impl StringUtils for String {
     fn byte_at(&self, index: usize) -> u8 {
         self.as_bytes()[index]
     }
+    #[inline]
     fn validate_brackets(&self) -> Result<bool, usize> {
         backend_val_brackets(self)
     }
+    #[inline]
     fn is_alphanumeric(&self) -> Result<bool, usize> {
         backend_alphanumeric(self)
     }
+    #[inline]
     fn is_numeric(&self) -> Result<bool, usize> {
         backend_numeric(self)
     }
@@ -150,12 +153,15 @@ impl StringUtils for str {
     fn byte_at(&self, index: usize) -> u8 {
         self.as_bytes()[index]
     }
+    #[inline]
     fn validate_brackets(&self) -> Result<bool, usize> {
         backend_val_brackets(self)
     }
+    #[inline]
     fn is_alphanumeric(&self) -> Result<bool, usize> {
         backend_alphanumeric(self)
     }
+    #[inline]
     fn is_numeric(&self) -> Result<bool, usize> {
         backend_numeric(self)
     }
