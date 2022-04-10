@@ -382,3 +382,28 @@ pub fn nth_fibonacci(n: u128) -> u128 {
 
     z
 }
+
+/// Compute the absolute difference ("Delta") between two values.
+/// # But Rust already has a abs_diff() function!
+/// Yes, it does. But it does not have support for floating point numbers.
+/// That's why we implemented a generic function.
+/// # Arguments
+/// - `a: T` - The first value.
+/// - `b: T` - The second value.
+/// # Returns
+/// A `T`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::delta;
+/// 
+/// assert_eq!(4, delta(4, 8));
+/// assert_eq!(3.14, delta(6.28, 3.14));
+/// assert_eq!(4.905, delta(4.905, 9.81));
+/// ```
+pub fn delta<T: Sub<Output = T> +
+                PartialOrd>(a: T, b: T) -> T {
+    match a > b {
+        true  => { return a - b; }
+        false => { return b - a; }
+    }
+}
