@@ -1,19 +1,19 @@
 //! Vectors can be really handy, sometimes. Do everything you want with your favorite direction pointing data type from mathematics.
-use std::ops::*;
+use std::{ops::*, convert::TryInto};
 use super::general::NumTools;
 const INV_DIM: &str = "Error: Dimensions did not match.";
 
 /// Mathematical Vectors in Rust.
-#[derive(Clone)]
-pub struct MathVector<T> {
-    values: Vec<T>,
+#[derive(Clone, Debug)]
+pub struct MathVector<const C: usize, T> {
+    values: [T; C],
     length: Option<f64>,
 }
 
 impl<T: Copy +
         NumTools<T> +
         From<f64> +
-        Mul<Output = T>> MathVector<T>
+        Mul<Output = T>, const C: usize> MathVector<C, T>
         where
         f64: From<T> {
     /// Creates a new `MathVector`.
@@ -21,26 +21,47 @@ impl<T: Copy +
     /// * `values` - The values for the new MathVector.
     /// # Returns
     /// A new MathVector.
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// 
+    /// let mut v = MathVector::new([2.0, 2.0, 2.0]);
+    /// 
+    /// assert_eq!(v.length(), 3.4641016151377544);
+    /// ```
     #[must_use]
-    pub fn new(values: &[T]) -> MathVector<T> {        
-        MathVector { values: values.to_owned(),
+    pub fn new(values: [T; C]) -> MathVector<C, T> {        
+        MathVector { values: values.try_into().unwrap(),
                      length: None }
     }
     /// Creates a new `MathVector` with the specified capacity.
     /// # Arguments
     /// * `dim` - The dimension for the new MathVector.
     /// # Returns
-    /// A new `MathVector<f64>` with length 0.
+    /// A new `MathVector<f32>` with length 0.
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// 
+    /// let mut v: MathVector<3, f64> = MathVector::new([0.0, 0.0, 0.0]);
+    /// 
+    /// assert_eq!(v, MathVector::new_with_dimension());
+    /// ```
     #[inline]
     #[must_use]
-    pub fn new_with_dimension(dim: usize) -> MathVector<f64> {
+    pub fn new_with_dimension() -> MathVector<C, T> {
 
-        MathVector { values: vec![0.0; dim],
+        MathVector { values: [0.0.into(); C],
                      length: None }
     }
     /// Gets the dimension in which a `MathVector` lives.
     /// # Returns
     /// A `usize`.
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// 
+    /// let mut v = MathVector::new([2.0, 2.0, 2.0]);
+    /// 
+    /// assert_eq!(v.dimension(), 3);
+    /// ```
     #[inline]
     #[must_use]
     pub fn dimension(&self) -> usize {
@@ -49,6 +70,13 @@ impl<T: Copy +
     /// Gets the length of a `MathVector`.
     /// # Returns
     /// A `f64`.
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// 
+    /// let mut v = MathVector::new([2.0, 2.0, 2.0]);
+    /// 
+    /// assert_eq!(v.length(), 3.4641016151377544);
+    /// ```
     #[inline]
     #[must_use]
     pub fn length(&mut self) -> f64 {
@@ -66,9 +94,16 @@ impl<T: Copy +
     /// Gets the values of a `MathVector`.
     /// # Returns
     /// A `&Vec<T>`.
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// 
+    /// let mut v = MathVector::new([2.0, 2.0, 2.0]);
+    /// 
+    /// assert_eq!(v.get_values(), &vec!(2.0; 3));
+    /// ```
     #[inline]
     #[must_use]
-    pub fn get_values(&self) -> &Vec<T> {
+    pub fn get_values(&self) -> &[T] {
         &self.values
     }
     /// Sets the values of a `MathVector`.
@@ -76,9 +111,17 @@ impl<T: Copy +
     /// * `vals` - The Vector of the new values.
     /// # Panic
     /// Panics if the values don't have the same dimension as before.
-    pub fn set_values(&mut self, vals: &[T]) {
+    /// ```
+    /// use lib_rapid::math::vectors::MathVector;
+    /// 
+    /// let mut v = MathVector::new([2.0, 2.0, 2.0]);
+    /// v.set_values([1.0; 3]);
+    /// 
+    /// assert_eq!(v.get_values(), &vec!(1.0; 3));
+    /// ```
+    pub fn set_values(&mut self, vals: [T; C]) {
         match vals.len() == self.dimension() {
-            true  => { self.values = vals.to_owned();
+            true  => { self.values = vals;
                        self.length = None; }
             false => { panic!("{}", INV_DIM); } 
         }
@@ -88,9 +131,10 @@ impl<T: Copy +
     /// # Examples
     /// ```
     /// use lib_rapid::math::vectors::MathVector;
-    /// use lib_rapid::math::vectors::new_mathvec;
-    /// let mut v = new_mathvec!(2.0, 2.0, 2.0);
+    /// 
+    /// let mut v = MathVector::new([2.0, 2.0, 2.0]);
     /// v.normalise(); // Also sets the Length to 1.0.
+    /// 
     /// assert_eq!(v.length(), 1.0);
     /// assert_eq!(v.get_values(), &vec!(0.5773502691896258; 3));
     /// ```
@@ -105,17 +149,17 @@ impl<T: Copy +
         super::general::NumTools<T> +
         From<f64> + Into<f64> +
         Mul<Output = T> +
-        Add<Output = T>>
-        Add for MathVector<T>
+        Add<Output = T>, const C: usize>
+        Add for MathVector<C, T>
         where
         f64: From<T> {
     type Output = Self;
-    fn add(self, other: Self) -> MathVector<T> {
+    fn add(self, other: Self) -> MathVector<C, T> {
         match self.dimension() == other.dimension() {
             true  =>  { 
-                let mut vals: Vec<T> = Vec::with_capacity(self.dimension());
+                let mut vals = [0.0.into(); C];
                 for i in 0..self.dimension() {
-                    vals.push(self.values[i] + other.values[i]);
+                    vals[i] = self.values[i] + other.values[i];
                 }
                 MathVector { values: vals,
                              length: None }
@@ -130,17 +174,17 @@ impl<T: Copy +
         From<f64> +
         Into<f64> +
         Mul<Output = T> +
-        Sub<Output = T>>
-        Sub for MathVector<T>
+        Sub<Output = T>, const C: usize>
+        Sub for MathVector<C, T>
         where
         f64: From<T> {
     type Output = Self;
-    fn sub(self, other: Self) -> MathVector<T> {
+    fn sub(self, other: Self) -> MathVector<C, T> {
         match self.dimension() == other.dimension() {
             true  =>  { 
-                let mut vals: Vec<T> = Vec::with_capacity(self.dimension());
+                let mut vals = [0.0.into(); C];
                 for i in 0..self.dimension() {
-                    vals.push(self.values[i] - other.values[i]);
+                    vals[i] = self.values[i] - other.values[i];
                 }
                 MathVector { values: vals,
                              length: None }
@@ -160,44 +204,27 @@ impl<T: Copy +
 pub fn scalar_mul<T: Copy +
                      super::general::NumTools<T> +
                      From<f64> +
-                     Mul<Output = T>>
-                     (scalar: f64, other: &MathVector<T>) -> MathVector<T> 
+                     Mul<Output = T>, const C: usize>
+                     (scalar: f64, other: &MathVector<C, T>) -> MathVector<C, T> 
                      where 
                      f64: From<T> {
 
-    let mut vals: Vec<T> = Vec::with_capacity(other.dimension());
+    let mut vals = [0.0.into(); C];
     let scal = T::from(scalar);
 
-    other.values.iter().for_each(|x| vals.push(*x * scal));
+    for x in other.values.iter().enumerate() {
+        vals[x.0] = *x.1 * scal;
+    }
     MathVector { values: vals,
                  length: None }
 }
-
-/// Creates a new `MathVector` more elegantly from values.
-/// # Returns
-/// A new `MathVector<T>`.
-#[macro_export]
-#[must_use]
-macro_rules! new_mathvec {
-    ( $( $a:expr ),* ) => {
-        {
-            let mut temp = Vec::with_capacity(5);
-            $(
-                temp.push($a);
-            )*
-            MathVector::new(&temp)
-        }
-    };
-}
-
-pub use new_mathvec;
 
 impl<T: Copy +
         super::general::NumTools<T> +
         Into<f64> +
         std::fmt::Display + From<f64> +
-        Mul<Output = T>>
-        std::fmt::Display for MathVector<T> 
+        Mul<Output = T>, const C: usize>
+        std::fmt::Display for MathVector<C, T> 
         where 
         f64: From<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -210,7 +237,7 @@ impl<T: Copy +
     }
 }
 
-impl<T: PartialEq> PartialEq for MathVector<T> {
+impl<T: PartialEq, const C: usize> PartialEq for MathVector<C, T> {
     fn eq(&self, other: &Self) -> bool {
         self.values == other.values
     }
