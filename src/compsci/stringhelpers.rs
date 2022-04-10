@@ -134,20 +134,10 @@ impl StringUtils for String {
         backend_val_brackets(self)
     }
     fn is_alphanumeric(&self) -> Result<bool, usize> {
-        for c in self.chars().enumerate() {
-            if !((c.1 >= '0' && c.1 <= '9') ||
-                 (c.1 >= 'a' && c.1 <= 'z') || 
-                 (c.1 >= 'A' && c.1 <= 'Z'))
-            { return Err(c.0); }
-        }
-        Ok(true)
+        backend_alphanumeric(self)
     }
     fn is_numeric(&self) -> Result<bool, usize> {
-        for c in self.chars().enumerate() {
-            if !(c.1 as u8).is_in_range(48, 57)
-            { return Err(c.0); }
-        }
-        Ok(true)
+        backend_numeric(self)
     }
 }
 
@@ -164,24 +154,13 @@ impl StringUtils for str {
         backend_val_brackets(self)
     }
     fn is_alphanumeric(&self) -> Result<bool, usize> {
-        for c in self.chars().enumerate() {
-            if !((c.1 >= '0' && c.1 <= '9') ||
-                 (c.1 >= 'a' && c.1 <= 'z') || 
-                 (c.1 >= 'A' && c.1 <= 'Z'))
-            { return Err(c.0); }
-        }
-        Ok(true)
+        backend_alphanumeric(self)
     }
     fn is_numeric(&self) -> Result<bool, usize> {
-        for c in self.chars().enumerate() {
-            if !(c.1 as u8).is_in_range(48, 57)
-            { return Err(c.0); }
-        }
-        Ok(true)
+        backend_numeric(self)
     }
 }
 
-#[must_use]
 fn backend_val_brackets(s: &str) -> Result<bool, usize> {
     let mut res_vec: Vec<char> = Vec::with_capacity(s.len());
     let mut i: usize = 0;
@@ -198,6 +177,24 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 
     if !res_vec.is_empty()
     { return Err(i); }
+    Ok(true)
+}
+
+fn backend_numeric(s: &str) -> Result<bool, usize> {
+    for c in s.chars().enumerate() {
+        if !(c.1 as u8).is_in_range(48, 57)
+        { return Err(c.0); }
+    }
+    Ok(true)
+}
+
+fn backend_alphanumeric(s: &str) -> Result<bool, usize> {
+    for c in s.chars().enumerate() {
+        if !((c.1 >= '0' && c.1 <= '9') ||
+             (c.1 >= 'a' && c.1 <= 'z') || 
+             (c.1 >= 'A' && c.1 <= 'Z'))
+        { return Err(c.0); }
+    }
     Ok(true)
 }
 
@@ -233,6 +230,7 @@ fn backend_val_brackets(s: &str) -> Result<bool, usize> {
 /// // 72 == 'H' in ASCII.
 /// // 104 == `h` in ASCII.
 /// ```
+#[must_use]
 pub const fn strcmp(s1: &str, s2: &str) -> i16 {
     let mut i: usize = 0;
     let mut flag: i16 = 0;
