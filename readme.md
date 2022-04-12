@@ -16,6 +16,9 @@ _____
 - Added Public API: `is_alphanumeric()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `is_numeric()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `delta()` in `math::general`.
+- Added Public API: `sqrt_f64()` in `math::general`.
+- Added Public API: `sqrt_f32()` in `math::general`.
+- Added Public API: `ComplexNumber` in `math::complex`.
 - Added Public API: `better_be_even()` in `math::general`.
 - Changed Public API: Major rewrite of `math::vectors::MathVector`.
 - Changed Public API: Moved String related traits to `compsci::stringhelpers::StringUtils`.
