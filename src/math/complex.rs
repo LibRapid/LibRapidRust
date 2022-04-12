@@ -334,3 +334,23 @@ impl<T: From<u8>> std::convert::From<T> for ComplexNumber<T> {
         ComplexNumber { real: _a, complex: T::from(0) }
     }
 }
+
+/// This PartialOrd implementation uses Lexicographical ordering. This means:
+/// * Ordered by real part if a₁ ≠ a₂.
+/// * Ordered by imaginary part if a₁ = a₂.
+/// ```
+/// use lib_rapid::math::complex::ComplexNumber;
+/// 
+/// assert!(ComplexNumber::new(2, 3) < ComplexNumber::new(3, 4));
+/// assert!(ComplexNumber::new(2, 1) > ComplexNumber::new(2, 0));
+/// ```
+impl<T: PartialEq +
+        PartialOrd> PartialOrd for ComplexNumber<T> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        match self.real.partial_cmp(&other.real) {
+            Some(core::cmp::Ordering::Equal) =>
+            { return self.complex.partial_cmp(&other.complex); }
+            ord => return ord,
+        }
+    }
+}
