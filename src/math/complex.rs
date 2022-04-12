@@ -2,6 +2,9 @@ use std::fmt::Display;
 use std::ops::*;
 use std::cmp::*;
 
+/// The real number `1usize` as a complex number.
+pub const REAL_ONE: ComplexNumber<usize> = ComplexNumber { real: 1, complex: 0 };
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ComplexNumber<T> {
     pub real:    T,
@@ -18,7 +21,6 @@ impl<T: Neg<Output = T> +
         Add<Output = T> +
         From<u8>> ComplexNumber<T>
         where
-        f32: From<T>,
         f64: From<T> {
     #[inline]
     #[must_use]
@@ -34,18 +36,26 @@ impl<T: Neg<Output = T> +
     }
     #[inline]
     #[must_use]
+    pub fn recip(&self) -> ComplexNumber<T> {
+        ComplexNumber {real: self.real /
+                             (self.real * self.real + self.complex * self.complex),
+                       complex: - (self.complex /
+                                  (self.real * self.real + self.complex * self.complex)) }
+    }
+    #[inline]
+    #[must_use]
     pub fn complex_conjugate(&self) -> ComplexNumber<T> {
         ComplexNumber { real: self.real, complex: - self.complex }
     }
     #[inline]
     #[must_use]
-    pub fn abs_f32(&self) -> f32 {
-        (f32::from(self.real.square()) + f32::from(self.complex.square())).sqrt()
+    pub fn abs_f64(&self) -> f64 {
+        (f64::from(self.real.square()) + f64::from(self.complex.square())).sqrt()
     }
     #[inline]
     #[must_use]
-    pub fn abs_f64(&self) -> f64 {
-        (f64::from(self.real.square()) + f64::from(self.complex.square())).sqrt()
+    pub fn abs_f32(&self) -> f32 {
+        self.abs_f64() as f32
     }
     #[inline]
     #[must_use]
@@ -55,13 +65,19 @@ impl<T: Neg<Output = T> +
 
         match pow > 0 {
             true  => { let mut res = *self; 
-                       for _ in 0..pow {
-                           res *= *self;
-                       }
+                       (0..pow).for_each(|_| res *= *self);
                        res
             }
             false => { return ComplexNumber::new(T::from(1), T::from(0)) / self.powi(-pow); }
         }
+    }
+    #[inline]
+    #[must_use]
+    pub fn exp_f64(&self) -> ComplexNumber<f64> {
+        let ea = super::constants::E.powf(f64::from(self.real));
+
+        ComplexNumber { real:    ea * f64::cos(f64::from(self.complex)),
+                        complex: ea * f64::sin(f64::from(self.complex)) }
     }
 }
 
@@ -171,9 +187,15 @@ impl<T: Display +
         let mut res = String::with_capacity(10);
         res.push_str(&format!("{} ", self.real));
         if self.complex < T::from(0)
-        { res.push_str(&format!("- {}", - self.complex)); }
+        { res.push_str(&format!("- {}i", - self.complex)); }
         else
-        { res.push_str(&format!("+ {}", self.complex)); }
+        { res.push_str(&format!("+ {}i", self.complex)); }
         write!(f, "{}", res)
+    }
+}
+
+impl<T: From<u8>> std::convert::From<T> for ComplexNumber<T> {
+    fn from(_a: T) -> Self {
+        ComplexNumber { real: _a, complex: T::from(0) }
     }
 }
