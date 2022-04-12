@@ -48,6 +48,9 @@ pub const REAL_ONE: ComplexNumber<usize> = ComplexNumber { real: 1, complex: 0 }
 /// assert!( delta( (c1 / c2).complex, expected.complex ) < 1e-10);
 /// assert!( delta( complex.real,      expected.real    ) < 1e-10);
 /// assert!( delta( complex.complex,   expected.complex ) < 1e-10);
+/// 
+/// // Convert from real to complex
+/// assert_eq!(ComplexNumber::from(5.0), ComplexNumber::new(5.0, 0.0));
 /// ```
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ComplexNumber<T> {
