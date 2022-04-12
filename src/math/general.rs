@@ -2,7 +2,7 @@
 //! Everything you need.
 
 use std::{convert::{TryInto, TryFrom}, ops::*, cmp::*};
-
+use super::complex::ComplexNumber;
 use crate::eval_postfix;
 
 use super::constants::{SQRT5, GOLDENRATIO};
@@ -419,6 +419,7 @@ pub fn delta<T: Sub<Output = T> +
 /// 
 /// better_be_even(-3); // Panics, because -3 is odd.
 /// ```
+#[inline]
 pub fn better_be_even<T: From<bool> +
                          BitAnd<Output = T> +
                          PartialEq +
@@ -426,4 +427,47 @@ pub fn better_be_even<T: From<bool> +
                          Copy>(x: T) {
     if x & true.into() != false.into()
     { core::panic!("Oops! {} was not even.", x); }
+}
+
+/// Allows for square roots of negative numbers.
+/// # Arguments
+/// - `x: f64` - The number of which the square root needs to be drawn.
+/// # Returns
+/// A `ComplexNumber<f64>`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::{general::sqrt_f64, complex::ComplexNumber, constants::SQRT2};
+/// 
+/// let c = ComplexNumber::new(0.0f64, SQRT2);
+/// 
+/// assert_eq!(sqrt_f64(-2.0), c);
+/// ```
+#[inline]
+#[must_use]
+pub fn sqrt_f64(x: f64) -> ComplexNumber<f64> {
+    if x < 0.0
+    { return ComplexNumber { real: 0.0, complex: (-x).sqrt() }; }
+
+    ComplexNumber { real: x.sqrt(), complex: 0.0 }
+}
+/// Allows for square roots of negative numbers.
+/// # Arguments
+/// - `x: f64` - The number of which the square root needs to be drawn.
+/// # Returns
+/// A `ComplexNumber<f64>`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::{general::sqrt_f32, complex::ComplexNumber, constants::SQRT2};
+/// 
+/// let c = ComplexNumber::new(0.0f32, SQRT2 as f32);
+/// 
+/// assert_eq!(sqrt_f32(-2.0), c);
+/// ```
+#[inline]
+#[must_use]
+pub fn sqrt_f32(x: f32) -> ComplexNumber<f32> {
+    if x < 0.0
+    { return ComplexNumber { real: 0.0, complex: (-x).sqrt() }; }
+
+    ComplexNumber { real: x.sqrt(), complex: 0.0 }
 }
