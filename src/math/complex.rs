@@ -117,10 +117,10 @@ impl<T: Neg<Output = T> +
     #[inline]
     #[must_use]
     pub fn recip(&self) -> ComplexNumber<T> {
-        ComplexNumber {real: self.real /
-                             (self.real * self.real + self.complex * self.complex),
+        ComplexNumber {real:       self.real /
+                                  (self.real.square() + self.complex.square()),
                        complex: - (self.complex /
-                                  (self.real * self.real + self.complex * self.complex)) }
+                                  (self.real.square() + self.complex.square())) }
     }
     /// Calculate the complex conjugage of a complex number.
     /// # Returns
