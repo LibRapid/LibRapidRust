@@ -34,7 +34,7 @@ impl<T: Copy + Shl<Output = T> + Into<u128>> BinaryPrefix<T> {
     /// assert_eq!(5u128, BinaryPrefix::Unity(5u8).to_decimal_u128());
     /// assert_eq!(1073741824u128, BinaryPrefix::Gibi(1u8).to_decimal_u128());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn to_decimal_u128(&self) -> u128 {
         match self {
             BinaryPrefix::Unity(x) => { (*x).into()       },

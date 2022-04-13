@@ -81,7 +81,7 @@ pub trait BitwiseSlice<T, U> {
     /// assert_eq!(vec!(0, 0), fs.xor_with(&sn));
     /// assert_eq!(vec!(259), fs2.xor_with(&sn2));
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn xor_with(&self, other: &[U]) -> Vec<T>;
     /// ORs a slice of type `[T]` with a slice of type `[U]`.
     /// # Returns
@@ -101,7 +101,7 @@ pub trait BitwiseSlice<T, U> {
     /// assert_eq!(vec!(129, 2), fs.or_with(&sn));
     /// assert_eq!(vec!(7), fs2.or_with(&sn2));
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn or_with(&self, other: &[U]) -> Vec<T>;
     /// ANDs a slice of type `[T]` with a slice of type `[U]`.
     /// # Returns
@@ -121,7 +121,7 @@ pub trait BitwiseSlice<T, U> {
     /// assert_eq!(vec!(1, 2), fs.and_with(&sn));
     /// assert_eq!(vec!(1), fs2.and_with(&sn2));
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn and_with(&self, other: &[U]) -> Vec<T>;
 }
 /// Trait for `binary_insert`.
@@ -239,7 +239,7 @@ pub trait FloatMagic {
     /// 
     /// assert_eq!(2570638229164439, 3.1415927_f64.raw_mantissa());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn raw_mantissa(&self) -> Self::Mantissa;
     /// Get the raw binary exponent data.
     /// # Returns
@@ -251,7 +251,7 @@ pub trait FloatMagic {
     /// assert_eq!(1024, 3.1415927_f64.raw_exponent());
     /// assert_eq!(1, 1.1754943508e-38f32.raw_exponent());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn raw_exponent(&self) -> Self::Exponent;
     /// Get the actual mantissa part.
     /// # Returns
@@ -263,7 +263,7 @@ pub trait FloatMagic {
     /// assert_eq!(1.57079635, 3.1415927_f64.real_mantissa());
     /// assert_eq!(1.0, 1.1754943508e-38f32.real_mantissa());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn real_mantissa(&self) -> Self;
     /// Get the actual exponent part.
     /// # Returns
@@ -276,7 +276,7 @@ pub trait FloatMagic {
     /// assert_eq!(-126, 1.1754943508e-38f32.real_exponent());
     /// assert_eq!(-1022, 2.2250738585072014e-308.real_exponent()); // Minimal f64 value.
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn real_exponent(&self) -> Self::RealExponent;
     /// Decompose a floating point number into it's core components.
     /// # Returns
@@ -290,7 +290,7 @@ pub trait FloatMagic {
     /// 
     /// assert_eq!((0, 1024, 2570638229164439), 3.1415927_f64.raw_decompose());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn raw_decompose(&self) -> (u8, Self::Exponent, Self::Mantissa);
     /// Decompose a floating point number into it's core components.
     /// # Returns
@@ -305,7 +305,7 @@ pub trait FloatMagic {
     /// assert_eq!((0, 1, 1.5707964), 3.1415927_f32.real_decompose());
     /// assert_eq!((0, 1, 1.57079635), 3.1415927_f64.real_decompose());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn real_decompose(&self) -> (u8, Self::RealExponent, Self);
     /// Compose a floating point value out of the raw parts.
     /// # Returns

@@ -115,7 +115,7 @@ impl<T: Neg<Output = T> +
     /// assert_eq!(c.recip(), ComplexNumber::new(0.1, 0.2));
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn recip(&self) -> ComplexNumber<T> {
         ComplexNumber {real:       self.real /
                                   (self.real.square() + self.complex.square()),
@@ -133,7 +133,7 @@ impl<T: Neg<Output = T> +
     /// assert_eq!(c.complex_conjugate(), ComplexNumber::new(2, 4));
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn complex_conjugate(&self) -> ComplexNumber<T> {
         ComplexNumber { real: self.real, complex: - self.complex }
     }
@@ -149,7 +149,7 @@ impl<T: Neg<Output = T> +
     /// assert!((2.0 * SQRT5 - c.abs_f64()).abs() < 1e-10);
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn abs_f64(&self) -> f64 {
         (f64::from(self.real.square()) + f64::from(self.complex.square())).sqrt()
     }
@@ -165,7 +165,7 @@ impl<T: Neg<Output = T> +
     /// assert!((2.0 * SQRT5 as f32 - c.abs_f32()).abs() < 1e-10);
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn abs_f32(&self) -> f32 {
         self.abs_f64() as f32
     }
@@ -182,7 +182,7 @@ impl<T: Neg<Output = T> +
     /// assert_eq!(c.powi(2), ComplexNumber::new(-12, -16));
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn powi(&self, pow: isize) -> ComplexNumber<T> {
         if pow == 0
         { return ComplexNumber::new(T::from(1), T::from(0)); }
@@ -207,7 +207,7 @@ impl<T: Neg<Output = T> +
     /// assert!((c.exp_f64().real + E.powf(PI)).abs() < 1e-10);
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn exp_f64(&self) -> ComplexNumber<f64> {
         let ea = super::constants::E.powf(f64::from(self.real));
 

@@ -215,7 +215,7 @@ impl<T: Copy +
 /// assert_eq!(MathVector::new([2.0, 2.0, 2.0]), scalar_mul(2.0, &v));
 /// ```
 #[inline]
-#[must_use]
+#[must_use = "This returns the result of the operation, without modifying the original."]
 pub fn scalar_mul<T: Copy +
                      super::general::NumTools<T> +
                      From<f64> +

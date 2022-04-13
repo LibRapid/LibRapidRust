@@ -88,7 +88,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let c:  VecSet<i32> = s.union(&s1);
     /// assert_eq!(c, set!(0,1,2,3,4,5,6,7,8,9,10,11,12,13));
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn union(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res: VecSet<T> = VecSet {elements: Vec::with_capacity(self.cardinality() +
                                                                       other.cardinality()),
@@ -119,7 +119,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// let c:  VecSet<i32> = s.intersection(&s2);
     /// assert_eq!(c, set!(0, 1, 2, 3, 11));
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn intersection(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res: VecSet<T> = self.clone();
         res.elements.retain(|x| other.elements.binary_search(x).is_ok());
@@ -168,7 +168,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(set!(1, 2), s1.difference_with(&s2));
     ///```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn difference_with(&self, other: &VecSet<T>) -> VecSet<T> {
         let mut res_vec: Vec<T> = Vec::with_capacity(std::cmp::max(self.cardinality(), other.cardinality()));
         for i in self {
@@ -193,7 +193,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(set!((1, 1), (1, 2), (2, 1), (2, 2), (3, 1), (3, 2)), s1.cartesian_product(&s2));
     ///```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn cartesian_product(&self, other: &VecSet<T>) -> VecSet<(T, T)> {
         let mut res_vec = Vec::with_capacity(self.cardinality() * other.cardinality());
         for i in self {
@@ -216,7 +216,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     /// 
     /// assert_eq!(set!(1, 2, 5), s1.symmetric_difference_with(&s2));
     ///```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn symmetric_difference_with(&self, other: &VecSet<T>) -> VecSet<T> {
         let diff1 = self.difference_with(&other);
         let diff2 = other.difference_with(&self).clone();
