@@ -12,7 +12,7 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 -----
 0.2.2-preview.1.
 _____
-- Added Public API: `PartialEq` implemented for `ComplexNumber<T>`.
+- Added Public API: `PartialOrd` implemented for `ComplexNumber<T>`.
 
 Credits
 -----

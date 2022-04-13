@@ -200,6 +200,8 @@ impl<T: Copy +
     /// 
     /// assert_eq!((Some(3.0), Some(-1.0)), f_x.get_solutions());
     /// ```
+    #[inline]
+    #[must_use]
     pub fn get_solutions(&mut self) -> (Option<T>, Option<T>) {
         if self.solutions != (None, None)
         { return self.solutions; }
