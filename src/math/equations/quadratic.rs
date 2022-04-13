@@ -45,7 +45,7 @@ impl<T: Copy +
     /// 
     /// let mut f_x = QuadraticEquation::new_from_coefficients(1.0, 0.0, -1.5);
     /// 
-    /// assert_eq!("f(x) = 1x^2 + 0x - 1.5", &f_x.to_string());
+    /// assert_eq!("1x^2 + 0x - 1.5", &f_x.to_string());
     /// ```
     #[inline]
     #[must_use]
@@ -349,7 +349,7 @@ impl<T: Display +
         Copy> std::fmt::Display for QuadraticEquation<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut res = String::with_capacity(22);
-        res.push_str(&format!("f(x) = {}x^2", self.a));
+        res.push_str(&format!("{}x^2", self.a));
         if self.b < T::from(0)
         { res.push_str(&format!(" - {}x", self.b)); }
         else

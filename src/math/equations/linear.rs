@@ -39,7 +39,7 @@ impl<T: Copy +
     /// 
     /// let f_x = LinearEquation::new(1.5, -2.2);
     /// 
-    /// assert_eq!("f(x) = 1.5x - 2.2".to_owned(), f_x.to_string());
+    /// assert_eq!("1.5x - 2.2".to_owned(), f_x.to_string());
     /// ```
     #[inline]
     #[must_use]
@@ -235,8 +235,8 @@ impl<T: From<u8> +
         Copy> std::fmt::Display for LinearEquation<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self.c > T::from(0) {
-            true  => { write!(f, "f(x) = {}x + {}", self.m, self.c) }
-            false => { write!(f, "f(x) = {}x - {}", self.m, - self.c) }
+            true  => { write!(f, "{}x + {}", self.m, self.c) }
+            false => { write!(f, "{}x - {}", self.m, - self.c) }
         }
     }
 }
