@@ -91,7 +91,7 @@ pub trait NumDigits {
     /// assert_eq!(9u16, 342.cross_sum());
     /// assert_eq!(52u64, 4928947234u64.cross_sum());
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn cross_sum(&self) -> Self;
     /// Gets the digits as a number with the 1s place at index 0.
     /// # Returns
@@ -149,7 +149,7 @@ pub trait NumTools<T> {
     /// let result: f32 = 5.0.map_to(0., 10., 0., 1.); // Original value 5 in the range from 0-10
     /// assert_eq!(result, 0.5);
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
     /// Increment a number by one.
     /// # Returns
@@ -215,7 +215,7 @@ pub trait NumTools<T> {
     ///let res = i.square();
     ///assert_eq!(144, res);
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn square(&self) -> Self;
 
     /// Cube a number.
@@ -230,7 +230,7 @@ pub trait NumTools<T> {
     ///let res = i.cube();
     ///assert_eq!(1728, res);
     /// ```
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn cube(&self) -> Self;
 }
 
@@ -343,7 +343,7 @@ impl<'a, T: PartialEq +
 /// use lib_rapid::math::constants;
 /// assert_eq!(constants::SQRT2, nth_root(2.0, 2.0));
 /// ```
-#[must_use]
+#[must_use = "This returns the result of the operation, without modifying the original."]
 #[inline]
 pub fn nth_root(degree: f64, radicand: f64) -> f64 {
     radicand.powf(degree.recip())

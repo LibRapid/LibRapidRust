@@ -331,7 +331,7 @@ impl<T: Copy +
     /// assert_eq!(LinearEquation::new(2.0, -2.0), f_x.get_derivative());
     /// ```
     #[inline]
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn get_derivative(&mut self) -> LinearEquation<T> {
         match self.derivative {
             Some(d) => { return d; }

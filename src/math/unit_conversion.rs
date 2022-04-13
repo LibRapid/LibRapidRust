@@ -70,7 +70,7 @@ pub trait AngleConversionTrait {
     /// * `mode` - The mode ( e.g. RadiansToDegrees ).
     /// # Returns
     /// A `Self` containing the result.
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn angle_conversion(&self, mode: AngleConversion) -> Self;
 }
 
@@ -82,7 +82,7 @@ pub trait TempConversionTrait {
     /// * `mode` - The mode ( e.g. CelsiusToFahrenheit ).
     /// # Returns
     /// A `Self` containing the result.
-    #[must_use]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     fn temp_conversion(&self, mode: TempConversion) -> Self;
 }
 
@@ -141,6 +141,7 @@ impl<T: Into<f64> + Copy> SIPrefix<T> {
     /// assert_eq!(0.5, SIPrefix::Deci(5.0).to_decimal_f32());
     /// assert_eq!(5000.0, SIPrefix::Kilo(5.0).to_decimal_f32());
     /// ```
+    #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn to_decimal_f32(&self) -> f32 {
         self.to_decimal_f64() as f32
     }
