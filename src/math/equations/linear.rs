@@ -210,7 +210,6 @@ impl<T: Copy +
                                                  other.b() - self.m,
                                                  other.c() - self.c);
 
-        q.get_solutions();
         if q.get_solutions() == (None, None)
         { return (None, None); }
 
