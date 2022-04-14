@@ -10,9 +10,10 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.2.2-preview.1.
+0.3.0.
 _____
 - Added Public API: `PartialOrd` implemented for `ComplexNumber<T>`.
+- Added Public API: `euler_gamma<T>` in `math::general`.
 
 Credits
 -----

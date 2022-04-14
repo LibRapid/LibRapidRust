@@ -2,7 +2,7 @@
 //! Everything you need.
 
 use std::{convert::{TryInto, TryFrom}, ops::*, cmp::*};
-use super::complex::ComplexNumber;
+use super::{complex::ComplexNumber, constants::{E, EULERMASCHERONI}};
 use crate::eval_postfix;
 
 use super::constants::{SQRT5, GOLDENRATIO};
@@ -81,7 +81,7 @@ pub trait Averages<T> {
 pub trait NumDigits {
     /// Calculates the cross sum of a number.
     /// # Returns
-    /// A `Self` containing the result.
+    /// A `Self`.
     /// 
     /// # Examples
     /// ```
@@ -96,7 +96,6 @@ pub trait NumDigits {
     /// Gets the digits as a number with the 1s place at index 0.
     /// # Returns
     /// A `Vec<u8>`.
-    /// 
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumDigits;
@@ -152,8 +151,6 @@ pub trait NumTools<T> {
     #[must_use = "This returns the result of the operation, without modifying the original."]
     fn map_to(&self, start1: T, end1: T, start2: T, end2: T) -> T;
     /// Increment a number by one.
-    /// # Returns
-    /// Nothing.
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
@@ -165,8 +162,6 @@ pub trait NumTools<T> {
     /// Increment a number by a specified value.
     /// # Arguments
     /// * `n` - The value to be incremented by.
-    /// # Returns
-    /// Nothing.
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
@@ -176,8 +171,6 @@ pub trait NumTools<T> {
     /// ```
     fn inc_by(&mut self, n: Self);
     /// Decrement a number by one.
-    /// # Returns
-    /// Nothing.
     /// # Warning
     /// Does not check for underflow.
     /// # Examples
@@ -205,7 +198,7 @@ pub trait NumTools<T> {
     fn dec_by(&mut self, n: Self);
     /// Square a number.
     /// # Returns
-    /// The square of the number.
+    /// A `Self`.
     /// # Caution
     /// This function does not check if overflow occurs.
     /// # Examples
@@ -220,7 +213,7 @@ pub trait NumTools<T> {
 
     /// Cube a number.
     /// # Returns
-    /// The cube of the number.
+    /// A `Self`.
     /// # Caution
     /// This function does not check if overflow occurs.
     /// # Examples
@@ -352,7 +345,7 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
 /// # Arguments
 /// * `n` - the nth-fibonacci number to be computed.
 /// # How does it work?
-/// This function uses the function `φⁿ / √5` for all numbers `n < 76`, as this is the maximum precision for that formula. For every number above that, it uses the iterative approach.
+/// This function uses the function `φⁿ ÷ √5` for all numbers `n < 76`, as this is the maximum precision for that formula. For every number above that, it uses the iterative approach.
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::nth_fibonacci;
@@ -470,4 +463,43 @@ pub fn sqrt_f32(x: f32) -> ComplexNumber<f32> {
     { return ComplexNumber { real: 0.0, complex: (-x).sqrt() }; }
 
     ComplexNumber { real: x.sqrt(), complex: 0.0 }
+}
+
+/// The gamma function `Γ(z)` for all `z ∈ ℝ \ {-1}`.
+/// # Arguments
+/// * `z: T` - The function value to be computed.
+/// * `precision: f64` - The precision of the computation. Numbers of the form 1e^n with `n ∈ ℤ⁻` roughly give a precision of `1e^((n / 2) - 1)`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::{euler_gamma, delta};
+/// 
+/// assert!(delta(euler_gamma( 1.6, 1e-12), 0.8935153492876903) < 1e-5);
+/// assert!(delta(euler_gamma(-1.6, 1e-12), 2.3105828580809252) < 1e-5);
+/// ```
+pub fn euler_gamma<T: Into<f64>>(z: T, precision: f64) -> f64 {
+    let     _z:       f64 = z.into();
+    let     pre:      f64 = E.powf(-_z * EULERMASCHERONI) / _z;
+    let mut term_inf: f64 = E.powf(_z) /
+                            (1.0 + _z);
+    let mut res:      f64 = 1.0;
+    let mut n:        f64 = 1.0;
+    let mut zdivn:    f64;
+
+    if delta(term_inf, 1.0) < precision
+    { return res; }
+
+    // Infinite Series _Gamma:
+    // \prod_{n = 1}^{\infty} \frac{e^{z \div n}}{1 + z \div n}.
+    loop {
+        res *= term_inf;
+        
+        if delta(term_inf, 1.0) < precision
+        { break; }
+        
+        n.inc();
+        zdivn = _z / n;
+        term_inf  = E.powf(zdivn) /
+                    (1.0 + zdivn);
+    }
+    pre * res
 }
