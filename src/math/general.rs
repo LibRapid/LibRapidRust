@@ -468,7 +468,7 @@ pub fn sqrt_f32(x: f32) -> ComplexNumber<f32> {
 /// The gamma function `Γ(z)` for all `z ∈ ℝ \ {-1}`.
 /// # Arguments
 /// * `z: T` - The function value to be computed.
-/// * `precision: f64` - The precision of the computation. Numbers of the form 1e^n with `n ∈ ℤ⁻` roughly give a precision of `1e^((n / 2) - 1)`.
+/// * `precision: f64` - The precision of the computation. Numbers of the form 10^n with `n ∈ ℤ⁻` roughly give a precision of `10^((n / 2) - 1)`.
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::{euler_gamma, delta};
