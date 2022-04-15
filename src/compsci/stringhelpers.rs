@@ -1,4 +1,5 @@
 //! Certain functions for working with Strings.
+
 use crate::math::general::NumTools;
 
 /// Useful String related functions.
@@ -119,6 +120,35 @@ pub trait StringUtils {
     /// assert_eq!(true, "30".is_numeric().is_ok());
     /// ```
     fn is_numeric(&self) -> Result<bool, usize>;
+    /// Gets the similarity between two Strings ( correct characters divided by length). In other words, this similarity measures the character changes needed for the two Strings to match.
+    /// # Arguments
+    /// * `other: &str` - The other string to be compared to.
+    /// # Returns
+    /// A `f32`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::stringhelpers::StringUtils;
+    /// 
+    /// assert_eq!("Hello!".similarity_with("hello."), 4.0 / 6.0);
+    /// assert_eq!("ABCD".similarity_with("ABCDEFGH"), 4.0 / 8.0);
+    /// assert_eq!("abcdEfGh".similarity_with("abcD"), 3.0 / 8.0);
+    /// assert_eq!("my_test_var".similarity_with("ym_test_var"), 9.0 / 11.0);
+    /// ```
+    #[must_use]
+    fn similarity_with(&self, other: &str) -> f32;
+    /// Calculate the Levenshtein-distance between two Strings.
+    /// # Arguments
+    /// * `a: &str`
+    /// * `b: &str`
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::stringhelpers::StringUtils;
+    /// 
+    /// assert_eq!("Japan".levenshtein_dist_with("Canada"), 4);
+    /// assert_eq!("kitten".levenshtein_dist_with("sitting"), 3);
+    /// ```
+    #[must_use]
+    fn levenshtein_dist_with(&self, other: &str) -> usize;
 }
 
 impl StringUtils for String {
@@ -142,6 +172,14 @@ impl StringUtils for String {
     fn is_numeric(&self) -> Result<bool, usize> {
         backend_numeric(self)
     }
+    #[inline]
+    fn similarity_with(&self, other: &str) -> f32 {
+        backend_sim(self, other)
+    }
+    #[inline]
+    fn levenshtein_dist_with(&self, other: &str) -> usize {
+        backend_levenshtein(self, other)
+    }
 }
 
 impl StringUtils for str {
@@ -164,6 +202,14 @@ impl StringUtils for str {
     #[inline]
     fn is_numeric(&self) -> Result<bool, usize> {
         backend_numeric(self)
+    }
+    #[inline]
+    fn similarity_with(&self, other: &str) -> f32 {
+        backend_sim(self, other)
+    }
+    #[inline]
+    fn levenshtein_dist_with(&self, other: &str) -> usize {
+        backend_levenshtein(self, other)
     }
 }
 
@@ -202,6 +248,79 @@ fn backend_alphanumeric(s: &str) -> Result<bool, usize> {
         { return Err(c.0); }
     }
     Ok(true)
+}
+
+fn backend_sim(s1: &str, s2: &str) -> f32 {
+    let mut sum = 0;
+
+    match s1.len() > s2.len() {
+        true => { 
+            for i in s2.chars().enumerate() {
+                if unsafe { s1.char_at(i.0).unwrap_unchecked() } == i.1
+                { sum.inc(); }
+            }
+        }
+        false => { 
+            for i in s1.chars().enumerate() {
+                if unsafe { s2.char_at(i.0).unwrap_unchecked() } == i.1
+                { sum.inc(); }
+            }
+        }
+    }
+
+    sum as f32 / std::cmp::max(s1.len(), s2.len()) as f32
+}
+
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+// *   Original Implementation due to Titus Wormer (github.com/wooorm).  *
+// *              https://github.com/wooorm/levenshtein-rs               *
+// *                   Licensed under the MIT License.                   *
+// *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+fn backend_levenshtein(str1: &str, str2: &str) -> usize {
+    if str1 == str2
+    { return 0; }
+    
+    let mut res  = 0;
+    let str1_len = str1.chars().count();
+    let str2_len = str2.chars().count();
+
+    if str1_len == 0
+    { return str2_len; }
+    if str2_len == 0
+    { return str1_len; }
+
+    let mut cache:     Vec<usize> = (1..).take(str1_len).collect();
+    let mut str1_dist: usize;
+    let mut str2_dist: usize;
+
+    for (index_str2, char_str2) in str2.chars().enumerate() {
+        res       = index_str2;
+        str1_dist = index_str2;
+
+        for (index_str1, char_str1) in str1.chars().enumerate() {
+            str2_dist = if char_str1 == char_str2
+                        { str1_dist }
+                        else
+                        { str1_dist + 1 };
+
+            str1_dist = cache[index_str1];
+
+            res = if str1_dist > res {
+                    if str2_dist > res
+                    { res + 1 }
+                    else
+                    { str2_dist }
+                }
+                else if str2_dist > str1_dist
+                { str1_dist + 1 }
+                else
+                { str2_dist };
+
+            cache[index_str1] = res;
+        }
+    }
+
+    res
 }
 
 /// A Rust implementation of C's `strcmp()` function.
