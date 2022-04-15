@@ -289,34 +289,37 @@ fn backend_levenshtein(str1: &str, str2: &str) -> usize {
     if str2_len == 0
     { return str1_len; }
 
-    let mut cache:     Vec<usize> = (1..).take(str1_len).collect();
-    let mut str1_dist: usize;
-    let mut str2_dist: usize;
+    let mut buffer: Vec<usize> = (1..).take(str1_len).collect();
+    let mut str1_dist:  usize;
+    let mut str2_dist:  usize;
 
     for (index_str2, char_str2) in str2.chars().enumerate() {
         res       = index_str2;
         str1_dist = index_str2;
 
         for (index_str1, char_str1) in str1.chars().enumerate() {
-            str2_dist = if char_str1 == char_str2
-                        { str1_dist }
-                        else
-                        { str1_dist + 1 };
 
-            str1_dist = cache[index_str1];
+            str2_dist =
+            match char_str1 == char_str2 {
+                true  => { str1_dist }
+                false => { str1_dist + 1 }
+            };
 
-            res = if str1_dist > res {
-                    if str2_dist > res
-                    { res + 1 }
-                    else
-                    { str2_dist }
+            str1_dist = buffer[index_str1];
+
+            res =
+            if str1_dist > res {
+                match str2_dist > res {
+                    true  => { res + 1 }
+                    false => { str2_dist }
                 }
-                else if str2_dist > str1_dist
-                { str1_dist + 1 }
-                else
-                { str2_dist };
+            }
+            else if str1_dist < str2_dist
+            { str1_dist + 1 }
+            else
+            { str2_dist };
 
-            cache[index_str1] = res;
+            buffer[index_str1] = res;
         }
     }
 
