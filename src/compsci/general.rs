@@ -62,6 +62,9 @@ pub trait SliceOps<T> {
 }
 
 /// Bitwise operations on slices of arbitrary (numeric) types.
+/// \
+/// It reinterprets the bytes of type `U` as the type `T` and then does bitwise
+/// operations on it.
 pub trait BitwiseSlice<T, U> {
     /// XORs a slice of type `[T]` with a slice of type `[U]`.
     /// # Returns
