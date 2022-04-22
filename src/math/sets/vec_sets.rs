@@ -45,7 +45,7 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
     pub fn empty_set() -> VecSet<'a, T> {
         VecSet { elements: Vec::new(), parent: None }
     }
-    /// Creates a new `VecSet` using a parent-`VecSet` to which it applies a closure.
+    /// Creates a new `VecSet` using a parent-`VecSet` to which it applies a closure (A rule which is applied to each element and checks if this rule holds true).
     /// # Arguments
     /// * `parent` - The `VecSet` from which the new `VecSet` emerges.
     /// * `f` - The closure after which the new `VecSet` is created.
@@ -71,6 +71,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         res
     }
     /// Does a mathematical union on two VecSets.
+    /// \
+    /// In other words, it creates a new set of all values that are either in `self` or `other` or both.
     /// `self ∪ other`.
     /// # Arguments
     /// * `self` - The first set.
@@ -102,6 +104,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         res
     }
     /// Does a mathematical intersection on two sets.
+    /// \
+    /// In other words: It creates a new set of all values that are present in both sets.
     /// # Arguments
     /// * `self` - The first set.
     /// * `other` - The second set.
@@ -127,6 +131,10 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         res
     }
     /// Checks for disjointness between `self` and `other`.
+    /// \
+    /// Two sets are disjoint if and only if `self` has no elements of `other`.
+    /// The two sets `A := {1, 2, 3}` and `B := {1, 5, 6}` are *not* disjoint, because they
+    /// share the common element `1`.
     /// # Arguments
     /// * `other` - The other set to be checked for disjointness.
     /// # Returns
@@ -154,6 +162,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         true
     }
     /// Checks for mathematical difference between two sets - `A \ B`.
+    /// \
+    /// The difference between two sets is the set of all elements that are present in a set `A`,
+    /// but not in the set `B`. For example, the difference between `A := {1, 5, 6}` and `B := {2, 3, 4}` is `{5, 6}`, because `5` and `6` are the elements not present in `B`.
     /// # Arguments
     /// * `other` - The other set to be checked for.
     /// # Returns
@@ -180,8 +191,11 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
                  parent: None }
     }
     /// Gets the cartesian product of two sets in `O(n·m)`.
+    /// \
+    /// The cartesian product of two sets is the set of all tuples of the form (a, b), such
+    /// that every unique permutation is captured. Let `A := {1, 2}` and `B := {3, 4}`. Then, the cartesian product `C` is `C := {(1, 3), (1, 4), (2, 3), (2, 4)}`.
     /// # Arguments
-    /// * `other` - `&VecSet<T>`-
+    /// * `other` - `&VecSet<T>`
     /// # Returns
     /// A `VecSet<(T, T)>`.
     ///```
@@ -203,7 +217,10 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         }
         VecSet { elements: res_vec, parent: None }
     }
-    /// Gets the symmetric difference (Elements either in `self` or `other`, but not in both).
+    /// Gets the symmetric difference.
+    /// \
+    /// The symmetric difference is the set of all
+    /// elements that are either in `self` or `other`, but not in both.
     /// # Arguments
     /// * `other` - A `&VecSet<T>`.
     /// # Examples
@@ -247,6 +264,9 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         self.elements.binary_search(&elem).is_ok()
     }
     /// Lets you insert an element into a set. Does not insert already present values.
+    /// \
+    /// Mathematically speaking, it takes the set `A` and a set `B`, where the set B is defined as
+    /// `B := {b}`, where `b` is the new value. `A` is then redefined as `A = A_{pre} ∪ B`.
     /// # Arguments
     /// * `elem` - The element to insert.
     /// # Returns
@@ -325,6 +345,8 @@ impl<'a, T: Copy + Ord> VecSet<'a, T> {
         true
     }
     /// Gets the cardinality of a set.
+    /// \
+    /// The cardinality of a set is the count of all elements.
     /// # Returns
     /// A `usize`: `|self|`.
     /// # Examples
