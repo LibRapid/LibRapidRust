@@ -1,6 +1,5 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
-
 use std::{convert::{TryInto, TryFrom}, ops::*, cmp::*};
 use super::{complex::ComplexNumber, constants::{E, EULERMASCHERONI}};
 use crate::eval_postfix;
@@ -504,58 +503,53 @@ pub fn euler_gamma<T: Into<f64>>(z: T, precision: f64) -> f64 {
     pre * res
 }
 
-// Binary gcd
-pub(crate) fn gcd(mut a: u64, mut b: u64) -> u64 {
+/// Find the greatest common divisor between two values.
+/// # Arguments
+/// * `a: T` - The first value.
+/// * `b: T` - The second value.
+/// # Returns
+/// A `T`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::gcd;
+/// 
+/// assert_eq!(gcd(3, 6), 3);
+/// assert_eq!(gcd(52, 345), 1);
+/// ```
+pub fn gcd<T: From<u8> +
+              PartialEq +
+              PartialOrd +
+              Shl<Output = T> +
+              NumTools<T> +
+              Copy +
+              ShrAssign>(a: T, b: T) -> T
+              where
+              i128: From<T> {
     
-    if b == 0 
-    { return a; } 
+    let mut _a = a;
+    let mut _b = b;
+    if _b == 0.into()
+    { return _a; }
 
-    if a == 0
-    { return b; }
+    if _a == 0.into()
+    { return _b; }
 
-    let a_two_factor:   u32 = a.trailing_zeros();  
-    let b_two_factor:   u32 = b.trailing_zeros(); 
-    let min_two_factor: u32 = std::cmp::min(a_two_factor, b_two_factor);
-    a >>= a_two_factor;
-	b >>= b_two_factor;
+    let a_two_factor:   u8 =
+    unsafe { i128::from(_a).trailing_zeros().try_into().unwrap_unchecked() };
+    let b_two_factor:   u8 =
+    unsafe { i128::from(_b).trailing_zeros().try_into().unwrap_unchecked() };
+    let min_two_factor: u8 = std::cmp::min(a_two_factor, b_two_factor);
+    _a >>= a_two_factor.into();
+	_b >>= b_two_factor.into();
     loop {
          
-        if b > a
-        { std::mem::swap(&mut b, &mut a); }
+        if _b > _a
+        { std::mem::swap(&mut _b, &mut _a); }
 
-        a.dec_by(b);
+        _a.dec_by(_b);
 
-        if a == 0 
-        { return b << min_two_factor; }
-
-        a >>= a.trailing_zeros();
+        if _a == 0.into()
+        { return _b << min_two_factor.into(); }
+        _a >>= unsafe { u8::try_from(i128::from(_a).trailing_zeros()).unwrap_unchecked() }.into();
     }
-  }
-
-
-// Extended Euclidean algorithm
-pub(crate) const fn eea(p: i64 , q: i64) -> (i64, i64, i64) {
-    let mut gcd:      i64 = p; 
-    let mut new_r:    i64 = q;
-    let mut bezout_1: i64 = 1;
-    let mut new_s:    i64 = 0;
-    let mut bezout_2: i64 = 0;
-    let mut new_t:    i64 = 1;
-    
-    while new_r != 0 {
-        let quotient: i64 = gcd / new_r;
-        let mut temp: i64 = new_r;
-        new_r = gcd - quotient * temp;
-        gcd = temp;
-        
-        temp     = new_s;
-        new_s    = bezout_1 - quotient * temp;
-        bezout_1 = temp;
-        
-        temp     = new_t;
-        new_t    = bezout_2 - quotient * temp;
-        bezout_2 = temp;
-    }
-
-    (gcd, bezout_1, bezout_2)
 }

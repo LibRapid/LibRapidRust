@@ -10,11 +10,11 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.3.0-preview.1.
+0.3.1.
 _____
 - Added Public API: `sim_with()` in `compsci::stringhelpers::StringUtils`.
 - Added Public API: `levenshtein_dist_with()` in `compsci::stringhelpers::StringUtils`.
-
+- Added Public API: `gcd()` in `math::general`.
 Credits
 -----
 
