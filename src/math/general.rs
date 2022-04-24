@@ -516,6 +516,7 @@ pub fn euler_gamma<T: Into<f64>>(z: T, precision: f64) -> f64 {
 /// assert_eq!(gcd(3, 6), 3);
 /// assert_eq!(gcd(52, 345), 1);
 /// ```
+#[must_use]
 pub fn gcd<T: From<u8> +
               PartialEq +
               PartialOrd +
