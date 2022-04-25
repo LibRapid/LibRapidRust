@@ -16,10 +16,10 @@ impl<'a> Element<'a> {
     /// # Arguments
     /// * `symbol: &str` - The element symbol.
     /// * `protons: u8` - The number of protons.
-    /// * `electrons: &str` - The number of electrons.
-    /// * `neutrons: &str` - The number of neutrons.
-    /// * `atomic_weight: &str` - The weighted average of all isotopes.
-    /// * `pauling_en: &str` - The electronegativity after Pauling.
+    /// * `electrons: u8` - The number of electrons.
+    /// * `neutrons: u8` - The number of neutrons.
+    /// * `atomic_weight: f32` - The weighted average of all isotopes.
+    /// * `pauling_en: f32` - The electronegativity after Pauling.
     /// # Examples
     /// ```
     /// use lib_rapid::chem::elements::Element;
