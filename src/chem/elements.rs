@@ -1,4 +1,4 @@
-//! Definition of a chemical element.
+//! Definition of a chemical element and constants (in pse).
 pub mod pse;
 /// The struct for storing a chemical element.
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
