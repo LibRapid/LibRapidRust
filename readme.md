@@ -13,7 +13,6 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 0.4.0-preview.1.
 _____
 - Added Public API: `lib_rapid::chem`.
-Credits
 -----
 
 The original idea comes from Pencilcaseman, I collaborated with him to get LibRapid into Rust. We're closely working together to provide
