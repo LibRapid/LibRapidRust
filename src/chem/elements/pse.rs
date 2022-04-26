@@ -7,7 +7,7 @@ use super::Element;
 /// let element = pse::PROTON;
 /// assert_eq!(element.atomic_weight, pse::PROTONMASS as f32);
 /// ```
-pub const PROTON:        Element = Element::new("H⁺",  1,   0,   0,   PROTONMASS as f32,  2.20);
+pub const PROTON:        Element = Element::new("H⁺",  1,   0,   0,   PPLUS_MASS as f32,  2.20);
 /// The chemical element Hydrogen.
 /// ```
 /// use lib_rapid::chem::elements::pse;
@@ -962,11 +962,34 @@ pub const OGANESSON:     Element = Element::new("Og", 118, 118, 176, 294.0,  f32
 pub const PSE:           [Element; 118] = [ HYDROGEN, HELIUM, LITHIUM, BERYLLIUM, BORON, CARBON, NITROGEN, OXYGEN, FLUORINE, NEON, SODIUM, MAGNESIUM, ALUMINIUM, SILICON, PHOSPHORUS, SULFUR, CHLORINE, ARGON, POTASSIUM, CALCIUM, SCANDIUM, TITANIUM, VANADIUM, CHROMIUM, MANGANESE, IRON, COBALT, NICKEL, COPPER, ZINC, GALLIUM, GERMANIUM, ARSENIC, SELENIUM, BROMINE, KRYPTON, RUBIDIUM, STRONTIUM, YTTRIUM, ZIRCONIUM, NIOBIUM, MOLYBDENUM, TECHNETIUM, RUTHENIUM, RHODIUM, PALLADIUM, SILVER, CADMIUM, INDIUM, TIN, ANTIMONY, TELLURIUM, IODINE, XENON, CAESIUM, BARIUM, LANTHANUM, CERIUM, PRASEODYMIUM, NEODYMIUM, PROMETHIUM, SAMARIUM, EUROPIUM, GADOLINIUM, TERBIUM, DYSPROSIUM, HOLMIUM, ERBIUM, THULIUM, YTTERBIUM, LUTETIUM, HAFNIUM, TANTALUM, TUNGSTEN, RHENIUM, OSMIUM, IRIDIUM, PLATINUM, GOLD, MERCURY, THALLIUM, LEAD, BISMUTH, POLONIUM, ASTATINE, RADON, FRANCIUM, RADIUM, ACTINIUM, THORIUM, PROTACTINIUM, URANIUM, NEPTUNIUM, PLUTONIUM, AMERICIUM, CURIUM, BERKELIUM, CALIFORNIUM, EINSTEINIUM, FERMIUM, MENDELEVIUM, NOBELIUM, LAWRENCIUM, RUTHERFORDIUM, DUBNIUM, SEABORGIUM, BOHRIUM, HASSIUM, MEITNERIUM, DARMSTADTIUM, ROENTGENIUM, COPERNICIUM, NIHONIUM, FLEROVIUM, MOSCOVIUM, LIVERMORIUM, TENNESSINE, OGANESSON ];
 
 /// The mass of one electron in Dalton.
-pub const ELECTRONMASS: f64 = 5.4857990907016e-4;
+pub const EMINUS_MASS:    f64 = 5.4857990907016e-4;
 /// The mass of one proton in Dalton.
-pub const PROTONMASS:   f64 = 1.00727646662153;
+pub const PPLUS_MASS:     f64 = 1.00727646662153;
 /// The mass of one neutron in Dalton.
-pub const NEUTRONMASS:  f64 = 1.0086649158849;
+pub const NEUTRON_MASS:   f64 = 1.0086649158849;
+/// Avogadro's number in mol⁻¹.
+pub const AVOGADRO:       f64 = 6.02214076e23;
+/// Bohr's radius in meter.
+pub const BOHRRADIUS:     f64 = 5.2917721090380e-11;
+/// Proton energy-equivalent in Joule.
+pub const PPLUS_ENERGY:   f64 = 1.5032776159846e-10;
+/// Neutron energy-equivalent in Joule.
+pub const NEUTRON_ENERGY: f64 = 1.5053497628786e-10;
+/// Electron energy-equivalent in Joule.
+pub const EMINUS_ENERGY:  f64 = 8.187105776925e-14;
+/// The charge of one electron in Coloumb.
+pub const EMINUS_CHARGE:  f64 = 1.602176634e-19;
+/// The radius of one electron in meter.
+pub const EMINUS_RADIUS:  f64 = 2.817940326213e-15;
+/// Planck's length in meters.
+pub const PLANCK_LENGTH:  f64 = 1.61625518e-35;
+/// Planck's mass in kilogram.
+pub const PLANCK_MASS:    f64 = 2.17643424e-8;
+/// Planck's temperature in Kelvin.
+pub const PLANCK_TEMP:    f64 = 1.41678416e32;
+/// Planck's time in Kelvin.
+pub const PLANCK_TIME:    f64 = 5.39124760e-44;
+
 
 /// Get a chemical element by its atomic number.
 /// # Arguments
