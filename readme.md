@@ -9,6 +9,7 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 ============
 Current Statistics
 -----
+
 | **Item**     | **Count** | **Used RegEx**       | **Used Method**     |
 |--------------|-----------|----------------------|---------------------|
 | Examples     | 301       |(No RegEx required)   | `cargo test`        |
@@ -19,6 +20,7 @@ Current Statistics
 | Structs      | 12        |`pub struct`          | VSCode RegEx-Search |
 | Macros       | 7         |`macro_rules`         | VSCode RegEx-Search |
 | Dependencies | 4         |(No RegEx required)   | `Cargo.toml`        |
+
 **Changelog**
 -----
 0.4.0.
