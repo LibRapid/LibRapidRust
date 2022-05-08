@@ -224,6 +224,9 @@ pub trait NumTools<T> {
     /// ```
     #[must_use = "This returns the result of the operation, without modifying the original."]
     fn cube(&self) -> Self;
+
+    #[must_use = "This returns the result of the operation, without modifying the original."]
+    fn recip(&self) -> Self;
 }
 
 impl<T: PartialOrd +
@@ -277,6 +280,11 @@ impl<T: PartialOrd +
     #[inline]
     fn cube(&self) -> Self {
         *self * *self * *self
+    }
+
+    #[inline]
+    fn recip(&self) -> Self {
+        Self::from(1u8) / *self
     }
 }
 
