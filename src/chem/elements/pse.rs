@@ -5,7 +5,7 @@ use super::Element;
 /// use lib_rapid::chem::elements::pse;
 ///
 /// let element = pse::PROTON;
-/// assert_eq!(element.atomic_weight, pse::PROTONMASS as f32);
+/// assert_eq!(element.atomic_weight, pse::PPLUS_MASS as f32);
 /// ```
 pub const PROTON:        Element = Element::new("H⁺",  1,   0,   0,   PPLUS_MASS as f32,  2.20);
 /// The chemical element Hydrogen.
