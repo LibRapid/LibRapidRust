@@ -7,7 +7,18 @@
 
 LibRapid for Rust - Fast. Reliable. Lightweight.
 ============
-
+Current Statistics
+-----
+| **Item**     | **Count** | **Used RegEx**       | **Used Method**     |
+|--------------|-----------|----------------------|---------------------|
+| Examples     | 301       |(No RegEx required)   | `cargo test`        |
+| Constants    | 187       |`pub const [\^f][\^n]`| VSCode RegEx-Search |
+| Functions    | 123       |`pub c?o?n?s?t? ?fn`  | VSCode RegEx-Search |
+| Modules      | 30        |`pub mod`             | VSCode RegEx-Search |
+| Traits       | 14        |`pub trait`           | VSCode RegEx-Search |
+| Structs      | 12        |`pub struct`          | VSCode RegEx-Search |
+| Macros       | 7         |`macro_rules`         | VSCode RegEx-Search |
+| Dependencies | 4         |(No RegEx required)   | `Cargo.toml`        |
 **Changelog**
 -----
 0.4.0.
@@ -16,9 +27,6 @@ _____
 - Added Public API: `recip()` in `math::general::NumTools`.
 - Added Public API: `get_inverse()` in `math::equations::linear::LinearEquation`.
 -----
-
-The original idea comes from Pencilcaseman, I collaborated with him to get LibRapid into Rust. We're closely working together to provide
-the best possible user experience and consistency over all libraries.
 
 Why X? Why Y?
 -----
