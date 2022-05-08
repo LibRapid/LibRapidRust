@@ -224,7 +224,16 @@ pub trait NumTools<T> {
     /// ```
     #[must_use = "This returns the result of the operation, without modifying the original."]
     fn cube(&self) -> Self;
-
+    /// Calculates the reciprocal ( 1 ÷ number ) of a given number.
+    /// # Returns
+    /// A `Self`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumTools;
+    /// 
+    /// assert_eq!(5.recip(), 0);
+    /// assert_eq!(NumTools::recip(&0.2), 0.2.recip());
+    /// ```
     #[must_use = "This returns the result of the operation, without modifying the original."]
     fn recip(&self) -> Self;
 }
