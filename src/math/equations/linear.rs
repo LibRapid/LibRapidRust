@@ -126,7 +126,6 @@ impl<T: Copy +
     /// assert_eq!(2.0, f_x.get_root());
     /// ```
     #[inline]
-    #[must_use]
     pub fn get_root(&mut self) -> T {
         if self.root.is_some()
         { return unsafe { self.root.unwrap_unchecked() }; }
@@ -225,6 +224,26 @@ impl<T: Copy +
             res.1 = Some((uq, self.get_fun_val_of(uq)));
         }
         res
+    }
+    /// Constructs the inverse function of `self`.
+    /// # Returns
+    /// A new `LinearEquation<T>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::equations::linear::LinearEquation;
+    /// 
+    /// let mut eq     = LinearEquation::new(5.0,  1.0); // 5x + 1.
+    /// let mut inv_eq = LinearEquation::new(0.2, -0.2); // ⅕x - ⅕.
+    /// inv_eq.get_root();
+    ///     eq.get_root();
+    /// 
+    /// assert_eq!(eq.get_inv(), inv_eq);
+    /// assert_eq!(inv_eq.get_inv(), eq);
+    /// ```
+    #[must_use]
+    #[inline]
+    pub fn get_inv(&self) -> LinearEquation<T> {
+        LinearEquation { m: self.m.recip(), c: -self.c / self.m, root: Some(self.c) }
     }
 }
 

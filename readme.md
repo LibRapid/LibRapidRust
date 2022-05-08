@@ -10,9 +10,11 @@ LibRapid for Rust - Fast. Reliable. Lightweight.
 
 **Changelog**
 -----
-0.4.0-preview.1.
+0.4.0.
 _____
 - Added Public API: `lib_rapid::chem`.
+- Added Public API: `recip()` in `math::general::NumTools`.
+- Added Public API: `get_inverse()` in `math::equations::linear::LinearEquation`.
 -----
 
 The original idea comes from Pencilcaseman, I collaborated with him to get LibRapid into Rust. We're closely working together to provide
