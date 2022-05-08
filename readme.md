@@ -13,7 +13,7 @@ Current Statistics
 | **Item**     | **Count** | **Used RegEx**       | **Used Method**     |
 |--------------|-----------|----------------------|---------------------|
 | Examples     | 301       |(No RegEx required)   | `cargo test`        |
-| Constants    | 187       |`pub const [\^f][\^n]`| VSCode RegEx-Search |
+| Constants    | 187       |`pub const [^f][^n]`  | VSCode RegEx-Search |
 | Functions    | 123       |`pub c?o?n?s?t? ?fn`  | VSCode RegEx-Search |
 | Modules      | 30        |`pub mod`             | VSCode RegEx-Search |
 | Traits       | 14        |`pub trait`           | VSCode RegEx-Search |
