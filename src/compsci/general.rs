@@ -26,6 +26,7 @@ pub trait SliceOps<T> {
     /// let v = vec![0.2, 3.2];
     /// assert_eq!(3.2, v.peek());
     /// assert_eq!(vec![0.2, 3.2], v);
+    /// ```
     #[must_use]
     fn peek(&self) -> T;
     /// Swap the top two elements of a slice `[T]`.
@@ -36,6 +37,7 @@ pub trait SliceOps<T> {
     /// let mut v = vec![0.2, 3.2];
     /// v.swap_top();
     /// assert_eq!(vec![3.2, 0.2], v);
+    /// ```
     fn swap_top(&mut self);
     /// Find the number of times a item is contained in a slice `[T]`.
     /// # Returns
@@ -46,6 +48,7 @@ pub trait SliceOps<T> {
     /// 
     /// let mut v = vec![4, 0, 0, 2, 3, 4, 4, 4];
     /// assert_eq!(4, v.count_of(4));
+    /// ```
     #[must_use]
     fn count_of(&self, item: T) -> usize;
     /// Get the indexes at which a item resides in a slice `[T]`.
@@ -57,6 +60,7 @@ pub trait SliceOps<T> {
     /// 
     /// let mut v = vec![4, 0, 0, 2, 3, 4, 4, 4];
     /// assert_eq!(vec![0, 5, 6, 7], v.positions_of(4));
+    /// ```
     #[must_use]
     fn positions_of(&self, item: T) -> Vec<usize>;
 }
@@ -212,6 +216,7 @@ pub trait CharTools {
     /// assert_eq!(None, '('.get_opening_bracket());
     /// assert_eq!(Some('('), ')'.get_opening_bracket());
     /// assert_eq!(Some('{'), '}'.get_opening_bracket());
+    /// ```
     #[must_use]
     fn get_opening_bracket(&self) -> Option<char>;
     /// Gets the corresponding closing bracket if there is one..
