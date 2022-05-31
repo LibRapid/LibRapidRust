@@ -571,3 +571,47 @@ pub fn gcd<T: From<u8> +
         _a >>= unsafe { u8::try_from(i128::from(_a).trailing_zeros()).unwrap_unchecked() }.into();
     }
 }
+/// Calculates the factorial of a number.
+/// # Arguments
+/// * `n: u8` - The number of which the factorial should be calculated.
+/// # Returns
+/// A `u128`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::factorial;
+/// 
+/// assert_eq!(factorial(7), 7 * 6 * 5 * 4 * 3 * 2);
+/// ```
+pub const fn factorial(n: u8) -> u128 {
+    let mut x    = n as u128;
+    let mut _res = 1;
+    while x > 1 {
+        _res *= x;
+        x    -= 1;
+    }
+
+    _res
+}
+/// Calculates the division of two factorials of the form `n! ÷ (n - k)!`.
+/// # Arguments
+/// * `x: usize` - `n`.
+/// * `y: usize` - `n - k`.
+/// # Returns
+/// A `usize`.
+/// # Examples
+/// ```
+/// use lib_rapid::math::general::div_factorials;
+/// 
+/// assert_eq!(div_factorials(245, 242), 14526540); // 245! ÷ 242! = 245 · 244 · 243.
+/// assert_eq!(div_factorials(1, 0), 1); // 1! ÷ 0! = 1 ÷ 1.
+/// ```
+pub const fn div_factorials(x: usize, y: usize) -> usize {
+    let k        = x - y;
+    let mut _res = 1;
+    let mut i    = 0;
+    while i != k {
+        _res *= x - i;
+        i    += 1;
+    }
+    _res
+}
