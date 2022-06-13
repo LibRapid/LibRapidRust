@@ -12,7 +12,7 @@ Current Statistics
 
 | **Item**     | **Count** | **Used RegEx**       | **Used Method**     |
 |--------------|-----------|----------------------|---------------------|
-| Examples     | 303       |(No RegEx required)   | `cargo test`        |
+| Examples     | 304       |(No RegEx required)   | `cargo test`        |
 | Constants    | 187       |`pub const [^f][^n]`  | VSCode RegEx-Search |
 | Functions    | 125       |`pub c?o?n?s?t? ?fn`  | VSCode RegEx-Search |
 | Modules      | 30        |`pub mod`             | VSCode RegEx-Search |
@@ -23,10 +23,11 @@ Current Statistics
 
 **Changelog**
 -----
-0.4.1-preview.1.
+0.4.1-preview.2.
 _____
 - Added Public API: `math::general::factorial()`.
 - Added Public API: `math::general::div_factorials()`.
+- Added Public API: `compsci::stringhelpers::StringUtils::to_isize()`.
 -----
 
 Why X? Why Y?
