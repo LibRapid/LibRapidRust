@@ -149,6 +149,17 @@ pub trait StringUtils {
     /// ```
     #[must_use]
     fn levenshtein_dist_with(&self, other: &str) -> usize;
+    /// Converts a given String into an `isize`. This function
+    /// ignores whitespaces, commas and full stops.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::compsci::stringhelpers::StringUtils;
+    /// 
+    /// assert_eq!("  -  5 52 3 ".to_isize().unwrap(), -5523);
+    /// assert_eq!("256".to_isize().unwrap(), 256);
+    /// ```
+    #[must_use]
+    fn to_isize(&self) -> Option<isize>;
 }
 
 impl StringUtils for String {
@@ -180,6 +191,10 @@ impl StringUtils for String {
     fn levenshtein_dist_with(&self, other: &str) -> usize {
         backend_levenshtein(self, other)
     }
+    #[inline]
+    fn to_isize(&self) -> Option<isize> {
+        backend_to_isize(self)
+    }
 }
 
 impl StringUtils for str {
@@ -210,6 +225,10 @@ impl StringUtils for str {
     #[inline]
     fn levenshtein_dist_with(&self, other: &str) -> usize {
         backend_levenshtein(self, other)
+    }
+    #[inline]
+    fn to_isize(&self) -> Option<isize> {
+        backend_to_isize(self)
     }
 }
 
@@ -326,6 +345,34 @@ fn backend_levenshtein(str1: &str, str2: &str) -> usize {
     res
 }
 
+fn backend_to_isize(s: &str) -> Option<isize> {
+    let _s = s.trim();
+    let mut res = 0;
+    let flag = _s.starts_with('-');
+    let mut power_of_ten = 1;
+    for (i, character) in _s.chars().rev().enumerate() {
+        if character == '-' && i != _s.len() - 1
+        { return None; }
+        match character {
+            '1' => res.inc_by(    power_of_ten),
+            '2' => res.inc_by(2 * power_of_ten),
+            '3' => res.inc_by(3 * power_of_ten),
+            '4' => res.inc_by(4 * power_of_ten),
+            '5' => res.inc_by(5 * power_of_ten),
+            '6' => res.inc_by(6 * power_of_ten),
+            '7' => res.inc_by(7 * power_of_ten),
+            '8' => res.inc_by(8 * power_of_ten),
+            '9' => res.inc_by(9 * power_of_ten),
+            _   => { }
+        }
+        if !character.is_whitespace()
+        { power_of_ten *= 10; }
+    }
+    if flag
+    { res *= -1; }
+
+    Some(res)
+}
 /// A Rust implementation of C's `strcmp()` function.
 /// # Arguments
 /// * `s1` - The String reference to be compared to.
