@@ -407,14 +407,13 @@ fn backend_to_isize(s: &str) -> Option<isize> {
 /// ```
 #[must_use]
 pub const fn strcmp(s1: &str, s2: &str) -> i16 {
-    let mut i: usize = 0;
-    let mut flag: i16 = 0;
+    let mut i:    usize = 0;
+    let mut flag: i16   = 0;
     while flag == 0 {
         flag = s1.as_bytes()[i] as i16 - s2.as_bytes()[i] as i16;
-        if i + 1 == s1.len()
-        { break; }
-
         i += 1;
+        if i == s1.len()
+        { break; }
     }
     flag
 }
