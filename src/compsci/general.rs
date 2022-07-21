@@ -63,6 +63,18 @@ pub trait SliceOps<T> {
     /// ```
     #[must_use]
     fn positions_of(&self, item: T) -> Vec<usize>;
+    /// Get the index of the first matching item in a slice.
+    /// # Arguments
+    /// * `t: T` - The item to be searched for.
+    /// # Returns
+    /// An `Option<usize>`.
+    /// ```
+    /// use lib_rapid::compsci::general::SliceOps;
+    /// 
+    /// assert_eq!(vec!['h','e','l','l','o'].position_of('l').unwrap(), 2);
+    /// ```
+    #[must_use]
+    fn position_of(&self, t: T) -> Option<usize>;
 }
 
 /// Bitwise operations on slices of arbitrary (numeric) types.
@@ -563,6 +575,16 @@ impl<T: Clone + std::cmp::PartialEq> SliceOps<T> for [T] {
             { res.push(i.0); }
         }
         res
+    }
+    #[inline]
+    fn position_of(&self, t: T) -> Option<usize> {
+        let mut i: usize = 0;
+        for v_t in self {
+            if *v_t == t
+            { return Some(i); }
+            i.inc();
+        }
+        None
     }
 }
 
