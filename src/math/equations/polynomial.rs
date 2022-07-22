@@ -1,10 +1,16 @@
 //! Polynomials in Rust.
+// * TODO: Documentation.
+// * TODO: Finding roots.
+// * TODO: Summation/Difference of Polynomials with arbitrary length.
+// * TODO: Macro for fast creation.
+// * TODO: Function for standard polynomial with coefficients set to 1.0.
+// * TODO: Interoperation with QuadraticEquation and LinearEquation.
 
-use std::{ops::{Add, Sub, SubAssign, AddAssign}, borrow::BorrowMut};
+use std::ops::{Add, Sub, SubAssign, AddAssign};
 
 use crate::math::general::NumTools;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Polynomial<const C: usize, T> {
     coefficients: [T; C],
     degree:       usize
