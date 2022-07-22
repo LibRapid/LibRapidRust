@@ -142,11 +142,11 @@ impl<T: Copy +
     /// 
     /// let mut f_x = LinearEquation::new(1.0, -2.0);
     /// 
-    /// assert_eq!(-1.0, f_x.get_fun_val_of(1.0));
+    /// assert_eq!(-1.0, f_x.eval(1.0));
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_fun_val_of(&self, x: T) -> T {
+    pub fn eval(&self, x: T) -> T {
         self.m * x + self.c
     }
     /// Get the intersection point between `self` and `other` if there is some.
@@ -216,12 +216,12 @@ impl<T: Copy +
         let q1: Option<T> = q.get_solutions().1;
         let mut res: (Option<(T, T)>,
                       Option<(T, T)>) =
-        ( Some((q0, self.get_fun_val_of(q0))),
+        ( Some((q0, self.eval(q0))),
           None );
 
         if q1.is_some() { 
             let uq: T = unsafe { q1.unwrap_unchecked() };
-            res.1 = Some((uq, self.get_fun_val_of(uq)));
+            res.1 = Some((uq, self.eval(uq)));
         }
         res
     }
