@@ -249,11 +249,11 @@ impl<T: Copy +
         if solquad == (None, None)
         { return (None, None); }
         let solquad0_unsafe = unsafe { solquad.0.unwrap_unchecked() };
-        let mut res = (Some((solquad0_unsafe, self.get_fun_val_of(solquad0_unsafe))), None );
+        let mut res = (Some((solquad0_unsafe, self.eval(solquad0_unsafe))), None );
         match solquad {
             (Some(_), None)     => { }
             (Some(_), Some(s1)) => {
-                res.1 = Some((s1, self.get_fun_val_of(s1)));
+                res.1 = Some((s1, self.eval(s1)));
             }
             _                   => { }
         }
@@ -310,11 +310,11 @@ impl<T: Copy +
     /// 
     /// let f_x = QuadraticEquation::new_from_coefficients(1.0, -2.0, 3.0);
     /// 
-    /// assert_eq!(2.0, f_x.get_fun_val_of(1.0));
+    /// assert_eq!(2.0, f_x.eval(1.0));
     /// ```
     #[inline]
     #[must_use]
-    pub fn get_fun_val_of(&self, x: T) -> T {
+    pub fn eval(&self, x: T) -> T {
         self.a * x.square() + self.b * x + self.c
     }
     /// Get the derivative of a `QuadraticEquation<T>`. The derivative is the graph of the

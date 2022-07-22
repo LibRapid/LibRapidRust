@@ -236,6 +236,17 @@ pub trait NumTools<T> {
     /// ```
     #[must_use = "This returns the result of the operation, without modifying the original."]
     fn recip(&self) -> Self;
+    /// Calculates the nth power of a given number.
+    /// # Returns
+    /// A `Self`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::general::NumTools;
+    /// 
+    /// assert_eq!(5.pow(4), 625);
+    /// ```
+    #[must_use = "This returns the result of the operation, without modifying the original."]
+    fn pow(&self, power: usize) -> Self;
 }
 
 impl<T: PartialOrd +
@@ -246,7 +257,8 @@ impl<T: PartialOrd +
         From<u8> +
         Copy +
         SubAssign +
-        AddAssign> NumTools<T> for T {
+        AddAssign +
+        MulAssign> NumTools<T> for T {
     #[inline]
     fn is_in_range(&self, start: Self, end: Self) -> bool {
         self >= &start &&
@@ -295,6 +307,15 @@ impl<T: PartialOrd +
     fn recip(&self) -> Self {
         Self::from(1u8) / *self
     }
+
+    #[inline]
+    fn pow(&self, power: usize) -> Self {
+        let mut res = *self;
+        for _ in 2..power {
+            res *= res;
+        }
+        res
+    }
 }
 
 impl<'a, T: PartialEq +
@@ -306,7 +327,8 @@ impl<'a, T: PartialEq +
         Add<Output = T> +
         Mul<Output = T> +
         AddAssign +
-        SubAssign>
+        SubAssign +
+        MulAssign>
     NumDigits
     for T
     where
