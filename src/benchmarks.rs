@@ -1,7 +1,7 @@
 #![allow(unused)]
 use std::time::Instant;
 use crate::compsci::compression::huffman::write_to_file;
-use crate::math::constants::SQRT5;
+use crate::math::constants::f64::SQRT5;
 use crate::math::general::NumTools;
 use crate::math::general::nth_fibonacci;
 use crate::math::primes::Primality;

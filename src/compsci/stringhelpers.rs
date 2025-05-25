@@ -120,7 +120,7 @@ pub trait StringUtils {
     /// assert_eq!(true, "30".is_numeric().is_ok());
     /// ```
     fn is_numeric(&self) -> Result<(), usize>;
-    /// Gets the similarity between two Strings ( correct characters divided by length). In other words, this similarity measures the character changes needed for the two Strings to match.
+    /// Gets the similarity between two Strings (correct characters divided by length). In other words, this similarity measures the character changes needed for the two Strings to match.
     /// # Arguments
     /// * `other: &str` - The other string to be compared to.
     /// # Returns

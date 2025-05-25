@@ -1,10 +1,9 @@
 //! Traits and functions for general purpose, everyday mathematics.
 //! Everything you need.
 use std::{convert::{TryInto, TryFrom}, ops::*, cmp::*};
-use super::{complex::ComplexNumber, constants::{E, EULERMASCHERONI}};
+use super::{complex::ComplexNumber, constants::f64::{E, EULERMASCHERONI, SQRT5, GOLDENRATIO}};
 use crate::eval_postfix;
 
-use super::constants::{SQRT5, GOLDENRATIO};
 pub mod avg_impl;
 pub mod avg_macros;
 /// Trait for several kinds of averages.
@@ -16,9 +15,9 @@ pub trait Averages<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
-    /// 
+    ///
     /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
-    /// 
+    ///
     /// assert_eq!(3.125, v.arithmetic_mean());
     /// ```
     #[must_use]
@@ -29,9 +28,9 @@ pub trait Averages<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
-    /// 
+    ///
     /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
-    /// 
+    ///
     /// assert_eq!(2.318840579710145, v.harmonic_mean());
     /// ```
     #[must_use]
@@ -42,9 +41,9 @@ pub trait Averages<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
-    /// 
+    ///
     /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
-    /// 
+    ///
     /// assert_eq!(2.5, v.median());
     /// ```
     #[must_use]
@@ -55,9 +54,9 @@ pub trait Averages<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
-    /// 
+    ///
     /// let v = vec![1, 2, 2, 2, 3, 4, 5, 6];
-    /// 
+    ///
     /// assert_eq!(2, v.mode());
     /// ```
     #[must_use]
@@ -68,9 +67,9 @@ pub trait Averages<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::Averages;
-    /// 
+    ///
     /// let v = vec![1.0, 2.0, 2.0, 2.0, 3.0, 4.0, 5.0, 6.0];
-    /// 
+    ///
     /// assert_eq!(3.5, v.mid_range());
     /// ```
     #[must_use]
@@ -81,11 +80,11 @@ pub trait NumDigits {
     /// Calculates the cross sum of a number.
     /// # Returns
     /// A `Self`.
-    /// 
+    ///
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumDigits;
-    /// 
+    ///
     /// assert_eq!(3u8, 12.cross_sum());
     /// assert_eq!(9u16, 342.cross_sum());
     /// assert_eq!(52u64, 4928947234u64.cross_sum());
@@ -98,7 +97,7 @@ pub trait NumDigits {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumDigits;
-    /// 
+    ///
     /// assert_eq!(vec![4,3,2,1], 1234u16.digits());
     /// assert_eq!(vec![0], 0u8.digits());
     /// ```
@@ -113,7 +112,7 @@ pub trait NumTools<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
-    /// 
+    ///
     /// assert_eq!(true, 5.is_in_range(0, 10));
     /// assert_eq!(true, 5.is_in_range(0, 5));
     /// assert_eq!(false, 3.14.is_in_range(5.0, 10.0));
@@ -126,7 +125,7 @@ pub trait NumTools<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
-    /// 
+    ///
     /// assert_eq!(true, 5.is_in_range_exclusive(0, 10));
     /// assert_eq!(false, 5.is_in_range_exclusive(0, 5));
     /// ```
@@ -230,7 +229,7 @@ pub trait NumTools<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
-    /// 
+    ///
     /// assert_eq!(5.recip(), 0);
     /// assert_eq!(NumTools::recip(&0.2), 0.2.recip());
     /// ```
@@ -242,7 +241,7 @@ pub trait NumTools<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
-    /// 
+    ///
     /// assert_eq!(5.pow(4), 625);
     /// assert_eq!(5.pow(0), 1);
     /// ```
@@ -254,7 +253,7 @@ pub trait NumTools<T> {
     /// # Examples
     /// ```
     /// use lib_rapid::math::general::NumTools;
-    /// 
+    ///
     /// assert_eq!(5u8.is_negative(), false);
     /// assert_eq!((-5.0).is_negative(), true);
     /// ```
@@ -332,7 +331,7 @@ impl<T: PartialOrd +
         { return 1u8.into(); }
         if self_is_zero && power_is_zero
         { panic!("0^0 is undefined."); }
-        
+
         let mut res = *self;
         for _ in 2..(power + 1) {
             res *= *self;
@@ -415,7 +414,7 @@ pub fn nth_root(degree: f64, radicand: f64) -> f64 {
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::nth_fibonacci;
-/// 
+///
 /// assert_eq!(1304969544928657, nth_fibonacci(74));
 /// assert_eq!(332825110087067562321196029789634457848, nth_fibonacci(186));
 /// ```
@@ -454,7 +453,7 @@ pub fn nth_fibonacci(n: u128) -> u128 {
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::delta;
-/// 
+///
 /// assert_eq!(4, delta(4, 8));
 /// assert_eq!(3.14, delta(6.28, 3.14));
 /// assert_eq!(4.905, delta(4.905, 9.81));
@@ -475,7 +474,7 @@ pub fn delta<T: Sub<Output = T> +
 /// # Examples
 /// ```should_panic
 /// use lib_rapid::math::general::better_be_even;
-/// 
+///
 /// better_be_even(-3); // Panics, because -3 is odd.
 /// ```
 #[inline]
@@ -496,9 +495,9 @@ pub fn better_be_even<T: From<bool> +
 /// # Examples
 /// ```
 /// use lib_rapid::math::{general::sqrt_f64, complex::ComplexNumber, constants::SQRT2};
-/// 
+///
 /// let c = ComplexNumber::new(0.0f64, SQRT2);
-/// 
+///
 /// assert_eq!(sqrt_f64(-2.0), c);
 /// ```
 #[inline]
@@ -517,9 +516,9 @@ pub fn sqrt_f64(x: f64) -> ComplexNumber<f64> {
 /// # Examples
 /// ```
 /// use lib_rapid::math::{general::sqrt_f32, complex::ComplexNumber, constants::SQRT2};
-/// 
+///
 /// let c = ComplexNumber::new(0.0f32, SQRT2 as f32);
-/// 
+///
 /// assert_eq!(sqrt_f32(-2.0), c);
 /// ```
 #[inline]
@@ -538,7 +537,7 @@ pub fn sqrt_f32(x: f32) -> ComplexNumber<f32> {
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::{euler_gamma, delta};
-/// 
+///
 /// assert!(delta(euler_gamma( 1.6, 1e-12), 0.8935153492876903) < 1e-5);
 /// assert!(delta(euler_gamma(-1.6, 1e-12), 2.3105828580809252) < 1e-5);
 /// ```
@@ -558,10 +557,10 @@ pub fn euler_gamma<T: Into<f64>>(z: T, precision: f64) -> f64 {
     // \prod_{n = 1}^{\infty} \frac{e^{z \div n}}{1 + z \div n}.
     loop {
         res *= term_inf;
-        
+
         if delta(term_inf, 1.0) < precision
         { break; }
-        
+
         n.inc();
         zdivn = _z / n;
         term_inf  = E.powf(zdivn) /
@@ -579,7 +578,7 @@ pub fn euler_gamma<T: Into<f64>>(z: T, precision: f64) -> f64 {
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::gcd;
-/// 
+///
 /// assert_eq!(gcd(3, 6), 3);
 /// assert_eq!(gcd(52, 345), 1);
 /// ```
@@ -593,7 +592,7 @@ pub fn gcd<T: From<u8> +
               ShrAssign>(a: T, b: T) -> T
               where
               i128: From<T> {
-    
+
     let mut _a = a;
     let mut _b = b;
     if _b == 0.into()
@@ -610,7 +609,7 @@ pub fn gcd<T: From<u8> +
     _a >>= a_two_factor.into();
 	_b >>= b_two_factor.into();
     loop {
-         
+
         if _b > _a
         { std::mem::swap(&mut _b, &mut _a); }
 
@@ -629,7 +628,7 @@ pub fn gcd<T: From<u8> +
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::factorial;
-/// 
+///
 /// assert_eq!(factorial(7), 7 * 6 * 5 * 4 * 3 * 2);
 /// ```
 pub const fn factorial(n: u8) -> u128 {
@@ -651,14 +650,15 @@ pub const fn factorial(n: u8) -> u128 {
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::div_factorials;
-/// 
+///
 /// assert_eq!(div_factorials(245, 242), 14526540); // 245! ÷ 242! = 245 · 244 · 243.
 /// assert_eq!(div_factorials(1, 0), 1); // 1! ÷ 0! = 1 ÷ 1.
 /// ```
 pub const fn div_factorials(x: usize, y: usize) -> usize {
-    let k        = x - y;
+    let     k    = x - y;
     let mut _res = 1;
     let mut i    = 0;
+
     while i != k {
         _res *= x - i;
         i    += 1;
@@ -674,7 +674,7 @@ pub const fn div_factorials(x: usize, y: usize) -> usize {
 /// # Examples
 /// ```
 /// use lib_rapid::math::general::round_to_n_mult;
-/// 
+///
 /// assert_eq!(round_to_n_mult(14, 5), 15);
 /// assert_eq!(round_to_n_mult(1932, 2), 1932);
 /// // This function rounds up if in doubt.

@@ -115,8 +115,8 @@ impl TempConversionTrait for f32 {
 impl AngleConversionTrait for f64 {
     fn angle_conversion(&self, mode: AngleConversion) -> Self {
         match mode {
-            AngleConversion::RadiansToDegrees => { self * constants::RADDEGRATE }
-            AngleConversion::DegreesToRadians => { self * constants::DEGRADRATE }
+            AngleConversion::RadiansToDegrees => { self * constants::f64::RADDEGRATE }
+            AngleConversion::DegreesToRadians => { self * constants::f64::DEGRADRATE }
         }
     }
 }
@@ -124,8 +124,8 @@ impl AngleConversionTrait for f64 {
 impl AngleConversionTrait for f32 {
     fn angle_conversion(&self, mode: AngleConversion) -> Self {
         match mode {
-            AngleConversion::RadiansToDegrees => { self * constants::RADDEGRATE as f32 }
-            AngleConversion::DegreesToRadians => { self * constants::DEGRADRATE as f32 }
+            AngleConversion::RadiansToDegrees => { self * constants::f64::RADDEGRATE as f32 }
+            AngleConversion::DegreesToRadians => { self * constants::f64::DEGRADRATE as f32 }
         }
     }
 }

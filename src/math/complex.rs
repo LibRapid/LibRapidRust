@@ -66,9 +66,12 @@ impl<T: Neg<Output = T> +
         Copy +
         super::general::NumTools<T> +
         Add<Output = T> +
-        From<u8>> ComplexNumber<T>
+        From<u8> +
+        From<f32> +
+        From<f64>> ComplexNumber<T>
         where
-        f64: From<T> {
+        f64: From<T>,
+        f32: From<T> {
     /// Create a new Complex number of the form `a + bi` with `a,b ∈ ℝ`.
     /// # Arguments
     /// * `real: T` - The real part of a complex number.
@@ -122,7 +125,7 @@ impl<T: Neg<Output = T> +
                        complex: - (self.complex /
                                   (self.real.square() + self.complex.square())) }
     }
-    /// Calculate the complex conjugage of a complex number.
+    /// Calculate the complex conjugate of a complex number.
     /// # Returns
     /// A `ComplexNumber<T>`.
     /// # Examples
@@ -195,7 +198,7 @@ impl<T: Neg<Output = T> +
             false => { return ComplexNumber::new(T::from(1), T::from(0)) / self.powi(-pow); }
         }
     }
-    /// Raise `e` to a imaginary number `self`.
+    /// Raise `e` (`f64`) to a imaginary number `self`.
     /// # Returns
     /// A `ComplexNumber<f64>`.
     /// # Examples
@@ -209,10 +212,42 @@ impl<T: Neg<Output = T> +
     #[inline]
     #[must_use = "This returns the result of the operation, without modifying the original."]
     pub fn exp_f64(&self) -> ComplexNumber<f64> {
-        let ea = super::constants::E.powf(f64::from(self.real));
+        let ea = super::constants::f64::E.powf(f64::from(self.real));
 
         ComplexNumber { real:    ea * f64::cos(f64::from(self.complex)),
                         complex: ea * f64::sin(f64::from(self.complex)) }
+    }
+    
+    /// Raise `e` (`f32`) to a imaginary number `self`.
+    /// # Returns
+    /// A `ComplexNumber<f32>`.
+    /// # Examples
+    /// ```
+    /// use lib_rapid::math::complex::ComplexNumber;
+    /// use lib_rapid::math::constants::{PI, E};
+    /// 
+    /// let c = ComplexNumber::new(PI, PI);
+    /// assert!((c.exp_f32().real + E.powf(PI)).abs() < 1e-10);
+    /// ```
+    #[inline]
+    #[must_use = "This returns the result of the operation, without modifying the original."]
+    pub fn exp_f32(&self) -> ComplexNumber<f32> {
+        let ea = (super::constants::f32::E as f32).powf(f32::from(self.real));
+
+        ComplexNumber { real:    ea * f32::cos(f32::from(self.complex)),
+                        complex: ea * f32::sin(f32::from(self.complex)) }
+    }
+
+
+    pub fn to_polar(&self) -> (T, T) {
+
+        (f32::sqrt((self.real.square() + self.complex.square()).into()).into(), 
+         f32::atan(f32::from(self.complex) / f32::from(self.real)).into())
+    }
+
+    pub fn from_polar(r: T, theta: T) -> ComplexNumber<T> {
+        ComplexNumber { real:    r * f64::cos(theta.into()).into(),
+                        complex: r * f64::sin(theta.into()).into() }
     }
 }
 
@@ -332,6 +367,12 @@ impl<T: Display +
 impl<T: From<u8>> std::convert::From<T> for ComplexNumber<T> {
     fn from(_a: T) -> Self {
         ComplexNumber { real: _a, complex: T::from(0) }
+    }
+}
+
+impl<T> std::convert::Into<(T, T)> for ComplexNumber<T> {
+    fn into(self) -> (T, T) {
+        (self.real, self.complex)
     }
 }
 
